@@ -461,12 +461,12 @@
     <script>
         // Sample product database - replace with your actual catalog
         const products = [
-            {code: "6100.2014", name: "1.4mm K-wires x 102mm (4\") long", price: 0.00},
-            {code: "6102.002", name: "2.6mm Drill, AO Quick Connect", price: 0.00},
-            {code: "6100.0027", name: "2.7mm Drill, AO Quick Connect, Cannulated", price: 0.00},
-            {code: "6100.0002", name: "Burr, Shannon Reca Large 2.2mm", price: 0.00},
-            {code: "6102.0005", name: "3x13mm Wedge burr", price: 0.00},
-            {code: "FCONMTP", name: "MIS MTP Construct", price: 0.00},
+            {code: "6100.2014", name: "1.4mm K-wires x 102mm (4\") long"},
+            {code: "6102.002", name: "2.6mm Drill, AO Quick Connect"},
+            {code: "6100.0027", name: "2.7mm Drill, AO Quick Connect, Cannulated"},
+            {code: "6100.0002", name: "Burr, Shannon Reca Large 2.2mm"},
+            {code: "6102.0005", name: "3x13mm Wedge burr"},
+            {code: "FCONMTP", name: "MIS MTP Construct"},
             // Add your 100+ products here
         ];
 
@@ -527,8 +527,8 @@
 
             if (matches.length > 0) {
                 suggestions.innerHTML = matches.map(product => 
-                    `<div class="suggestion-item" data-code="${product.code}" data-name="${product.name}" data-price="${product.price}">
-                        <strong>${product.code}</strong> - ${product.name} ($${product.price.toFixed(2)})
+                    `<div class="suggestion-item" data-code="${product.code}" data-name="${product.name}">
+                        <strong>${product.code}</strong> - ${product.name}
                     </div>`
                 ).join('');
                 suggestions.style.display = 'block';
@@ -542,14 +542,12 @@
             if (e.target.classList.contains('suggestion-item')) {
                 const code = e.target.dataset.code;
                 const name = e.target.dataset.name;
-                const price = e.target.dataset.price;
                 
                 itemSearch.value = `${code} - ${name}`;
                 itemSearch.dataset.selectedCode = code;
                 itemSearch.dataset.selectedName = name;
-                itemPrice.value = price;
                 suggestions.style.display = 'none';
-                itemQuantity.focus();
+                itemPrice.focus();
                 calculateExtendedPrice();
             }
         });
