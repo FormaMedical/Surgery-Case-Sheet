@@ -321,7 +321,7 @@
             
             <div class="form-row">
                 <div class="form-col">
-                    <label>Procedure(s):</label>
+                    <label for="procedure">Procedure (select multiple if needed):</label>
                     <div class="checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="procedure" value="Hammertoe">
@@ -345,38 +345,63 @@
                     <label for="caseDate">Date of Surgery:</label>
                     <input type="date" id="caseDate" name="caseDate" required>
                 </div>
-                <div class="form-col-small">
-                    <label for="patientId">Patient ID (2 initials):</label>
-                    <input type="text" id="patientId" name="patientId" class="patient-id" maxlength="2" pattern="[A-Za-z]{2}" required>
-                    <small>e.g., JS for John Smith</small>
-                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="patientId">Patient ID (2 initials):</label>
+                <input type="text" id="patientId" name="patientId" class="patient-id" maxlength="2" pattern="[A-Za-z]{2}" required>
+                <small>e.g., JS for John Smith</small>
             </div>
             
             <div class="construct-section">
                 <h3>Construct Information (if applicable)</h3>
+                
                 <div class="form-row">
                     <div class="form-col">
-                        <label for="constructCode">Construct Code:</label>
-                        <input type="text" id="constructCode" name="constructCode">
+                        <label for="constructCode1">Construct Code 1:</label>
+                        <input type="text" id="constructCode1" name="constructCode1">
                     </div>
                     <div class="form-col">
-                        <label for="constructPrice">Construct Price:</label>
-                        <input type="number" id="constructPrice" name="constructPrice" step="0.01" min="0">
+                        <label for="constructPrice1">Construct Price 1:</label>
+                        <input type="number" id="constructPrice1" name="constructPrice1" step="0.01" min="0">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="constructCode2">Construct Code 2:</label>
+                        <input type="text" id="constructCode2" name="constructCode2">
+                    </div>
+                    <div class="form-col">
+                        <label for="constructPrice2">Construct Price 2:</label>
+                        <input type="number" id="constructPrice2" name="constructPrice2" step="0.01" min="0">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="constructCode3">Construct Code 3:</label>
+                        <input type="text" id="constructCode3" name="constructCode3">
+                    </div>
+                    <div class="form-col">
+                        <label for="constructPrice3">Construct Price 3:</label>
+                        <input type="number" id="constructPrice3" name="constructPrice3" step="0.01" min="0">
                     </div>
                 </div>
             </div>
             
             <h3 class="section-title">Items Used</h3>
             <div class="item-search-container">
+                <div class="form-group">
+                    <label for="itemSearch">Search Item:</label>
+                    <input type="text" 
+                           id="itemSearch" 
+                           placeholder="Search for catalog number or product name..."
+                           autocomplete="off">
+                    <div id="suggestions" class="suggestions"></div>
+                </div>
+                
                 <div class="item-input-row">
-                    <div class="search-input">
-                        <label for="itemSearch">Search Item:</label>
-                        <input type="text" 
-                               id="itemSearch" 
-                               placeholder="Search for catalog number or product name..."
-                               autocomplete="off">
-                        <div id="suggestions" class="suggestions"></div>
-                    </div>
                     <div class="price-input">
                         <label for="itemPrice">Unit Price:</label>
                         <input type="number" 
@@ -452,7 +477,9 @@
         const extendedPrice = document.getElementById('extendedPrice');
         const addItemBtn = document.getElementById('addItem');
         const itemsList = document.getElementById('itemsList');
-        const constructPrice = document.getElementById('constructPrice');
+        const constructPrice1 = document.getElementById('constructPrice1');
+        const constructPrice2 = document.getElementById('constructPrice2');
+        const constructPrice3 = document.getElementById('constructPrice3');
 
         // Calculate extended price when price or quantity changes
         function calculateExtendedPrice() {
@@ -468,15 +495,20 @@
         // Calculate totals
         function updateTotals() {
             const itemsSubtotal = addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const constructTotal = parseFloat(constructPrice.value) || 0;
-            const grandTotal = itemsSubtotal + constructTotal;
+            const constructTotal1 = parseFloat(constructPrice1.value) || 0;
+            const constructTotal2 = parseFloat(constructPrice2.value) || 0;
+            const constructTotal3 = parseFloat(constructPrice3.value) || 0;
+            const totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
+            const grandTotal = itemsSubtotal + totalConstructPrice;
 
-            document.getElementById('itemsSubtotal').textContent = `$${itemsSubtotal.toFixed(2)}`;
-            document.getElementById('constructTotal').textContent = `$${constructTotal.toFixed(2)}`;
-            document.getElementById('grandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+            document.getElementById('itemsSubtotal').textContent = `${itemsSubtotal.toFixed(2)}`;
+            document.getElementById('constructTotal').textContent = `${totalConstructPrice.toFixed(2)}`;
+            document.getElementById('grandTotal').textContent = `${grandTotal.toFixed(2)}`;
         }
 
-        constructPrice.addEventListener('input', updateTotals);
+        constructPrice1.addEventListener('input', updateTotals);
+        constructPrice2.addEventListener('input', updateTotals);
+        constructPrice3.addEventListener('input', updateTotals);
 
         // Search functionality
         itemSearch.addEventListener('input', function() {
@@ -609,6 +641,29 @@
             const procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
             const selectedProcedures = Array.from(procedureCheckboxes).map(checkbox => checkbox.value);
 
+            // Get construct information
+            const constructs = [];
+            if (document.getElementById('constructCode1').value) {
+                constructs.push({
+                    code: document.getElementById('constructCode1').value,
+                    price: parseFloat(document.getElementById('constructPrice1').value) || 0
+                });
+            }
+            if (document.getElementById('constructCode2').value) {
+                constructs.push({
+                    code: document.getElementById('constructCode2').value,
+                    price: parseFloat(document.getElementById('constructPrice2').value) || 0
+                });
+            }
+            if (document.getElementById('constructCode3').value) {
+                constructs.push({
+                    code: document.getElementById('constructCode3').value,
+                    price: parseFloat(document.getElementById('constructPrice3').value) || 0
+                });
+            }
+
+            const totalConstructPrice = constructs.reduce((sum, construct) => sum + construct.price, 0);
+
             const formData = {
                 distributor: document.getElementById('distributor').value,
                 hospital: document.getElementById('hospital').value,
@@ -617,13 +672,12 @@
                 procedures: selectedProcedures,
                 caseDate: document.getElementById('caseDate').value,
                 patientId: document.getElementById('patientId').value,
-                constructCode: document.getElementById('constructCode').value,
-                constructPrice: parseFloat(document.getElementById('constructPrice').value) || 0,
+                constructs: constructs,
                 items: addedItems,
                 totals: {
                     itemsSubtotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                    constructPrice: parseFloat(document.getElementById('constructPrice').value) || 0,
-                    grandTotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + (parseFloat(document.getElementById('constructPrice').value) || 0)
+                    constructPrice: totalConstructPrice,
+                    grandTotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + totalConstructPrice
                 }
             };
 
