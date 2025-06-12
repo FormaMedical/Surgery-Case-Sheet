@@ -10,13 +10,34 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            color: #2c5aa0;
+            margin: 0;
+            font-size: 28px;
+        }
+        .logo {
+            height: 60px;
+            width: auto;
         }
         .form-container {
             background: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #2c5aa0;
         }
         .form-group {
             margin-bottom: 20px;
@@ -36,15 +57,21 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #333;
+            color: #2c5aa0;
         }
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
             font-size: 16px;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
         }
         select[multiple] {
             height: 100px;
@@ -72,15 +99,19 @@
         }
         .add-btn {
             flex: 0.5;
-            background: #007bff;
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-            height: 42px;
+            border-radius: 8px;
+            height: 46px;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
         .add-btn:hover {
-            background: #0056b3;
+            background: linear-gradient(135deg, #1e3d6f 0%, #2c5aa0 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
         }
         .suggestions {
             position: absolute;
@@ -88,26 +119,30 @@
             left: 0;
             right: 0;
             background: white;
-            border: 1px solid #ddd;
+            border: 2px solid #e1e8ed;
             border-top: none;
+            border-radius: 0 0 8px 8px;
             max-height: 200px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .suggestion-item {
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #f1f3f4;
+            transition: background-color 0.2s ease;
         }
         .suggestion-item:hover {
-            background: #f0f0f0;
+            background: #f8f9fa;
+            color: #2c5aa0;
         }
         .items-list {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
             margin: 20px 0;
             min-height: 100px;
         }
@@ -115,66 +150,93 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+            border-bottom: 1px solid #e1e8ed;
+            transition: background-color 0.2s ease;
+        }
+        .item-row:hover {
+            background: rgba(44, 90, 160, 0.05);
+            border-radius: 6px;
+            margin: 0 -10px;
+            padding: 12px 10px;
         }
         .item-details {
             flex: 2;
+            color: #2c5aa0;
+            font-weight: 500;
         }
         .item-pricing {
             flex: 1;
             text-align: right;
             margin-right: 10px;
+            color: #666;
         }
         .remove-btn {
-            background: #dc3545;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
+            padding: 8px 15px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
         .remove-btn:hover {
-            background: #c82333;
+            background: linear-gradient(135deg, #c82333 0%, #dc3545 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
         }
         .totals-section {
-            background: #e9ecef;
-            padding: 20px;
-            border-radius: 5px;
+            background: linear-gradient(135deg, #e8f4f8 0%, #d1ecf1 100%);
+            padding: 25px;
+            border-radius: 8px;
             margin: 20px 0;
+            border: 2px solid #bee5eb;
         }
         .total-row {
             display: flex;
             justify-content: space-between;
-            margin: 10px 0;
+            margin: 12px 0;
             font-size: 16px;
+            color: #2c5aa0;
         }
         .total-row.grand-total {
             font-weight: bold;
-            font-size: 18px;
-            border-top: 2px solid #333;
-            padding-top: 10px;
+            font-size: 20px;
+            border-top: 3px solid #2c5aa0;
+            padding-top: 15px;
+            color: #1e3d6f;
         }
         .construct-section {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #ffeaa7;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #ffeaa7;
             margin: 20px 0;
         }
+        .construct-section h3 {
+            color: #856404;
+            margin-top: 0;
+        }
         .submit-btn {
-            background: #28a745;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
+            font-weight: bold;
             width: 100%;
             margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .submit-btn:hover {
-            background: #218838;
+            background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
         }
         .patient-id {
             max-width: 100px;
@@ -189,12 +251,51 @@
             font-size: 14px;
             margin-top: 5px;
         }
+        .checkbox-group {
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+        }
+        .checkbox-label {
+            display: flex; 
+            align-items: center; 
+            font-weight: normal; 
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            color: #2c5aa0;
+        }
+        .checkbox-label:hover {
+            background: white;
+            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.1);
+        }
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px; 
+            width: auto;
+            transform: scale(1.2);
+            accent-color: #2c5aa0;
+        }
+        .section-title {
+            color: #2c5aa0;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="form-container">
+    <div class="header">
         <h1>Surgery Case Submission Form</h1>
-        
+        <img src="https://static.wixstatic.com/media/5a1a52_f4d8c8f4b8b44de085e4f4a4c4b8e4a4~mv2.png" alt="Forma Medical Logo" class="logo" onerror="this.style.display='none'">
+    </div>
+    
+    <div class="form-container">
         <form id="caseForm">
             <div class="form-row">
                 <div class="form-col">
@@ -221,21 +322,21 @@
             <div class="form-row">
                 <div class="form-col">
                     <label>Procedure(s):</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
-                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" name="procedure" value="Hammertoe" style="margin-right: 8px; width: auto;">
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="procedure" value="Hammertoe">
                             Hammertoe
                         </label>
-                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" name="procedure" value="MTP" style="margin-right: 8px; width: auto;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="procedure" value="MTP">
                             MTP
                         </label>
-                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" name="procedure" value="Lapidus" style="margin-right: 8px; width: auto;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="procedure" value="Lapidus">
                             Lapidus
                         </label>
-                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
-                            <input type="checkbox" name="procedure" value="Akin" style="margin-right: 8px; width: auto;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="procedure" value="Akin">
                             Akin
                         </label>
                     </div>
@@ -265,7 +366,7 @@
                 </div>
             </div>
             
-            <h3>Items Used</h3>
+            <h3 class="section-title">Items Used</h3>
             <div class="item-search-container">
                 <div class="item-input-row">
                     <div class="search-input">
