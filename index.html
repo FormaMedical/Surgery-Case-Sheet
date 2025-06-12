@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f5f5f5;
@@ -21,6 +21,17 @@
         .form-group {
             margin-bottom: 20px;
         }
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        .form-col {
+            flex: 1;
+        }
+        .form-col-small {
+            flex: 0.3;
+        }
         label {
             display: block;
             margin-bottom: 5px;
@@ -33,29 +44,40 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
+        }
+        select[multiple] {
+            height: 100px;
         }
         .item-search-container {
             position: relative;
             margin-bottom: 20px;
         }
-        .search-input {
-            width: 70%;
-            display: inline-block;
+        .item-input-row {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            margin-bottom: 10px;
         }
-        .quantity-input {
-            width: 15%;
-            display: inline-block;
-            margin-left: 10px;
+        .search-input {
+            flex: 2;
+        }
+        .price-input, .quantity-input {
+            flex: 0.8;
+        }
+        .extended-price {
+            flex: 0.8;
+            background: #f8f9fa;
+            color: #666;
         }
         .add-btn {
-            width: 10%;
-            display: inline-block;
-            margin-left: 10px;
+            flex: 0.5;
             background: #007bff;
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            height: 42px;
         }
         .add-btn:hover {
             background: #0056b3;
@@ -96,6 +118,14 @@
             padding: 8px 0;
             border-bottom: 1px solid #eee;
         }
+        .item-details {
+            flex: 2;
+        }
+        .item-pricing {
+            flex: 1;
+            text-align: right;
+            margin-right: 10px;
+        }
         .remove-btn {
             background: #dc3545;
             color: white;
@@ -106,6 +136,31 @@
         }
         .remove-btn:hover {
             background: #c82333;
+        }
+        .totals-section {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .total-row.grand-total {
+            font-weight: bold;
+            font-size: 18px;
+            border-top: 2px solid #333;
+            padding-top: 10px;
+        }
+        .construct-section {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ffeaa7;
+            margin: 20px 0;
         }
         .submit-btn {
             background: #28a745;
@@ -121,6 +176,19 @@
         .submit-btn:hover {
             background: #218838;
         }
+        .patient-id {
+            max-width: 100px;
+            text-transform: uppercase;
+        }
+        .error {
+            border-color: #dc3545 !important;
+            background-color: #f8d7da !important;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -128,50 +196,122 @@
         <h1>Surgery Case Submission Form</h1>
         
         <form id="caseForm">
-            <div class="form-group">
-                <label for="hospital">Hospital/Surgery Center:</label>
-                <input type="text" id="hospital" name="hospital" required>
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="distributor">Distributor Company:</label>
+                    <input type="text" id="distributor" name="distributor" required>
+                </div>
+                <div class="form-col">
+                    <label for="hospital">Hospital/Surgery Center:</label>
+                    <input type="text" id="hospital" name="hospital" required>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="surgeon">Surgeon Name:</label>
-                <input type="text" id="surgeon" name="surgeon" required>
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="surgeon">Surgeon Name:</label>
+                    <input type="text" id="surgeon" name="surgeon" required>
+                </div>
+                <div class="form-col">
+                    <label for="salesRep">Sales Rep:</label>
+                    <input type="text" id="salesRep" name="salesRep" required>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="salesRep">Sales Rep:</label>
-                <input type="text" id="salesRep" name="salesRep" required>
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="procedure">Procedure (select multiple if needed):</label>
+                    <select id="procedure" name="procedure" multiple required>
+                        <option value="Hammertoe">Hammertoe</option>
+                        <option value="MTP">MTP</option>
+                        <option value="Lapidus">Lapidus</option>
+                        <option value="Akin">Akin</option>
+                    </select>
+                    <small>Hold Ctrl (PC) or Cmd (Mac) to select multiple procedures</small>
+                </div>
+                <div class="form-col">
+                    <label for="caseDate">Date of Surgery:</label>
+                    <input type="date" id="caseDate" name="caseDate" required>
+                </div>
+                <div class="form-col-small">
+                    <label for="patientId">Patient ID (2 initials):</label>
+                    <input type="text" id="patientId" name="patientId" class="patient-id" maxlength="2" pattern="[A-Za-z]{2}" required>
+                    <small>e.g., JS for John Smith</small>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="procedure">Procedure:</label>
-                <input type="text" id="procedure" name="procedure" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="caseDate">Date of Surgery:</label>
-                <input type="date" id="caseDate" name="caseDate" required>
+            <div class="construct-section">
+                <h3>Construct Information (if applicable)</h3>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label for="constructCode">Construct Code:</label>
+                        <input type="text" id="constructCode" name="constructCode">
+                    </div>
+                    <div class="form-col">
+                        <label for="constructPrice">Construct Price:</label>
+                        <input type="number" id="constructPrice" name="constructPrice" step="0.01" min="0">
+                    </div>
+                </div>
             </div>
             
             <h3>Items Used</h3>
             <div class="item-search-container">
-                <input type="text" 
-                       id="itemSearch" 
-                       class="search-input" 
-                       placeholder="Search for catalog number or product name..."
-                       autocomplete="off">
-                <input type="number" 
-                       id="itemQuantity" 
-                       class="quantity-input" 
-                       placeholder="Qty" 
-                       min="1">
-                <button type="button" id="addItem" class="add-btn">Add</button>
-                <div id="suggestions" class="suggestions"></div>
+                <div class="item-input-row">
+                    <div class="search-input">
+                        <label for="itemSearch">Search Item:</label>
+                        <input type="text" 
+                               id="itemSearch" 
+                               placeholder="Search for catalog number or product name..."
+                               autocomplete="off">
+                        <div id="suggestions" class="suggestions"></div>
+                    </div>
+                    <div class="price-input">
+                        <label for="itemPrice">Unit Price:</label>
+                        <input type="number" 
+                               id="itemPrice" 
+                               placeholder="0.00" 
+                               step="0.01" 
+                               min="0">
+                    </div>
+                    <div class="quantity-input">
+                        <label for="itemQuantity">Quantity:</label>
+                        <input type="number" 
+                               id="itemQuantity" 
+                               placeholder="Qty" 
+                               min="1">
+                    </div>
+                    <div class="extended-price">
+                        <label for="extendedPrice">Extended Price:</label>
+                        <input type="number" 
+                               id="extendedPrice" 
+                               class="extended-price"
+                               readonly>
+                    </div>
+                    <div class="add-btn-container">
+                        <label>&nbsp;</label>
+                        <button type="button" id="addItem" class="add-btn">Add</button>
+                    </div>
+                </div>
             </div>
             
             <div class="items-list">
                 <div id="itemsList">
                     <p style="color: #666; text-align: center;">No items added yet. Search and add items above.</p>
+                </div>
+            </div>
+            
+            <div class="totals-section">
+                <div class="total-row">
+                    <span>Items Subtotal:</span>
+                    <span id="itemsSubtotal">$0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Construct Price:</span>
+                    <span id="constructTotal">$0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                    <span>Grand Total:</span>
+                    <span id="grandTotal">$0.00</span>
                 </div>
             </div>
             
@@ -195,9 +335,36 @@
         
         const itemSearch = document.getElementById('itemSearch');
         const suggestions = document.getElementById('suggestions');
+        const itemPrice = document.getElementById('itemPrice');
         const itemQuantity = document.getElementById('itemQuantity');
+        const extendedPrice = document.getElementById('extendedPrice');
         const addItemBtn = document.getElementById('addItem');
         const itemsList = document.getElementById('itemsList');
+        const constructPrice = document.getElementById('constructPrice');
+
+        // Calculate extended price when price or quantity changes
+        function calculateExtendedPrice() {
+            const price = parseFloat(itemPrice.value) || 0;
+            const quantity = parseInt(itemQuantity.value) || 0;
+            const extended = price * quantity;
+            extendedPrice.value = extended.toFixed(2);
+        }
+
+        itemPrice.addEventListener('input', calculateExtendedPrice);
+        itemQuantity.addEventListener('input', calculateExtendedPrice);
+
+        // Calculate totals
+        function updateTotals() {
+            const itemsSubtotal = addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const constructTotal = parseFloat(constructPrice.value) || 0;
+            const grandTotal = itemsSubtotal + constructTotal;
+
+            document.getElementById('itemsSubtotal').textContent = `$${itemsSubtotal.toFixed(2)}`;
+            document.getElementById('constructTotal').textContent = `$${constructTotal.toFixed(2)}`;
+            document.getElementById('grandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+        }
+
+        constructPrice.addEventListener('input', updateTotals);
 
         // Search functionality
         itemSearch.addEventListener('input', function() {
@@ -215,7 +382,7 @@
             if (matches.length > 0) {
                 suggestions.innerHTML = matches.map(product => 
                     `<div class="suggestion-item" data-code="${product.code}" data-name="${product.name}" data-price="${product.price}">
-                        <strong>${product.code}</strong> - ${product.name}
+                        <strong>${product.code}</strong> - ${product.name} ($${product.price.toFixed(2)})
                     </div>`
                 ).join('');
                 suggestions.style.display = 'block';
@@ -229,43 +396,53 @@
             if (e.target.classList.contains('suggestion-item')) {
                 const code = e.target.dataset.code;
                 const name = e.target.dataset.name;
+                const price = e.target.dataset.price;
+                
                 itemSearch.value = `${code} - ${name}`;
                 itemSearch.dataset.selectedCode = code;
-                itemSearch.dataset.selectedPrice = e.target.dataset.price;
+                itemSearch.dataset.selectedName = name;
+                itemPrice.value = price;
                 suggestions.style.display = 'none';
                 itemQuantity.focus();
+                calculateExtendedPrice();
             }
         });
 
         // Add item functionality
         addItemBtn.addEventListener('click', function() {
             const selectedCode = itemSearch.dataset.selectedCode;
-            const selectedPrice = itemSearch.dataset.selectedPrice;
-            const quantity = itemQuantity.value;
+            const selectedName = itemSearch.dataset.selectedName;
+            const price = parseFloat(itemPrice.value);
+            const quantity = parseInt(itemQuantity.value);
 
-            if (!selectedCode || !quantity) {
-                alert('Please select an item and enter quantity');
+            if (!selectedCode || !price || !quantity) {
+                alert('Please select an item, enter price and quantity');
                 return;
             }
 
             const existingItemIndex = addedItems.findIndex(item => item.code === selectedCode);
             
             if (existingItemIndex >= 0) {
-                addedItems[existingItemIndex].quantity = parseInt(addedItems[existingItemIndex].quantity) + parseInt(quantity);
+                addedItems[existingItemIndex].quantity += quantity;
             } else {
                 addedItems.push({
                     code: selectedCode,
-                    name: itemSearch.value.split(' - ')[1],
-                    quantity: parseInt(quantity),
-                    price: parseFloat(selectedPrice)
+                    name: selectedName,
+                    quantity: quantity,
+                    price: price
                 });
             }
 
             updateItemsList();
+            updateTotals();
+            
+            // Clear inputs
             itemSearch.value = '';
+            itemPrice.value = '';
             itemQuantity.value = '';
+            extendedPrice.value = '';
             delete itemSearch.dataset.selectedCode;
-            delete itemSearch.dataset.selectedPrice;
+            delete itemSearch.dataset.selectedName;
         });
 
         // Update items display
@@ -277,9 +454,12 @@
 
             itemsList.innerHTML = addedItems.map((item, index) => 
                 `<div class="item-row">
-                    <span><strong>${item.code}</strong> - ${item.name}</span>
-                    <span>Qty: ${item.quantity}</span>
-                    <span>$${item.price.toFixed(2)}</span>
+                    <div class="item-details">
+                        <strong>${item.code}</strong> - ${item.name}
+                    </div>
+                    <div class="item-pricing">
+                        Qty: ${item.quantity} × $${item.price.toFixed(2)} = $${(item.quantity * item.price).toFixed(2)}
+                    </div>
                     <button type="button" class="remove-btn" onclick="removeItem(${index})">Remove</button>
                 </div>`
             ).join('');
@@ -289,7 +469,13 @@
         function removeItem(index) {
             addedItems.splice(index, 1);
             updateItemsList();
+            updateTotals();
         }
+
+        // Patient ID validation
+        document.getElementById('patientId').addEventListener('input', function() {
+            this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '');
+        });
 
         // Hide suggestions when clicking outside
         document.addEventListener('click', function(e) {
@@ -307,17 +493,30 @@
                 return;
             }
 
+            // Get selected procedures
+            const procedureSelect = document.getElementById('procedure');
+            const selectedProcedures = Array.from(procedureSelect.selectedOptions).map(option => option.value);
+
             const formData = {
+                distributor: document.getElementById('distributor').value,
                 hospital: document.getElementById('hospital').value,
                 surgeon: document.getElementById('surgeon').value,
                 salesRep: document.getElementById('salesRep').value,
-                procedure: document.getElementById('procedure').value,
+                procedures: selectedProcedures,
                 caseDate: document.getElementById('caseDate').value,
-                items: addedItems
+                patientId: document.getElementById('patientId').value,
+                constructCode: document.getElementById('constructCode').value,
+                constructPrice: parseFloat(document.getElementById('constructPrice').value) || 0,
+                items: addedItems,
+                totals: {
+                    itemsSubtotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                    constructPrice: parseFloat(document.getElementById('constructPrice').value) || 0,
+                    grandTotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + (parseFloat(document.getElementById('constructPrice').value) || 0)
+                }
             };
 
             // Send to your n8n webhook
-            fetch('https://formamedical.app.n8n.cloud/webhook-test/b9cbd865-2d9d-448c-938f-930d88faa42e', {
+            fetch('YOUR_N8N_WEBHOOK_URL', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -331,6 +530,7 @@
                 document.getElementById('caseForm').reset();
                 addedItems = [];
                 updateItemsList();
+                updateTotals();
             })
             .catch(error => {
                 console.error('Error:', error);
