@@ -77,8 +77,10 @@
             height: 100px;
         }
         .item-search-container {
-            position: relative;
             margin-bottom: 20px;
+        }
+        .search-wrapper {
+            position: relative;
         }
         .item-input-row {
             display: flex;
@@ -392,7 +394,7 @@
             
             <h3 class="section-title">Items Used</h3>
             <div class="item-search-container">
-                <div class="form-group">
+                <div class="form-group search-wrapper">
                     <label for="itemSearch">Search Item:</label>
                     <input type="text" 
                            id="itemSearch" 
@@ -623,7 +625,7 @@
 
         // Hide suggestions when clicking outside
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.item-search-container')) {
+            if (!e.target.closest('.search-wrapper')) {
                 suggestions.style.display = 'none';
             }
         });
