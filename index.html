@@ -220,14 +220,25 @@
             
             <div class="form-row">
                 <div class="form-col">
-                    <label for="procedure">Procedure (select multiple if needed):</label>
-                    <select id="procedure" name="procedure" multiple required>
-                        <option value="Hammertoe">Hammertoe</option>
-                        <option value="MTP">MTP</option>
-                        <option value="Lapidus">Lapidus</option>
-                        <option value="Akin">Akin</option>
-                    </select>
-                    <small>Hold Ctrl (PC) or Cmd (Mac) to select multiple procedures</small>
+                    <label>Procedure(s):</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="procedure" value="Hammertoe" style="margin-right: 8px; width: auto;">
+                            Hammertoe
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="procedure" value="MTP" style="margin-right: 8px; width: auto;">
+                            MTP
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="procedure" value="Lapidus" style="margin-right: 8px; width: auto;">
+                            Lapidus
+                        </label>
+                        <label style="display: flex; align-items: center; font-weight: normal; cursor: pointer;">
+                            <input type="checkbox" name="procedure" value="Akin" style="margin-right: 8px; width: auto;">
+                            Akin
+                        </label>
+                    </div>
                 </div>
                 <div class="form-col">
                     <label for="caseDate">Date of Surgery:</label>
@@ -494,8 +505,8 @@
             }
 
             // Get selected procedures
-            const procedureSelect = document.getElementById('procedure');
-            const selectedProcedures = Array.from(procedureSelect.selectedOptions).map(option => option.value);
+            const procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
+            const selectedProcedures = Array.from(procedureCheckboxes).map(checkbox => checkbox.value);
 
             const formData = {
                 distributor: document.getElementById('distributor').value,
