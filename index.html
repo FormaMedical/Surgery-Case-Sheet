@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surgery Case Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .item-search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 70%;
+            display: inline-block;
+        }
+        .quantity-input {
+            width: 15%;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .add-btn {
+            width: 10%;
+            display: inline-block;
+            margin-left: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .add-btn:hover {
+            background: #0056b3;
+        }
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .suggestion-item:hover {
+            background: #f0f0f0;
+        }
+        .items-list {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background: #c82333;
+        }
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .submit-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Surgery Case Submission Form</h1>
+        
+        <form id="caseForm">
+            <div class="form-group">
+                <label for="hospital">Hospital/Surgery Center:</label>
+                <input type="text" id="hospital" name="hospital" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="surgeon">Surgeon Name:</label>
+                <input type="text" id="surgeon" name="surgeon" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="salesRep">Sales Rep:</label>
+                <input type="text" id="salesRep" name="salesRep" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="procedure">Procedure:</label>
+                <input type="text" id="procedure" name="procedure" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="caseDate">Date of Surgery:</label>
+                <input type="date" id="caseDate" name="caseDate" required>
+            </div>
+            
+            <h3>Items Used</h3>
+            <div class="item-search-container">
+                <input type="text" 
+                       id="itemSearch" 
+                       class="search-input" 
+                       placeholder="Search for catalog number or product name..."
+                       autocomplete="off">
+                <input type="number" 
+                       id="itemQuantity" 
+                       class="quantity-input" 
+                       placeholder="Qty" 
+                       min="1">
+                <button type="button" id="addItem" class="add-btn">Add</button>
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+            
+            <div class="items-list">
+                <div id="itemsList">
+                    <p style="color: #666; text-align: center;">No items added yet. Search and add items above.</p>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit Case Sheet</button>
+        </form>
+    </div>
+
+    <script>
+        // Sample product database - replace with your actual catalog
+        const products = [
+            {code: "6100.2014", name: "1.4mm K-wires x 102mm (4\") long", price: 25.00},
+            {code: "6102.002", name: "2.6mm Drill, AO Quick Connect", price: 125.00},
+            {code: "6100.0027", name: "2.7mm Drill, AO Quick Connect, Cannulated", price: 125.00},
+            {code: "6100.0002", name: "Burr, Shannon Reca Large 2.2mm", price: 350.00},
+            {code: "6102.0005", name: "3x13mm Wedge burr", price: 350.00},
+            {code: "FCONMTP", name: "MIS MTP Construct", price: 3000.00},
+            // Add your 100+ products here
+        ];
+
+        let addedItems = [];
+        
+        const itemSearch = document.getElementById('itemSearch');
+        const suggestions = document.getElementById('suggestions');
+        const itemQuantity = document.getElementById('itemQuantity');
+        const addItemBtn = document.getElementById('addItem');
+        const itemsList = document.getElementById('itemsList');
+
+        // Search functionality
+        itemSearch.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            if (query.length < 2) {
+                suggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = products.filter(product => 
+                product.code.toLowerCase().includes(query) || 
+                product.name.toLowerCase().includes(query)
+            ).slice(0, 10);
+
+            if (matches.length > 0) {
+                suggestions.innerHTML = matches.map(product => 
+                    `<div class="suggestion-item" data-code="${product.code}" data-name="${product.name}" data-price="${product.price}">
+                        <strong>${product.code}</strong> - ${product.name}
+                    </div>`
+                ).join('');
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // Handle suggestion clicks
+        suggestions.addEventListener('click', function(e) {
+            if (e.target.classList.contains('suggestion-item')) {
+                const code = e.target.dataset.code;
+                const name = e.target.dataset.name;
+                itemSearch.value = `${code} - ${name}`;
+                itemSearch.dataset.selectedCode = code;
+                itemSearch.dataset.selectedPrice = e.target.dataset.price;
+                suggestions.style.display = 'none';
+                itemQuantity.focus();
+            }
+        });
+
+        // Add item functionality
+        addItemBtn.addEventListener('click', function() {
+            const selectedCode = itemSearch.dataset.selectedCode;
+            const selectedPrice = itemSearch.dataset.selectedPrice;
+            const quantity = itemQuantity.value;
+
+            if (!selectedCode || !quantity) {
+                alert('Please select an item and enter quantity');
+                return;
+            }
+
+            const existingItemIndex = addedItems.findIndex(item => item.code === selectedCode);
+            
+            if (existingItemIndex >= 0) {
+                addedItems[existingItemIndex].quantity = parseInt(addedItems[existingItemIndex].quantity) + parseInt(quantity);
+            } else {
+                addedItems.push({
+                    code: selectedCode,
+                    name: itemSearch.value.split(' - ')[1],
+                    quantity: parseInt(quantity),
+                    price: parseFloat(selectedPrice)
+                });
+            }
+
+            updateItemsList();
+            itemSearch.value = '';
+            itemQuantity.value = '';
+            delete itemSearch.dataset.selectedCode;
+            delete itemSearch.dataset.selectedPrice;
+        });
+
+        // Update items display
+        function updateItemsList() {
+            if (addedItems.length === 0) {
+                itemsList.innerHTML = '<p style="color: #666; text-align: center;">No items added yet. Search and add items above.</p>';
+                return;
+            }
+
+            itemsList.innerHTML = addedItems.map((item, index) => 
+                `<div class="item-row">
+                    <span><strong>${item.code}</strong> - ${item.name}</span>
+                    <span>Qty: ${item.quantity}</span>
+                    <span>$${item.price.toFixed(2)}</span>
+                    <button type="button" class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                </div>`
+            ).join('');
+        }
+
+        // Remove item
+        function removeItem(index) {
+            addedItems.splice(index, 1);
+            updateItemsList();
+        }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.item-search-container')) {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // Form submission
+        document.getElementById('caseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (addedItems.length === 0) {
+                alert('Please add at least one item before submitting');
+                return;
+            }
+
+            const formData = {
+                hospital: document.getElementById('hospital').value,
+                surgeon: document.getElementById('surgeon').value,
+                salesRep: document.getElementById('salesRep').value,
+                procedure: document.getElementById('procedure').value,
+                caseDate: document.getElementById('caseDate').value,
+                items: addedItems
+            };
+
+            // Send to your n8n webhook
+            fetch('YOUR_N8N_WEBHOOK_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Case sheet submitted successfully!');
+                // Reset form
+                document.getElementById('caseForm').reset();
+                addedItems = [];
+                updateItemsList();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting case sheet. Please try again.');
+            });
+        });
+
+        // Allow Enter key to add items
+        itemQuantity.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addItemBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
