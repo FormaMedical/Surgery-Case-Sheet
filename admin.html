@@ -350,289 +350,44 @@
             box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
         }
 
-        /* Distributor List */
-        .distributor-item {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 5px solid #2c5aa0;
-            transition: all 0.3s ease;
-        }
-
-        .distributor-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-
-        .distributor-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .distributor-name {
-            font-weight: bold;
-            color: #2c5aa0;
-            font-size: 20px;
-        }
-
-        .distributor-details {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .distributor-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .distributor-features {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 15px;
-        }
-
-        .feature-title {
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .feature-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f3f4;
-            font-size: 14px;
-        }
-
-        .feature-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Analytics Styles */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .analytics-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .analytics-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .analytics-title {
-            color: #2c5aa0;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Table Styles */
-        .commission-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .commission-table th,
-        .commission-table td {
-            padding: 18px;
-            text-align: left;
-            border-bottom: 1px solid #f1f3f4;
-        }
-
-        .commission-table th {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            font-weight: bold;
-            color: #2c5aa0;
-            font-size: 16px;
-        }
-
-        .commission-table tr:hover {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-        }
-
-        .status-badge {
+        .btn-small {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+            border: none;
             padding: 6px 12px;
-            border-radius: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 5px;
+            transition: all 0.3s ease;
             font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
         }
 
-        .status-paid {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            color: #155724;
-        }
-
-        .status-pending {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            color: #856404;
-        }
-
-        .status-outstanding {
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-            color: #721c24;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 2% auto;
-            padding: 40px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #2c5aa0;
-        }
-
-        .modal-title {
-            color: #2c5aa0;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close-btn {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 25px;
-        }
-
-        .commission-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border-left: 5px solid #2c5aa0;
-        }
-
-        .commission-section h3 {
-            color: #2c5aa0;
-            margin-bottom: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .add-item-btn {
-            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 15px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .add-item-btn:hover {
+        .btn-small:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
         }
 
-        /* Export Section */
-        .export-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+        .btn-small.btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
 
-        .export-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        .btn-small.btn-success:hover {
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
         }
 
-        .export-card:hover {
-            transform: translateY(-5px);
+        .btn-small.btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #212529;
         }
 
-        .export-title {
-            color: #2c5aa0;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
+        .btn-small.btn-warning:hover {
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
         }
 
-        .export-description {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 16px;
+        .btn-small.active {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
         }
 
         /* Case Management Styles */
@@ -730,44 +485,28 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
 
-        .btn-small {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            color: white;
-            border: none;
+        /* Status badges */
+        .status-badge {
             padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 5px;
-            transition: all 0.3s ease;
+            border-radius: 15px;
             font-size: 12px;
-        }
-
-        .btn-small:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
-        }
-
-        .btn-small.btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .btn-small.btn-success:hover {
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-small.btn-warning {
-            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-            color: #212529;
-        }
-
-        .btn-small.btn-warning:hover {
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .status-paid {
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             color: #155724;
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+        }
+
+        .status-outstanding {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
         }
 
         .pagination-section {
@@ -799,95 +538,53 @@
             align-items: center;
         }
 
-        .btn-small.active {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
-        }
-
-        /* Modal Enhancements */
-        .case-detail-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border-left: 5px solid #2c5aa0;
-        }
-
-        .case-detail-title {
-            color: #2c5aa0;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .case-detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .case-detail-item {
+        /* Simple table styles */
+        .commission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
             background: white;
-            padding: 15px;
-            border-radius: 10px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .case-detail-label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+        .commission-table th,
+        .commission-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid #f1f3f4;
         }
 
-        .case-detail-value {
-            font-size: 16px;
+        .commission-table th {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             font-weight: bold;
             color: #2c5aa0;
+            font-size: 16px;
         }
 
-        .upload-area {
-            border: 2px dashed #2c5aa0;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
+        .commission-table tr:hover {
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            transition: all 0.3s ease;
         }
 
-        .upload-area:hover {
-            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
-            transform: translateY(-2px);
-        }
-
-        .upload-area.drag-over {
-            border-color: #28a745;
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-        }
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .header {
+        @media (max-width: 768px) {
+            .search-group {
                 flex-direction: column;
-                text-align: center;
+                align-items: stretch;
             }
             
-            .distributor-header {
+            .filter-section {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
             }
             
-            .distributor-actions {
-                width: 100%;
+            .filter-select {
+                min-width: auto;
             }
             
-            .nav-tabs {
-                justify-content: center;
-            }
-            
-            .analytics-grid, .export-grid {
-                grid-template-columns: 1fr;
+            .pagination-section {
+                flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
@@ -936,7 +633,6 @@
             <div class="nav-tabs">
                 <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
                 <button class="nav-tab" onclick="showTab('cases')">📋 Case Management</button>
-                <button class="nav-tab" onclick="showTab('distributors')">👥 Distributors</button>
                 <button class="nav-tab" onclick="showTab('analytics')">📈 Analytics</button>
                 <button class="nav-tab" onclick="showTab('exports')">📤 Reports</button>
             </div>
@@ -1043,7 +739,7 @@
                                     <td><span class="status-badge status-paid">PO Received</span></td>
                                     <td>
                                         <button class="btn-small" onclick="viewCaseDetails('CS-1234567890')">👁️ View</button>
-                                        <button class="btn-small btn-success" onclick="uploadPO('CS-1234567890')">📎 PO</button>
+                                        <button class="btn-small btn-success" onclick="alert('PO already received!')">📎 PO</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1058,7 +754,7 @@
                                     <td><span class="status-badge status-outstanding">Awaiting PO</span></td>
                                     <td>
                                         <button class="btn-small" onclick="viewCaseDetails('CS-1234567891')">👁️ View</button>
-                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567891')">⬆️ Upload PO</button>
+                                        <button class="btn-small btn-warning" onclick="alert('PO Upload feature coming soon!')">⬆️ Upload PO</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1073,37 +769,7 @@
                                     <td><span class="status-badge status-paid">Invoiced</span></td>
                                     <td>
                                         <button class="btn-small" onclick="viewCaseDetails('CS-1234567892')">👁️ View</button>
-                                        <button class="btn-small btn-success" onclick="uploadPO('CS-1234567892')">📎 PO</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>CS-1234567893</strong></td>
-                                    <td>2024-12-20</td>
-                                    <td>Surgical Solutions Inc</td>
-                                    <td>Dr. Lisa Martinez</td>
-                                    <td>Valley Medical Center</td>
-                                    <td>Akin</td>
-                                    <td style="color: #2c5aa0; font-weight: bold;">$2,100</td>
-                                    <td style="color: #ffc107; font-weight: bold;">$180</td>
-                                    <td><span class="status-badge status-outstanding">Awaiting PO</span></td>
-                                    <td>
-                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567893')">👁️ View</button>
-                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567893')">⬆️ Upload PO</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><strong>CS-1234567894</strong></td>
-                                    <td>2024-12-22</td>
-                                    <td>ABC Ortho Solutions</td>
-                                    <td>Dr. Robert Chen</td>
-                                    <td>Metropolitan Hospital</td>
-                                    <td>MTP Fusion</td>
-                                    <td style="color: #2c5aa0; font-weight: bold;">$3,800</td>
-                                    <td style="color: #ffc107; font-weight: bold;">$340</td>
-                                    <td><span class="status-badge status-pending">Submitted</span></td>
-                                    <td>
-                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567894')">👁️ View</button>
-                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567894')">⬆️ Upload PO</button>
+                                        <button class="btn-small btn-success" onclick="alert('Already invoiced!')">📎 PO</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1113,120 +779,18 @@
                     <!-- Pagination -->
                     <div class="pagination-section">
                         <div class="pagination-info">
-                            Showing 1-5 of 47 cases
+                            Showing 1-3 of 47 cases
                         </div>
                         <div class="pagination-controls">
-                            <button class="btn-small" onclick="previousPage()">← Previous</button>
+                            <button class="btn-small" onclick="alert('Previous page')">← Previous</button>
                             <span class="pagination-numbers">
                                 <button class="btn-small active">1</button>
-                                <button class="btn-small" onclick="goToPage(2)">2</button>
-                                <button class="btn-small" onclick="goToPage(3)">3</button>
+                                <button class="btn-small" onclick="alert('Page 2')">2</button>
+                                <button class="btn-small" onclick="alert('Page 3')">3</button>
                                 <span>...</span>
-                                <button class="btn-small" onclick="goToPage(10)">10</button>
+                                <button class="btn-small" onclick="alert('Page 16')">16</button>
                             </span>
-                            <button class="btn-small" onclick="nextPage()">Next →</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Distributors Tab -->
-            <div id="distributorsTab" class="tab-content">
-                <div class="section">
-                    <h2 class="section-title">👥 Distributor Management</h2>
-                    <button class="btn" onclick="showAddDistributorModal()">Add New Distributor</button>
-                    <button class="btn btn-success" onclick="exportDistributors()">Export Distributors</button>
-                    
-                    <div id="distributorsList" style="margin-top: 30px;">
-                        <div class="distributor-item">
-                            <div class="distributor-header">
-                                <div class="distributor-name">ABC Ortho Solutions</div>
-                                <div class="distributor-actions">
-                                    <button class="btn" onclick="editDistributor('ABCORTHO')">Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteDistributor('ABCORTHO')">Delete</button>
-                                </div>
-                            </div>
-                            <div class="distributor-details">
-                                Code: ABCORTHO | Contact: John Smith | Default Rate: 30%
-                            </div>
-                            <div class="distributor-features">
-                                <div class="feature-title">👨‍⚕️ Surgeons & Rates:</div>
-                                <div class="feature-list">
-                                    <div class="feature-item">
-                                        <span>Dr. Johnson (New - 40%)</span>
-                                        <span style="color: #28a745; font-weight: bold;">$1,200 this month</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span>Dr. Smith (30%)</span>
-                                        <span style="color: #28a745; font-weight: bold;">$800 this month</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="distributor-features">
-                                <div class="feature-title">🎯 Procedure Rates:</div>
-                                <div class="feature-list">
-                                    <div class="feature-item">
-                                        <span>MTP Fusion</span>
-                                        <span style="color: #2c5aa0; font-weight: bold;">35%</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span>Hammertoe</span>
-                                        <span style="color: #2c5aa0; font-weight: bold;">30%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="distributor-item">
-                            <div class="distributor-header">
-                                <div class="distributor-name">MedSupply Pro</div>
-                                <div class="distributor-actions">
-                                    <button class="btn" onclick="editDistributor('MEDSUPPLY')">Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteDistributor('MEDSUPPLY')">Delete</button>
-                                </div>
-                            </div>
-                            <div class="distributor-details">
-                                Code: MEDSUPPLY | Contact: Sarah Johnson | Procedure-Based Rates
-                            </div>
-                            <div class="distributor-features">
-                                <div class="feature-title">🎯 Procedure Rates:</div>
-                                <div class="feature-list">
-                                    <div class="feature-item">
-                                        <span>Hammertoe/Akin</span>
-                                        <span style="color: #2c5aa0; font-weight: bold;">30%</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span>MTP/Lapidus</span>
-                                        <span style="color: #2c5aa0; font-weight: bold;">35%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="distributor-item">
-                            <div class="distributor-header">
-                                <div class="distributor-name">Surgical Solutions Inc</div>
-                                <div class="distributor-actions">
-                                    <button class="btn" onclick="editDistributor('SURGSOL')">Edit</button>
-                                    <button class="btn btn-danger" onclick="deleteDistributor('SURGSOL')">Delete</button>
-                                </div>
-                            </div>
-                            <div class="distributor-details">
-                                Code: SURGSOL | Contact: Mike Wilson | Default 30% + Special Rules
-                            </div>
-                            <div class="distributor-features">
-                                <div class="feature-title">⚡ Special Rules:</div>
-                                <div class="feature-list">
-                                    <div class="feature-item">
-                                        <span>Dr. Wilson Cases</span>
-                                        <span style="color: #dc3545; font-weight: bold;">30% Immediate Payout</span>
-                                    </div>
-                                    <div class="feature-item">
-                                        <span>All Other Surgeons</span>
-                                        <span style="color: #2c5aa0; font-weight: bold;">30% Accrued Monthly</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <button class="btn-small" onclick="alert('Next page')">Next →</button>
                         </div>
                     </div>
                 </div>
@@ -1238,31 +802,22 @@
                     <h2 class="section-title">📈 Commission Analytics</h2>
                     <p style="color: #666; margin-bottom: 25px; font-size: 16px;">Track commissions by PO status - Only cases with POs generate payable commissions</p>
                     
-                    <div class="analytics-grid">
-                        <div class="analytics-card">
-                            <div class="analytics-title">💰 Monthly Commission Summary</div>
-                            <div style="margin-bottom: 15px; font-size: 18px;">
-                                <strong style="color: #28a745;">Payable Commissions (PO Received): $12,450</strong>
-                            </div>
-                            <div style="margin-bottom: 15px; font-size: 16px;">
-                                Outstanding (No PO): $3,200
-                            </div>
-                            <div style="color: #666; font-size: 16px;">
-                                Total Potential: $15,650
-                            </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">$12,450</div>
+                            <div class="stat-label">Payable Commissions</div>
                         </div>
-                        
-                        <div class="analytics-card">
-                            <div class="analytics-title">📋 PO Status Breakdown</div>
-                            <div style="margin-bottom: 15px; font-size: 16px;">
-                                Cases with PO: <strong style="color: #28a745;">32 (68%)</strong>
-                            </div>
-                            <div style="margin-bottom: 15px; font-size: 16px;">
-                                Outstanding POs: <strong style="color: #ffc107;">15 (32%)</strong>
-                            </div>
-                            <div style="color: #666; font-size: 16px;">
-                                Average days to PO: <strong>8 days</strong>
-                            </div>
+                        <div class="stat-card">
+                            <div class="stat-value">$3,200</div>
+                            <div class="stat-label">Outstanding (No PO)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">32</div>
+                            <div class="stat-label">Cases with PO</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Outstanding POs</div>
                         </div>
                     </div>
 
@@ -1305,44 +860,6 @@
                             </tr>
                         </tbody>
                     </table>
-
-                    <h3 style="color: #2c5aa0; margin: 35px 0 20px 0; font-size: 24px;">⚠️ Outstanding Cases (No PO)</h3>
-                    <table class="commission-table">
-                        <thead>
-                            <tr>
-                                <th>Case ID</th>
-                                <th>Distributor</th>
-                                <th>Surgeon</th>
-                                <th>Hospital</th>
-                                <th>Date</th>
-                                <th>Commission</th>
-                                <th>Days Outstanding</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>CS-1234567890</strong></td>
-                                <td>ABC Ortho</td>
-                                <td>Dr. Johnson</td>
-                                <td>Regional Medical</td>
-                                <td>2024-12-15</td>
-                                <td style="color: #ffc107; font-weight: bold;">$250</td>
-                                <td style="color: #dc3545; font-weight: bold;">12</td>
-                                <td><span class="status-badge status-outstanding">No PO</span></td>
-                            </tr>
-                            <tr>
-                                <td><strong>CS-1234567891</strong></td>
-                                <td>MedSupply Pro</td>
-                                <td>Dr. Wilson</td>
-                                <td>City Hospital</td>
-                                <td>2024-12-18</td>
-                                <td style="color: #ffc107; font-weight: bold;">$320</td>
-                                <td style="color: #dc3545; font-weight: bold;">9</td>
-                                <td><span class="status-badge status-outstanding">No PO</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
@@ -1351,394 +868,58 @@
                 <div class="section">
                     <h2 class="section-title">📤 Exports & Reports</h2>
                     
-                    <div class="export-grid">
-                        <div class="export-card">
-                            <div class="export-title">💰 Commission Exports</div>
-                            <p class="export-description">Export payable commissions (PO received only)</p>
-                            <button class="btn btn-success" onclick="exportPayableCommissions()">Export Payable Commissions</button>
-                            <button class="btn btn-warning" onclick="exportOutstandingPOs()">Export Outstanding POs</button>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div style="color: #2c5aa0; font-size: 20px; font-weight: bold; margin-bottom: 15px;">💰 Commission Exports</div>
+                            <p style="color: #666; margin-bottom: 20px;">Export payable commissions (PO received only)</p>
+                            <button class="btn btn-success" onclick="alert('Exporting payable commissions...')">Export Payable Commissions</button>
+                            <button class="btn btn-warning" onclick="alert('Exporting outstanding POs...')">Export Outstanding POs</button>
                         </div>
                         
-                        <div class="export-card">
-                            <div class="export-title">📊 Comprehensive Reports</div>
-                            <p class="export-description">Full system reports and analytics</p>
-                            <button class="btn" onclick="exportAllData()">Export All Data</button>
-                            <button class="btn" onclick="generateMonthlyReport()">Monthly Report</button>
-                        </div>
-                    </div>
-
-                    <div class="analytics-card" style="margin-top: 30px;">
-                        <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 22px;">📋 Export Information</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
-                            <div>
-                                <h4 style="color: #28a745; margin-bottom: 15px;">✅ Payable Commissions Export includes:</h4>
-                                <ul style="color: #666; font-size: 16px; line-height: 1.6;">
-                                    <li>All cases with PO received</li>
-                                    <li>Commission calculations by distributor</li>
-                                    <li>Surgeon-specific rates applied</li>
-                                    <li>Procedure-specific rates applied</li>
-                                    <li>Ready for payroll processing</li>
-                                </ul>
-                            </div>
-                            
-                            <div>
-                                <h4 style="color: #ffc107; margin-bottom: 15px;">⚠️ Outstanding POs Report excludes:</h4>
-                                <ul style="color: #666; font-size: 16px; line-height: 1.6;">
-                                    <li>Cases without PO (not payable)</li>
-                                    <li>Shows potential commission value</li>
-                                    <li>Days outstanding tracking</li>
-                                    <li>Follow-up action items</li>
-                                </ul>
-                            </div>
+                        <div class="stat-card">
+                            <div style="color: #2c5aa0; font-size: 20px; font-weight: bold; margin-bottom: 15px;">📊 Comprehensive Reports</div>
+                            <p style="color: #666; margin-bottom: 20px;">Full system reports and analytics</p>
+                            <button class="btn" onclick="alert('Exporting all data...')">Export All Data</button>
+                            <button class="btn" onclick="alert('Generating monthly report...')">Monthly Report</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- PO Upload Modal -->
-    <div id="poUploadModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="poModalTitle">Upload Purchase Order</h2>
-                <button class="close-btn" onclick="closePOModal()">&times;</button>
-            </div>
-            
-            <div class="case-detail-section">
-                <div class="case-detail-title">📋 Case Information</div>
-                <div class="case-detail-grid">
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Case ID</div>
-                        <div class="case-detail-value" id="poModalCaseId">CS-1234567890</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Surgeon</div>
-                        <div class="case-detail-value" id="poModalSurgeon">Dr. Benjamin Potter</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Hospital</div>
-                        <div class="case-detail-value" id="poModalHospital">Holston Valley Surgery Center</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Total Value</div>
-                        <div class="case-detail-value" id="poModalValue">$3,200</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="commission-section">
-                <h3>📎 Purchase Order Upload</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>PO Number *</label>
-                        <input type="text" id="poNumber" required placeholder="e.g., PO-2024-001">
-                    </div>
-                    <div class="form-group">
-                        <label>PO Date *</label>
-                        <input type="date" id="poDate" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>PO Amount</label>
-                        <input type="number" id="poAmount" step="0.01" placeholder="e.g., 3200.00">
-                    </div>
-                    <div class="form-group">
-                        <label>Payment Terms</label>
-                        <select id="paymentTerms">
-                            <option value="Net 30">Net 30</option>
-                            <option value="Net 45">Net 45</option>
-                            <option value="Net 60">Net 60</option>
-                            <option value="COD">COD</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Upload PO Document</label>
-                    <div class="upload-area" id="uploadArea">
-                        <div style="font-size: 48px; color: #2c5aa0; margin-bottom: 15px;">📎</div>
-                        <div style="font-size: 18px; font-weight: bold; color: #2c5aa0; margin-bottom: 10px;">
-                            Drop PO file here or click to browse
-                        </div>
-                        <div style="color: #666; font-size: 14px;">
-                            Supported formats: PDF, PNG, JPG, DOC, DOCX (Max 10MB)
-                        </div>
-                        <input type="file" id="poFileInput" style="display: none;" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx">
-                        <button type="button" class="btn" style="margin-top: 15px;" onclick="document.getElementById('poFileInput').click()">
-                            📁 Browse Files
-                        </button>
-                    </div>
-                    <div id="uploadedFiles" style="margin-top: 15px;"></div>
-                </div>
-
-                <div class="form-group">
-                    <label>Notes (Optional)</label>
-                    <textarea id="poNotes" rows="3" placeholder="Any additional notes about this PO..." style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px;"></textarea>
-                </div>
-            </div>
-
-            <div style="margin-top: 35px; text-align: center;">
-                <button type="button" class="btn btn-success" onclick="savePO()" style="padding: 15px 30px; font-size: 18px;">
-                    💾 Save Purchase Order
-                </button>
-                <button type="button" class="btn" onclick="closePOModal()" style="padding: 15px 30px; font-size: 18px;">
-                    Cancel
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Case Details Modal -->
-    <div id="caseDetailsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="caseModalTitle">Case Details</h2>
-                <button class="close-btn" onclick="closeCaseModal()">&times;</button>
-            </div>
-            
-            <div class="case-detail-section">
-                <div class="case-detail-title">📋 Case Information</div>
-                <div class="case-detail-grid">
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Case ID</div>
-                        <div class="case-detail-value" id="caseModalId">CS-1234567890</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Submission Date</div>
-                        <div class="case-detail-value" id="caseModalDate">2024-12-15</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Distributor</div>
-                        <div class="case-detail-value" id="caseModalDistributor">ABC Ortho Solutions</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Status</div>
-                        <div class="case-detail-value" id="caseModalStatus">PO Received</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="case-detail-section">
-                <div class="case-detail-title">🏥 Surgery Details</div>
-                <div class="case-detail-grid">
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Surgeon</div>
-                        <div class="case-detail-value" id="caseModalSurgeon">Dr. Benjamin Potter</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Hospital</div>
-                        <div class="case-detail-value" id="caseModalHospital">Holston Valley Surgery Center</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Procedure</div>
-                        <div class="case-detail-value" id="caseModalProcedure">MTP Fusion</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Patient ID</div>
-                        <div class="case-detail-value" id="caseModalPatientId">JP</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="case-detail-section">
-                <div class="case-detail-title">💰 Financial Details</div>
-                <div class="case-detail-grid">
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Total Case Value</div>
-                        <div class="case-detail-value" id="caseModalTotal">$3,200</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Commission Rate</div>
-                        <div class="case-detail-value" id="caseModalRate">30%</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Commission Amount</div>
-                        <div class="case-detail-value" id="caseModalCommission">$285</div>
-                    </div>
-                    <div class="case-detail-item">
-                        <div class="case-detail-label">Payment Status</div>
-                        <div class="case-detail-value" id="caseModalPayment">Ready for Payment</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="case-detail-section">
-                <div class="case-detail-title">📦 Items Used</div>
-                <table class="commission-table" style="margin-top: 15px;">
-                    <thead>
-                        <tr>
-                            <th>Catalog Number</th>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Extended Price</th>
-                        </tr>
-                    </thead>
-                    <tbody id="caseModalItems">
-                        <tr>
-                            <td><strong>FCONMTP</strong></td>
-                            <td>MIS MTP Construct</td>
-                            <td>1</td>
-                            <td>$2,500.00</td>
-                            <td>$2,500.00</td>
-                        </tr>
-                        <tr>
-                            <td><strong>6100.2014</strong></td>
-                            <td>1.4mm K-wires x 102mm (4") long</td>
-                            <td>3</td>
-                            <td>$25.00</td>
-                            <td>$75.00</td>
-                        </tr>
-                        <tr>
-                            <td><strong>6102.002</strong></td>
-                            <td>2.6mm Drill, AO Quick Connect</td>
-                            <td>1</td>
-                            <td>$125.00</td>
-                            <td>$125.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div style="margin-top: 35px; text-align: center;">
-                <button type="button" class="btn btn-warning" onclick="uploadPOFromDetails()" style="padding: 15px 30px; font-size: 18px;">
-                    📎 Upload PO
-                </button>
-                <button type="button" class="btn btn-success" onclick="generateInvoice()" style="padding: 15px 30px; font-size: 18px;">
-                    📄 Generate Invoice
-                </button>
-                <button type="button" class="btn" onclick="closeCaseModal()" style="padding: 15px 30px; font-size: 18px;">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add/Edit Distributor Modal -->
-    <div id="distributorModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle">Add New Distributor</h2>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            
-            <form id="distributorForm" onsubmit="saveDistributor(event)">
-                <!-- Basic Info -->
-                <div class="commission-section">
-                    <h3>📋 Basic Information</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Company Name *</label>
-                            <input type="text" id="companyName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Access Code *</label>
-                            <input type="text" id="accessCode" required style="text-transform: uppercase;">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Contact Name *</label>
-                            <input type="text" id="contactName" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="contactEmail">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="tel" id="contactPhone">
-                        </div>
-                        <div class="form-group">
-                            <label>Default Commission Rate (%)</label>
-                            <input type="number" id="defaultRate" min="0" max="100" value="30">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Surgeon-Specific Rates -->
-                <div class="commission-section">
-                    <h3>👨‍⚕️ Surgeon-Specific Rates</h3>
-                    <p style="color: #666; margin-bottom: 20px;">Add specific commission rates for individual surgeons</p>
-                    
-                    <div id="surgeonRates">
-                        <!-- Surgeon rates will be added here -->
-                    </div>
-                    
-                    <button type="button" class="add-item-btn" onclick="addSurgeonRate()">+ Add Surgeon Rate</button>
-                </div>
-
-                <!-- Procedure-Specific Rates -->
-                <div class="commission-section">
-                    <h3>🎯 Procedure-Specific Rates</h3>
-                    <p style="color: #666; margin-bottom: 20px;">Set different rates for different procedure types</p>
-                    
-                    <div id="procedureRates">
-                        <!-- Procedure rates will be added here -->
-                    </div>
-                    
-                    <button type="button" class="add-item-btn" onclick="addProcedureRate()">+ Add Procedure Rate</button>
-                </div>
-
-                <!-- Special Rules -->
-                <div class="commission-section">
-                    <h3>⚡ Special Commission Rules</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>New Surgeon Bonus Rate (%)</label>
-                            <input type="number" id="newSurgeonBonus" min="0" max="100" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label>Immediate Payout Surgeon</label>
-                            <input type="text" id="immediateSurgeon" placeholder="e.g., Dr. Wilson">
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 35px; text-align: center;">
-                    <button type="submit" class="btn btn-success" style="padding: 15px 30px; font-size: 18px;">Save Distributor</button>
-                    <button type="button" class="btn" onclick="closeModal()" style="padding: 15px 30px; font-size: 18px;">Cancel</button>
-                </div>
-            </form>
         </div>
     </div>
 
     <script>
-        console.log('Beautiful admin script loaded');
-        
-        var surgeonRateCounter = 0;
-        var procedureRateCounter = 0;
-        var distributors = [];
+        console.log('Admin script loaded successfully');
         
         function doLogin() {
+            console.log('Login attempt started');
+            
             var user = document.getElementById('username').value;
             var pass = document.getElementById('password').value;
             var errorDiv = document.getElementById('errorMsg');
             var successDiv = document.getElementById('successMsg');
             
+            console.log('Username:', user);
+            console.log('Password:', pass);
+            
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
             
             if ((user === 'admin' && pass === 'forma2025') || (user === 'formamedical' && pass === 'admin123')) {
+                console.log('Login successful');
                 successDiv.style.display = 'block';
                 setTimeout(function() {
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('adminDashboard').style.display = 'block';
                 }, 1000);
             } else {
+                console.log('Login failed');
                 errorDiv.style.display = 'block';
             }
         }
         
         function doLogout() {
+            console.log('Logging out');
             document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('adminDashboard').style.display = 'none';
             document.getElementById('username').value = '';
@@ -1748,6 +929,8 @@
         }
         
         function showTab(tabName) {
+            console.log('Showing tab:', tabName);
+            
             var tabContents = document.querySelectorAll('.tab-content');
             var navTabs = document.querySelectorAll('.nav-tab');
             
@@ -1763,167 +946,10 @@
             event.target.classList.add('active');
         }
         
-        function showAddDistributorModal() {
-            document.getElementById('modalTitle').textContent = 'Add New Distributor';
-            document.getElementById('distributorForm').reset();
-            document.getElementById('surgeonRates').innerHTML = '';
-            document.getElementById('procedureRates').innerHTML = '';
-            surgeonRateCounter = 0;
-            procedureRateCounter = 0;
-            document.getElementById('distributorModal').style.display = 'block';
-        }
-        
-        function editDistributor(code) {
-            document.getElementById('modalTitle').textContent = 'Edit Distributor: ' + code;
-            if (code === 'ABCORTHO') {
-                document.getElementById('companyName').value = 'ABC Ortho Solutions';
-                document.getElementById('accessCode').value = 'ABCORTHO';
-                document.getElementById('contactName').value = 'John Smith';
-                document.getElementById('contactEmail').value = 'john@abcortho.com';
-                document.getElementById('defaultRate').value = '30';
-                document.getElementById('newSurgeonBonus').value = '40';
-                
-                addSurgeonRate('Dr. Johnson', '40');
-                addSurgeonRate('Dr. Smith', '30');
-                addProcedureRate('MTP', '35');
-                addProcedureRate('Hammertoe', '30');
-            }
-            document.getElementById('distributorModal').style.display = 'block';
-        }
-        
-        function closeModal() {
-            document.getElementById('distributorModal').style.display = 'none';
-        }
-        
-        function addSurgeonRate(surgeonName, rate) {
-            surgeonRateCounter++;
-            var surgeonContainer = document.getElementById('surgeonRates');
-            
-            var surgeonDiv = document.createElement('div');
-            surgeonDiv.className = 'form-row';
-            surgeonDiv.id = 'surgeonRate_' + surgeonRateCounter;
-            surgeonDiv.style.background = 'white';
-            surgeonDiv.style.padding = '20px';
-            surgeonDiv.style.borderRadius = '10px';
-            surgeonDiv.style.marginBottom = '15px';
-            
-            surgeonDiv.innerHTML = `
-                <div class="form-group">
-                    <label>Surgeon Name</label>
-                    <input type="text" id="surgeonName_${surgeonRateCounter}" value="${surgeonName || ''}" placeholder="e.g., Dr. Smith">
-                </div>
-                <div class="form-group">
-                    <label>Commission Rate (%) 
-                        <button type="button" onclick="removeSurgeonRate(${surgeonRateCounter})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; float: right;">Remove</button>
-                    </label>
-                    <input type="number" id="surgeonRate_${surgeonRateCounter}" value="${rate || '30'}" min="0" max="100">
-                </div>
-            `;
-            
-            surgeonContainer.appendChild(surgeonDiv);
-        }
-        
-        function removeSurgeonRate(id) {
-            document.getElementById('surgeonRate_' + id).remove();
-        }
-        
-        function addProcedureRate(procedureType, rate) {
-            procedureRateCounter++;
-            var procedureContainer = document.getElementById('procedureRates');
-            
-            var procedureDiv = document.createElement('div');
-            procedureDiv.className = 'form-row';
-            procedureDiv.id = 'procedureRate_' + procedureRateCounter;
-            procedureDiv.style.background = 'white';
-            procedureDiv.style.padding = '20px';
-            procedureDiv.style.borderRadius = '10px';
-            procedureDiv.style.marginBottom = '15px';
-            
-            procedureDiv.innerHTML = `
-                <div class="form-group">
-                    <label>Procedure Type</label>
-                    <select id="procedureType_${procedureRateCounter}">
-                        <option value="Hammertoe" ${procedureType === 'Hammertoe' ? 'selected' : ''}>Hammertoe</option>
-                        <option value="MTP" ${procedureType === 'MTP' ? 'selected' : ''}>MTP</option>
-                        <option value="Lapidus" ${procedureType === 'Lapidus' ? 'selected' : ''}>Lapidus</option>
-                        <option value="Akin" ${procedureType === 'Akin' ? 'selected' : ''}>Akin</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Commission Rate (%) 
-                        <button type="button" onclick="removeProcedureRate(${procedureRateCounter})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; float: right;">Remove</button>
-                    </label>
-                    <input type="number" id="procedureRate_${procedureRateCounter}" value="${rate || '30'}" min="0" max="100">
-                </div>
-            `;
-            
-            procedureContainer.appendChild(procedureDiv);
-        }
-        
-        function removeProcedureRate(id) {
-            document.getElementById('procedureRate_' + id).remove();
-        }
-        
-        function saveDistributor(event) {
-            event.preventDefault();
-            
-            var companyName = document.getElementById('companyName').value;
-            var accessCode = document.getElementById('accessCode').value.toUpperCase();
-            
-            var surgeonRates = [];
-            var surgeonElements = document.querySelectorAll('[id^="surgeonRate_"]');
-            surgeonElements.forEach(function(element) {
-                var id = element.id.split('_')[1];
-                var name = document.getElementById('surgeonName_' + id).value;
-                var rate = document.getElementById('surgeonRate_' + id).value;
-                if (name && rate) {
-                    surgeonRates.push({name: name, rate: rate});
-                }
-            });
-            
-            var procedureRates = [];
-            var procedureElements = document.querySelectorAll('[id^="procedureRate_"]');
-            procedureElements.forEach(function(element) {
-                var id = element.id.split('_')[1];
-                var type = document.getElementById('procedureType_' + id).value;
-                var rate = document.getElementById('procedureRate_' + id).value;
-                if (type && rate) {
-                    procedureRates.push({type: type, rate: rate});
-                }
-            });
-            
-            alert('Distributor saved successfully!\\n\\nSurgeon Rates: ' + surgeonRates.length + '\\nProcedure Rates: ' + procedureRates.length);
-            closeModal();
-        }
-        
-        function deleteDistributor(code) {
-            if (confirm('Are you sure you want to delete this distributor?')) {
-                alert('Distributor deleted: ' + code);
-            }
-        }
-        
-        function exportPayableCommissions() {
-            alert('Exporting payable commissions (PO received only)...\\n\\nThis will include:\\n- All cases with PO\\n- Calculated commissions\\n- Distributor breakdown\\n- Ready for payroll');
-        }
-        
-        function exportOutstandingPOs() {
-            alert('Exporting outstanding POs report...\\n\\nThis will include:\\n- Cases without PO\\n- Potential commission values\\n- Days outstanding\\n- Follow-up needed');
-        }
-        
-        function exportAllData() {
-            alert('Exporting comprehensive data...\\n\\nThis will include:\\n- All distributors\\n- All cases\\n- Commission calculations\\n- Complete analytics');
-        }
-        
-        function generateMonthlyReport() {
-            alert('Generating monthly report...\\n\\nThis will include:\\n- Commission summary\\n- PO status breakdown\\n- Distributor performance\\n- Outstanding items');
-        }
-        
-        // Case Management Functions
         function searchCases() {
             var searchTerm = document.getElementById('caseSearch').value;
             console.log('Searching for:', searchTerm);
-            // Here you would implement actual search logic
-            alert('Searching for: "' + searchTerm + '"\\n\\nIn a real system, this would filter the cases table based on your search criteria.');
+            alert('Searching for: "' + searchTerm + '"');
         }
         
         function filterCases() {
@@ -1931,213 +957,15 @@
             var distributor = document.getElementById('distributorFilter').value;
             var dateRange = document.getElementById('dateFilter').value;
             
-            console.log('Filtering:', {status: status, distributor: distributor, dateRange: dateRange});
-            // Here you would implement actual filtering logic
+            console.log('Filtering cases:', status, distributor, dateRange);
         }
         
         function viewCaseDetails(caseId) {
-            // Populate modal with case data (in real app, fetch from database)
-            document.getElementById('caseModalId').textContent = caseId;
-            
-            if (caseId === 'CS-1234567890') {
-                document.getElementById('caseModalDate').textContent = '2024-12-15';
-                document.getElementById('caseModalDistributor').textContent = 'ABC Ortho Solutions';
-                document.getElementById('caseModalStatus').textContent = 'PO Received';
-                document.getElementById('caseModalSurgeon').textContent = 'Dr. Benjamin Potter';
-                document.getElementById('caseModalHospital').textContent = 'Holston Valley Surgery Center';
-                document.getElementById('caseModalProcedure').textContent = 'MTP Fusion';
-                document.getElementById('caseModalPatientId').textContent = 'JP';
-                document.getElementById('caseModalTotal').textContent = '$3,200';
-                document.getElementById('caseModalRate').textContent = '30%';
-                document.getElementById('caseModalCommission').textContent = '$285';
-                document.getElementById('caseModalPayment').textContent = 'Ready for Payment';
-            }
-            
-            document.getElementById('caseDetailsModal').style.display = 'block';
-        }
-        
-        function closeCaseModal() {
-            document.getElementById('caseDetailsModal').style.display = 'none';
-        }
-        
-        function uploadPO(caseId) {
-            // Populate PO modal with case data
-            document.getElementById('poModalCaseId').textContent = caseId;
-            
-            if (caseId === 'CS-1234567890') {
-                document.getElementById('poModalSurgeon').textContent = 'Dr. Benjamin Potter';
-                document.getElementById('poModalHospital').textContent = 'Holston Valley Surgery Center';
-                document.getElementById('poModalValue').textContent = '$3,200';
-                document.getElementById('poModalTitle').textContent = 'Upload Purchase Order - ' + caseId;
-            } else if (caseId === 'CS-1234567891') {
-                document.getElementById('poModalSurgeon').textContent = 'Dr. Sarah Johnson';
-                document.getElementById('poModalHospital').textContent = 'Regional Medical Center';
-                document.getElementById('poModalValue').textContent = '$1,850';
-                document.getElementById('poModalTitle').textContent = 'Upload Purchase Order - ' + caseId;
-            }
-            
-            // Set today's date as default
-            var today = new Date().toISOString().split('T')[0];
-            document.getElementById('poDate').value = today;
-            
-            document.getElementById('poUploadModal').style.display = 'block';
-        }
-        
-        function uploadPOFromDetails() {
-            var caseId = document.getElementById('caseModalId').textContent;
-            closeCaseModal();
-            uploadPO(caseId);
-        }
-        
-        function closePOModal() {
-            document.getElementById('poUploadModal').style.display = 'none';
-            // Clear form
-            document.getElementById('poNumber').value = '';
-            document.getElementById('poDate').value = '';
-            document.getElementById('poAmount').value = '';
-            document.getElementById('poNotes').value = '';
-            document.getElementById('uploadedFiles').innerHTML = '';
-        }
-        
-        function savePO() {
-            var poNumber = document.getElementById('poNumber').value;
-            var poDate = document.getElementById('poDate').value;
-            var poAmount = document.getElementById('poAmount').value;
-            var caseId = document.getElementById('poModalCaseId').textContent;
-            
-            if (!poNumber || !poDate) {
-                alert('Please fill in required fields (PO Number and PO Date)');
-                return;
-            }
-            
-            // In real app, this would save to database and update case status
-            alert('Purchase Order saved successfully!\\n\\nCase: ' + caseId + '\\nPO Number: ' + poNumber + '\\nPO Date: ' + poDate + '\\nAmount: 
-        
-        window.onclick = function(event) {
-            var modal = document.getElementById('distributorModal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
-    </script>
-</body>
-</html> + poAmount + '\\n\\nCase status updated to "PO Received"');
-            
-            closePOModal();
-            
-            // Update the case status in the table (in real app, refresh from database)
-            updateCaseStatus(caseId, 'PO Received');
-        }
-        
-        function updateCaseStatus(caseId, newStatus) {
-            // Find and update the status in the table
-            var rows = document.querySelectorAll('#casesTableBody tr');
-            rows.forEach(function(row) {
-                var firstCell = row.cells[0].textContent;
-                if (firstCell.includes(caseId)) {
-                    var statusCell = row.cells[8];
-                    var badgeClass = 'status-paid';
-                    if (newStatus === 'Awaiting PO') badgeClass = 'status-outstanding';
-                    if (newStatus === 'Submitted') badgeClass = 'status-pending';
-                    
-                    statusCell.innerHTML = '<span class="status-badge ' + badgeClass + '">' + newStatus + '</span>';
-                }
-            });
-        }
-        
-        function generateInvoice() {
-            var caseId = document.getElementById('caseModalId').textContent;
-            alert('Generating invoice for case: ' + caseId + '\\n\\nThis will create a professional invoice with:\\n- Case details\\n- Items used\\n- Commission calculations\\n- Hospital billing information');
+            alert('Viewing case details for: ' + caseId + '\\n\\nThis will show:\\n- Complete case information\\n- Surgery details\\n- Items used\\n- Commission calculations\\n- PO status');
         }
         
         function exportFilteredCases() {
-            var statusFilter = document.getElementById('statusFilter').value || 'All';
-            var distributorFilter = document.getElementById('distributorFilter').value || 'All';
-            var dateFilter = document.getElementById('dateFilter').value;
-            
-            alert('Exporting filtered cases...\\n\\nFilters applied:\\n- Status: ' + statusFilter + '\\n- Distributor: ' + distributorFilter + '\\n- Date Range: ' + dateFilter + ' days\\n\\nExport will include all visible cases with current filters.');
-        }
-        
-        // Pagination functions
-        function previousPage() {
-            console.log('Previous page');
-            // Implement pagination logic
-        }
-        
-        function nextPage() {
-            console.log('Next page');
-            // Implement pagination logic
-        }
-        
-        function goToPage(pageNum) {
-            console.log('Go to page:', pageNum);
-            // Implement pagination logic
-        }
-        
-        // File upload handling
-        document.addEventListener('DOMContentLoaded', function() {
-            var uploadArea = document.getElementById('uploadArea');
-            var fileInput = document.getElementById('poFileInput');
-            
-            // Handle drag and drop
-            uploadArea.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                uploadArea.classList.add('drag-over');
-            });
-            
-            uploadArea.addEventListener('dragleave', function(e) {
-                e.preventDefault();
-                uploadArea.classList.remove('drag-over');
-            });
-            
-            uploadArea.addEventListener('drop', function(e) {
-                e.preventDefault();
-                uploadArea.classList.remove('drag-over');
-                
-                var files = e.dataTransfer.files;
-                handleFileUpload(files);
-            });
-            
-            // Handle file input change
-            fileInput.addEventListener('change', function(e) {
-                handleFileUpload(e.target.files);
-            });
-            
-            // Click to upload
-            uploadArea.addEventListener('click', function() {
-                fileInput.click();
-            });
-        });
-        
-        function handleFileUpload(files) {
-            var uploadedFilesDiv = document.getElementById('uploadedFiles');
-            uploadedFilesDiv.innerHTML = '';
-            
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var fileDiv = document.createElement('div');
-                fileDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;';
-                
-                fileDiv.innerHTML = `
-                    <div>
-                        <strong>${file.name}</strong> (${(file.size / 1024 / 1024).toFixed(2)} MB)
-                    </div>
-                    <button type="button" onclick="removeFile(this)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Remove</button>
-                `;
-                
-                uploadedFilesDiv.appendChild(fileDiv);
-            }
-        }
-        
-        function removeFile(button) {
-            button.parentElement.remove();
-        }
-        
-        window.onclick = function(event) {
-            var modal = document.getElementById('distributorModal');
-            if (event.target === modal) {
-                closeModal();
-            }
+            alert('Exporting filtered cases...');
         }
     </script>
 </body>
