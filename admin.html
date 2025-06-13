@@ -567,7 +567,130 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
 
-        @media (max-width: 768px) {
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c5aa0;
+        }
+
+        .modal-title {
+            color: #2c5aa0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .case-detail-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #2c5aa0;
+        }
+
+        .case-detail-title {
+            color: #2c5aa0;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .case-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .case-detail-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .case-detail-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .case-detail-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .upload-area {
+            border: 2px dashed #2c5aa0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+            transform: translateY(-2px);
+        }
+
+        .upload-area.drag-over {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
             .search-group {
                 flex-direction: column;
                 align-items: stretch;
@@ -754,7 +877,7 @@
                                     <td><span class="status-badge status-outstanding">Awaiting PO</span></td>
                                     <td>
                                         <button class="btn-small" onclick="viewCaseDetails('CS-1234567891')">👁️ View</button>
-                                        <button class="btn-small btn-warning" onclick="alert('PO Upload feature coming soon!')">⬆️ Upload PO</button>
+                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567891')">⬆️ Upload PO</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -888,6 +1011,101 @@
         </div>
     </div>
 
+    <!-- PO Upload Modal -->
+    <div id="poUploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="poModalTitle">Upload Purchase Order</h2>
+                <button class="close-btn" onclick="closePOModal()">&times;</button>
+            </div>
+            
+            <div class="case-detail-section">
+                <div class="case-detail-title">📋 Case Information</div>
+                <div class="case-detail-grid">
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Case ID</div>
+                        <div class="case-detail-value" id="poModalCaseId">CS-1234567890</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Surgeon</div>
+                        <div class="case-detail-value" id="poModalSurgeon">Dr. Benjamin Potter</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Hospital</div>
+                        <div class="case-detail-value" id="poModalHospital">Holston Valley Surgery Center</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Total Value</div>
+                        <div class="case-detail-value" id="poModalValue">$3,200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-detail-section">
+                <div class="case-detail-title">📎 Purchase Order Upload</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PO Number *</label>
+                        <input type="text" id="poNumber" required placeholder="e.g., PO-2024-001">
+                    </div>
+                    <div class="form-group">
+                        <label>PO Date *</label>
+                        <input type="date" id="poDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PO Amount</label>
+                        <input type="number" id="poAmount" step="0.01" placeholder="e.g., 3200.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <select id="paymentTerms">
+                            <option value="Net 30">Net 30</option>
+                            <option value="Net 45">Net 45</option>
+                            <option value="Net 60">Net 60</option>
+                            <option value="COD">COD</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload PO Document</label>
+                    <div class="upload-area" id="uploadArea">
+                        <div style="font-size: 48px; color: #2c5aa0; margin-bottom: 15px;">📎</div>
+                        <div style="font-size: 18px; font-weight: bold; color: #2c5aa0; margin-bottom: 10px;">
+                            Drop PO file here or click to browse
+                        </div>
+                        <div style="color: #666; font-size: 14px;">
+                            Supported formats: PDF, PNG, JPG, DOC, DOCX (Max 10MB)
+                        </div>
+                        <input type="file" id="poFileInput" style="display: none;" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx">
+                        <button type="button" class="btn" style="margin-top: 15px;" onclick="document.getElementById('poFileInput').click()">
+                            📁 Browse Files
+                        </button>
+                    </div>
+                    <div id="uploadedFiles" style="margin-top: 15px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Notes (Optional)</label>
+                    <textarea id="poNotes" rows="3" placeholder="Any additional notes about this PO..." style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px;"></textarea>
+                </div>
+            </div>
+
+            <div style="margin-top: 35px; text-align: center;">
+                <button type="button" class="btn btn-success" onclick="savePO()" style="padding: 15px 30px; font-size: 18px;">
+                    💾 Save Purchase Order
+                </button>
+                <button type="button" class="btn" onclick="closePOModal()" style="padding: 15px 30px; font-size: 18px;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         console.log('Admin script loaded successfully');
         
@@ -963,6 +1181,141 @@
         function viewCaseDetails(caseId) {
             alert('Viewing case details for: ' + caseId + '\\n\\nThis will show:\\n- Complete case information\\n- Surgery details\\n- Items used\\n- Commission calculations\\n- PO status');
         }
+        
+        function uploadPO(caseId) {
+            console.log('Opening PO upload for case:', caseId);
+            
+            // Populate PO modal with case data
+            document.getElementById('poModalCaseId').textContent = caseId;
+            document.getElementById('poModalTitle').textContent = 'Upload Purchase Order - ' + caseId;
+            
+            if (caseId === 'CS-1234567890') {
+                document.getElementById('poModalSurgeon').textContent = 'Dr. Benjamin Potter';
+                document.getElementById('poModalHospital').textContent = 'Holston Valley Surgery Center';
+                document.getElementById('poModalValue').textContent = '$3,200';
+            } else if (caseId === 'CS-1234567891') {
+                document.getElementById('poModalSurgeon').textContent = 'Dr. Sarah Johnson';
+                document.getElementById('poModalHospital').textContent = 'Regional Medical Center';
+                document.getElementById('poModalValue').textContent = '$1,850';
+            } else if (caseId === 'CS-1234567892') {
+                document.getElementById('poModalSurgeon').textContent = 'Dr. Michael Wilson';
+                document.getElementById('poModalHospital').textContent = 'City General Hospital';
+                document.getElementById('poModalValue').textContent = '$4,500';
+            }
+            
+            // Set today's date as default
+            var today = new Date();
+            var dateString = today.getFullYear() + '-' + 
+                String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                String(today.getDate()).padStart(2, '0');
+            document.getElementById('poDate').value = dateString;
+            
+            document.getElementById('poUploadModal').style.display = 'block';
+        }
+        
+        function closePOModal() {
+            document.getElementById('poUploadModal').style.display = 'none';
+            // Clear form
+            document.getElementById('poNumber').value = '';
+            document.getElementById('poDate').value = '';
+            document.getElementById('poAmount').value = '';
+            document.getElementById('poNotes').value = '';
+            document.getElementById('uploadedFiles').innerHTML = '';
+        }
+        
+        function savePO() {
+            var poNumber = document.getElementById('poNumber').value;
+            var poDate = document.getElementById('poDate').value;
+            var poAmount = document.getElementById('poAmount').value;
+            var caseId = document.getElementById('poModalCaseId').textContent;
+            
+            if (!poNumber || !poDate) {
+                alert('Please fill in required fields (PO Number and PO Date)');
+                return;
+            }
+            
+            // In real app, this would save to database and update case status
+            alert('Purchase Order saved successfully!\\n\\nCase: ' + caseId + '\\nPO Number: ' + poNumber + '\\nPO Date: ' + poDate + '\\nAmount: 
+        
+        function exportFilteredCases() {
+            alert('Exporting filtered cases...');
+        }
+    </script>
+</body>
+</html> + poAmount + '\\n\\nCase status updated to "PO Received"');
+            
+            closePOModal();
+            
+            // Update the case status in the table
+            updateCaseStatus(caseId, 'PO Received');
+        }
+        
+        function updateCaseStatus(caseId, newStatus) {
+            // Find and update the status in the table
+            var rows = document.querySelectorAll('#casesTableBody tr');
+            rows.forEach(function(row) {
+                var firstCell = row.cells[0].textContent;
+                if (firstCell.includes(caseId)) {
+                    var statusCell = row.cells[8];
+                    var badgeClass = 'status-paid';
+                    if (newStatus === 'Awaiting PO') badgeClass = 'status-outstanding';
+                    if (newStatus === 'Submitted') badgeClass = 'status-pending';
+                    
+                    statusCell.innerHTML = '<span class="status-badge ' + badgeClass + '">' + newStatus + '</span>';
+                }
+            });
+        }
+        
+        function handleFileUpload(files) {
+            var uploadedFilesDiv = document.getElementById('uploadedFiles');
+            uploadedFilesDiv.innerHTML = '';
+            
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var fileDiv = document.createElement('div');
+                fileDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;';
+                
+                var fileSize = (file.size / 1024 / 1024).toFixed(2);
+                fileDiv.innerHTML = '<div><strong>' + file.name + '</strong> (' + fileSize + ' MB)</div><button type="button" onclick="removeFile(this)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Remove</button>';
+                
+                uploadedFilesDiv.appendChild(fileDiv);
+            }
+        }
+        
+        function removeFile(button) {
+            button.parentElement.remove();
+        }
+        
+        // Initialize file upload when page loads
+        window.addEventListener('load', function() {
+            var uploadArea = document.getElementById('uploadArea');
+            var fileInput = document.getElementById('poFileInput');
+            
+            if (uploadArea && fileInput) {
+                // Handle drag and drop
+                uploadArea.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    uploadArea.classList.add('drag-over');
+                });
+                
+                uploadArea.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                });
+                
+                uploadArea.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                    var files = e.dataTransfer.files;
+                    handleFileUpload(files);
+                });
+                
+                // Handle file input change
+                fileInput.addEventListener('change', function(e) {
+                    handleFileUpload(e.target.files);
+                });
+            }
+        });
         
         function exportFilteredCases() {
             alert('Exporting filtered cases...');
