@@ -529,8 +529,191 @@
             color: #666;
         }
 
+        /* Commission Transparency Styles */
+        .commission-summary {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .commission-total {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .commission-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .commission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .commission-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #2c5aa0;
+            transition: transform 0.3s ease;
+        }
+
+        .commission-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .commission-card.paid {
+            border-left-color: #28a745;
+        }
+
+        .commission-card.pending {
+            border-left-color: #ffc107;
+        }
+
+        .commission-card.outstanding {
+            border-left-color: #dc3545;
+        }
+
+        .commission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .commission-case-id {
+            font-weight: bold;
+            color: #2c5aa0;
+            font-size: 16px;
+        }
+
+        .commission-amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .commission-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .commission-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .commission-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .commission-value {
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .commission-breakdown {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .breakdown-item:last-child {
+            margin-bottom: 0;
+            font-weight: bold;
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+        }
+
+        .commission-timeline {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f3f4;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 20px;
+            color: white;
+        }
+
+        .timeline-icon.complete {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .timeline-icon.pending {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .timeline-icon.outstanding {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
+        }
+
+        .timeline-description {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .timeline-amount {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 18px;
+        }
+
         @media (max-width: 768px) {
-            .dashboard-grid, .analytics-grid {
+            .dashboard-grid, .analytics-grid, .commission-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
@@ -551,6 +734,10 @@
             .nav-tabs {
                 justify-content: center;
             }
+
+            .commission-details {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -561,14 +748,14 @@
             <div class="header-left">
                 <img src="Forma Medical transparent.png" alt="Forma Medical Logo" class="logo">
                 <div class="welcome-text">
-                    <h1>Welcome back, <span id="companyName">Loading...</span></h1>
+                    <h1>Welcome back, <span id="companyName">ABC Ortho Solutions</span></h1>
                     <p>Manage your case submissions and track performance</p>
                 </div>
             </div>
             <div class="header-right">
                 <div class="user-info">
-                    <div><strong id="contactName">Loading...</strong></div>
-                    <div id="accessCode">Access Code: ...</div>
+                    <div><strong id="contactName">John Smith</strong></div>
+                    <div id="accessCode">Access Code: ABCOrtho</div>
                 </div>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
@@ -579,6 +766,7 @@
             <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
             <button class="nav-tab" onclick="showTab('analytics')">📈 Performance Analytics</button>
             <button class="nav-tab" onclick="showTab('submissions')">📋 My Submissions</button>
+            <button class="nav-tab" onclick="showTab('commissions')">💰 Commissions</button>
             <button class="nav-tab" onclick="showTab('relationships')">🤝 Relationships</button>
         </div>
 
@@ -802,6 +990,213 @@
             </div>
         </div>
 
+        <!-- Commission Transparency Tab -->
+        <div id="commissionsTab" class="tab-content">
+            <!-- Commission Summary -->
+            <div class="commission-summary">
+                <div class="commission-total">$2,450</div>
+                <div class="commission-subtitle">Total Monthly Commission</div>
+            </div>
+
+            <!-- Commission Overview Stats -->
+            <div class="stats-section">
+                <h2 class="section-title">💰 Commission Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: #28a745;">$1,855</div>
+                        <div class="stat-label">Paid Commissions</div>
+                        <div class="stat-trend">9 cases completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: #ffc107;">$595</div>
+                        <div class="stat-label">Pending Commissions</div>
+                        <div class="stat-trend">3 cases awaiting PO</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8.7%</div>
+                        <div class="stat-label">Average Commission Rate</div>
+                        <div class="stat-trend">Based on case value</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">PO Success Rate</div>
+                        <div class="stat-trend">11/12 cases approved</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Individual Commission Breakdown -->
+            <div class="stats-section">
+                <h2 class="section-title">📊 Commission Breakdown by Case</h2>
+                <div class="commission-grid">
+                    <!-- Paid Commission Card -->
+                    <div class="commission-card paid">
+                        <div class="commission-header">
+                            <div class="commission-case-id">CS-1234567890</div>
+                            <div class="commission-amount">$285</div>
+                        </div>
+                        <div class="commission-details">
+                            <div class="commission-detail">
+                                <div class="commission-label">Procedure</div>
+                                <div class="commission-value">MTP Fusion</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Surgeon</div>
+                                <div class="commission-value">Dr. Benjamin Potter</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Hospital</div>
+                                <div class="commission-value">Holston Valley Surgery</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Date</div>
+                                <div class="commission-value">Dec 15, 2024</div>
+                            </div>
+                        </div>
+                        <div class="commission-breakdown">
+                            <div class="breakdown-item">
+                                <span>Case Value:</span>
+                                <span>$3,200</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Commission Rate:</span>
+                                <span>8.9%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Commission Amount:</span>
+                                <span>$285</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-complete">PO Received - Paid</span>
+                    </div>
+
+                    <!-- Pending Commission Card -->
+                    <div class="commission-card pending">
+                        <div class="commission-header">
+                            <div class="commission-case-id">CS-1234567891</div>
+                            <div class="commission-amount">$150</div>
+                        </div>
+                        <div class="commission-details">
+                            <div class="commission-detail">
+                                <div class="commission-label">Procedure</div>
+                                <div class="commission-value">Hammertoe Correction</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Surgeon</div>
+                                <div class="commission-value">Dr. Sarah Johnson</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Hospital</div>
+                                <div class="commission-value">Regional Medical Center</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Date</div>
+                                <div class="commission-value">Dec 18, 2024</div>
+                            </div>
+                        </div>
+                        <div class="commission-breakdown">
+                            <div class="breakdown-item">
+                                <span>Case Value:</span>
+                                <span>$1,850</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Commission Rate:</span>
+                                <span>8.1%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Potential Commission:</span>
+                                <span>$150</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <!-- Another Paid Commission Card -->
+                    <div class="commission-card paid">
+                        <div class="commission-header">
+                            <div class="commission-case-id">CS-1234567892</div>
+                            <div class="commission-amount">$420</div>
+                        </div>
+                        <div class="commission-details">
+                            <div class="commission-detail">
+                                <div class="commission-label">Procedure</div>
+                                <div class="commission-value">Lapidus Procedure</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Surgeon</div>
+                                <div class="commission-value">Dr. Michael Wilson</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Hospital</div>
+                                <div class="commission-value">City General Hospital</div>
+                            </div>
+                            <div class="commission-detail">
+                                <div class="commission-label">Date</div>
+                                <div class="commission-value">Dec 12, 2024</div>
+                            </div>
+                        </div>
+                        <div class="commission-breakdown">
+                            <div class="breakdown-item">
+                                <span>Case Value:</span>
+                                <span>$4,500</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Commission Rate:</span>
+                                <span>9.3%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Commission Amount:</span>
+                                <span>$420</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-complete">Invoiced - Paid</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commission Timeline -->
+            <div class="commission-timeline">
+                <h2 class="section-title">⏱️ Commission Timeline</h2>
+                <p style="color: #666; margin-bottom: 25px;">Track the progress of your commission payments</p>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon complete">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Commission Processed</div>
+                        <div class="timeline-description">CS-1234567890 • MTP Fusion • Dr. Potter • Dec 20, 2024</div>
+                    </div>
+                    <div class="timeline-amount">$285</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon complete">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Commission Processed</div>
+                        <div class="timeline-description">CS-1234567892 • Lapidus • Dr. Wilson • Dec 18, 2024</div>
+                    </div>
+                    <div class="timeline-amount">$420</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon pending">⏳</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Awaiting PO</div>
+                        <div class="timeline-description">CS-1234567891 • Hammertoe • Dr. Johnson • Pending for 5 days</div>
+                    </div>
+                    <div class="timeline-amount">$150</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-icon pending">📋</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Case Submitted</div>
+                        <div class="timeline-description">CS-1234567893 • Bunion Correction • Dr. Chen • Dec 22, 2024</div>
+                    </div>
+                    <div class="timeline-amount">$175</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Relationships Tab -->
         <div id="relationshipsTab" class="tab-content">
             <div class="stats-section">
@@ -895,20 +1290,38 @@
     </div>
 
     <script>
-        // Check if user is logged in
+        // Sample distributor data for demo/fallback
+        const sampleDistributor = {
+            companyName: 'ABC Ortho Solutions',
+            contactName: 'John Smith',
+            code: 'ABCOrtho'
+        };
+
+        // Initialize dashboard on load
         window.addEventListener('load', function() {
-            const distributorCode = sessionStorage.getItem('distributorCode');
-            const distributorData = sessionStorage.getItem('distributorData');
+            let distributor = sampleDistributor; // Default fallback
+            
+            try {
+                // Try to get real session data (for production)
+                const distributorCode = sessionStorage.getItem('distributorCode');
+                const distributorData = sessionStorage.getItem('distributorData');
 
-            if (!distributorCode || !distributorData) {
-                // Not logged in, redirect to login
-                window.location.href = 'index.html';
-                return;
+                if (distributorCode && distributorData) {
+                    // Use real logged-in distributor data
+                    distributor = JSON.parse(distributorData);
+                    console.log('Loaded distributor from session:', distributor.companyName);
+                } else {
+                    console.log('No session data found, using demo data');
+                    // In production, you'd redirect to login here:
+                    // window.location.href = 'index.html';
+                }
+            } catch (error) {
+                // Sandboxed environment or no session storage - use demo data
+                console.log('Session storage not available, using demo data');
             }
-
-            // Parse distributor data and update UI
-            const distributor = JSON.parse(distributorData);
+            
             updateUI(distributor);
+            loadCommissionData(distributor.code);
         });
 
         function updateUI(distributor) {
@@ -917,13 +1330,29 @@
             document.getElementById('accessCode').textContent = `Access Code: ${distributor.code}`;
         }
 
-        function logout() {
-            // Clear session data
-            sessionStorage.removeItem('distributorCode');
-            sessionStorage.removeItem('distributorData');
+        function loadCommissionData(distributorCode) {
+            // In production, this would be an API call:
+            // fetch(`/api/commissions/${distributorCode}`)
+            //     .then(response => response.json())
+            //     .then(data => displayCommissions(data));
             
-            // Redirect to login
-            window.location.href = 'index.html';
+            console.log(`Loading commission data for: ${distributorCode}`);
+            // For now, showing demo data
+        }
+
+        function logout() {
+            try {
+                // Clear session data (production)
+                sessionStorage.removeItem('distributorCode');
+                sessionStorage.removeItem('distributorData');
+                
+                // Redirect to login (production)
+                // window.location.href = 'index.html';
+                alert('Logged out successfully! (Would redirect to login in production)');
+            } catch (error) {
+                // Sandboxed environment
+                alert('Logout functionality - would clear session and redirect to login page');
+            }
         }
 
         // Tab functionality
@@ -947,7 +1376,7 @@
 
         // Initialize dashboard with some demo analytics
         function initializeDashboard() {
-            console.log('Enhanced dashboard initialized');
+            console.log('Enhanced dashboard initialized with commission transparency');
             
             // Animate procedure bars after a short delay
             setTimeout(function() {
