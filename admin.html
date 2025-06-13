@@ -635,7 +635,235 @@
             font-size: 16px;
         }
 
-        @media (max-width: 768px) {
+        /* Case Management Styles */
+        .case-controls {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .search-section {
+            margin-bottom: 20px;
+        }
+
+        .search-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+        }
+
+        .cases-table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+
+        .cases-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .cases-table th,
+        .cases-table td {
+            padding: 15px 12px;
+            text-align: left;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+        }
+
+        .cases-table th {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-weight: bold;
+            color: #2c5aa0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cases-table tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .btn-small {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 5px;
+            transition: all 0.3s ease;
+            font-size: 12px;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+        }
+
+        .btn-small.btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-small.btn-success:hover {
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-small.btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #212529;
+        }
+
+        .btn-small.btn-warning:hover {
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .status-paid {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .pagination-section {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .pagination-info {
+            color: #666;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .pagination-numbers {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .btn-small.active {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+        }
+
+        /* Modal Enhancements */
+        .case-detail-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #2c5aa0;
+        }
+
+        .case-detail-title {
+            color: #2c5aa0;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .case-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .case-detail-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .case-detail-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .case-detail-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .upload-area {
+            border: 2px dashed #2c5aa0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            transition: all 0.3s ease;
+        }
+
+        .upload-area:hover {
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+            transform: translateY(-2px);
+        }
+
+        .upload-area.drag-over {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
             .form-row {
                 grid-template-columns: 1fr;
             }
@@ -707,6 +935,7 @@
             <!-- Navigation Tabs -->
             <div class="nav-tabs">
                 <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
+                <button class="nav-tab" onclick="showTab('cases')">📋 Case Management</button>
                 <button class="nav-tab" onclick="showTab('distributors')">👥 Distributors</button>
                 <button class="nav-tab" onclick="showTab('analytics')">📈 Analytics</button>
                 <button class="nav-tab" onclick="showTab('exports')">📤 Reports</button>
@@ -738,6 +967,165 @@
                     <div class="stat-card">
                         <div class="stat-value">15</div>
                         <div class="stat-label">Outstanding POs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Management Tab -->
+            <div id="casesTab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">📋 Case Management System</h2>
+                    
+                    <!-- Search and Filter Controls -->
+                    <div class="case-controls">
+                        <div class="search-section">
+                            <div class="search-group">
+                                <input type="text" id="caseSearch" placeholder="Search by Case ID, Surgeon, Hospital, or Patient..." class="search-input">
+                                <button class="btn" onclick="searchCases()">🔍 Search</button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <select id="statusFilter" onchange="filterCases()" class="filter-select">
+                                <option value="">All Status</option>
+                                <option value="submitted">Submitted</option>
+                                <option value="po-received">PO Received</option>
+                                <option value="invoiced">Invoiced</option>
+                                <option value="paid">Paid</option>
+                            </select>
+                            
+                            <select id="distributorFilter" onchange="filterCases()" class="filter-select">
+                                <option value="">All Distributors</option>
+                                <option value="ABCORTHO">ABC Ortho Solutions</option>
+                                <option value="MEDSUPPLY">MedSupply Pro</option>
+                                <option value="SURGSOL">Surgical Solutions Inc</option>
+                            </select>
+                            
+                            <select id="dateFilter" onchange="filterCases()" class="filter-select">
+                                <option value="30">Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                                <option value="180">Last 6 Months</option>
+                                <option value="365">Last Year</option>
+                                <option value="all">All Time</option>
+                            </select>
+                            
+                            <button class="btn btn-success" onclick="exportFilteredCases()">📤 Export Filtered</button>
+                        </div>
+                    </div>
+
+                    <!-- Cases Table -->
+                    <div class="cases-table-container">
+                        <table class="cases-table">
+                            <thead>
+                                <tr>
+                                    <th>Case ID</th>
+                                    <th>Date</th>
+                                    <th>Distributor</th>
+                                    <th>Surgeon</th>
+                                    <th>Hospital</th>
+                                    <th>Procedure</th>
+                                    <th>Total Value</th>
+                                    <th>Commission</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="casesTableBody">
+                                <tr>
+                                    <td><strong>CS-1234567890</strong></td>
+                                    <td>2024-12-15</td>
+                                    <td>ABC Ortho Solutions</td>
+                                    <td>Dr. Benjamin Potter</td>
+                                    <td>Holston Valley Surgery Center</td>
+                                    <td>MTP Fusion</td>
+                                    <td style="color: #2c5aa0; font-weight: bold;">$3,200</td>
+                                    <td style="color: #28a745; font-weight: bold;">$285</td>
+                                    <td><span class="status-badge status-paid">PO Received</span></td>
+                                    <td>
+                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567890')">👁️ View</button>
+                                        <button class="btn-small btn-success" onclick="uploadPO('CS-1234567890')">📎 PO</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CS-1234567891</strong></td>
+                                    <td>2024-12-18</td>
+                                    <td>ABC Ortho Solutions</td>
+                                    <td>Dr. Sarah Johnson</td>
+                                    <td>Regional Medical Center</td>
+                                    <td>Hammertoe</td>
+                                    <td style="color: #2c5aa0; font-weight: bold;">$1,850</td>
+                                    <td style="color: #ffc107; font-weight: bold;">$150</td>
+                                    <td><span class="status-badge status-outstanding">Awaiting PO</span></td>
+                                    <td>
+                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567891')">👁️ View</button>
+                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567891')">⬆️ Upload PO</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CS-1234567892</strong></td>
+                                    <td>2024-12-12</td>
+                                    <td>MedSupply Pro</td>
+                                    <td>Dr. Michael Wilson</td>
+                                    <td>City General Hospital</td>
+                                    <td>Lapidus</td>
+                                    <td style="color: #2c5aa0; font-weight: bold;">$4,500</td>
+                                    <td style="color: #28a745; font-weight: bold;">$420</td>
+                                    <td><span class="status-badge status-paid">Invoiced</span></td>
+                                    <td>
+                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567892')">👁️ View</button>
+                                        <button class="btn-small btn-success" onclick="uploadPO('CS-1234567892')">📎 PO</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CS-1234567893</strong></td>
+                                    <td>2024-12-20</td>
+                                    <td>Surgical Solutions Inc</td>
+                                    <td>Dr. Lisa Martinez</td>
+                                    <td>Valley Medical Center</td>
+                                    <td>Akin</td>
+                                    <td style="color: #2c5aa0; font-weight: bold;">$2,100</td>
+                                    <td style="color: #ffc107; font-weight: bold;">$180</td>
+                                    <td><span class="status-badge status-outstanding">Awaiting PO</span></td>
+                                    <td>
+                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567893')">👁️ View</button>
+                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567893')">⬆️ Upload PO</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CS-1234567894</strong></td>
+                                    <td>2024-12-22</td>
+                                    <td>ABC Ortho Solutions</td>
+                                    <td>Dr. Robert Chen</td>
+                                    <td>Metropolitan Hospital</td>
+                                    <td>MTP Fusion</td>
+                                    <td style="color: #2c5aa0; font-weight: bold;">$3,800</td>
+                                    <td style="color: #ffc107; font-weight: bold;">$340</td>
+                                    <td><span class="status-badge status-pending">Submitted</span></td>
+                                    <td>
+                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567894')">👁️ View</button>
+                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567894')">⬆️ Upload PO</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-section">
+                        <div class="pagination-info">
+                            Showing 1-5 of 47 cases
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="btn-small" onclick="previousPage()">← Previous</button>
+                            <span class="pagination-numbers">
+                                <button class="btn-small active">1</button>
+                                <button class="btn-small" onclick="goToPage(2)">2</button>
+                                <button class="btn-small" onclick="goToPage(3)">3</button>
+                                <span>...</span>
+                                <button class="btn-small" onclick="goToPage(10)">10</button>
+                            </span>
+                            <button class="btn-small" onclick="nextPage()">Next →</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1005,6 +1393,227 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PO Upload Modal -->
+    <div id="poUploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="poModalTitle">Upload Purchase Order</h2>
+                <button class="close-btn" onclick="closePOModal()">&times;</button>
+            </div>
+            
+            <div class="case-detail-section">
+                <div class="case-detail-title">📋 Case Information</div>
+                <div class="case-detail-grid">
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Case ID</div>
+                        <div class="case-detail-value" id="poModalCaseId">CS-1234567890</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Surgeon</div>
+                        <div class="case-detail-value" id="poModalSurgeon">Dr. Benjamin Potter</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Hospital</div>
+                        <div class="case-detail-value" id="poModalHospital">Holston Valley Surgery Center</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Total Value</div>
+                        <div class="case-detail-value" id="poModalValue">$3,200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="commission-section">
+                <h3>📎 Purchase Order Upload</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PO Number *</label>
+                        <input type="text" id="poNumber" required placeholder="e.g., PO-2024-001">
+                    </div>
+                    <div class="form-group">
+                        <label>PO Date *</label>
+                        <input type="date" id="poDate" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PO Amount</label>
+                        <input type="number" id="poAmount" step="0.01" placeholder="e.g., 3200.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <select id="paymentTerms">
+                            <option value="Net 30">Net 30</option>
+                            <option value="Net 45">Net 45</option>
+                            <option value="Net 60">Net 60</option>
+                            <option value="COD">COD</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload PO Document</label>
+                    <div class="upload-area" id="uploadArea">
+                        <div style="font-size: 48px; color: #2c5aa0; margin-bottom: 15px;">📎</div>
+                        <div style="font-size: 18px; font-weight: bold; color: #2c5aa0; margin-bottom: 10px;">
+                            Drop PO file here or click to browse
+                        </div>
+                        <div style="color: #666; font-size: 14px;">
+                            Supported formats: PDF, PNG, JPG, DOC, DOCX (Max 10MB)
+                        </div>
+                        <input type="file" id="poFileInput" style="display: none;" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx">
+                        <button type="button" class="btn" style="margin-top: 15px;" onclick="document.getElementById('poFileInput').click()">
+                            📁 Browse Files
+                        </button>
+                    </div>
+                    <div id="uploadedFiles" style="margin-top: 15px;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Notes (Optional)</label>
+                    <textarea id="poNotes" rows="3" placeholder="Any additional notes about this PO..." style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px;"></textarea>
+                </div>
+            </div>
+
+            <div style="margin-top: 35px; text-align: center;">
+                <button type="button" class="btn btn-success" onclick="savePO()" style="padding: 15px 30px; font-size: 18px;">
+                    💾 Save Purchase Order
+                </button>
+                <button type="button" class="btn" onclick="closePOModal()" style="padding: 15px 30px; font-size: 18px;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Case Details Modal -->
+    <div id="caseDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="caseModalTitle">Case Details</h2>
+                <button class="close-btn" onclick="closeCaseModal()">&times;</button>
+            </div>
+            
+            <div class="case-detail-section">
+                <div class="case-detail-title">📋 Case Information</div>
+                <div class="case-detail-grid">
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Case ID</div>
+                        <div class="case-detail-value" id="caseModalId">CS-1234567890</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Submission Date</div>
+                        <div class="case-detail-value" id="caseModalDate">2024-12-15</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Distributor</div>
+                        <div class="case-detail-value" id="caseModalDistributor">ABC Ortho Solutions</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Status</div>
+                        <div class="case-detail-value" id="caseModalStatus">PO Received</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-detail-section">
+                <div class="case-detail-title">🏥 Surgery Details</div>
+                <div class="case-detail-grid">
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Surgeon</div>
+                        <div class="case-detail-value" id="caseModalSurgeon">Dr. Benjamin Potter</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Hospital</div>
+                        <div class="case-detail-value" id="caseModalHospital">Holston Valley Surgery Center</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Procedure</div>
+                        <div class="case-detail-value" id="caseModalProcedure">MTP Fusion</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Patient ID</div>
+                        <div class="case-detail-value" id="caseModalPatientId">JP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-detail-section">
+                <div class="case-detail-title">💰 Financial Details</div>
+                <div class="case-detail-grid">
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Total Case Value</div>
+                        <div class="case-detail-value" id="caseModalTotal">$3,200</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Commission Rate</div>
+                        <div class="case-detail-value" id="caseModalRate">30%</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Commission Amount</div>
+                        <div class="case-detail-value" id="caseModalCommission">$285</div>
+                    </div>
+                    <div class="case-detail-item">
+                        <div class="case-detail-label">Payment Status</div>
+                        <div class="case-detail-value" id="caseModalPayment">Ready for Payment</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="case-detail-section">
+                <div class="case-detail-title">📦 Items Used</div>
+                <table class="commission-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Catalog Number</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Extended Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="caseModalItems">
+                        <tr>
+                            <td><strong>FCONMTP</strong></td>
+                            <td>MIS MTP Construct</td>
+                            <td>1</td>
+                            <td>$2,500.00</td>
+                            <td>$2,500.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6100.2014</strong></td>
+                            <td>1.4mm K-wires x 102mm (4") long</td>
+                            <td>3</td>
+                            <td>$25.00</td>
+                            <td>$75.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6102.002</strong></td>
+                            <td>2.6mm Drill, AO Quick Connect</td>
+                            <td>1</td>
+                            <td>$125.00</td>
+                            <td>$125.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 35px; text-align: center;">
+                <button type="button" class="btn btn-warning" onclick="uploadPOFromDetails()" style="padding: 15px 30px; font-size: 18px;">
+                    📎 Upload PO
+                </button>
+                <button type="button" class="btn btn-success" onclick="generateInvoice()" style="padding: 15px 30px; font-size: 18px;">
+                    📄 Generate Invoice
+                </button>
+                <button type="button" class="btn" onclick="closeCaseModal()" style="padding: 15px 30px; font-size: 18px;">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -1309,8 +1918,219 @@
             alert('Generating monthly report...\\n\\nThis will include:\\n- Commission summary\\n- PO status breakdown\\n- Distributor performance\\n- Outstanding items');
         }
         
-        function exportDistributors() {
-            alert('Exporting distributor data...');
+        // Case Management Functions
+        function searchCases() {
+            var searchTerm = document.getElementById('caseSearch').value;
+            console.log('Searching for:', searchTerm);
+            // Here you would implement actual search logic
+            alert('Searching for: "' + searchTerm + '"\\n\\nIn a real system, this would filter the cases table based on your search criteria.');
+        }
+        
+        function filterCases() {
+            var status = document.getElementById('statusFilter').value;
+            var distributor = document.getElementById('distributorFilter').value;
+            var dateRange = document.getElementById('dateFilter').value;
+            
+            console.log('Filtering:', {status: status, distributor: distributor, dateRange: dateRange});
+            // Here you would implement actual filtering logic
+        }
+        
+        function viewCaseDetails(caseId) {
+            // Populate modal with case data (in real app, fetch from database)
+            document.getElementById('caseModalId').textContent = caseId;
+            
+            if (caseId === 'CS-1234567890') {
+                document.getElementById('caseModalDate').textContent = '2024-12-15';
+                document.getElementById('caseModalDistributor').textContent = 'ABC Ortho Solutions';
+                document.getElementById('caseModalStatus').textContent = 'PO Received';
+                document.getElementById('caseModalSurgeon').textContent = 'Dr. Benjamin Potter';
+                document.getElementById('caseModalHospital').textContent = 'Holston Valley Surgery Center';
+                document.getElementById('caseModalProcedure').textContent = 'MTP Fusion';
+                document.getElementById('caseModalPatientId').textContent = 'JP';
+                document.getElementById('caseModalTotal').textContent = '$3,200';
+                document.getElementById('caseModalRate').textContent = '30%';
+                document.getElementById('caseModalCommission').textContent = '$285';
+                document.getElementById('caseModalPayment').textContent = 'Ready for Payment';
+            }
+            
+            document.getElementById('caseDetailsModal').style.display = 'block';
+        }
+        
+        function closeCaseModal() {
+            document.getElementById('caseDetailsModal').style.display = 'none';
+        }
+        
+        function uploadPO(caseId) {
+            // Populate PO modal with case data
+            document.getElementById('poModalCaseId').textContent = caseId;
+            
+            if (caseId === 'CS-1234567890') {
+                document.getElementById('poModalSurgeon').textContent = 'Dr. Benjamin Potter';
+                document.getElementById('poModalHospital').textContent = 'Holston Valley Surgery Center';
+                document.getElementById('poModalValue').textContent = '$3,200';
+                document.getElementById('poModalTitle').textContent = 'Upload Purchase Order - ' + caseId;
+            } else if (caseId === 'CS-1234567891') {
+                document.getElementById('poModalSurgeon').textContent = 'Dr. Sarah Johnson';
+                document.getElementById('poModalHospital').textContent = 'Regional Medical Center';
+                document.getElementById('poModalValue').textContent = '$1,850';
+                document.getElementById('poModalTitle').textContent = 'Upload Purchase Order - ' + caseId;
+            }
+            
+            // Set today's date as default
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('poDate').value = today;
+            
+            document.getElementById('poUploadModal').style.display = 'block';
+        }
+        
+        function uploadPOFromDetails() {
+            var caseId = document.getElementById('caseModalId').textContent;
+            closeCaseModal();
+            uploadPO(caseId);
+        }
+        
+        function closePOModal() {
+            document.getElementById('poUploadModal').style.display = 'none';
+            // Clear form
+            document.getElementById('poNumber').value = '';
+            document.getElementById('poDate').value = '';
+            document.getElementById('poAmount').value = '';
+            document.getElementById('poNotes').value = '';
+            document.getElementById('uploadedFiles').innerHTML = '';
+        }
+        
+        function savePO() {
+            var poNumber = document.getElementById('poNumber').value;
+            var poDate = document.getElementById('poDate').value;
+            var poAmount = document.getElementById('poAmount').value;
+            var caseId = document.getElementById('poModalCaseId').textContent;
+            
+            if (!poNumber || !poDate) {
+                alert('Please fill in required fields (PO Number and PO Date)');
+                return;
+            }
+            
+            // In real app, this would save to database and update case status
+            alert('Purchase Order saved successfully!\\n\\nCase: ' + caseId + '\\nPO Number: ' + poNumber + '\\nPO Date: ' + poDate + '\\nAmount: 
+        
+        window.onclick = function(event) {
+            var modal = document.getElementById('distributorModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html> + poAmount + '\\n\\nCase status updated to "PO Received"');
+            
+            closePOModal();
+            
+            // Update the case status in the table (in real app, refresh from database)
+            updateCaseStatus(caseId, 'PO Received');
+        }
+        
+        function updateCaseStatus(caseId, newStatus) {
+            // Find and update the status in the table
+            var rows = document.querySelectorAll('#casesTableBody tr');
+            rows.forEach(function(row) {
+                var firstCell = row.cells[0].textContent;
+                if (firstCell.includes(caseId)) {
+                    var statusCell = row.cells[8];
+                    var badgeClass = 'status-paid';
+                    if (newStatus === 'Awaiting PO') badgeClass = 'status-outstanding';
+                    if (newStatus === 'Submitted') badgeClass = 'status-pending';
+                    
+                    statusCell.innerHTML = '<span class="status-badge ' + badgeClass + '">' + newStatus + '</span>';
+                }
+            });
+        }
+        
+        function generateInvoice() {
+            var caseId = document.getElementById('caseModalId').textContent;
+            alert('Generating invoice for case: ' + caseId + '\\n\\nThis will create a professional invoice with:\\n- Case details\\n- Items used\\n- Commission calculations\\n- Hospital billing information');
+        }
+        
+        function exportFilteredCases() {
+            var statusFilter = document.getElementById('statusFilter').value || 'All';
+            var distributorFilter = document.getElementById('distributorFilter').value || 'All';
+            var dateFilter = document.getElementById('dateFilter').value;
+            
+            alert('Exporting filtered cases...\\n\\nFilters applied:\\n- Status: ' + statusFilter + '\\n- Distributor: ' + distributorFilter + '\\n- Date Range: ' + dateFilter + ' days\\n\\nExport will include all visible cases with current filters.');
+        }
+        
+        // Pagination functions
+        function previousPage() {
+            console.log('Previous page');
+            // Implement pagination logic
+        }
+        
+        function nextPage() {
+            console.log('Next page');
+            // Implement pagination logic
+        }
+        
+        function goToPage(pageNum) {
+            console.log('Go to page:', pageNum);
+            // Implement pagination logic
+        }
+        
+        // File upload handling
+        document.addEventListener('DOMContentLoaded', function() {
+            var uploadArea = document.getElementById('uploadArea');
+            var fileInput = document.getElementById('poFileInput');
+            
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                
+                var files = e.dataTransfer.files;
+                handleFileUpload(files);
+            });
+            
+            // Handle file input change
+            fileInput.addEventListener('change', function(e) {
+                handleFileUpload(e.target.files);
+            });
+            
+            // Click to upload
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+        });
+        
+        function handleFileUpload(files) {
+            var uploadedFilesDiv = document.getElementById('uploadedFiles');
+            uploadedFilesDiv.innerHTML = '';
+            
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var fileDiv = document.createElement('div');
+                fileDiv.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px;';
+                
+                fileDiv.innerHTML = `
+                    <div>
+                        <strong>${file.name}</strong> (${(file.size / 1024 / 1024).toFixed(2)} MB)
+                    </div>
+                    <button type="button" onclick="removeFile(this)" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Remove</button>
+                `;
+                
+                uploadedFilesDiv.appendChild(fileDiv);
+            }
+        }
+        
+        function removeFile(button) {
+            button.parentElement.remove();
         }
         
         window.onclick = function(event) {
