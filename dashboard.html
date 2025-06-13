@@ -1058,6 +1058,7 @@
                 </div>
             </div>
             <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">🌙</button>
                 <div class="user-info">
                     <div><strong id="contactName">John Smith</strong></div>
                     <div id="accessCode">Access Code: ABCOrtho</div>
@@ -1716,6 +1717,33 @@
     </div>
 
     <script>
+        // Dark mode functionality
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            
+            // Update theme toggle icon
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            
+            // Store preference (in production, this would use localStorage)
+            console.log(`Theme switched to: ${newTheme}`);
+        }
+
+        // Initialize theme
+        function initializeTheme() {
+            // In production, you'd check localStorage for saved preference
+            const savedTheme = 'light'; // Default to light mode
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (themeToggle) {
+                themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            }
+        }
+
         // Calendar functionality
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth();
@@ -1965,8 +1993,10 @@
                 console.log('Session storage not available, using demo data');
             }
             
+            initializeTheme();
             updateUI(distributor);
             loadCommissionData(distributor.code);
+            initializeDashboard();
         });
 
         function updateUI(distributor) {
