@@ -69,9 +69,6 @@
             border-color: #2c5aa0;
             box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
         }
-        select[multiple] {
-            height: 100px;
-        }
         .item-search-container {
             margin-bottom: 20px;
         }
@@ -240,15 +237,6 @@
             max-width: 100px;
             text-transform: uppercase;
         }
-        .error {
-            border-color: #dc3545 !important;
-            background-color: #f8d7da !important;
-        }
-        .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-        }
         .checkbox-group {
             display: flex; 
             flex-wrap: wrap; 
@@ -318,7 +306,7 @@
             
             <div class="form-row">
                 <div class="form-col">
-                    <label for="procedure">Procedure (select multiple if needed):</label>
+                    <label>Procedure(s):</label>
                     <div class="checkbox-group">
                         <label class="checkbox-label">
                             <input type="checkbox" name="procedure" value="Hammertoe">
@@ -416,7 +404,7 @@
                     </div>
                     <div class="extended-price">
                         <label for="extendedPrice">Extended Price:</label>
-                        <input type="number" 
+                        <input type="text" 
                                id="extendedPrice" 
                                class="extended-price"
                                readonly>
@@ -461,8 +449,7 @@
             {code: "6100.0027", name: "2.7mm Drill, AO Quick Connect, Cannulated"},
             {code: "6100.0002", name: "Burr, Shannon Reca Large 2.2mm"},
             {code: "6102.0005", name: "3x13mm Wedge burr"},
-            {code: "FCONMTP", name: "MIS MTP Construct"},
-            // Add your 100+ products here
+            {code: "FCONMTP", name: "MIS MTP Construct"}
         ];
 
         let addedItems = [];
@@ -483,7 +470,12 @@
             const price = parseFloat(itemPrice.value) || 0;
             const quantity = parseInt(itemQuantity.value) || 0;
             const extended = price * quantity;
-            extendedPrice.value = '
+            if (extended > 0) {
+                extendedPrice.value = '$' + extended.toFixed(2);
+            } else {
+                extendedPrice.value = '';
+            }
+        }
 
         itemPrice.addEventListener('input', calculateExtendedPrice);
         itemQuantity.addEventListener('input', calculateExtendedPrice);
@@ -497,9 +489,9 @@
             const totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
             const grandTotal = itemsSubtotal + totalConstructPrice;
 
-            document.getElementById('itemsSubtotal').textContent = `${itemsSubtotal.toFixed(2)}`;
-            document.getElementById('constructTotal').textContent = `${totalConstructPrice.toFixed(2)}`;
-            document.getElementById('grandTotal').textContent = `${grandTotal.toFixed(2)}`;
+            document.getElementById('itemsSubtotal').textContent = '$' + itemsSubtotal.toFixed(2);
+            document.getElementById('constructTotal').textContent = '$' + totalConstructPrice.toFixed(2);
+            document.getElementById('grandTotal').textContent = '$' + grandTotal.toFixed(2);
         }
 
         constructPrice1.addEventListener('input', updateTotals);
@@ -521,9 +513,9 @@
 
             if (matches.length > 0) {
                 suggestions.innerHTML = matches.map(product => 
-                    `<div class="suggestion-item" data-code="${product.code}" data-name="${product.name}">
-                        <strong>${product.code}</strong> - ${product.name}
-                    </div>`
+                    '<div class="suggestion-item" data-code="' + product.code + '" data-name="' + product.name + '">' +
+                        '<strong>' + product.code + '</strong> - ' + product.name +
+                    '</div>'
                 ).join('');
                 suggestions.style.display = 'block';
             } else {
@@ -537,7 +529,7 @@
                 const code = e.target.dataset.code;
                 const name = e.target.dataset.name;
                 
-                itemSearch.value = `${code} - ${name}`;
+                itemSearch.value = code + ' - ' + name;
                 itemSearch.dataset.selectedCode = code;
                 itemSearch.dataset.selectedName = name;
                 suggestions.style.display = 'none';
@@ -550,7 +542,7 @@
         addItemBtn.addEventListener('click', function() {
             const selectedCode = itemSearch.dataset.selectedCode;
             const selectedName = itemSearch.dataset.selectedName;
-            const price = parseFloat(itemPrice.value) || 0; // Default to 0 if no price entered
+            const price = parseFloat(itemPrice.value) || 0;
             const quantity = parseInt(itemQuantity.value);
 
             if (!selectedCode || !quantity) {
@@ -591,239 +583,15 @@
             }
 
             itemsList.innerHTML = addedItems.map((item, index) => 
-                `<div class="item-row">
-                    <div class="item-details">
-                        <strong>${item.code}</strong> - ${item.name}
-                    </div>
-                    <div class="item-pricing">
-                        Qty: ${item.quantity} × ${item.price.toFixed(2)} = ${(item.quantity * item.price).toFixed(2)}
-                    </div>
-                    <button type="button" class="remove-btn" onclick="removeItem(${index})">Remove</button>
-                </div>`
-            ).join('');
-        }
-
-        // Remove item
-        function removeItem(index) {
-            addedItems.splice(index, 1);
-            updateItemsList();
-            updateTotals();
-        }
-
-        // Patient ID validation
-        document.getElementById('patientId').addEventListener('input', function() {
-            this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '');
-        });
-
-        // Hide suggestions when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-wrapper')) {
-                suggestions.style.display = 'none';
-            }
-        });
-
-        // Form submission
-        document.getElementById('caseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (addedItems.length === 0) {
-                alert('Please add at least one item before submitting');
-                return;
-            }
-
-            // Get selected procedures
-            const procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
-            const selectedProcedures = Array.from(procedureCheckboxes).map(checkbox => checkbox.value);
-
-            // Get construct information
-            const constructs = [];
-            if (document.getElementById('constructCode1').value) {
-                constructs.push({
-                    code: document.getElementById('constructCode1').value,
-                    price: parseFloat(document.getElementById('constructPrice1').value) || 0
-                });
-            }
-            if (document.getElementById('constructCode2').value) {
-                constructs.push({
-                    code: document.getElementById('constructCode2').value,
-                    price: parseFloat(document.getElementById('constructPrice2').value) || 0
-                });
-            }
-            if (document.getElementById('constructCode3').value) {
-                constructs.push({
-                    code: document.getElementById('constructCode3').value,
-                    price: parseFloat(document.getElementById('constructPrice3').value) || 0
-                });
-            }
-
-            const totalConstructPrice = constructs.reduce((sum, construct) => sum + construct.price, 0);
-
-            const formData = {
-                distributor: document.getElementById('distributor').value,
-                hospital: document.getElementById('hospital').value,
-                surgeon: document.getElementById('surgeon').value,
-                salesRep: document.getElementById('salesRep').value,
-                procedures: selectedProcedures,
-                caseDate: document.getElementById('caseDate').value,
-                patientId: document.getElementById('patientId').value,
-                constructs: constructs,
-                items: addedItems,
-                totals: {
-                    itemsSubtotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                    constructPrice: totalConstructPrice,
-                    grandTotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + totalConstructPrice
-                }
-            };
-
-            // Send to your n8n webhook
-            fetch('YOUR_N8N_WEBHOOK_URL', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Case sheet submitted successfully!');
-                // Reset form
-                document.getElementById('caseForm').reset();
-                addedItems = [];
-                updateItemsList();
-                updateTotals();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error submitting case sheet. Please try again.');
-            });
-        });
-
-        // Allow Enter key to add items
-        itemQuantity.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addItemBtn.click();
-            }
-        });
-    </script>
-</body>
-</html> + extended.toFixed(2);
-        }
-
-        itemPrice.addEventListener('input', calculateExtendedPrice);
-        itemQuantity.addEventListener('input', calculateExtendedPrice);
-
-        // Calculate totals
-        function updateTotals() {
-            const itemsSubtotal = addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const constructTotal1 = parseFloat(constructPrice1.value) || 0;
-            const constructTotal2 = parseFloat(constructPrice2.value) || 0;
-            const constructTotal3 = parseFloat(constructPrice3.value) || 0;
-            const totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
-            const grandTotal = itemsSubtotal + totalConstructPrice;
-
-            document.getElementById('itemsSubtotal').textContent = `${itemsSubtotal.toFixed(2)}`;
-            document.getElementById('constructTotal').textContent = `${totalConstructPrice.toFixed(2)}`;
-            document.getElementById('grandTotal').textContent = `${grandTotal.toFixed(2)}`;
-        }
-
-        constructPrice1.addEventListener('input', updateTotals);
-        constructPrice2.addEventListener('input', updateTotals);
-        constructPrice3.addEventListener('input', updateTotals);
-
-        // Search functionality
-        itemSearch.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
-            if (query.length < 2) {
-                suggestions.style.display = 'none';
-                return;
-            }
-
-            const matches = products.filter(product => 
-                product.code.toLowerCase().includes(query) || 
-                product.name.toLowerCase().includes(query)
-            ).slice(0, 10);
-
-            if (matches.length > 0) {
-                suggestions.innerHTML = matches.map(product => 
-                    `<div class="suggestion-item" data-code="${product.code}" data-name="${product.name}">
-                        <strong>${product.code}</strong> - ${product.name}
-                    </div>`
-                ).join('');
-                suggestions.style.display = 'block';
-            } else {
-                suggestions.style.display = 'none';
-            }
-        });
-
-        // Handle suggestion clicks
-        suggestions.addEventListener('click', function(e) {
-            if (e.target.classList.contains('suggestion-item')) {
-                const code = e.target.dataset.code;
-                const name = e.target.dataset.name;
-                
-                itemSearch.value = `${code} - ${name}`;
-                itemSearch.dataset.selectedCode = code;
-                itemSearch.dataset.selectedName = name;
-                suggestions.style.display = 'none';
-                itemPrice.focus();
-                calculateExtendedPrice();
-            }
-        });
-
-        // Add item functionality
-        addItemBtn.addEventListener('click', function() {
-            const selectedCode = itemSearch.dataset.selectedCode;
-            const selectedName = itemSearch.dataset.selectedName;
-            const price = parseFloat(itemPrice.value) || 0; // Default to 0 if no price entered
-            const quantity = parseInt(itemQuantity.value);
-
-            if (!selectedCode || !quantity) {
-                alert('Please select an item and enter quantity');
-                return;
-            }
-
-            const existingItemIndex = addedItems.findIndex(item => item.code === selectedCode);
-            
-            if (existingItemIndex >= 0) {
-                addedItems[existingItemIndex].quantity += quantity;
-            } else {
-                addedItems.push({
-                    code: selectedCode,
-                    name: selectedName,
-                    quantity: quantity,
-                    price: price
-                });
-            }
-
-            updateItemsList();
-            updateTotals();
-            
-            // Clear inputs
-            itemSearch.value = '';
-            itemPrice.value = '';
-            itemQuantity.value = '';
-            extendedPrice.value = '';
-            delete itemSearch.dataset.selectedCode;
-            delete itemSearch.dataset.selectedName;
-        });
-
-        // Update items display
-        function updateItemsList() {
-            if (addedItems.length === 0) {
-                itemsList.innerHTML = '<p style="color: #666; text-align: center;">No items added yet. Search and add items above.</p>';
-                return;
-            }
-
-            itemsList.innerHTML = addedItems.map((item, index) => 
-                `<div class="item-row">
-                    <div class="item-details">
-                        <strong>${item.code}</strong> - ${item.name}
-                    </div>
-                    <div class="item-pricing">
-                        Qty: ${item.quantity} × ${item.price.toFixed(2)} = ${(item.quantity * item.price).toFixed(2)}
-                    </div>
-                    <button type="button" class="remove-btn" onclick="removeItem(${index})">Remove</button>
-                </div>`
+                '<div class="item-row">' +
+                    '<div class="item-details">' +
+                        '<strong>' + item.code + '</strong> - ' + item.name +
+                    '</div>' +
+                    '<div class="item-pricing">' +
+                        'Qty: ' + item.quantity + ' × $' + item.price.toFixed(2) + ' = $' + (item.quantity * item.price).toFixed(2) +
+                    '</div>' +
+                    '<button type="button" class="remove-btn" onclick="removeItem(' + index + ')">Remove</button>' +
+                '</div>'
             ).join('');
         }
 
