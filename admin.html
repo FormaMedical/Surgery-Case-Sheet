@@ -1,32 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forma Medical - Admin Portal</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
             min-height: 100vh;
-            color: #333;
         }
-
-        /* Login Screen */
+        
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 80vh;
         }
-
+        
         .login-card {
             background: white;
             padding: 40px;
@@ -36,206 +27,151 @@
             max-width: 400px;
             text-align: center;
         }
-
+        
         .logo {
             width: 120px;
             height: auto;
             margin-bottom: 30px;
         }
-
+        
         .login-title {
             color: #2c5aa0;
             font-size: 28px;
-            font-weight: 700;
+            font-weight: bold;
             margin-bottom: 10px;
         }
-
+        
         .login-subtitle {
             color: #666;
             margin-bottom: 30px;
-            font-size: 16px;
         }
-
+        
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
-
+        
         .form-group label {
             display: block;
             margin-bottom: 8px;
             color: #2c5aa0;
-            font-weight: 600;
+            font-weight: bold;
         }
-
+        
         .form-group input {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e1e5e9;
             border-radius: 8px;
             font-size: 16px;
-            transition: border-color 0.3s;
+            box-sizing: border-box;
         }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #2c5aa0;
-        }
-
+        
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
+            background: #2c5aa0;
             color: white;
             border: none;
             padding: 15px;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
         }
-
+        
         .login-btn:hover {
-            transform: translateY(-2px);
+            background: #1e4080;
         }
-
+        
         .error-message {
-            color: #dc3545;
+            color: red;
             margin-top: 15px;
-            font-size: 14px;
             display: none;
         }
-
+        
         .success-message {
-            color: #28a745;
+            color: green;
             margin-top: 15px;
-            font-size: 14px;
             display: none;
         }
-
-        /* Admin Dashboard */
+        
         .admin-dashboard {
             display: none;
-            padding: 20px;
-        }
-
-        .dashboard-header {
             background: white;
             padding: 30px;
             border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            margin: 0 auto;
         }
-
+        
         .dashboard-title {
             color: #2c5aa0;
             font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
         }
-
-        .dashboard-subtitle {
-            color: #666;
-            font-size: 18px;
-        }
-
+        
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
+        
         .stat-card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 36px;
-            font-weight: 700;
-            color: #2c5aa0;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 14px;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .management-section {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            color: #2c5aa0;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #2c5aa0;
-            padding-bottom: 10px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            transition: transform 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: #dc3545;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        .distributor-list {
-            margin-top: 20px;
-        }
-
-        .distributor-item {
             background: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
-            margin-bottom: 15px;
+            text-align: center;
             border-left: 4px solid #2c5aa0;
         }
-
-        .distributor-name {
-            font-weight: 700;
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
             color: #2c5aa0;
-            font-size: 18px;
             margin-bottom: 5px;
         }
-
-        .distributor-details {
+        
+        .stat-label {
             color: #666;
             font-size: 14px;
         }
-
+        
+        .section-title {
+            color: #2c5aa0;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2c5aa0;
+            padding-bottom: 10px;
+        }
+        
+        .btn {
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background: #1e4080;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
         .logout-btn {
             position: fixed;
             top: 20px;
@@ -246,12 +182,24 @@
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
+        }
+        
+        .distributor-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #2c5aa0;
+        }
+        
+        .distributor-name {
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <div class="login-card">
             <img src="Forma Medical transparent.png" alt="Forma Medical" class="logo">
@@ -259,37 +207,27 @@
             <p class="login-subtitle">Forma Medical Management System</p>
             
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username">
+                <label>Username</label>
+                <input type="text" id="username">
             </div>
             
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password">
+                <label>Password</label>
+                <input type="password" id="password">
             </div>
             
-            <button class="login-btn" onclick="attemptLogin()">Access Admin Portal</button>
+            <button class="login-btn" onclick="doLogin()">Access Admin Portal</button>
             
-            <div id="errorMessage" class="error-message">
-                Invalid username or password. Please try again.
-            </div>
-            
-            <div id="successMessage" class="success-message">
-                Login successful! Loading dashboard...
-            </div>
+            <div id="errorMsg" class="error-message">Invalid username or password</div>
+            <div id="successMsg" class="success-message">Login successful!</div>
         </div>
     </div>
 
-    <!-- Admin Dashboard -->
     <div id="adminDashboard" class="admin-dashboard">
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <button class="logout-btn" onclick="doLogout()">Logout</button>
         
-        <div class="dashboard-header">
-            <h1 class="dashboard-title">Admin Dashboard</h1>
-            <p class="dashboard-subtitle">Forma Medical Management System</p>
-        </div>
-
-        <!-- Stats -->
+        <h1 class="dashboard-title">Admin Dashboard</h1>
+        
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-value">3</div>
@@ -309,143 +247,93 @@
             </div>
         </div>
 
-        <!-- Distributor Management -->
-        <div class="management-section">
-            <h2 class="section-title">Distributor Management</h2>
-            <button class="btn" onclick="addDistributor()">Add New Distributor</button>
-            <button class="btn btn-success" onclick="exportData()">Export Data</button>
+        <h2 class="section-title">Distributor Management</h2>
+        <button class="btn" onclick="addNew()">Add New Distributor</button>
+        <button class="btn btn-success" onclick="exportData()">Export Data</button>
+        
+        <div style="margin-top: 20px;">
+            <div class="distributor-item">
+                <div class="distributor-name">ABC Ortho Solutions</div>
+                <div>Code: ABCORTHO | Contact: John Smith | Rate: 30% (+40% new surgeons)</div>
+            </div>
             
-            <div class="distributor-list">
-                <div class="distributor-item">
-                    <div class="distributor-name">ABC Ortho Solutions</div>
-                    <div class="distributor-details">
-                        Access Code: ABCORTHO | Contact: John Smith | Base Rate: 30% (+40% new surgeons)
-                    </div>
-                </div>
-                
-                <div class="distributor-item">
-                    <div class="distributor-name">MedSupply Pro</div>
-                    <div class="distributor-details">
-                        Access Code: MEDSUPPLY | Contact: Sarah Johnson | Base Rate: 30% Hammertoe/Akin, 35% MTP
-                    </div>
-                </div>
-                
-                <div class="distributor-item">
-                    <div class="distributor-name">Surgical Solutions Inc</div>
-                    <div class="distributor-details">
-                        Access Code: SURGSOL | Contact: Mike Wilson | Base Rate: 30% (Dr. Wilson immediate payout)
-                    </div>
-                </div>
+            <div class="distributor-item">
+                <div class="distributor-name">MedSupply Pro</div>
+                <div>Code: MEDSUPPLY | Contact: Sarah Johnson | Rate: 30% Hammertoe, 35% MTP</div>
+            </div>
+            
+            <div class="distributor-item">
+                <div class="distributor-name">Surgical Solutions Inc</div>
+                <div>Code: SURGSOL | Contact: Mike Wilson | Rate: 30% (Dr. Wilson immediate payout)</div>
             </div>
         </div>
 
-        <!-- Commission Settings -->
-        <div class="management-section">
-            <h2 class="section-title">Commission Settings</h2>
-            <p style="margin-bottom: 20px; color: #666;">Global commission rates and procedure-specific settings</p>
-            
-            <div style="margin-bottom: 15px;">
-                <label style="display: inline-block; width: 200px; font-weight: 600; color: #2c5aa0;">Default Base Rate:</label>
-                <input type="number" value="30" min="0" max="100" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"> %
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <label style="display: inline-block; width: 200px; font-weight: 600; color: #2c5aa0;">Hammertoe Rate:</label>
-                <input type="number" value="30" min="0" max="100" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"> %
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <label style="display: inline-block; width: 200px; font-weight: 600; color: #2c5aa0;">MTP Rate:</label>
-                <input type="number" value="35" min="0" max="100" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"> %
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <label style="display: inline-block; width: 200px; font-weight: 600; color: #2c5aa0;">New Surgeon Bonus:</label>
-                <input type="number" value="10" min="0" max="50" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;"> %
-            </div>
-            
-            <button class="btn btn-success" onclick="saveSettings()">Save Settings</button>
+        <h2 class="section-title">Commission Settings</h2>
+        <div style="margin-bottom: 15px;">
+            <label style="display: inline-block; width: 150px;">Default Rate:</label>
+            <input type="number" value="30" style="padding: 5px;"> %
         </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: inline-block; width: 150px;">MTP Rate:</label>
+            <input type="number" value="35" style="padding: 5px;"> %
+        </div>
+        <button class="btn btn-success" onclick="saveSettings()">Save Settings</button>
     </div>
 
     <script>
-        console.log('Admin portal script loaded');
-
-        function attemptLogin() {
-            console.log('Login attempt started');
+        console.log('Script loaded successfully');
+        
+        function doLogin() {
+            console.log('Login function called');
             
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            var errorDiv = document.getElementById('errorMessage');
-            var successDiv = document.getElementById('successMessage');
+            var user = document.getElementById('username').value;
+            var pass = document.getElementById('password').value;
             
-            console.log('Username:', username);
-            console.log('Password:', password);
+            console.log('Username: ' + user);
+            console.log('Password: ' + pass);
             
-            // Hide messages
+            var errorDiv = document.getElementById('errorMsg');
+            var successDiv = document.getElementById('successMsg');
+            
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
             
-            // Check credentials
-            if ((username === 'admin' && password === 'forma2025') || 
-                (username === 'formamedical' && password === 'admin123')) {
-                
-                console.log('Login successful');
+            if ((user === 'admin' && pass === 'forma2025') || (user === 'formamedical' && pass === 'admin123')) {
+                console.log('Login SUCCESS');
                 successDiv.style.display = 'block';
                 
-                // Show success message briefly then redirect
                 setTimeout(function() {
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('adminDashboard').style.display = 'block';
-                    sessionStorage.setItem('adminLoggedIn', 'true');
                 }, 1000);
                 
             } else {
-                console.log('Login failed');
+                console.log('Login FAILED');
                 errorDiv.style.display = 'block';
-                document.getElementById('password').value = '';
             }
         }
-
-        function logout() {
-            console.log('Logging out');
-            sessionStorage.removeItem('adminLoggedIn');
+        
+        function doLogout() {
+            console.log('Logout called');
             document.getElementById('loginScreen').style.display = 'flex';
             document.getElementById('adminDashboard').style.display = 'none';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
         }
-
-        function addDistributor() {
-            alert('Add Distributor functionality - Coming soon!');
+        
+        function addNew() {
+            alert('Add New Distributor - Coming soon!');
         }
-
+        
         function exportData() {
-            alert('Exporting distributor data...');
+            alert('Export Data - Coming soon!');
         }
-
+        
         function saveSettings() {
-            alert('Settings saved successfully!');
+            alert('Settings saved!');
         }
-
-        // Check if already logged in when page loads
-        window.addEventListener('load', function() {
-            console.log('Page loaded, checking session');
-            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-                console.log('Already logged in, showing dashboard');
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminDashboard').style.display = 'block';
-            }
-        });
-
-        // Allow Enter key to submit login
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
-                attemptLogin();
-            }
-        });
     </script>
 </body>
 </html>
