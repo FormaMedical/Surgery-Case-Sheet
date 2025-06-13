@@ -89,9 +89,6 @@
         .form-col {
             flex: 1;
         }
-        .form-col-small {
-            flex: 0.3;
-        }
         label {
             display: block;
             margin-bottom: 5px;
@@ -112,6 +109,57 @@
             border-color: #2c5aa0;
             box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
         }
+        .checkbox-group {
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+        }
+        .checkbox-label {
+            display: flex; 
+            align-items: center; 
+            font-weight: normal; 
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            color: #2c5aa0;
+        }
+        .checkbox-label:hover {
+            background: white;
+            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.1);
+        }
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px; 
+            width: auto;
+            transform: scale(1.2);
+            accent-color: #2c5aa0;
+        }
+        .patient-id {
+            max-width: 100px;
+            text-transform: uppercase;
+        }
+        .construct-section {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #ffeaa7;
+            margin: 20px 0;
+        }
+        .construct-section h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+        .section-title {
+            color: #2c5aa0;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
         .item-search-container {
             margin-bottom: 20px;
         }
@@ -123,9 +171,6 @@
             gap: 10px;
             align-items: flex-end;
             margin-bottom: 10px;
-        }
-        .search-input {
-            flex: 2;
         }
         .price-input, .quantity-input {
             flex: 0.8;
@@ -192,12 +237,6 @@
             border-bottom: 1px solid #e1e8ed;
             transition: background-color 0.2s ease;
         }
-        .item-row:hover {
-            background: rgba(44, 90, 160, 0.05);
-            border-radius: 6px;
-            margin: 0 -10px;
-            padding: 12px 10px;
-        }
         .item-details {
             flex: 2;
             color: #2c5aa0;
@@ -245,17 +284,6 @@
             padding-top: 15px;
             color: #1e3d6f;
         }
-        .construct-section {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            padding: 20px;
-            border-radius: 8px;
-            border: 2px solid #ffeaa7;
-            margin: 20px 0;
-        }
-        .construct-section h3 {
-            color: #856404;
-            margin-top: 0;
-        }
         .submit-btn {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
@@ -275,46 +303,6 @@
             background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
-        }
-        .patient-id {
-            max-width: 100px;
-            text-transform: uppercase;
-        }
-        .checkbox-group {
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 15px; 
-            margin-top: 10px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 2px solid #e1e8ed;
-        }
-        .checkbox-label {
-            display: flex; 
-            align-items: center; 
-            font-weight: normal; 
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            color: #2c5aa0;
-        }
-        .checkbox-label:hover {
-            background: white;
-            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.1);
-        }
-        .checkbox-label input[type="checkbox"] {
-            margin-right: 8px; 
-            width: auto;
-            transform: scale(1.2);
-            accent-color: #2c5aa0;
-        }
-        .section-title {
-            color: #2c5aa0;
-            border-bottom: 2px solid #e1e8ed;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -492,61 +480,14 @@
     </div>
 
     <script>
-        // Global variables for distributor info
-        let distributorInfo = null;
-
-        // Check authentication and load distributor info (immediate execution)
-        function initializeDistributorInfo() {
-            const distributorCode = sessionStorage.getItem('distributorCode');
-            const distributorData = sessionStorage.getItem('distributorData');
-
-            console.log('Checking session data...');
-            console.log('Distributor Code:', distributorCode);
-            console.log('Distributor Data:', distributorData);
-
-            if (!distributorCode || !distributorData) {
-                console.log('No session data found, redirecting to login');
-                alert('Please log in to access this page.');
-                window.location.href = 'index.html';
-                return;
-            }
-
-            try {
-                // Parse distributor data and update UI
-                const distributor = JSON.parse(distributorData);
-                console.log('Parsed distributor:', distributor);
-                
-                // Update UI elements immediately
-                const companyElement = document.getElementById('distributorCompany');
-                const contactElement = document.getElementById('distributorContact');
-                
-                if (companyElement && contactElement) {
-                    companyElement.textContent = distributor.companyName;
-                    contactElement.textContent = `Contact: ${distributor.contactName}`;
-                    console.log('UI updated successfully');
-                } else {
-                    console.log('Elements not found, retrying...');
-                    setTimeout(initializeDistributorInfo, 100);
-                    return;
-                }
-                
-                // Store globally for form submission
-                distributorInfo = distributor;
-            } catch (error) {
-                console.error('Error parsing distributor data:', error);
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Run immediately when script loads
-        document.addEventListener('DOMContentLoaded', initializeDistributorInfo);
+        console.log('Script starting...');
         
-        // Fallback for older browsers
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeDistributorInfo);
-        } else {
-            initializeDistributorInfo();
-        }
+        // Global variables
+        var distributorInfo = null;
+        var addedItems = [];
+
+        // Product database
+        var products = [
             {code: "6100.2014", name: "1.4mm K-wires x 102mm (4\") long"},
             {code: "6102.002", name: "2.6mm Drill, AO Quick Connect"},
             {code: "6100.0027", name: "2.7mm Drill, AO Quick Connect, Cannulated"},
@@ -555,26 +496,47 @@
             {code: "FCONMTP", name: "MIS MTP Construct"}
         ];
 
-        let addedItems = [];
+        // Initialize when page loads
+        window.onload = function() {
+            console.log('Window loaded, checking session...');
+            
+            var distributorCode = sessionStorage.getItem('distributorCode');
+            var distributorData = sessionStorage.getItem('distributorData');
+            
+            console.log('Code:', distributorCode);
+            console.log('Data:', distributorData);
+            
+            if (!distributorCode || !distributorData) {
+                alert('Please log in to access this page.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            var distributor = JSON.parse(distributorData);
+            document.getElementById('distributorCompany').textContent = distributor.companyName;
+            document.getElementById('distributorContact').textContent = 'Contact: ' + distributor.contactName;
+            distributorInfo = distributor;
+            
+            console.log('Distributor info loaded:', distributor);
+        };
 
-        let addedItems = [];
-        
-        const itemSearch = document.getElementById('itemSearch');
-        const suggestions = document.getElementById('suggestions');
-        const itemPrice = document.getElementById('itemPrice');
-        const itemQuantity = document.getElementById('itemQuantity');
-        const extendedPrice = document.getElementById('extendedPrice');
-        const addItemBtn = document.getElementById('addItem');
-        const itemsList = document.getElementById('itemsList');
-        const constructPrice1 = document.getElementById('constructPrice1');
-        const constructPrice2 = document.getElementById('constructPrice2');
-        const constructPrice3 = document.getElementById('constructPrice3');
+        // Get DOM elements
+        var itemSearch = document.getElementById('itemSearch');
+        var suggestions = document.getElementById('suggestions');
+        var itemPrice = document.getElementById('itemPrice');
+        var itemQuantity = document.getElementById('itemQuantity');
+        var extendedPrice = document.getElementById('extendedPrice');
+        var addItemBtn = document.getElementById('addItem');
+        var itemsList = document.getElementById('itemsList');
+        var constructPrice1 = document.getElementById('constructPrice1');
+        var constructPrice2 = document.getElementById('constructPrice2');
+        var constructPrice3 = document.getElementById('constructPrice3');
 
-        // Calculate extended price when price or quantity changes
+        // Calculate extended price
         function calculateExtendedPrice() {
-            const price = parseFloat(itemPrice.value) || 0;
-            const quantity = parseInt(itemQuantity.value) || 0;
-            const extended = price * quantity;
+            var price = parseFloat(itemPrice.value) || 0;
+            var quantity = parseInt(itemQuantity.value) || 0;
+            var extended = price * quantity;
             if (extended > 0) {
                 extendedPrice.value = '$' + extended.toFixed(2);
             } else {
@@ -582,46 +544,49 @@
             }
         }
 
-        itemPrice.addEventListener('input', calculateExtendedPrice);
-        itemQuantity.addEventListener('input', calculateExtendedPrice);
-
-        // Calculate totals
+        // Update totals
         function updateTotals() {
-            const itemsSubtotal = addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const constructTotal1 = parseFloat(constructPrice1.value) || 0;
-            const constructTotal2 = parseFloat(constructPrice2.value) || 0;
-            const constructTotal3 = parseFloat(constructPrice3.value) || 0;
-            const totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
-            const grandTotal = itemsSubtotal + totalConstructPrice;
+            var itemsSubtotal = 0;
+            for (var i = 0; i < addedItems.length; i++) {
+                itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
+            }
+            
+            var constructTotal1 = parseFloat(constructPrice1.value) || 0;
+            var constructTotal2 = parseFloat(constructPrice2.value) || 0;
+            var constructTotal3 = parseFloat(constructPrice3.value) || 0;
+            var totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
+            var grandTotal = itemsSubtotal + totalConstructPrice;
 
             document.getElementById('itemsSubtotal').textContent = '$' + itemsSubtotal.toFixed(2);
             document.getElementById('constructTotal').textContent = '$' + totalConstructPrice.toFixed(2);
             document.getElementById('grandTotal').textContent = '$' + grandTotal.toFixed(2);
         }
 
-        constructPrice1.addEventListener('input', updateTotals);
-        constructPrice2.addEventListener('input', updateTotals);
-        constructPrice3.addEventListener('input', updateTotals);
-
         // Search functionality
         itemSearch.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
+            var query = this.value.toLowerCase();
             if (query.length < 2) {
                 suggestions.style.display = 'none';
                 return;
             }
 
-            const matches = products.filter(product => 
-                product.code.toLowerCase().includes(query) || 
-                product.name.toLowerCase().includes(query)
-            ).slice(0, 10);
+            var matches = [];
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].code.toLowerCase().indexOf(query) !== -1 || 
+                    products[i].name.toLowerCase().indexOf(query) !== -1) {
+                    matches.push(products[i]);
+                }
+            }
+            matches = matches.slice(0, 10);
 
             if (matches.length > 0) {
-                suggestions.innerHTML = matches.map(product => 
-                    '<div class="suggestion-item" data-code="' + product.code + '" data-name="' + product.name + '">' +
-                        '<strong>' + product.code + '</strong> - ' + product.name +
-                    '</div>'
-                ).join('');
+                var html = '';
+                for (var i = 0; i < matches.length; i++) {
+                    html += '<div class="suggestion-item" data-code="' + matches[i].code + '" data-name="' + matches[i].name + '">';
+                    html += '<strong>' + matches[i].code + '</strong> - ' + matches[i].name;
+                    html += '</div>';
+                }
+                suggestions.innerHTML = html;
                 suggestions.style.display = 'block';
             } else {
                 suggestions.style.display = 'none';
@@ -631,31 +596,37 @@
         // Handle suggestion clicks
         suggestions.addEventListener('click', function(e) {
             if (e.target.classList.contains('suggestion-item')) {
-                const code = e.target.dataset.code;
-                const name = e.target.dataset.name;
+                var code = e.target.getAttribute('data-code');
+                var name = e.target.getAttribute('data-name');
                 
                 itemSearch.value = code + ' - ' + name;
-                itemSearch.dataset.selectedCode = code;
-                itemSearch.dataset.selectedName = name;
+                itemSearch.setAttribute('data-selected-code', code);
+                itemSearch.setAttribute('data-selected-name', name);
                 suggestions.style.display = 'none';
                 itemPrice.focus();
                 calculateExtendedPrice();
             }
         });
 
-        // Add item functionality
+        // Add item
         addItemBtn.addEventListener('click', function() {
-            const selectedCode = itemSearch.dataset.selectedCode;
-            const selectedName = itemSearch.dataset.selectedName;
-            const price = parseFloat(itemPrice.value) || 0;
-            const quantity = parseInt(itemQuantity.value);
+            var selectedCode = itemSearch.getAttribute('data-selected-code');
+            var selectedName = itemSearch.getAttribute('data-selected-name');
+            var price = parseFloat(itemPrice.value) || 0;
+            var quantity = parseInt(itemQuantity.value);
 
             if (!selectedCode || !quantity) {
                 alert('Please select an item and enter quantity');
                 return;
             }
 
-            const existingItemIndex = addedItems.findIndex(item => item.code === selectedCode);
+            var existingItemIndex = -1;
+            for (var i = 0; i < addedItems.length; i++) {
+                if (addedItems[i].code === selectedCode) {
+                    existingItemIndex = i;
+                    break;
+                }
+            }
             
             if (existingItemIndex >= 0) {
                 addedItems[existingItemIndex].quantity += quantity;
@@ -676,28 +647,31 @@
             itemPrice.value = '';
             itemQuantity.value = '';
             extendedPrice.value = '';
-            delete itemSearch.dataset.selectedCode;
-            delete itemSearch.dataset.selectedName;
+            itemSearch.removeAttribute('data-selected-code');
+            itemSearch.removeAttribute('data-selected-name');
         });
 
-        // Update items display
+        // Update items list
         function updateItemsList() {
             if (addedItems.length === 0) {
                 itemsList.innerHTML = '<p style="color: #666; text-align: center;">No items added yet. Search and add items above.</p>';
                 return;
             }
 
-            itemsList.innerHTML = addedItems.map((item, index) => 
-                '<div class="item-row">' +
-                    '<div class="item-details">' +
-                        '<strong>' + item.code + '</strong> - ' + item.name +
-                    '</div>' +
-                    '<div class="item-pricing">' +
-                        'Qty: ' + item.quantity + ' × $' + item.price.toFixed(2) + ' = $' + (item.quantity * item.price).toFixed(2) +
-                    '</div>' +
-                    '<button type="button" class="remove-btn" onclick="removeItem(' + index + ')">Remove</button>' +
-                '</div>'
-            ).join('');
+            var html = '';
+            for (var i = 0; i < addedItems.length; i++) {
+                var item = addedItems[i];
+                html += '<div class="item-row">';
+                html += '<div class="item-details">';
+                html += '<strong>' + item.code + '</strong> - ' + item.name;
+                html += '</div>';
+                html += '<div class="item-pricing">';
+                html += 'Qty: ' + item.quantity + ' × $' + item.price.toFixed(2) + ' = $' + (item.quantity * item.price).toFixed(2);
+                html += '</div>';
+                html += '<button type="button" class="remove-btn" onclick="removeItem(' + i + ')">Remove</button>';
+                html += '</div>';
+            }
+            itemsList.innerHTML = html;
         }
 
         // Remove item
@@ -706,6 +680,13 @@
             updateItemsList();
             updateTotals();
         }
+
+        // Event listeners
+        itemPrice.addEventListener('input', calculateExtendedPrice);
+        itemQuantity.addEventListener('input', calculateExtendedPrice);
+        constructPrice1.addEventListener('input', updateTotals);
+        constructPrice2.addEventListener('input', updateTotals);
+        constructPrice3.addEventListener('input', updateTotals);
 
         // Patient ID validation
         document.getElementById('patientId').addEventListener('input', function() {
@@ -729,11 +710,14 @@
             }
 
             // Get selected procedures
-            const procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
-            const selectedProcedures = Array.from(procedureCheckboxes).map(checkbox => checkbox.value);
+            var procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
+            var selectedProcedures = [];
+            for (var i = 0; i < procedureCheckboxes.length; i++) {
+                selectedProcedures.push(procedureCheckboxes[i].value);
+            }
 
             // Get construct information
-            const constructs = [];
+            var constructs = [];
             if (document.getElementById('constructCode1').value) {
                 constructs.push({
                     code: document.getElementById('constructCode1').value,
@@ -753,9 +737,17 @@
                 });
             }
 
-            const totalConstructPrice = constructs.reduce((sum, construct) => sum + construct.price, 0);
+            var totalConstructPrice = 0;
+            for (var i = 0; i < constructs.length; i++) {
+                totalConstructPrice += constructs[i].price;
+            }
 
-            const formData = {
+            var itemsSubtotal = 0;
+            for (var i = 0; i < addedItems.length; i++) {
+                itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
+            }
+
+            var formData = {
                 distributor: distributorInfo.companyName,
                 distributorCode: distributorInfo.code,
                 distributorContact: distributorInfo.contactName,
@@ -768,15 +760,15 @@
                 constructs: constructs,
                 items: addedItems,
                 totals: {
-                    itemsSubtotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                    itemsSubtotal: itemsSubtotal,
                     constructPrice: totalConstructPrice,
-                    grandTotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + totalConstructPrice
+                    grandTotal: itemsSubtotal + totalConstructPrice
                 },
                 submissionDate: new Date().toISOString(),
                 status: 'submitted'
             };
 
-            // Send to your n8n webhook
+            // Send to webhook
             fetch('YOUR_N8N_WEBHOOK_URL', {
                 method: 'POST',
                 headers: {
@@ -784,30 +776,33 @@
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                // Store submission locally for demo purposes
-                const submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
-                const submissionId = 'CS-' + Date.now();
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                // Store submission locally for demo
+                var submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+                var submissionId = 'CS-' + Date.now();
                 formData.id = submissionId;
                 submissions.push(formData);
                 localStorage.setItem('submissions', JSON.stringify(submissions));
 
                 alert('Case sheet submitted successfully! Submission ID: ' + submissionId);
+                
                 // Reset form
                 document.getElementById('caseForm').reset();
                 addedItems = [];
                 updateItemsList();
                 updateTotals();
                 
-                // Optionally redirect to dashboard
-                setTimeout(() => {
+                // Ask to return to dashboard
+                setTimeout(function() {
                     if (confirm('Would you like to return to your dashboard?')) {
                         window.location.href = 'dashboard.html';
                     }
                 }, 1000);
             })
-            .catch(error => {
+            .catch(function(error) {
                 console.error('Error:', error);
                 alert('Error submitting case sheet. Please try again.');
             });
