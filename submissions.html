@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Submissions - Forma Medical</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .back-btn {
+            color: #2c5aa0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #1e3d6f;
+        }
+
+        .page-title {
+            color: #2c5aa0;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-info {
+            text-align: right;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .filters-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .filters-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #2c5aa0;
+            font-size: 14px;
+        }
+
+        .filter-group select, .filter-group input {
+            padding: 8px 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .submissions-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            color: #2c5aa0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .submissions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .submissions-table th {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .submissions-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .submissions-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .submissions-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f1f3f4;
+            vertical-align: top;
+        }
+
+        .submissions-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .submission-id {
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .submission-details {
+            font-size: 14px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .status-submitted {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-po-pending {
+            background: #cce7ff;
+            color: #004085;
+        }
+
+        .status-po-received {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-invoiced {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .status-paid {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: #2c5aa0;
+        }
+
+        .empty-state p {
+            margin-bottom: 20px;
+        }
+
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+
+        .po-upload-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            color: #2c5aa0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .filters-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .submissions-table {
+                font-size: 14px;
+            }
+            
+            .submissions-table th,
+            .submissions-table td {
+                padding: 10px 8px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <img src="Forma Medical transparent.png" alt="Forma Medical Logo" class="logo">
+                <div class="breadcrumb">
+                    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+                    <h1 class="page-title">My Submissions</h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div><strong id="companyName">Loading...</strong></div>
+                    <div id="accessCode">Access Code: ...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label for="statusFilter">Status Filter:</label>
+                    <select id="statusFilter">
+                        <option value="all">All Submissions</option>
+                        <option value="submitted">Submitted</option>
+                        <option value="po-pending">PO Pending</option>
+                        <option value="po-received">PO Received</option>
+                        <option value="invoiced">Invoiced</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFilter">Date Range:</label>
+                    <select id="dateFilter">
+                        <option value="all">All Time</option>
+                        <option value="week">Last 7 Days</option>
+                        <option value="month">Last 30 Days</option>
+                        <option value="quarter">Last 3 Months</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="searchFilter">Search:</label>
+                    <input type="text" id="searchFilter" placeholder="Search by ID, surgeon, hospital...">
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSubmissions">0</div>
+                <div class="stat-label">Total Submissions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingPOs">0</div>
+                <div class="stat-label">Pending POs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalValue">$0</div>
+                <div class="stat-label">Total Value</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="thisMonth">0</div>
+                <div class="stat-label">This Month</div>
+            </div>
+        </div>
+
+        <!-- Submissions Table -->
+        <div class="submissions-section">
+            <div class="section-header">
+                <h2 class="section-title">All Submissions</h2>
+            </div>
+            
+            <div id="submissionsContainer">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- PO Upload Modal -->
+    <div id="poUploadModal" class="po-upload-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Upload Purchase Order</h3>
+                <button class="close-btn" onclick="closePOModal()">&times;</button>
+            </div>
+            <form id="poUploadForm">
+                <div class="form-group">
+                    <label for="poNumber">PO Number:</label>
+                    <input type="text" id="poNumber" name="poNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="poDate">PO Date:</label>
+                    <input type="date" id="poDate" name="poDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="poAmount">PO Amount:</label>
+                    <input type="number" id="poAmount" name="poAmount" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="poFile">Upload PO Document (optional):</label>
+                    <input type="file" id="poFile" name="poFile" accept=".pdf,.jpg,.jpeg,.png">
+                </div>
+                <div class="form-group">
+                    <label for="poNotes">Notes:</label>
+                    <textarea id="poNotes" name="poNotes" rows="3" placeholder="Any additional notes about this PO..."></textarea>
+                </div>
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-success btn-large">Upload PO</button>
+                    <button type="button" class="btn btn-warning btn-large" onclick="closePOModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var distributorInfo = null;
+        var allSubmissions = [];
+        var currentSubmissionId = null;
+
+        // Initialize page
+        window.onload = function() {
+            console.log('Submissions page loading...');
+            
+            var distributorCode = sessionStorage.getItem('distributorCode');
+            var distributorData = sessionStorage.getItem('distributorData');
+            
+            if (!distributorCode || !distributorData) {
+                alert('Please log in to access this page.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            distributorInfo = JSON.parse(distributorData);
+            document.getElementById('companyName').textContent = distributorInfo.companyName;
+            document.getElementById('accessCode').textContent = 'Access Code: ' + distributorInfo.code;
+            
+            loadSubmissions();
+            setupFilters();
+        };
+
+        function loadSubmissions() {
+            // Load submissions from localStorage (in real app, this would be from your API)
+            var submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+            
+            // Filter submissions for current distributor
+            allSubmissions = submissions.filter(function(sub) {
+                return sub.distributorCode === distributorInfo.code;
+            });
+            
+            // Add some demo data if no submissions exist
+            if (allSubmissions.length === 0) {
+                addDemoSubmissions();
+            }
+            
+            updateStatistics();
+            renderSubmissions(allSubmissions);
+        }
+
+        function addDemoSubmissions() {
+            var demoSubmissions = [
+                {
+                    id: 'CS-1671234567890',
+                    distributor: distributorInfo.companyName,
+                    distributorCode: distributorInfo.code,
+                    hospital: 'Regional Medical Center',
+                    surgeon: 'Dr. Johnson',
+                    procedures: ['MTP'],
+                    caseDate: '2025-06-10',
+                    patientId: 'JS',
+                    totals: { grandTotal: 3200 },
+                    submissionDate: '2025-06-10T14:30:00Z',
+                    status: 'po-pending'
+                },
+                {
+                    id: 'CS-1671234567891',
+                    distributor: distributorInfo.companyName,
+                    distributorCode: distributorInfo.code,
+                    hospital: 'City Hospital',
+                    surgeon: 'Dr. Smith',
+                    procedures: ['Hammertoe'],
+                    caseDate: '2025-06-08',
+                    patientId: 'MB',
+                    totals: { grandTotal: 1850 },
+                    submissionDate: '2025-06-08T09:15:00Z',
+                    status: 'po-received',
+                    poNumber: 'PO-2025-001234'
+                },
+                {
+                    id: 'CS-1671234567892',
+                    distributor: distributorInfo.companyName,
+                    distributorCode: distributorInfo.code,
+                    hospital: 'University Medical',
+                    surgeon: 'Dr. Williams',
+                    procedures: ['Lapidus'],
+                    caseDate: '2025-06-05',
+                    patientId: 'RD',
+                    totals: { grandTotal: 4500 },
+                    submissionDate: '2025-06-05T16:45:00Z',
+                    status: 'invoiced'
+                }
+            ];
+            
+            allSubmissions = demoSubmissions;
+            
+            // Save demo data to localStorage
+            var existingSubmissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+            localStorage.setItem('submissions', JSON.stringify(existingSubmissions.concat(demoSubmissions)));
+        }
+
+        function updateStatistics() {
+            var totalSubmissions = allSubmissions.length;
+            var pendingPOs = allSubmissions.filter(function(sub) { return sub.status === 'po-pending'; }).length;
+            var totalValue = allSubmissions.reduce(function(sum, sub) { return sum + (sub.totals.grandTotal || 0); }, 0);
+            
+            // This month submissions
+            var thisMonth = new Date();
+            var thisMonthSubmissions = allSubmissions.filter(function(sub) {
+                var subDate = new Date(sub.submissionDate);
+                return subDate.getMonth() === thisMonth.getMonth() && subDate.getFullYear() === thisMonth.getFullYear();
+            }).length;
+            
+            document.getElementById('totalSubmissions').textContent = totalSubmissions;
+            document.getElementById('pendingPOs').textContent = pendingPOs;
+            document.getElementById('totalValue').textContent = '$' + totalValue.toLocaleString();
+            document.getElementById('thisMonth').textContent = thisMonthSubmissions;
+        }
+
+        function renderSubmissions(submissions) {
+            var container = document.getElementById('submissionsContainer');
+            
+            if (submissions.length === 0) {
+                container.innerHTML = 
+                    '<div class="empty-state">' +
+                        '<div class="empty-state-icon">📄</div>' +
+                        '<h3>No Submissions Found</h3>' +
+                        '<p>You haven\'t submitted any case sheets yet, or none match your current filters.</p>' +
+                        '<a href="form.html" class="btn btn-primary btn-large">Submit Your First Case</a>' +
+                    '</div>';
+                return;
+            }
+            
+            var tableHTML = '<table class="submissions-table">' +
+                '<thead>' +
+                    '<tr>' +
+                        '<th>Submission Details</th>' +
+                        '<th>Hospital & Surgeon</th>' +
+                        '<th>Procedure</th>' +
+                        '<th>Date</th>' +
+                        '<th>Total</th>' +
+                        '<th>Status</th>' +
+                        '<th>Actions</th>' +
+                    '</tr>' +
+                '</thead>' +
+                '<tbody>';
+            
+            submissions.forEach(function(submission) {
+                var submissionDate = new Date(submission.submissionDate).toLocaleDateString();
+                var caseDate = new Date(submission.caseDate).toLocaleDateString();
+                var statusClass = 'status-' + submission.status.replace('_', '-');
+                var statusText = submission.status.replace('_', ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+                
+                tableHTML += '<tr>' +
+                    '<td>' +
+                        '<div class="submission-id">' + submission.id + '</div>' +
+                        '<div class="submission-details">Submitted: ' + submissionDate + '</div>' +
+                        '<div class="submission-details">Patient: ' + submission.patientId + '</div>' +
+                    '</td>' +
+                    '<td>' +
+                        '<strong>' + submission.hospital + '</strong><br>' +
+                        '<small>' + submission.surgeon + '</small>' +
+                    '</td>' +
+                    '<td>' + submission.procedures.join(', ') + '</td>' +
+                    '<td>' + caseDate + '</td>' +
+                    '<td><strong>$' + (submission.totals.grandTotal || 0).toLocaleString() + '</strong></td>' +
+                    '<td><span class="status-badge ' + statusClass + '">' + statusText + '</span></td>' +
+                    '<td>' +
+                        '<div class="action-buttons">' +
+                            getActionButtons(submission) +
+                        '</div>' +
+                    '</td>' +
+                '</tr>';
+            });
+            
+            tableHTML += '</tbody></table>';
+            container.innerHTML = tableHTML;
+        }
+
+        function getActionButtons(submission) {
+            var buttons = '';
+            
+            if (submission.status === 'po-pending') {
+                buttons += '<button class="btn btn-success" onclick="openPOModal(\'' + submission.id + '\')">Upload PO</button>';
+            }
+            
+            if (submission.poNumber) {
+                buttons += '<button class="btn btn-primary" onclick="viewPO(\'' + submission.id + '\')">View PO: ' + submission.poNumber + '</button>';
+            }
+            
+            buttons += '<button class="btn btn-warning" onclick="viewDetails(\'' + submission.id + '\')">View Details</button>';
+            
+            return buttons;
+        }
+
+        function setupFilters() {
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+            document.getElementById('dateFilter').addEventListener('change', applyFilters);
+            document.getElementById('searchFilter').addEventListener('input', applyFilters);
+        }
+
+        function applyFilters() {
+            var statusFilter = document.getElementById('statusFilter').value;
+            var dateFilter = document.getElementById('dateFilter').value;
+            var searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+            
+            var filteredSubmissions = allSubmissions.filter(function(submission) {
+                // Status filter
+                if (statusFilter !== 'all' && submission.status !== statusFilter) {
+                    return false;
+                }
+                
+                // Date filter
+                if (dateFilter !== 'all') {
+                    var submissionDate = new Date(submission.submissionDate);
+                    var now = new Date();
+                    var daysAgo = 0;
+                    
+                    switch (dateFilter) {
+                        case 'week': daysAgo = 7; break;
+                        case 'month': daysAgo = 30; break;
+                        case 'quarter': daysAgo = 90; break;
+                    }
+                    
+                    if (now - submissionDate > daysAgo * 24 * 60 * 60 * 1000) {
+                        return false;
+                    }
+                }
+                
+                // Search filter
+                if (searchFilter) {
+                    var searchText = (submission.id + ' ' + submission.hospital + ' ' + submission.surgeon + ' ' + submission.procedures.join(' ')).toLowerCase();
+                    if (searchText.indexOf(searchFilter) === -1) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            renderSubmissions(filteredSubmissions);
+        }
+
+        function openPOModal(submissionId) {
+            currentSubmissionId = submissionId;
+            document.getElementById('poUploadModal').style.display = 'block';
+        }
+
+        function closePOModal() {
+            document.getElementById('poUploadModal').style.display = 'none';
+            document.getElementById('poUploadForm').reset();
+            currentSubmissionId = null;
+        }
+
+        function viewPO(submissionId) {
+            var submission = allSubmissions.find(function(sub) { return sub.id === submissionId; });
+            if (submission && submission.poNumber) {
+                alert('PO Details:\nPO Number: ' + submission.poNumber + '\nStatus: ' + submission.status.replace('_', ' '));
+            }
+        }
+
+        function viewDetails(submissionId) {
+            var submission = allSubmissions.find(function(sub) { return sub.id === submissionId; });
+            if (submission) {
+                var details = 'Submission Details:\n\n' +
+                    'ID: ' + submission.id + '\n' +
+                    'Hospital: ' + submission.hospital + '\n' +
+                    'Surgeon: ' + submission.surgeon + '\n' +
+                    'Procedure: ' + submission.procedures.join(', ') + '\n' +
+                    'Date: ' + new Date(submission.caseDate).toLocaleDateString() + '\n' +
+                    'Patient: ' + submission.patientId + '\n' +
+                    'Total: $' + (submission.totals.grandTotal || 0).toLocaleString() + '\n' +
+                    'Status: ' + submission.status.replace('_', ' ');
+                
+                alert(details);
+            }
+        }
+
+        // PO Upload Form
+        document.getElementById('poUploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var poNumber = document.getElementById('poNumber').value;
+            var poDate = document.getElementById('poDate').value;
+            var poAmount = document.getElementById('poAmount').value;
+            var poNotes = document.getElementById('poNotes').value;
+            
+            // Update submission with PO info
+            var submissionIndex = allSubmissions.findIndex(function(sub) { return sub.id === currentSubmissionId; });
+            if (submissionIndex !== -1) {
+                allSubmissions[submissionIndex].poNumber = poNumber;
+                allSubmissions[submissionIndex].poDate = poDate;
+                allSubmissions[submissionIndex].poAmount = parseFloat(poAmount) || 0;
+                allSubmissions[submissionIndex].poNotes = poNotes;
+                allSubmissions[submissionIndex].status = 'po-received';
+                
+                // Update localStorage
+                var allStoredSubmissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+                var storedIndex = allStoredSubmissions.findIndex(function(sub) { return sub.id === currentSubmissionId; });
+                if (storedIndex !== -1) {
+                    allStoredSubmissions[storedIndex] = allSubmissions[submissionIndex];
+                    localStorage.setItem('submissions', JSON.stringify(allStoredSubmissions));
+                }
+                
+                alert('PO uploaded successfully! Submission status updated to "PO Received".');
+                closePOModal();
+                updateStatistics();
+                renderSubmissions(allSubmissions);
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('poUploadModal').addEventListener('click', function(e) {
+            if (e.target === document.getElementById('poUploadModal')) {
+                closePOModal();
+            }
+        });
+    </script>
+</body>
+</html>
