@@ -1,136 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Forma Medical - Advanced Admin Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Forma Medical</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
+            padding: 20px;
         }
-        
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Login Screen */
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 80vh;
+            min-height: 100vh;
+            padding: 20px;
         }
-        
+
         .login-card {
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
-        
+
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+
         .logo {
-            width: 120px;
+            width: 130px;
             height: auto;
             margin-bottom: 30px;
         }
-        
+
         .login-title {
             color: #2c5aa0;
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             margin-bottom: 10px;
         }
-        
+
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: left;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 8px;
             color: #2c5aa0;
             font-weight: bold;
+            font-size: 16px;
         }
-        
+
         .form-group input, .form-group select {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
             font-size: 16px;
-            box-sizing: border-box;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
-        
-        .login-btn, .btn {
-            background: #2c5aa0;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+            transform: translateY(-2px);
         }
-        
+
         .login-btn {
             width: 100%;
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 90, 160, 0.3);
+        }
+
+        .error-message, .success-message {
+            margin-top: 20px;
             padding: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
         }
-        
-        .btn:hover, .login-btn:hover {
-            background: #1e4080;
-        }
-        
+
         .error-message {
-            color: red;
-            margin-top: 15px;
-            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
-        
+
         .success-message {
-            color: green;
-            margin-top: 15px;
-            display: none;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
-        
+
+        /* Admin Dashboard */
         .admin-dashboard {
             display: none;
+        }
+
+        .header {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .dashboard-title {
-            color: #2c5aa0;
-            font-size: 32px;
-            font-weight: bold;
+            border-radius: 20px;
+            padding: 25px 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .nav-tabs {
             display: flex;
-            border-bottom: 2px solid #2c5aa0;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .header-title {
+            color: #2c5aa0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .header-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-bottom: 30px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
         }
         
         .nav-tab {
-            background: none;
+            background: transparent;
             border: none;
             padding: 15px 25px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             color: #666;
-            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 16px;
         }
         
         .nav-tab.active {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             color: #2c5aa0;
-            border-bottom-color: #2c5aa0;
+            transform: translateY(-2px);
         }
         
         .tab-content {
@@ -140,119 +237,276 @@
         .tab-content.active {
             display: block;
         }
-        
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
             margin-bottom: 30px;
         }
-        
+
         .stat-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
-            border-left: 4px solid #2c5aa0;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+        }
+
         .stat-value {
-            font-size: 28px;
+            font-size: 42px;
             font-weight: bold;
             color: #2c5aa0;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
-        
+
         .stat-label {
             color: #666;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
+
+        /* Section Styles */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
         .section-title {
             color: #2c5aa0;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #2c5aa0;
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
-        .btn-success {
-            background: #28a745;
-        }
-        
-        .btn-danger {
-            background: #dc3545;
-        }
-        
-        .btn-warning {
-            background: #ffc107;
-            color: #212529;
-        }
-        
-        .logout-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #dc3545;
+
+        /* Button Styles */
+        .btn {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 25px;
+            border-radius: 10px;
             cursor: pointer;
+            font-weight: bold;
+            margin-right: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            font-size: 16px;
         }
-        
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        /* Distributor List */
         .distributor-item {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 4px solid #2c5aa0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #2c5aa0;
+            transition: all 0.3s ease;
         }
-        
+
+        .distributor-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
         .distributor-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        
+
         .distributor-name {
             font-weight: bold;
             color: #2c5aa0;
-            font-size: 18px;
+            font-size: 20px;
         }
-        
+
         .distributor-details {
             color: #666;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
-        
+
         .distributor-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
-        
-        .surgeon-list, .procedure-list {
+
+        .distributor-features {
             background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 15px;
         }
-        
-        .surgeon-item, .procedure-item {
+
+        .feature-title {
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feature-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
         }
-        
-        .surgeon-item:last-child, .procedure-item:last-child {
+
+        .feature-item:last-child {
             border-bottom: none;
         }
-        
+
+        /* Analytics Styles */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .analytics-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .analytics-title {
+            color: #2c5aa0;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Table Styles */
+        .commission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .commission-table th,
+        .commission-table td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .commission-table th {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            font-weight: bold;
+            color: #2c5aa0;
+            font-size: 16px;
+        }
+
+        .commission-table tr:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-paid {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+        }
+
+        .status-outstanding {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -261,162 +515,162 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
+            backdrop-filter: blur(5px);
         }
-        
+
         .modal-content {
             background: white;
             margin: 2% auto;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 40px;
+            border-radius: 20px;
             width: 90%;
             max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            position: relative;
         }
-        
+
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #2c5aa0;
-            padding-bottom: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #2c5aa0;
         }
-        
+
         .modal-title {
             color: #2c5aa0;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
         }
-        
+
         .close-btn {
-            background: none;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
             border: none;
-            font-size: 24px;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
             cursor: pointer;
-            color: #666;
+            transition: all 0.3s ease;
         }
-        
+
+        .close-btn:hover {
+            transform: scale(1.1);
+        }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 25px;
+            margin-bottom: 25px;
         }
-        
+
         .commission-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #2c5aa0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 5px solid #2c5aa0;
         }
-        
+
         .commission-section h3 {
             color: #2c5aa0;
-            margin-bottom: 15px;
-            font-size: 18px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
         }
-        
+
         .add-item-btn {
-            background: #17a2b8;
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
-        
-        .analytics-grid {
+
+        .add-item-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+        }
+
+        /* Export Section */
+        .export-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
-        
-        .analytics-card {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 4px solid #2c5aa0;
+
+        .export-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
-        
-        .analytics-title {
+
+        .export-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .export-title {
             color: #2c5aa0;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
         }
-        
-        .commission-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
+
+        .export-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
         }
-        
-        .commission-table th,
-        .commission-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .commission-table th {
-            background: #f8f9fa;
-            font-weight: bold;
-            color: #2c5aa0;
-        }
-        
-        .commission-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        .status-paid {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .status-outstanding {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
+
         @media (max-width: 768px) {
             .form-row {
                 grid-template-columns: 1fr;
             }
             
-            .analytics-grid {
-                grid-template-columns: 1fr;
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .distributor-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .distributor-actions {
+                width: 100%;
             }
             
             .nav-tabs {
-                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .analytics-grid, .export-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <div class="login-card">
             <img src="Forma Medical transparent.png" alt="Forma Medical" class="logo">
             <h1 class="login-title">Admin Portal</h1>
-            <p style="color: #666; margin-bottom: 30px;">Advanced Management System</p>
+            <p class="login-subtitle">Advanced Management System</p>
             
             <div class="form-group">
                 <label>Username</label>
@@ -435,242 +689,321 @@
         </div>
     </div>
 
+    <!-- Admin Dashboard -->
     <div id="adminDashboard" class="admin-dashboard">
-        <button class="logout-btn" onclick="doLogout()">Logout</button>
-        
-        <h1 class="dashboard-title">Advanced Admin Portal</h1>
-        
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
-            <button class="nav-tab" onclick="showTab('distributors')">Distributors</button>
-            <button class="nav-tab" onclick="showTab('analytics')">Commission Analytics</button>
-            <button class="nav-tab" onclick="showTab('exports')">Exports & Reports</button>
-        </div>
-
-        <!-- Overview Tab -->
-        <div id="overviewTab" class="tab-content active">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalDistributorsCount">3</div>
-                    <div class="stat-label">Total Distributors</div>
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <img src="Forma Medical transparent.png" alt="Forma Medical" class="header-logo">
+                    <div>
+                        <div class="header-title">Admin Portal</div>
+                        <div class="header-subtitle">Advanced Management System</div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">$12,450</div>
-                    <div class="stat-label">Monthly Commissions (PO Received)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">$3,200</div>
-                    <div class="stat-label">Outstanding Commissions (No PO)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">47</div>
-                    <div class="stat-label">Total Submissions</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">32</div>
-                    <div class="stat-label">Cases with PO</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">15</div>
-                    <div class="stat-label">Outstanding POs</div>
-                </div>
+                <button class="logout-btn" onclick="doLogout()">Logout</button>
             </div>
-        </div>
 
-        <!-- Distributors Tab -->
-        <div id="distributorsTab" class="tab-content">
-            <h2 class="section-title">Distributor Management</h2>
-            <button class="btn" onclick="showAddDistributorModal()">Add New Distributor</button>
-            <button class="btn btn-success" onclick="exportDistributors()">Export Distributors</button>
-            
-            <div id="distributorsList" style="margin-top: 20px;">
-                <div class="distributor-item">
-                    <div class="distributor-header">
-                        <div class="distributor-name">ABC Ortho Solutions</div>
-                        <div class="distributor-actions">
-                            <button class="btn" onclick="editDistributor('ABCORTHO')">Edit</button>
-                            <button class="btn btn-danger" onclick="deleteDistributor('ABCORTHO')">Delete</button>
-                        </div>
-                    </div>
-                    <div class="distributor-details">
-                        Code: ABCORTHO | Contact: John Smith | Default Rate: 30%
-                    </div>
-                    <div class="surgeon-list">
-                        <strong>Surgeons:</strong>
-                        <div class="surgeon-item">
-                            <span>Dr. Johnson (New - 40%)</span>
-                            <span>$1,200 this month</span>
-                        </div>
-                        <div class="surgeon-item">
-                            <span>Dr. Smith (30%)</span>
-                            <span>$800 this month</span>
-                        </div>
-                    </div>
-                    <div class="procedure-list">
-                        <strong>Procedure Rates:</strong>
-                        <div class="procedure-item">
-                            <span>MTP: 35%</span>
-                            <span>Hammertoe: 30%</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
+                <button class="nav-tab" onclick="showTab('distributors')">👥 Distributors</button>
+                <button class="nav-tab" onclick="showTab('analytics')">📈 Analytics</button>
+                <button class="nav-tab" onclick="showTab('exports')">📤 Reports</button>
             </div>
-        </div>
 
-        <!-- Analytics Tab -->
-        <div id="analyticsTab" class="tab-content">
-            <h2 class="section-title">Commission Analytics</h2>
-            <p style="color: #666; margin-bottom: 20px;">Track commissions by PO status - Only cases with POs generate payable commissions</p>
-            
-            <div class="analytics-grid">
-                <div class="analytics-card">
-                    <div class="analytics-title">Monthly Commission Summary</div>
-                    <div style="margin-bottom: 10px;">
-                        <strong>Payable Commissions (PO Received): $12,450</strong>
+            <!-- Overview Tab -->
+            <div id="overviewTab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalDistributorsCount">3</div>
+                        <div class="stat-label">Total Distributors</div>
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        Outstanding (No PO): $3,200
+                    <div class="stat-card">
+                        <div class="stat-value">$12,450</div>
+                        <div class="stat-label">Monthly Commissions</div>
                     </div>
-                    <div style="color: #666;">
-                        Total Potential: $15,650
+                    <div class="stat-card">
+                        <div class="stat-value">$3,200</div>
+                        <div class="stat-label">Outstanding (No PO)</div>
                     </div>
-                </div>
-                
-                <div class="analytics-card">
-                    <div class="analytics-title">PO Status Breakdown</div>
-                    <div style="margin-bottom: 10px;">
-                        Cases with PO: 32 (68%)
+                    <div class="stat-card">
+                        <div class="stat-value">47</div>
+                        <div class="stat-label">Total Submissions</div>
                     </div>
-                    <div style="margin-bottom: 10px;">
-                        Outstanding POs: 15 (32%)
+                    <div class="stat-card">
+                        <div class="stat-value">32</div>
+                        <div class="stat-label">Cases with PO</div>
                     </div>
-                    <div style="color: #666;">
-                        Average days to PO: 8 days
+                    <div class="stat-card">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Outstanding POs</div>
                     </div>
                 </div>
             </div>
 
-            <h3 style="color: #2c5aa0; margin-bottom: 15px;">Commission Details by Distributor</h3>
-            <table class="commission-table">
-                <thead>
-                    <tr>
-                        <th>Distributor</th>
-                        <th>Cases with PO</th>
-                        <th>Outstanding POs</th>
-                        <th>Payable Commission</th>
-                        <th>Outstanding Commission</th>
-                        <th>Total Potential</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ABC Ortho Solutions</td>
-                        <td>12</td>
-                        <td>5</td>
-                        <td>$4,200</td>
-                        <td>$1,150</td>
-                        <td>$5,350</td>
-                    </tr>
-                    <tr>
-                        <td>MedSupply Pro</td>
-                        <td>15</td>
-                        <td>7</td>
-                        <td>$5,800</td>
-                        <td>$1,650</td>
-                        <td>$7,450</td>
-                    </tr>
-                    <tr>
-                        <td>Surgical Solutions Inc</td>
-                        <td>5</td>
-                        <td>3</td>
-                        <td>$2,450</td>
-                        <td>$400</td>
-                        <td>$2,850</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Distributors Tab -->
+            <div id="distributorsTab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">👥 Distributor Management</h2>
+                    <button class="btn" onclick="showAddDistributorModal()">Add New Distributor</button>
+                    <button class="btn btn-success" onclick="exportDistributors()">Export Distributors</button>
+                    
+                    <div id="distributorsList" style="margin-top: 30px;">
+                        <div class="distributor-item">
+                            <div class="distributor-header">
+                                <div class="distributor-name">ABC Ortho Solutions</div>
+                                <div class="distributor-actions">
+                                    <button class="btn" onclick="editDistributor('ABCORTHO')">Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteDistributor('ABCORTHO')">Delete</button>
+                                </div>
+                            </div>
+                            <div class="distributor-details">
+                                Code: ABCORTHO | Contact: John Smith | Default Rate: 30%
+                            </div>
+                            <div class="distributor-features">
+                                <div class="feature-title">👨‍⚕️ Surgeons & Rates:</div>
+                                <div class="feature-list">
+                                    <div class="feature-item">
+                                        <span>Dr. Johnson (New - 40%)</span>
+                                        <span style="color: #28a745; font-weight: bold;">$1,200 this month</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span>Dr. Smith (30%)</span>
+                                        <span style="color: #28a745; font-weight: bold;">$800 this month</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="distributor-features">
+                                <div class="feature-title">🎯 Procedure Rates:</div>
+                                <div class="feature-list">
+                                    <div class="feature-item">
+                                        <span>MTP Fusion</span>
+                                        <span style="color: #2c5aa0; font-weight: bold;">35%</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span>Hammertoe</span>
+                                        <span style="color: #2c5aa0; font-weight: bold;">30%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <h3 style="color: #2c5aa0; margin: 30px 0 15px 0;">Outstanding Cases (No PO)</h3>
-            <table class="commission-table">
-                <thead>
-                    <tr>
-                        <th>Case ID</th>
-                        <th>Distributor</th>
-                        <th>Surgeon</th>
-                        <th>Hospital</th>
-                        <th>Date</th>
-                        <th>Commission</th>
-                        <th>Days Outstanding</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>CS-1234567890</td>
-                        <td>ABC Ortho</td>
-                        <td>Dr. Johnson</td>
-                        <td>Regional Medical</td>
-                        <td>2024-12-15</td>
-                        <td>$250</td>
-                        <td>12</td>
-                        <td><span class="status-badge status-outstanding">No PO</span></td>
-                    </tr>
-                    <tr>
-                        <td>CS-1234567891</td>
-                        <td>MedSupply Pro</td>
-                        <td>Dr. Wilson</td>
-                        <td>City Hospital</td>
-                        <td>2024-12-18</td>
-                        <td>$320</td>
-                        <td>9</td>
-                        <td><span class="status-badge status-outstanding">No PO</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                        <div class="distributor-item">
+                            <div class="distributor-header">
+                                <div class="distributor-name">MedSupply Pro</div>
+                                <div class="distributor-actions">
+                                    <button class="btn" onclick="editDistributor('MEDSUPPLY')">Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteDistributor('MEDSUPPLY')">Delete</button>
+                                </div>
+                            </div>
+                            <div class="distributor-details">
+                                Code: MEDSUPPLY | Contact: Sarah Johnson | Procedure-Based Rates
+                            </div>
+                            <div class="distributor-features">
+                                <div class="feature-title">🎯 Procedure Rates:</div>
+                                <div class="feature-list">
+                                    <div class="feature-item">
+                                        <span>Hammertoe/Akin</span>
+                                        <span style="color: #2c5aa0; font-weight: bold;">30%</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span>MTP/Lapidus</span>
+                                        <span style="color: #2c5aa0; font-weight: bold;">35%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-        <!-- Exports Tab -->
-        <div id="exportsTab" class="tab-content">
-            <h2 class="section-title">Exports & Reports</h2>
-            
-            <div class="analytics-grid">
-                <div class="analytics-card">
-                    <div class="analytics-title">Commission Exports</div>
-                    <p style="color: #666; margin-bottom: 15px;">Export payable commissions (PO received only)</p>
-                    <button class="btn btn-success" onclick="exportPayableCommissions()">Export Payable Commissions</button>
-                    <button class="btn btn-warning" onclick="exportOutstandingPOs()">Export Outstanding POs</button>
-                </div>
-                
-                <div class="analytics-card">
-                    <div class="analytics-title">Comprehensive Reports</div>
-                    <p style="color: #666; margin-bottom: 15px;">Full system reports and analytics</p>
-                    <button class="btn" onclick="exportAllData()">Export All Data</button>
-                    <button class="btn" onclick="generateMonthlyReport()">Monthly Report</button>
+                        <div class="distributor-item">
+                            <div class="distributor-header">
+                                <div class="distributor-name">Surgical Solutions Inc</div>
+                                <div class="distributor-actions">
+                                    <button class="btn" onclick="editDistributor('SURGSOL')">Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteDistributor('SURGSOL')">Delete</button>
+                                </div>
+                            </div>
+                            <div class="distributor-details">
+                                Code: SURGSOL | Contact: Mike Wilson | Default 30% + Special Rules
+                            </div>
+                            <div class="distributor-features">
+                                <div class="feature-title">⚡ Special Rules:</div>
+                                <div class="feature-list">
+                                    <div class="feature-item">
+                                        <span>Dr. Wilson Cases</span>
+                                        <span style="color: #dc3545; font-weight: bold;">30% Immediate Payout</span>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span>All Other Surgeons</span>
+                                        <span style="color: #2c5aa0; font-weight: bold;">30% Accrued Monthly</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <h3 style="color: #2c5aa0; margin-bottom: 15px;">Export Options</h3>
-            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
-                <div style="margin-bottom: 15px;">
-                    <strong>Payable Commissions Export includes:</strong>
-                    <ul style="margin-top: 5px; color: #666;">
-                        <li>All cases with PO received</li>
-                        <li>Commission calculations by distributor</li>
-                        <li>Surgeon-specific rates applied</li>
-                        <li>Procedure-specific rates applied</li>
-                        <li>Ready for payroll processing</li>
-                    </ul>
+            <!-- Analytics Tab -->
+            <div id="analyticsTab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">📈 Commission Analytics</h2>
+                    <p style="color: #666; margin-bottom: 25px; font-size: 16px;">Track commissions by PO status - Only cases with POs generate payable commissions</p>
+                    
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-title">💰 Monthly Commission Summary</div>
+                            <div style="margin-bottom: 15px; font-size: 18px;">
+                                <strong style="color: #28a745;">Payable Commissions (PO Received): $12,450</strong>
+                            </div>
+                            <div style="margin-bottom: 15px; font-size: 16px;">
+                                Outstanding (No PO): $3,200
+                            </div>
+                            <div style="color: #666; font-size: 16px;">
+                                Total Potential: $15,650
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div class="analytics-title">📋 PO Status Breakdown</div>
+                            <div style="margin-bottom: 15px; font-size: 16px;">
+                                Cases with PO: <strong style="color: #28a745;">32 (68%)</strong>
+                            </div>
+                            <div style="margin-bottom: 15px; font-size: 16px;">
+                                Outstanding POs: <strong style="color: #ffc107;">15 (32%)</strong>
+                            </div>
+                            <div style="color: #666; font-size: 16px;">
+                                Average days to PO: <strong>8 days</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 24px;">📊 Commission Details by Distributor</h3>
+                    <table class="commission-table">
+                        <thead>
+                            <tr>
+                                <th>Distributor</th>
+                                <th>Cases with PO</th>
+                                <th>Outstanding POs</th>
+                                <th>Payable Commission</th>
+                                <th>Outstanding Commission</th>
+                                <th>Total Potential</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ABC Ortho Solutions</strong></td>
+                                <td>12</td>
+                                <td>5</td>
+                                <td style="color: #28a745; font-weight: bold;">$4,200</td>
+                                <td style="color: #ffc107; font-weight: bold;">$1,150</td>
+                                <td style="color: #2c5aa0; font-weight: bold;">$5,350</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MedSupply Pro</strong></td>
+                                <td>15</td>
+                                <td>7</td>
+                                <td style="color: #28a745; font-weight: bold;">$5,800</td>
+                                <td style="color: #ffc107; font-weight: bold;">$1,650</td>
+                                <td style="color: #2c5aa0; font-weight: bold;">$7,450</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Surgical Solutions Inc</strong></td>
+                                <td>5</td>
+                                <td>3</td>
+                                <td style="color: #28a745; font-weight: bold;">$2,450</td>
+                                <td style="color: #ffc107; font-weight: bold;">$400</td>
+                                <td style="color: #2c5aa0; font-weight: bold;">$2,850</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: #2c5aa0; margin: 35px 0 20px 0; font-size: 24px;">⚠️ Outstanding Cases (No PO)</h3>
+                    <table class="commission-table">
+                        <thead>
+                            <tr>
+                                <th>Case ID</th>
+                                <th>Distributor</th>
+                                <th>Surgeon</th>
+                                <th>Hospital</th>
+                                <th>Date</th>
+                                <th>Commission</th>
+                                <th>Days Outstanding</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>CS-1234567890</strong></td>
+                                <td>ABC Ortho</td>
+                                <td>Dr. Johnson</td>
+                                <td>Regional Medical</td>
+                                <td>2024-12-15</td>
+                                <td style="color: #ffc107; font-weight: bold;">$250</td>
+                                <td style="color: #dc3545; font-weight: bold;">12</td>
+                                <td><span class="status-badge status-outstanding">No PO</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>CS-1234567891</strong></td>
+                                <td>MedSupply Pro</td>
+                                <td>Dr. Wilson</td>
+                                <td>City Hospital</td>
+                                <td>2024-12-18</td>
+                                <td style="color: #ffc107; font-weight: bold;">$320</td>
+                                <td style="color: #dc3545; font-weight: bold;">9</td>
+                                <td><span class="status-badge status-outstanding">No PO</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                
-                <div>
-                    <strong>Outstanding POs Report excludes:</strong>
-                    <ul style="margin-top: 5px; color: #666;">
-                        <li>Cases without PO (not payable)</li>
-                        <li>Shows potential commission value</li>
-                        <li>Days outstanding tracking</li>
-                        <li>Follow-up action items</li>
-                    </ul>
+            </div>
+
+            <!-- Exports Tab -->
+            <div id="exportsTab" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">📤 Exports & Reports</h2>
+                    
+                    <div class="export-grid">
+                        <div class="export-card">
+                            <div class="export-title">💰 Commission Exports</div>
+                            <p class="export-description">Export payable commissions (PO received only)</p>
+                            <button class="btn btn-success" onclick="exportPayableCommissions()">Export Payable Commissions</button>
+                            <button class="btn btn-warning" onclick="exportOutstandingPOs()">Export Outstanding POs</button>
+                        </div>
+                        
+                        <div class="export-card">
+                            <div class="export-title">📊 Comprehensive Reports</div>
+                            <p class="export-description">Full system reports and analytics</p>
+                            <button class="btn" onclick="exportAllData()">Export All Data</button>
+                            <button class="btn" onclick="generateMonthlyReport()">Monthly Report</button>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card" style="margin-top: 30px;">
+                        <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 22px;">📋 Export Information</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                            <div>
+                                <h4 style="color: #28a745; margin-bottom: 15px;">✅ Payable Commissions Export includes:</h4>
+                                <ul style="color: #666; font-size: 16px; line-height: 1.6;">
+                                    <li>All cases with PO received</li>
+                                    <li>Commission calculations by distributor</li>
+                                    <li>Surgeon-specific rates applied</li>
+                                    <li>Procedure-specific rates applied</li>
+                                    <li>Ready for payroll processing</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 style="color: #ffc107; margin-bottom: 15px;">⚠️ Outstanding POs Report excludes:</h4>
+                                <ul style="color: #666; font-size: 16px; line-height: 1.6;">
+                                    <li>Cases without PO (not payable)</li>
+                                    <li>Shows potential commission value</li>
+                                    <li>Days outstanding tracking</li>
+                                    <li>Follow-up action items</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -687,7 +1020,7 @@
             <form id="distributorForm" onsubmit="saveDistributor(event)">
                 <!-- Basic Info -->
                 <div class="commission-section">
-                    <h3>Basic Information</h3>
+                    <h3>📋 Basic Information</h3>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Company Name *</label>
@@ -724,8 +1057,8 @@
 
                 <!-- Surgeon-Specific Rates -->
                 <div class="commission-section">
-                    <h3>Surgeon-Specific Rates</h3>
-                    <p style="color: #666; margin-bottom: 15px;">Add specific commission rates for individual surgeons</p>
+                    <h3>👨‍⚕️ Surgeon-Specific Rates</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Add specific commission rates for individual surgeons</p>
                     
                     <div id="surgeonRates">
                         <!-- Surgeon rates will be added here -->
@@ -736,8 +1069,8 @@
 
                 <!-- Procedure-Specific Rates -->
                 <div class="commission-section">
-                    <h3>Procedure-Specific Rates</h3>
-                    <p style="color: #666; margin-bottom: 15px;">Set different rates for different procedure types</p>
+                    <h3>🎯 Procedure-Specific Rates</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Set different rates for different procedure types</p>
                     
                     <div id="procedureRates">
                         <!-- Procedure rates will be added here -->
@@ -748,7 +1081,7 @@
 
                 <!-- Special Rules -->
                 <div class="commission-section">
-                    <h3>Special Commission Rules</h3>
+                    <h3>⚡ Special Commission Rules</h3>
                     <div class="form-row">
                         <div class="form-group">
                             <label>New Surgeon Bonus Rate (%)</label>
@@ -761,16 +1094,16 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 30px; text-align: center;">
-                    <button type="submit" class="btn btn-success">Save Distributor</button>
-                    <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+                <div style="margin-top: 35px; text-align: center;">
+                    <button type="submit" class="btn btn-success" style="padding: 15px 30px; font-size: 18px;">Save Distributor</button>
+                    <button type="button" class="btn" onclick="closeModal()" style="padding: 15px 30px; font-size: 18px;">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        console.log('Advanced admin script loaded');
+        console.log('Beautiful admin script loaded');
         
         var surgeonRateCounter = 0;
         var procedureRateCounter = 0;
@@ -806,19 +1139,17 @@
         }
         
         function showTab(tabName) {
-            // Hide all tabs
-            var tabs = document.querySelectorAll('.tab-content');
+            var tabContents = document.querySelectorAll('.tab-content');
             var navTabs = document.querySelectorAll('.nav-tab');
             
-            tabs.forEach(function(tab) {
+            tabContents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            
+            navTabs.forEach(function(tab) {
                 tab.classList.remove('active');
             });
             
-            navTabs.forEach(function(navTab) {
-                navTab.classList.remove('active');
-            });
-            
-            // Show selected tab
             document.getElementById(tabName + 'Tab').classList.add('active');
             event.target.classList.add('active');
         }
@@ -835,7 +1166,6 @@
         
         function editDistributor(code) {
             document.getElementById('modalTitle').textContent = 'Edit Distributor: ' + code;
-            // Pre-populate form with existing data
             if (code === 'ABCORTHO') {
                 document.getElementById('companyName').value = 'ABC Ortho Solutions';
                 document.getElementById('accessCode').value = 'ABCORTHO';
@@ -844,11 +1174,8 @@
                 document.getElementById('defaultRate').value = '30';
                 document.getElementById('newSurgeonBonus').value = '40';
                 
-                // Add some example surgeon rates
                 addSurgeonRate('Dr. Johnson', '40');
                 addSurgeonRate('Dr. Smith', '30');
-                
-                // Add some example procedure rates
                 addProcedureRate('MTP', '35');
                 addProcedureRate('Hammertoe', '30');
             }
@@ -866,6 +1193,10 @@
             var surgeonDiv = document.createElement('div');
             surgeonDiv.className = 'form-row';
             surgeonDiv.id = 'surgeonRate_' + surgeonRateCounter;
+            surgeonDiv.style.background = 'white';
+            surgeonDiv.style.padding = '20px';
+            surgeonDiv.style.borderRadius = '10px';
+            surgeonDiv.style.marginBottom = '15px';
             
             surgeonDiv.innerHTML = `
                 <div class="form-group">
@@ -874,7 +1205,7 @@
                 </div>
                 <div class="form-group">
                     <label>Commission Rate (%) 
-                        <button type="button" onclick="removeSurgeonRate(${surgeonRateCounter})" style="background: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 3px; float: right;">Remove</button>
+                        <button type="button" onclick="removeSurgeonRate(${surgeonRateCounter})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; float: right;">Remove</button>
                     </label>
                     <input type="number" id="surgeonRate_${surgeonRateCounter}" value="${rate || '30'}" min="0" max="100">
                 </div>
@@ -894,6 +1225,10 @@
             var procedureDiv = document.createElement('div');
             procedureDiv.className = 'form-row';
             procedureDiv.id = 'procedureRate_' + procedureRateCounter;
+            procedureDiv.style.background = 'white';
+            procedureDiv.style.padding = '20px';
+            procedureDiv.style.borderRadius = '10px';
+            procedureDiv.style.marginBottom = '15px';
             
             procedureDiv.innerHTML = `
                 <div class="form-group">
@@ -907,7 +1242,7 @@
                 </div>
                 <div class="form-group">
                     <label>Commission Rate (%) 
-                        <button type="button" onclick="removeProcedureRate(${procedureRateCounter})" style="background: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 3px; float: right;">Remove</button>
+                        <button type="button" onclick="removeProcedureRate(${procedureRateCounter})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; float: right;">Remove</button>
                     </label>
                     <input type="number" id="procedureRate_${procedureRateCounter}" value="${rate || '30'}" min="0" max="100">
                 </div>
@@ -926,7 +1261,6 @@
             var companyName = document.getElementById('companyName').value;
             var accessCode = document.getElementById('accessCode').value.toUpperCase();
             
-            // Collect surgeon rates
             var surgeonRates = [];
             var surgeonElements = document.querySelectorAll('[id^="surgeonRate_"]');
             surgeonElements.forEach(function(element) {
@@ -938,7 +1272,6 @@
                 }
             });
             
-            // Collect procedure rates
             var procedureRates = [];
             var procedureElements = document.querySelectorAll('[id^="procedureRate_"]');
             procedureElements.forEach(function(element) {
@@ -980,7 +1313,6 @@
             alert('Exporting distributor data...');
         }
         
-        // Close modal when clicking outside
         window.onclick = function(event) {
             var modal = document.getElementById('distributorModal');
             if (event.target === modal) {
