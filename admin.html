@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Forma Medical - Admin Portal</title>
+    <title>Forma Medical - Advanced Admin Portal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,11 +41,6 @@
             margin-bottom: 10px;
         }
         
-        .login-subtitle {
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
         .form-group {
             margin-bottom: 20px;
             text-align: left;
@@ -58,7 +53,7 @@
             font-weight: bold;
         }
         
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #e1e5e9;
@@ -67,19 +62,23 @@
             box-sizing: border-box;
         }
         
-        .login-btn {
-            width: 100%;
+        .login-btn, .btn {
             background: #2c5aa0;
             color: white;
             border: none;
-            padding: 15px;
+            padding: 12px 20px;
             border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
+            font-weight: bold;
         }
         
-        .login-btn:hover {
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+        }
+        
+        .btn:hover, .login-btn:hover {
             background: #1e4080;
         }
         
@@ -101,7 +100,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
@@ -111,6 +110,35 @@
             font-weight: bold;
             margin-bottom: 30px;
             text-align: center;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            border-bottom: 2px solid #2c5aa0;
+            margin-bottom: 30px;
+        }
+        
+        .nav-tab {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #666;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tab.active {
+            color: #2c5aa0;
+            border-bottom-color: #2c5aa0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .stats-grid {
@@ -149,27 +177,17 @@
             padding-bottom: 10px;
         }
         
-        .btn {
-            background: #2c5aa0;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .btn:hover {
-            background: #1e4080;
+        .btn-success {
+            background: #28a745;
         }
         
         .btn-danger {
             background: #dc3545;
         }
         
-        .btn-success {
-            background: #28a745;
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
         }
         
         .logout-btn {
@@ -188,22 +206,51 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             border-left: 4px solid #2c5aa0;
+        }
+        
+        .distributor-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
         
         .distributor-name {
             font-weight: bold;
             color: #2c5aa0;
-            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .distributor-details {
+            color: #666;
+            margin-bottom: 10px;
         }
         
         .distributor-actions {
             display: flex;
             gap: 10px;
+        }
+        
+        .surgeon-list, .procedure-list {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .surgeon-item, .procedure-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .surgeon-item:last-child, .procedure-item:last-child {
+            border-bottom: none;
         }
         
         /* Modal Styles */
@@ -224,7 +271,7 @@
             padding: 30px;
             border-radius: 15px;
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -259,10 +306,6 @@
             margin-bottom: 20px;
         }
         
-        .form-row-single {
-            margin-bottom: 20px;
-        }
-        
         .commission-section {
             background: #f8f9fa;
             padding: 20px;
@@ -277,39 +320,7 @@
             font-size: 18px;
         }
         
-        .commission-rule {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .commission-rule-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .rule-type-select {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        
-        .remove-rule-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .add-rule-btn {
+        .add-item-btn {
             background: #17a2b8;
             color: white;
             border: none;
@@ -319,8 +330,70 @@
             margin-top: 10px;
         }
         
-        .hidden {
-            display: none;
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .analytics-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #2c5aa0;
+        }
+        
+        .analytics-title {
+            color: #2c5aa0;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .commission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .commission-table th,
+        .commission-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .commission-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #2c5aa0;
+        }
+        
+        .commission-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-outstanding {
+            background: #f8d7da;
+            color: #721c24;
         }
         
         @media (max-width: 768px) {
@@ -328,13 +401,12 @@
                 grid-template-columns: 1fr;
             }
             
-            .distributor-item {
-                flex-direction: column;
-                align-items: flex-start;
+            .analytics-grid {
+                grid-template-columns: 1fr;
             }
             
-            .distributor-actions {
-                margin-top: 10px;
+            .nav-tabs {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -344,7 +416,7 @@
         <div class="login-card">
             <img src="Forma Medical transparent.png" alt="Forma Medical" class="logo">
             <h1 class="login-title">Admin Portal</h1>
-            <p class="login-subtitle">Forma Medical Management System</p>
+            <p style="color: #666; margin-bottom: 30px;">Advanced Management System</p>
             
             <div class="form-group">
                 <label>Username</label>
@@ -366,62 +438,239 @@
     <div id="adminDashboard" class="admin-dashboard">
         <button class="logout-btn" onclick="doLogout()">Logout</button>
         
-        <h1 class="dashboard-title">Admin Dashboard</h1>
+        <h1 class="dashboard-title">Advanced Admin Portal</h1>
         
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="totalDistributorsCount">3</div>
-                <div class="stat-label">Total Distributors</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">$12,450</div>
-                <div class="stat-label">Monthly Commissions</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">32%</div>
-                <div class="stat-label">Avg Commission Rate</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value">47</div>
-                <div class="stat-label">Active Submissions</div>
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">Overview</button>
+            <button class="nav-tab" onclick="showTab('distributors')">Distributors</button>
+            <button class="nav-tab" onclick="showTab('analytics')">Commission Analytics</button>
+            <button class="nav-tab" onclick="showTab('exports')">Exports & Reports</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overviewTab" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalDistributorsCount">3</div>
+                    <div class="stat-label">Total Distributors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$12,450</div>
+                    <div class="stat-label">Monthly Commissions (PO Received)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$3,200</div>
+                    <div class="stat-label">Outstanding Commissions (No PO)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Total Submissions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">32</div>
+                    <div class="stat-label">Cases with PO</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Outstanding POs</div>
+                </div>
             </div>
         </div>
 
-        <h2 class="section-title">Distributor Management</h2>
-        <button class="btn" onclick="showAddDistributorModal()">Add New Distributor</button>
-        <button class="btn btn-success" onclick="exportData()">Export Data</button>
-        
-        <div id="distributorsList" style="margin-top: 20px;">
-            <div class="distributor-item">
-                <div>
-                    <div class="distributor-name">ABC Ortho Solutions</div>
-                    <div>Code: ABCORTHO | Contact: John Smith | Rate: 30% (+40% new surgeons)</div>
-                </div>
-                <div class="distributor-actions">
-                    <button class="btn" onclick="editDistributor('ABCORTHO')">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteDistributor('ABCORTHO')">Delete</button>
+        <!-- Distributors Tab -->
+        <div id="distributorsTab" class="tab-content">
+            <h2 class="section-title">Distributor Management</h2>
+            <button class="btn" onclick="showAddDistributorModal()">Add New Distributor</button>
+            <button class="btn btn-success" onclick="exportDistributors()">Export Distributors</button>
+            
+            <div id="distributorsList" style="margin-top: 20px;">
+                <div class="distributor-item">
+                    <div class="distributor-header">
+                        <div class="distributor-name">ABC Ortho Solutions</div>
+                        <div class="distributor-actions">
+                            <button class="btn" onclick="editDistributor('ABCORTHO')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteDistributor('ABCORTHO')">Delete</button>
+                        </div>
+                    </div>
+                    <div class="distributor-details">
+                        Code: ABCORTHO | Contact: John Smith | Default Rate: 30%
+                    </div>
+                    <div class="surgeon-list">
+                        <strong>Surgeons:</strong>
+                        <div class="surgeon-item">
+                            <span>Dr. Johnson (New - 40%)</span>
+                            <span>$1,200 this month</span>
+                        </div>
+                        <div class="surgeon-item">
+                            <span>Dr. Smith (30%)</span>
+                            <span>$800 this month</span>
+                        </div>
+                    </div>
+                    <div class="procedure-list">
+                        <strong>Procedure Rates:</strong>
+                        <div class="procedure-item">
+                            <span>MTP: 35%</span>
+                            <span>Hammertoe: 30%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content">
+            <h2 class="section-title">Commission Analytics</h2>
+            <p style="color: #666; margin-bottom: 20px;">Track commissions by PO status - Only cases with POs generate payable commissions</p>
             
-            <div class="distributor-item">
-                <div>
-                    <div class="distributor-name">MedSupply Pro</div>
-                    <div>Code: MEDSUPPLY | Contact: Sarah Johnson | Rate: 30% Hammertoe, 35% MTP</div>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-title">Monthly Commission Summary</div>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Payable Commissions (PO Received): $12,450</strong>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        Outstanding (No PO): $3,200
+                    </div>
+                    <div style="color: #666;">
+                        Total Potential: $15,650
+                    </div>
                 </div>
-                <div class="distributor-actions">
-                    <button class="btn" onclick="editDistributor('MEDSUPPLY')">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteDistributor('MEDSUPPLY')">Delete</button>
+                
+                <div class="analytics-card">
+                    <div class="analytics-title">PO Status Breakdown</div>
+                    <div style="margin-bottom: 10px;">
+                        Cases with PO: 32 (68%)
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        Outstanding POs: 15 (32%)
+                    </div>
+                    <div style="color: #666;">
+                        Average days to PO: 8 days
+                    </div>
                 </div>
             </div>
+
+            <h3 style="color: #2c5aa0; margin-bottom: 15px;">Commission Details by Distributor</h3>
+            <table class="commission-table">
+                <thead>
+                    <tr>
+                        <th>Distributor</th>
+                        <th>Cases with PO</th>
+                        <th>Outstanding POs</th>
+                        <th>Payable Commission</th>
+                        <th>Outstanding Commission</th>
+                        <th>Total Potential</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ABC Ortho Solutions</td>
+                        <td>12</td>
+                        <td>5</td>
+                        <td>$4,200</td>
+                        <td>$1,150</td>
+                        <td>$5,350</td>
+                    </tr>
+                    <tr>
+                        <td>MedSupply Pro</td>
+                        <td>15</td>
+                        <td>7</td>
+                        <td>$5,800</td>
+                        <td>$1,650</td>
+                        <td>$7,450</td>
+                    </tr>
+                    <tr>
+                        <td>Surgical Solutions Inc</td>
+                        <td>5</td>
+                        <td>3</td>
+                        <td>$2,450</td>
+                        <td>$400</td>
+                        <td>$2,850</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: #2c5aa0; margin: 30px 0 15px 0;">Outstanding Cases (No PO)</h3>
+            <table class="commission-table">
+                <thead>
+                    <tr>
+                        <th>Case ID</th>
+                        <th>Distributor</th>
+                        <th>Surgeon</th>
+                        <th>Hospital</th>
+                        <th>Date</th>
+                        <th>Commission</th>
+                        <th>Days Outstanding</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CS-1234567890</td>
+                        <td>ABC Ortho</td>
+                        <td>Dr. Johnson</td>
+                        <td>Regional Medical</td>
+                        <td>2024-12-15</td>
+                        <td>$250</td>
+                        <td>12</td>
+                        <td><span class="status-badge status-outstanding">No PO</span></td>
+                    </tr>
+                    <tr>
+                        <td>CS-1234567891</td>
+                        <td>MedSupply Pro</td>
+                        <td>Dr. Wilson</td>
+                        <td>City Hospital</td>
+                        <td>2024-12-18</td>
+                        <td>$320</td>
+                        <td>9</td>
+                        <td><span class="status-badge status-outstanding">No PO</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Exports Tab -->
+        <div id="exportsTab" class="tab-content">
+            <h2 class="section-title">Exports & Reports</h2>
             
-            <div class="distributor-item">
-                <div>
-                    <div class="distributor-name">Surgical Solutions Inc</div>
-                    <div>Code: SURGSOL | Contact: Mike Wilson | Rate: 30% (Dr. Wilson immediate payout)</div>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-title">Commission Exports</div>
+                    <p style="color: #666; margin-bottom: 15px;">Export payable commissions (PO received only)</p>
+                    <button class="btn btn-success" onclick="exportPayableCommissions()">Export Payable Commissions</button>
+                    <button class="btn btn-warning" onclick="exportOutstandingPOs()">Export Outstanding POs</button>
                 </div>
-                <div class="distributor-actions">
-                    <button class="btn" onclick="editDistributor('SURGSOL')">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteDistributor('SURGSOL')">Delete</button>
+                
+                <div class="analytics-card">
+                    <div class="analytics-title">Comprehensive Reports</div>
+                    <p style="color: #666; margin-bottom: 15px;">Full system reports and analytics</p>
+                    <button class="btn" onclick="exportAllData()">Export All Data</button>
+                    <button class="btn" onclick="generateMonthlyReport()">Monthly Report</button>
+                </div>
+            </div>
+
+            <h3 style="color: #2c5aa0; margin-bottom: 15px;">Export Options</h3>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                <div style="margin-bottom: 15px;">
+                    <strong>Payable Commissions Export includes:</strong>
+                    <ul style="margin-top: 5px; color: #666;">
+                        <li>All cases with PO received</li>
+                        <li>Commission calculations by distributor</li>
+                        <li>Surgeon-specific rates applied</li>
+                        <li>Procedure-specific rates applied</li>
+                        <li>Ready for payroll processing</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <strong>Outstanding POs Report excludes:</strong>
+                    <ul style="margin-top: 5px; color: #666;">
+                        <li>Cases without PO (not payable)</li>
+                        <li>Shows potential commission value</li>
+                        <li>Days outstanding tracking</li>
+                        <li>Follow-up action items</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -473,16 +722,43 @@
                     </div>
                 </div>
 
-                <!-- Commission Rules -->
+                <!-- Surgeon-Specific Rates -->
                 <div class="commission-section">
-                    <h3>Commission Rules</h3>
-                    <p style="color: #666; margin-bottom: 15px;">Add specific commission rules for different scenarios</p>
+                    <h3>Surgeon-Specific Rates</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Add specific commission rates for individual surgeons</p>
                     
-                    <div id="commissionRules">
-                        <!-- Rules will be added here dynamically -->
+                    <div id="surgeonRates">
+                        <!-- Surgeon rates will be added here -->
                     </div>
                     
-                    <button type="button" class="add-rule-btn" onclick="addCommissionRule()">+ Add Commission Rule</button>
+                    <button type="button" class="add-item-btn" onclick="addSurgeonRate()">+ Add Surgeon Rate</button>
+                </div>
+
+                <!-- Procedure-Specific Rates -->
+                <div class="commission-section">
+                    <h3>Procedure-Specific Rates</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Set different rates for different procedure types</p>
+                    
+                    <div id="procedureRates">
+                        <!-- Procedure rates will be added here -->
+                    </div>
+                    
+                    <button type="button" class="add-item-btn" onclick="addProcedureRate()">+ Add Procedure Rate</button>
+                </div>
+
+                <!-- Special Rules -->
+                <div class="commission-section">
+                    <h3>Special Commission Rules</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>New Surgeon Bonus Rate (%)</label>
+                            <input type="number" id="newSurgeonBonus" min="0" max="100" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Immediate Payout Surgeon</label>
+                            <input type="text" id="immediateSurgeon" placeholder="e.g., Dr. Wilson">
+                        </div>
+                    </div>
                 </div>
 
                 <div style="margin-top: 30px; text-align: center;">
@@ -494,17 +770,15 @@
     </div>
 
     <script>
-        console.log('Enhanced admin script loaded');
+        console.log('Advanced admin script loaded');
         
-        var ruleCounter = 0;
+        var surgeonRateCounter = 0;
+        var procedureRateCounter = 0;
         var distributors = [];
         
         function doLogin() {
-            console.log('Login function called');
-            
             var user = document.getElementById('username').value;
             var pass = document.getElementById('password').value;
-            
             var errorDiv = document.getElementById('errorMsg');
             var successDiv = document.getElementById('successMsg');
             
@@ -512,16 +786,12 @@
             successDiv.style.display = 'none';
             
             if ((user === 'admin' && pass === 'forma2025') || (user === 'formamedical' && pass === 'admin123')) {
-                console.log('Login SUCCESS');
                 successDiv.style.display = 'block';
-                
                 setTimeout(function() {
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('adminDashboard').style.display = 'block';
                 }, 1000);
-                
             } else {
-                console.log('Login FAILED');
                 errorDiv.style.display = 'block';
             }
         }
@@ -535,11 +805,53 @@
             document.getElementById('successMsg').style.display = 'none';
         }
         
+        function showTab(tabName) {
+            // Hide all tabs
+            var tabs = document.querySelectorAll('.tab-content');
+            var navTabs = document.querySelectorAll('.nav-tab');
+            
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            
+            navTabs.forEach(function(navTab) {
+                navTab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
         function showAddDistributorModal() {
             document.getElementById('modalTitle').textContent = 'Add New Distributor';
             document.getElementById('distributorForm').reset();
-            document.getElementById('commissionRules').innerHTML = '';
-            ruleCounter = 0;
+            document.getElementById('surgeonRates').innerHTML = '';
+            document.getElementById('procedureRates').innerHTML = '';
+            surgeonRateCounter = 0;
+            procedureRateCounter = 0;
+            document.getElementById('distributorModal').style.display = 'block';
+        }
+        
+        function editDistributor(code) {
+            document.getElementById('modalTitle').textContent = 'Edit Distributor: ' + code;
+            // Pre-populate form with existing data
+            if (code === 'ABCORTHO') {
+                document.getElementById('companyName').value = 'ABC Ortho Solutions';
+                document.getElementById('accessCode').value = 'ABCORTHO';
+                document.getElementById('contactName').value = 'John Smith';
+                document.getElementById('contactEmail').value = 'john@abcortho.com';
+                document.getElementById('defaultRate').value = '30';
+                document.getElementById('newSurgeonBonus').value = '40';
+                
+                // Add some example surgeon rates
+                addSurgeonRate('Dr. Johnson', '40');
+                addSurgeonRate('Dr. Smith', '30');
+                
+                // Add some example procedure rates
+                addProcedureRate('MTP', '35');
+                addProcedureRate('Hammertoe', '30');
+            }
             document.getElementById('distributorModal').style.display = 'block';
         }
         
@@ -547,104 +859,65 @@
             document.getElementById('distributorModal').style.display = 'none';
         }
         
-        function addCommissionRule() {
-            ruleCounter++;
-            var rulesContainer = document.getElementById('commissionRules');
+        function addSurgeonRate(surgeonName, rate) {
+            surgeonRateCounter++;
+            var surgeonContainer = document.getElementById('surgeonRates');
             
-            var ruleDiv = document.createElement('div');
-            ruleDiv.className = 'commission-rule';
-            ruleDiv.id = 'rule_' + ruleCounter;
+            var surgeonDiv = document.createElement('div');
+            surgeonDiv.className = 'form-row';
+            surgeonDiv.id = 'surgeonRate_' + surgeonRateCounter;
             
-            ruleDiv.innerHTML = `
-                <div class="commission-rule-header">
-                    <select class="rule-type-select" onchange="updateRuleInputs(${ruleCounter})" id="ruleType_${ruleCounter}">
-                        <option value="">Select Rule Type</option>
-                        <option value="surgery">Based on Surgery Type</option>
-                        <option value="surgeon">Based on Surgeon</option>
-                        <option value="new_surgeon">New Surgeon Bonus</option>
-                        <option value="immediate_payout">Immediate Payout Surgeon</option>
-                    </select>
-                    <button type="button" class="remove-rule-btn" onclick="removeRule(${ruleCounter})">Remove</button>
+            surgeonDiv.innerHTML = `
+                <div class="form-group">
+                    <label>Surgeon Name</label>
+                    <input type="text" id="surgeonName_${surgeonRateCounter}" value="${surgeonName || ''}" placeholder="e.g., Dr. Smith">
                 </div>
-                <div id="ruleInputs_${ruleCounter}">
-                    <!-- Dynamic inputs will be added here -->
+                <div class="form-group">
+                    <label>Commission Rate (%) 
+                        <button type="button" onclick="removeSurgeonRate(${surgeonRateCounter})" style="background: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 3px; float: right;">Remove</button>
+                    </label>
+                    <input type="number" id="surgeonRate_${surgeonRateCounter}" value="${rate || '30'}" min="0" max="100">
                 </div>
             `;
             
-            rulesContainer.appendChild(ruleDiv);
+            surgeonContainer.appendChild(surgeonDiv);
         }
         
-        function updateRuleInputs(ruleId) {
-            var ruleType = document.getElementById('ruleType_' + ruleId).value;
-            var inputsContainer = document.getElementById('ruleInputs_' + ruleId);
-            
-            var html = '';
-            
-            if (ruleType === 'surgery') {
-                html = `
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Surgery Type</label>
-                            <select id="surgeryType_${ruleId}">
-                                <option value="Hammertoe">Hammertoe</option>
-                                <option value="MTP">MTP</option>
-                                <option value="Lapidus">Lapidus</option>
-                                <option value="Akin">Akin</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Commission Rate (%)</label>
-                            <input type="number" id="surgeryRate_${ruleId}" min="0" max="100" value="30">
-                        </div>
-                    </div>
-                `;
-            } else if (ruleType === 'surgeon') {
-                html = `
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Surgeon Name</label>
-                            <input type="text" id="surgeonName_${ruleId}" placeholder="e.g., Dr. Smith">
-                        </div>
-                        <div class="form-group">
-                            <label>Commission Rate (%)</label>
-                            <input type="number" id="surgeonRate_${ruleId}" min="0" max="100" value="30">
-                        </div>
-                    </div>
-                `;
-            } else if (ruleType === 'new_surgeon') {
-                html = `
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>New Surgeon Bonus Rate (%)</label>
-                            <input type="number" id="newSurgeonRate_${ruleId}" min="0" max="100" value="40">
-                        </div>
-                        <div class="form-group">
-                            <label>Effective Date</label>
-                            <input type="date" id="effectiveDate_${ruleId}">
-                        </div>
-                    </div>
-                `;
-            } else if (ruleType === 'immediate_payout') {
-                html = `
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Surgeon Name (Immediate Payout)</label>
-                            <input type="text" id="immediateSurgeon_${ruleId}" placeholder="e.g., Dr. Wilson">
-                        </div>
-                        <div class="form-group">
-                            <label>Commission Rate (%)</label>
-                            <input type="number" id="immediateRate_${ruleId}" min="0" max="100" value="30">
-                        </div>
-                    </div>
-                `;
-            }
-            
-            inputsContainer.innerHTML = html;
+        function removeSurgeonRate(id) {
+            document.getElementById('surgeonRate_' + id).remove();
         }
         
-        function removeRule(ruleId) {
-            var ruleElement = document.getElementById('rule_' + ruleId);
-            ruleElement.remove();
+        function addProcedureRate(procedureType, rate) {
+            procedureRateCounter++;
+            var procedureContainer = document.getElementById('procedureRates');
+            
+            var procedureDiv = document.createElement('div');
+            procedureDiv.className = 'form-row';
+            procedureDiv.id = 'procedureRate_' + procedureRateCounter;
+            
+            procedureDiv.innerHTML = `
+                <div class="form-group">
+                    <label>Procedure Type</label>
+                    <select id="procedureType_${procedureRateCounter}">
+                        <option value="Hammertoe" ${procedureType === 'Hammertoe' ? 'selected' : ''}>Hammertoe</option>
+                        <option value="MTP" ${procedureType === 'MTP' ? 'selected' : ''}>MTP</option>
+                        <option value="Lapidus" ${procedureType === 'Lapidus' ? 'selected' : ''}>Lapidus</option>
+                        <option value="Akin" ${procedureType === 'Akin' ? 'selected' : ''}>Akin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Commission Rate (%) 
+                        <button type="button" onclick="removeProcedureRate(${procedureRateCounter})" style="background: #dc3545; color: white; border: none; padding: 2px 6px; border-radius: 3px; float: right;">Remove</button>
+                    </label>
+                    <input type="number" id="procedureRate_${procedureRateCounter}" value="${rate || '30'}" min="0" max="100">
+                </div>
+            `;
+            
+            procedureContainer.appendChild(procedureDiv);
+        }
+        
+        function removeProcedureRate(id) {
+            document.getElementById('procedureRate_' + id).remove();
         }
         
         function saveDistributor(event) {
@@ -652,118 +925,58 @@
             
             var companyName = document.getElementById('companyName').value;
             var accessCode = document.getElementById('accessCode').value.toUpperCase();
-            var contactName = document.getElementById('contactName').value;
-            var contactEmail = document.getElementById('contactEmail').value;
-            var contactPhone = document.getElementById('contactPhone').value;
-            var defaultRate = document.getElementById('defaultRate').value;
             
-            // Collect commission rules
-            var rules = [];
-            var ruleElements = document.querySelectorAll('.commission-rule');
-            
-            ruleElements.forEach(function(ruleElement) {
-                var ruleId = ruleElement.id.split('_')[1];
-                var ruleType = document.getElementById('ruleType_' + ruleId).value;
-                
-                if (ruleType) {
-                    var rule = { type: ruleType };
-                    
-                    if (ruleType === 'surgery') {
-                        rule.surgeryType = document.getElementById('surgeryType_' + ruleId).value;
-                        rule.rate = document.getElementById('surgeryRate_' + ruleId).value;
-                    } else if (ruleType === 'surgeon') {
-                        rule.surgeonName = document.getElementById('surgeonName_' + ruleId).value;
-                        rule.rate = document.getElementById('surgeonRate_' + ruleId).value;
-                    } else if (ruleType === 'new_surgeon') {
-                        rule.rate = document.getElementById('newSurgeonRate_' + ruleId).value;
-                        rule.effectiveDate = document.getElementById('effectiveDate_' + ruleId).value;
-                    } else if (ruleType === 'immediate_payout') {
-                        rule.surgeonName = document.getElementById('immediateSurgeon_' + ruleId).value;
-                        rule.rate = document.getElementById('immediateRate_' + ruleId).value;
-                    }
-                    
-                    rules.push(rule);
+            // Collect surgeon rates
+            var surgeonRates = [];
+            var surgeonElements = document.querySelectorAll('[id^="surgeonRate_"]');
+            surgeonElements.forEach(function(element) {
+                var id = element.id.split('_')[1];
+                var name = document.getElementById('surgeonName_' + id).value;
+                var rate = document.getElementById('surgeonRate_' + id).value;
+                if (name && rate) {
+                    surgeonRates.push({name: name, rate: rate});
                 }
             });
             
-            // Create distributor object
-            var distributor = {
-                companyName: companyName,
-                accessCode: accessCode,
-                contactName: contactName,
-                contactEmail: contactEmail,
-                contactPhone: contactPhone,
-                defaultRate: defaultRate,
-                commissionRules: rules
-            };
-            
-            // Add to distributors array (in real app, this would save to database)
-            distributors.push(distributor);
-            
-            // Add to the UI
-            addDistributorToUI(distributor);
-            
-            // Update count
-            updateDistributorsCount();
-            
-            alert('Distributor added successfully!');
-            closeModal();
-        }
-        
-        function addDistributorToUI(distributor) {
-            var distributorsList = document.getElementById('distributorsList');
-            
-            // Build rules summary
-            var rulesSummary = 'Rate: ' + distributor.defaultRate + '%';
-            if (distributor.commissionRules.length > 0) {
-                var ruleTexts = [];
-                distributor.commissionRules.forEach(function(rule) {
-                    if (rule.type === 'surgery') {
-                        ruleTexts.push(rule.surgeryType + ' ' + rule.rate + '%');
-                    } else if (rule.type === 'new_surgeon') {
-                        ruleTexts.push('New surgeons ' + rule.rate + '%');
-                    } else if (rule.type === 'immediate_payout') {
-                        ruleTexts.push(rule.surgeonName + ' immediate payout');
-                    }
-                });
-                if (ruleTexts.length > 0) {
-                    rulesSummary += ' (' + ruleTexts.join(', ') + ')';
+            // Collect procedure rates
+            var procedureRates = [];
+            var procedureElements = document.querySelectorAll('[id^="procedureRate_"]');
+            procedureElements.forEach(function(element) {
+                var id = element.id.split('_')[1];
+                var type = document.getElementById('procedureType_' + id).value;
+                var rate = document.getElementById('procedureRate_' + id).value;
+                if (type && rate) {
+                    procedureRates.push({type: type, rate: rate});
                 }
-            }
+            });
             
-            var distributorDiv = document.createElement('div');
-            distributorDiv.className = 'distributor-item';
-            distributorDiv.innerHTML = `
-                <div>
-                    <div class="distributor-name">${distributor.companyName}</div>
-                    <div>Code: ${distributor.accessCode} | Contact: ${distributor.contactName} | ${rulesSummary}</div>
-                </div>
-                <div class="distributor-actions">
-                    <button class="btn" onclick="editDistributor('${distributor.accessCode}')">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteDistributor('${distributor.accessCode}')">Delete</button>
-                </div>
-            `;
-            
-            distributorsList.appendChild(distributorDiv);
-        }
-        
-        function updateDistributorsCount() {
-            var currentCount = parseInt(document.getElementById('totalDistributorsCount').textContent);
-            document.getElementById('totalDistributorsCount').textContent = currentCount + 1;
-        }
-        
-        function editDistributor(code) {
-            alert('Edit distributor: ' + code + ' - Coming soon!');
+            alert('Distributor saved successfully!\\n\\nSurgeon Rates: ' + surgeonRates.length + '\\nProcedure Rates: ' + procedureRates.length);
+            closeModal();
         }
         
         function deleteDistributor(code) {
             if (confirm('Are you sure you want to delete this distributor?')) {
                 alert('Distributor deleted: ' + code);
-                // Here you would remove from UI and database
             }
         }
         
-        function exportData() {
+        function exportPayableCommissions() {
+            alert('Exporting payable commissions (PO received only)...\\n\\nThis will include:\\n- All cases with PO\\n- Calculated commissions\\n- Distributor breakdown\\n- Ready for payroll');
+        }
+        
+        function exportOutstandingPOs() {
+            alert('Exporting outstanding POs report...\\n\\nThis will include:\\n- Cases without PO\\n- Potential commission values\\n- Days outstanding\\n- Follow-up needed');
+        }
+        
+        function exportAllData() {
+            alert('Exporting comprehensive data...\\n\\nThis will include:\\n- All distributors\\n- All cases\\n- Commission calculations\\n- Complete analytics');
+        }
+        
+        function generateMonthlyReport() {
+            alert('Generating monthly report...\\n\\nThis will include:\\n- Commission summary\\n- PO status breakdown\\n- Distributor performance\\n- Outstanding items');
+        }
+        
+        function exportDistributors() {
             alert('Exporting distributor data...');
         }
         
