@@ -79,7 +79,7 @@
             font-size: 16px;
         }
 
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, textarea {
             width: 100%;
             padding: 15px 20px;
             border: 2px solid #e9ecef;
@@ -89,29 +89,59 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus, .form-group select:focus, textarea:focus {
             outline: none;
             border-color: #2c5aa0;
             box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
             transform: translateY(-2px);
         }
 
-        .login-btn {
-            width: 100%;
+        .login-btn, .btn {
             background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
             color: white;
             border: none;
-            padding: 18px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 10px;
             cursor: pointer;
+            font-weight: bold;
             transition: all 0.3s ease;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
-        .login-btn:hover {
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+        }
+
+        .login-btn:hover, .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(44, 90, 160, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            margin-right: 5px;
         }
 
         .error-message, .success-message {
@@ -305,91 +335,6 @@
             gap: 12px;
         }
 
-        /* Button Styles */
-        .btn {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 12px;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .btn-success:hover {
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-        }
-
-        .btn-danger:hover {
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-            color: #212529;
-        }
-
-        .btn-warning:hover {
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-        }
-
-        .btn-small {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-right: 5px;
-            transition: all 0.3s ease;
-            font-size: 12px;
-        }
-
-        .btn-small:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
-        }
-
-        .btn-small.btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-
-        .btn-small.btn-success:hover {
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-
-        .btn-small.btn-warning {
-            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-            color: #212529;
-        }
-
-        .btn-small.btn-warning:hover {
-            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-        }
-
-        .btn-small.active {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
-        }
-
         /* Case Management Styles */
         .case-controls {
             background: white;
@@ -507,64 +452,6 @@
         .status-outstanding {
             background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
             color: #721c24;
-        }
-
-        .pagination-section {
-            background: white;
-            border-radius: 20px;
-            padding: 20px 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .pagination-info {
-            color: #666;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .pagination-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .pagination-numbers {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
-
-        /* Simple table styles */
-        .commission-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .commission-table th,
-        .commission-table td {
-            padding: 18px;
-            text-align: left;
-            border-bottom: 1px solid #f1f3f4;
-        }
-
-        .commission-table th {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            font-weight: bold;
-            color: #2c5aa0;
-            font-size: 16px;
-        }
-
-        .commission-table tr:hover {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
 
         /* Modal Styles */
@@ -691,6 +578,8 @@
             border-color: #28a745;
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
         }
+
+        @media (max-width: 768px) {
             .search-group {
                 flex-direction: column;
                 align-items: stretch;
@@ -705,9 +594,12 @@
                 min-width: auto;
             }
             
-            .pagination-section {
-                flex-direction: column;
-                gap: 15px;
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-detail-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -764,7 +656,7 @@
             <div id="overviewTab" class="tab-content active">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-value" id="totalDistributorsCount">3</div>
+                        <div class="stat-value">3</div>
                         <div class="stat-label">Total Distributors</div>
                     </div>
                     <div class="stat-card">
@@ -849,7 +741,7 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="casesTableBody">
+                            <tbody>
                                 <tr>
                                     <td><strong>CS-1234567890</strong></td>
                                     <td>2024-12-15</td>
@@ -861,8 +753,8 @@
                                     <td style="color: #28a745; font-weight: bold;">$285</td>
                                     <td><span class="status-badge status-paid">PO Received</span></td>
                                     <td>
-                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567890')">👁️ View</button>
-                                        <button class="btn-small btn-success" onclick="alert('PO already received!')">📎 PO</button>
+                                        <button class="btn btn-small" onclick="alert('Case details for CS-1234567890')">👁️ View</button>
+                                        <button class="btn btn-small btn-success" onclick="alert('PO already received!')">📎 PO</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -876,8 +768,8 @@
                                     <td style="color: #ffc107; font-weight: bold;">$150</td>
                                     <td><span class="status-badge status-outstanding">Awaiting PO</span></td>
                                     <td>
-                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567891')">👁️ View</button>
-                                        <button class="btn-small btn-warning" onclick="uploadPO('CS-1234567891')">⬆️ Upload PO</button>
+                                        <button class="btn btn-small" onclick="alert('Case details for CS-1234567891')">👁️ View</button>
+                                        <button class="btn btn-small btn-warning" onclick="uploadPO('CS-1234567891')">⬆️ Upload PO</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -891,30 +783,12 @@
                                     <td style="color: #28a745; font-weight: bold;">$420</td>
                                     <td><span class="status-badge status-paid">Invoiced</span></td>
                                     <td>
-                                        <button class="btn-small" onclick="viewCaseDetails('CS-1234567892')">👁️ View</button>
-                                        <button class="btn-small btn-success" onclick="alert('Already invoiced!')">📎 PO</button>
+                                        <button class="btn btn-small" onclick="alert('Case details for CS-1234567892')">👁️ View</button>
+                                        <button class="btn btn-small btn-success" onclick="alert('Already invoiced!')">📎 PO</button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="pagination-section">
-                        <div class="pagination-info">
-                            Showing 1-3 of 47 cases
-                        </div>
-                        <div class="pagination-controls">
-                            <button class="btn-small" onclick="alert('Previous page')">← Previous</button>
-                            <span class="pagination-numbers">
-                                <button class="btn-small active">1</button>
-                                <button class="btn-small" onclick="alert('Page 2')">2</button>
-                                <button class="btn-small" onclick="alert('Page 3')">3</button>
-                                <span>...</span>
-                                <button class="btn-small" onclick="alert('Page 16')">16</button>
-                            </span>
-                            <button class="btn-small" onclick="alert('Next page')">Next →</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -943,46 +817,6 @@
                             <div class="stat-label">Outstanding POs</div>
                         </div>
                     </div>
-
-                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 24px;">📊 Commission Details by Distributor</h3>
-                    <table class="commission-table">
-                        <thead>
-                            <tr>
-                                <th>Distributor</th>
-                                <th>Cases with PO</th>
-                                <th>Outstanding POs</th>
-                                <th>Payable Commission</th>
-                                <th>Outstanding Commission</th>
-                                <th>Total Potential</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>ABC Ortho Solutions</strong></td>
-                                <td>12</td>
-                                <td>5</td>
-                                <td style="color: #28a745; font-weight: bold;">$4,200</td>
-                                <td style="color: #ffc107; font-weight: bold;">$1,150</td>
-                                <td style="color: #2c5aa0; font-weight: bold;">$5,350</td>
-                            </tr>
-                            <tr>
-                                <td><strong>MedSupply Pro</strong></td>
-                                <td>15</td>
-                                <td>7</td>
-                                <td style="color: #28a745; font-weight: bold;">$5,800</td>
-                                <td style="color: #ffc107; font-weight: bold;">$1,650</td>
-                                <td style="color: #2c5aa0; font-weight: bold;">$7,450</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Surgical Solutions Inc</strong></td>
-                                <td>5</td>
-                                <td>3</td>
-                                <td style="color: #28a745; font-weight: bold;">$2,450</td>
-                                <td style="color: #ffc107; font-weight: bold;">$400</td>
-                                <td style="color: #2c5aa0; font-weight: bold;">$2,850</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
@@ -1091,7 +925,7 @@
 
                 <div class="form-group">
                     <label>Notes (Optional)</label>
-                    <textarea id="poNotes" rows="3" placeholder="Any additional notes about this PO..." style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px;"></textarea>
+                    <textarea id="poNotes" rows="3" placeholder="Any additional notes about this PO..."></textarea>
                 </div>
             </div>
 
@@ -1107,7 +941,7 @@
     </div>
 
     <script>
-        console.log('Admin script loaded successfully');
+        console.log('Admin portal loaded successfully');
         
         function doLogin() {
             console.log('Login attempt started');
@@ -1117,8 +951,7 @@
             var errorDiv = document.getElementById('errorMsg');
             var successDiv = document.getElementById('successMsg');
             
-            console.log('Username:', user);
-            console.log('Password:', pass);
+            console.log('Attempting login with:', user);
             
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
@@ -1178,32 +1011,22 @@
             console.log('Filtering cases:', status, distributor, dateRange);
         }
         
-        function viewCaseDetails(caseId) {
-            alert('Viewing case details for: ' + caseId + '\\n\\nThis will show:\\n- Complete case information\\n- Surgery details\\n- Items used\\n- Commission calculations\\n- PO status');
+        function exportFilteredCases() {
+            alert('Exporting filtered cases...');
         }
         
         function uploadPO(caseId) {
             console.log('Opening PO upload for case:', caseId);
             
-            // Populate PO modal with case data
             document.getElementById('poModalCaseId').textContent = caseId;
             document.getElementById('poModalTitle').textContent = 'Upload Purchase Order - ' + caseId;
             
-            if (caseId === 'CS-1234567890') {
-                document.getElementById('poModalSurgeon').textContent = 'Dr. Benjamin Potter';
-                document.getElementById('poModalHospital').textContent = 'Holston Valley Surgery Center';
-                document.getElementById('poModalValue').textContent = '$3,200';
-            } else if (caseId === 'CS-1234567891') {
+            if (caseId === 'CS-1234567891') {
                 document.getElementById('poModalSurgeon').textContent = 'Dr. Sarah Johnson';
                 document.getElementById('poModalHospital').textContent = 'Regional Medical Center';
                 document.getElementById('poModalValue').textContent = '$1,850';
-            } else if (caseId === 'CS-1234567892') {
-                document.getElementById('poModalSurgeon').textContent = 'Dr. Michael Wilson';
-                document.getElementById('poModalHospital').textContent = 'City General Hospital';
-                document.getElementById('poModalValue').textContent = '$4,500';
             }
             
-            // Set today's date as default
             var today = new Date();
             var dateString = today.getFullYear() + '-' + 
                 String(today.getMonth() + 1).padStart(2, '0') + '-' + 
@@ -1215,7 +1038,6 @@
         
         function closePOModal() {
             document.getElementById('poUploadModal').style.display = 'none';
-            // Clear form
             document.getElementById('poNumber').value = '';
             document.getElementById('poDate').value = '';
             document.getElementById('poAmount').value = '';
@@ -1234,37 +1056,39 @@
                 return;
             }
             
-            // In real app, this would save to database and update case status
-            alert('Purchase Order saved successfully!\\n\\nCase: ' + caseId + '\\nPO Number: ' + poNumber + '\\nPO Date: ' + poDate + '\\nAmount: 
-        
-        function exportFilteredCases() {
-            alert('Exporting filtered cases...');
-        }
-    </script>
-</body>
-</html> + poAmount + '\\n\\nCase status updated to "PO Received"');
+            alert('Purchase Order saved successfully!\\n\\nCase: ' + caseId + '\\nPO Number: ' + poNumber + '\\nPO Date: ' + poDate + '\\nAmount: $' + poAmount + '\\n\\nCase status updated to "PO Received"');
             
             closePOModal();
-            
-            // Update the case status in the table
-            updateCaseStatus(caseId, 'PO Received');
         }
         
-        function updateCaseStatus(caseId, newStatus) {
-            // Find and update the status in the table
-            var rows = document.querySelectorAll('#casesTableBody tr');
-            rows.forEach(function(row) {
-                var firstCell = row.cells[0].textContent;
-                if (firstCell.includes(caseId)) {
-                    var statusCell = row.cells[8];
-                    var badgeClass = 'status-paid';
-                    if (newStatus === 'Awaiting PO') badgeClass = 'status-outstanding';
-                    if (newStatus === 'Submitted') badgeClass = 'status-pending';
-                    
-                    statusCell.innerHTML = '<span class="status-badge ' + badgeClass + '">' + newStatus + '</span>';
-                }
-            });
-        }
+        // File upload handling
+        window.addEventListener('load', function() {
+            var uploadArea = document.getElementById('uploadArea');
+            var fileInput = document.getElementById('poFileInput');
+            
+            if (uploadArea && fileInput) {
+                uploadArea.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    uploadArea.classList.add('drag-over');
+                });
+                
+                uploadArea.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                });
+                
+                uploadArea.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    uploadArea.classList.remove('drag-over');
+                    var files = e.dataTransfer.files;
+                    handleFileUpload(files);
+                });
+                
+                fileInput.addEventListener('change', function(e) {
+                    handleFileUpload(e.target.files);
+                });
+            }
+        });
         
         function handleFileUpload(files) {
             var uploadedFilesDiv = document.getElementById('uploadedFiles');
@@ -1284,41 +1108,6 @@
         
         function removeFile(button) {
             button.parentElement.remove();
-        }
-        
-        // Initialize file upload when page loads
-        window.addEventListener('load', function() {
-            var uploadArea = document.getElementById('uploadArea');
-            var fileInput = document.getElementById('poFileInput');
-            
-            if (uploadArea && fileInput) {
-                // Handle drag and drop
-                uploadArea.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    uploadArea.classList.add('drag-over');
-                });
-                
-                uploadArea.addEventListener('dragleave', function(e) {
-                    e.preventDefault();
-                    uploadArea.classList.remove('drag-over');
-                });
-                
-                uploadArea.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    uploadArea.classList.remove('drag-over');
-                    var files = e.dataTransfer.files;
-                    handleFileUpload(files);
-                });
-                
-                // Handle file input change
-                fileInput.addEventListener('change', function(e) {
-                    handleFileUpload(e.target.files);
-                });
-            }
-        });
-        
-        function exportFilteredCases() {
-            alert('Exporting filtered cases...');
         }
     </script>
 </body>
