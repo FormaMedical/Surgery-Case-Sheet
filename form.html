@@ -23,10 +23,53 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
         .logo {
-            height: 80px;
+            height: 60px;
             width: auto;
             max-width: 100%;
+        }
+        .breadcrumb {
+            flex: 1;
+        }
+        .back-btn {
+            color: #2c5aa0;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+        .back-btn:hover {
+            color: #1e3d6f;
+        }
+        #pageTitle {
+            color: #2c5aa0;
+            margin: 0;
+            font-size: 24px;
+        }
+        .distributor-info {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d1ecf1 100%);
+            border: 2px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .distributor-info h3 {
+            color: #2c5aa0;
+            margin-bottom: 5px;
+        }
+        .distributor-info p {
+            color: #666;
+            margin: 0;
         }
         .form-container {
             background: white;
@@ -277,16 +320,23 @@
 </head>
 <body>
     <div class="header">
-        <img src="Forma Medical transparent.png" alt="Forma Medical Logo" class="logo">
+        <div class="header-content">
+            <img src="Forma Medical transparent.png" alt="Forma Medical Logo" class="logo">
+            <div class="breadcrumb">
+                <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+                <h2 id="pageTitle">Surgery Case Submission</h2>
+            </div>
+        </div>
     </div>
     
     <div class="form-container">
+        <div class="distributor-info">
+            <h3 id="distributorCompany">Loading...</h3>
+            <p id="distributorContact">Contact: Loading...</p>
+        </div>
+        
         <form id="caseForm">
             <div class="form-row">
-                <div class="form-col">
-                    <label for="distributor">Distributor Company:</label>
-                    <input type="text" id="distributor" name="distributor" required>
-                </div>
                 <div class="form-col">
                     <label for="hospital">Hospital/Surgery Center:</label>
                     <input type="text" id="hospital" name="hospital" required>
@@ -442,8 +492,30 @@
     </div>
 
     <script>
-        // Sample product database - replace with your actual catalog
-        const products = [
+        // Global variables for distributor info
+        let distributorInfo = null;
+
+        // Check authentication and load distributor info
+        window.addEventListener('load', function() {
+            const distributorCode = sessionStorage.getItem('distributorCode');
+            const distributorData = sessionStorage.getItem('distributorData');
+
+            if (!distributorCode || !distributorData) {
+                // Not logged in, redirect to login
+                alert('Please log in to access this page.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Parse and store distributor data
+            distributorInfo = JSON.parse(distributorData);
+            updateDistributorUI();
+        });
+
+        function updateDistributorUI() {
+            document.getElementById('distributorCompany').textContent = distributorInfo.companyName;
+            document.getElementById('distributorContact').textContent = `Contact: ${distributorInfo.contactName}`;
+        }
             {code: "6100.2014", name: "1.4mm K-wires x 102mm (4\") long"},
             {code: "6102.002", name: "2.6mm Drill, AO Quick Connect"},
             {code: "6100.0027", name: "2.7mm Drill, AO Quick Connect, Cannulated"},
@@ -451,6 +523,8 @@
             {code: "6102.0005", name: "3x13mm Wedge burr"},
             {code: "FCONMTP", name: "MIS MTP Construct"}
         ];
+
+        let addedItems = [];
 
         let addedItems = [];
         
@@ -651,7 +725,9 @@
             const totalConstructPrice = constructs.reduce((sum, construct) => sum + construct.price, 0);
 
             const formData = {
-                distributor: document.getElementById('distributor').value,
+                distributor: distributorInfo.companyName,
+                distributorCode: distributorInfo.code,
+                distributorContact: distributorInfo.contactName,
                 hospital: document.getElementById('hospital').value,
                 surgeon: document.getElementById('surgeon').value,
                 salesRep: document.getElementById('salesRep').value,
@@ -664,7 +740,9 @@
                     itemsSubtotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
                     constructPrice: totalConstructPrice,
                     grandTotal: addedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0) + totalConstructPrice
-                }
+                },
+                submissionDate: new Date().toISOString(),
+                status: 'submitted'
             };
 
             // Send to your n8n webhook
@@ -677,12 +755,26 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Case sheet submitted successfully!');
+                // Store submission locally for demo purposes
+                const submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+                const submissionId = 'CS-' + Date.now();
+                formData.id = submissionId;
+                submissions.push(formData);
+                localStorage.setItem('submissions', JSON.stringify(submissions));
+
+                alert('Case sheet submitted successfully! Submission ID: ' + submissionId);
                 // Reset form
                 document.getElementById('caseForm').reset();
                 addedItems = [];
                 updateItemsList();
                 updateTotals();
+                
+                // Optionally redirect to dashboard
+                setTimeout(() => {
+                    if (confirm('Would you like to return to your dashboard?')) {
+                        window.location.href = 'dashboard.html';
+                    }
+                }, 1000);
             })
             .catch(error => {
                 console.error('Error:', error);
