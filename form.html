@@ -497,24 +497,38 @@
 
         // Check authentication and load distributor info
         window.addEventListener('load', function() {
-            const distributorCode = sessionStorage.getItem('distributorCode');
-            const distributorData = sessionStorage.getItem('distributorData');
+            // Small delay to ensure DOM is fully loaded
+            setTimeout(() => {
+                const distributorCode = sessionStorage.getItem('distributorCode');
+                const distributorData = sessionStorage.getItem('distributorData');
 
-            if (!distributorCode || !distributorData) {
-                // Not logged in, redirect to login
-                alert('Please log in to access this page.');
-                window.location.href = 'index.html';
-                return;
-            }
+                if (!distributorCode || !distributorData) {
+                    // Not logged in, redirect to login
+                    alert('Please log in to access this page.');
+                    window.location.href = 'index.html';
+                    return;
+                }
 
-            // Parse and store distributor data
-            distributorInfo = JSON.parse(distributorData);
-            updateDistributorUI();
+                // Parse and store distributor data
+                try {
+                    distributorInfo = JSON.parse(distributorData);
+                    updateDistributorUI();
+                } catch (error) {
+                    console.error('Error parsing distributor data:', error);
+                    // Fallback or redirect to login
+                    window.location.href = 'index.html';
+                }
+            }, 100);
         });
 
         function updateDistributorUI() {
-            document.getElementById('distributorCompany').textContent = distributorInfo.companyName;
-            document.getElementById('distributorContact').textContent = `Contact: ${distributorInfo.contactName}`;
+            if (distributorInfo) {
+                document.getElementById('distributorCompany').textContent = distributorInfo.companyName || 'Company Name';
+                document.getElementById('distributorContact').textContent = `Contact: ${distributorInfo.contactName || 'Contact Name'}`;
+            } else {
+                document.getElementById('distributorCompany').textContent = 'Loading...';
+                document.getElementById('distributorContact').textContent = 'Contact: Loading...';
+            }
         }
             {code: "6100.2014", name: "1.4mm K-wires x 102mm (4\") long"},
             {code: "6102.002", name: "2.6mm Drill, AO Quick Connect"},
