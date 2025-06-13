@@ -402,11 +402,11 @@
         /* Compact iPhone-style Calendar */
         .calendar-container {
             background: var(--bg-card);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             box-shadow: var(--shadow);
             margin-bottom: 20px;
-            max-width: 400px;
+            max-width: 320px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -415,18 +415,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .calendar-nav {
             background: var(--gradient-primary);
             color: white;
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -440,7 +440,7 @@
 
         #currentMonth {
             color: #2c5aa0;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             margin: 0;
         }
@@ -448,50 +448,54 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
+            gap: 1px;
             background: var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .calendar-day-header {
             background: var(--gradient-primary);
             color: white;
-            padding: 8px 2px;
+            padding: 6px 2px;
             text-align: center;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .calendar-day {
             background: var(--bg-card);
-            padding: 8px 2px;
+            padding: 0;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
-            min-height: 35px;
+            width: 40px;
+            height: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            border: none;
         }
 
         .calendar-day:hover {
             background: var(--bg-secondary);
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .calendar-day.other-month {
             color: var(--text-muted);
             background: var(--bg-secondary);
+            opacity: 0.5;
         }
 
         .calendar-day.today {
             background: var(--gradient-success);
             color: white;
             font-weight: bold;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.3);
         }
 
         .calendar-day.today:hover {
@@ -502,6 +506,19 @@
             background: var(--gradient-primary);
             color: white;
             font-weight: bold;
+            position: relative;
+        }
+
+        .calendar-day.scheduled::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
         }
 
         .calendar-day.scheduled:hover {
@@ -509,22 +526,13 @@
         }
 
         .calendar-day-number {
-            font-size: 12px;
-            font-weight: bold;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1;
         }
 
         .calendar-event {
-            background: rgba(255,255,255,0.9);
-            color: #2c5aa0;
-            font-size: 8px;
-            padding: 1px 3px;
-            border-radius: 3px;
-            margin-top: 2px;
-            font-weight: bold;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            max-width: 90%;
+            display: none; /* Hide text events in compact mode */
         }
 
         .calendar-legend {
@@ -1092,22 +1100,27 @@
             }
 
             .calendar-container {
-                max-width: 100%;
-                margin: 0;
+                max-width: 280px;
+                padding: 12px;
             }
             
             .calendar-day {
-                min-height: 30px;
-                padding: 6px 2px;
+                width: 35px;
+                height: 35px;
             }
             
             .calendar-day-number {
-                font-size: 11px;
+                font-size: 10px;
             }
             
-            .calendar-event {
-                font-size: 7px;
-                padding: 1px 2px;
+            .calendar-nav {
+                width: 24px;
+                height: 24px;
+                font-size: 11px;
+            }
+
+            #currentMonth {
+                font-size: 14px;
             }
             
             .event-form-grid {
@@ -1115,11 +1128,16 @@
             }
             
             .calendar-legend {
-                gap: 10px;
+                gap: 8px;
             }
             
             .legend-item {
-                font-size: 11px;
+                font-size: 10px;
+            }
+
+            .legend-dot {
+                width: 10px;
+                height: 10px;
             }
         }
     </style>
@@ -1148,8 +1166,9 @@
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
-            <button class="nav-tab" onclick="showTab('analytics')">📈 Performance Analytics</button>
-            <button class="nav-tab" onclick="showTab('submissions')">📋 My Submissions</button>
+            <button class="nav-tab" onclick="showTab('calendar')">📅 Calendar</button>
+            <button class="nav-tab" onclick="showTab('analytics')">📈 Analytics</button>
+            <button class="nav-tab" onclick="showTab('submissions')">📋 Submissions</button>
             <button class="nav-tab" onclick="showTab('commissions')">💰 Commissions</button>
             <button class="nav-tab" onclick="showTab('relationships')">🤝 Relationships</button>
         </div>
@@ -1178,48 +1197,6 @@
                         </div>
                     </div>
                     <a href="submissions.html" class="action-btn btn-success">View All Submissions</a>
-                </div>
-            </div>
-
-            <!-- Surgery Calendar Section -->
-            <div class="stats-section">
-                <h2 class="section-title">📅 Surgery Calendar</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 15px;">Schedule upcoming surgeries and manage your case pipeline</p>
-                
-                <div class="calendar-container">
-                    <div class="calendar-header">
-                        <button class="calendar-nav" onclick="changeMonth(-1)">❮</button>
-                        <h3 id="currentMonth">June 2025</h3>
-                        <button class="calendar-nav" onclick="changeMonth(1)">❯</button>
-                    </div>
-                    
-                    <div class="calendar-grid">
-                        <div class="calendar-day-header">Sun</div>
-                        <div class="calendar-day-header">Mon</div>
-                        <div class="calendar-day-header">Tue</div>
-                        <div class="calendar-day-header">Wed</div>
-                        <div class="calendar-day-header">Thu</div>
-                        <div class="calendar-day-header">Fri</div>
-                        <div class="calendar-day-header">Sat</div>
-                        
-                        <!-- Calendar days will be generated by JavaScript -->
-                        <div id="calendarDays"></div>
-                    </div>
-                    
-                    <div class="calendar-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot scheduled"></div>
-                            <span>Scheduled Surgery</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot today"></div>
-                            <span>Today</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot available"></div>
-                            <span>Available</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -1274,6 +1251,78 @@
                             <p>Submitted June 5, 2025 • Patient: RD • Commission: $420</p>
                         </div>
                         <span class="status-badge status-complete">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div id="calendarTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">📅 Surgery Calendar</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 25px; text-align: center;">Schedule upcoming surgeries and manage your case pipeline</p>
+                
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" onclick="changeMonth(-1)">❮</button>
+                        <h3 id="currentMonth">June 2025</h3>
+                        <button class="calendar-nav" onclick="changeMonth(1)">❯</button>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                        
+                        <!-- Calendar days will be generated by JavaScript -->
+                        <div id="calendarDays"></div>
+                    </div>
+                    
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot scheduled"></div>
+                            <span>Scheduled Surgery</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot today"></div>
+                            <span>Today</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot available"></div>
+                            <span>Available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Surgeries List -->
+                <div class="recent-section" style="margin-top: 30px;">
+                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 20px; text-align: center;">📋 Upcoming Surgeries</h3>
+                    <div id="upcomingSurgeries">
+                        <div class="recent-item">
+                            <div class="recent-info">
+                                <h4>June 15, 2025 • 9:00 AM</h4>
+                                <p><strong>Dr. Benjamin Potter</strong> • MTP Fusion • Holston Valley Surgery Center • Patient: J.S.</p>
+                            </div>
+                            <span class="status-badge status-processing">Scheduled</span>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-info">
+                                <h4>June 18, 2025 • 2:30 PM</h4>
+                                <p><strong>Dr. Sarah Johnson</strong> • Hammertoe Correction • Regional Medical Center • Patient: M.B.</p>
+                            </div>
+                            <span class="status-badge status-processing">Scheduled</span>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-info">
+                                <h4>June 22, 2025 • 11:00 AM</h4>
+                                <p><strong>Dr. Michael Wilson</strong> • Lapidus Procedure • City General Hospital • Patient: R.D.</p>
+                            </div>
+                            <span class="status-badge status-processing">Scheduled</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1788,14 +1837,28 @@
     </div>
 
     <script>
-        // Theme functionality with proper CSS variables
+        // Theme functionality with proper persistence
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            
+            // Save to localStorage with error handling
+            try {
+                localStorage.setItem('theme', newTheme);
+                console.log('Theme saved to localStorage:', newTheme);
+            } catch (error) {
+                console.log('Could not save theme preference:', error);
+                // Fallback: save to sessionStorage
+                try {
+                    sessionStorage.setItem('theme', newTheme);
+                    console.log('Theme saved to sessionStorage as fallback');
+                } catch (fallbackError) {
+                    console.log('No storage available for theme preference');
+                }
+            }
             
             // Update theme toggle icon
             const themeToggle = document.querySelector('.theme-toggle');
@@ -1806,10 +1869,24 @@
             console.log(`Theme switched to: ${newTheme}`);
         }
 
-        // Initialize theme from localStorage
+        // Initialize theme with better persistence
         function initializeTheme() {
             const html = document.documentElement;
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            let savedTheme = 'light'; // Default
+            
+            // Try to get saved theme
+            try {
+                savedTheme = localStorage.getItem('theme') || 'light';
+                console.log('Theme loaded from localStorage:', savedTheme);
+            } catch (error) {
+                try {
+                    savedTheme = sessionStorage.getItem('theme') || 'light';
+                    console.log('Theme loaded from sessionStorage');
+                } catch (fallbackError) {
+                    console.log('No storage available, using default theme');
+                }
+            }
+            
             html.setAttribute('data-theme', savedTheme);
             
             const themeToggle = document.querySelector('.theme-toggle');
@@ -1869,7 +1946,7 @@
             // Previous month's trailing days
             for (let i = firstDay - 1; i >= 0; i--) {
                 const day = daysInPrevMonth - i;
-                calendarHTML += `<div class="calendar-day other-month">${day}</div>`;
+                calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}')"><div class="calendar-day-number">${day}</div></div>`;
             }
             
             // Current month's days
@@ -1882,15 +1959,9 @@
                 if (isToday) dayClass += ' today';
                 if (hasEvent) dayClass += ' scheduled';
                 
-                let eventHTML = '';
-                if (hasEvent) {
-                    eventHTML = `<div class="calendar-event">${hasEvent.time}</div>`;
-                }
-                
                 calendarHTML += `
                     <div class="${dayClass}" onclick="selectDate('${dateString}')">
                         <div class="calendar-day-number">${day}</div>
-                        ${eventHTML}
                     </div>
                 `;
             }
@@ -1899,7 +1970,9 @@
             const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
             const remainingCells = totalCells - (firstDay + daysInMonth);
             for (let day = 1; day <= remainingCells; day++) {
-                calendarHTML += `<div class="calendar-day other-month">${day}</div>`;
+                const nextMonth = month + 1 > 11 ? 0 : month + 1;
+                const nextYear = month + 1 > 11 ? year + 1 : year;
+                calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}')"><div class="calendar-day-number">${day}</div></div>`;
             }
             
             document.getElementById('calendarDays').innerHTML = calendarHTML;
@@ -2002,8 +2075,18 @@
                 notes: notesTextarea.value
             };
             
-            // Success message
-            alert(`✅ Surgery scheduled successfully!\n\n📅 Date: ${new Date(dateInput.value).toLocaleDateString()}\n⏰ Time: ${timeInput.value}\n👨‍⚕️ Surgeon: ${surgeonSelect.value}\n🏥 Hospital: ${hospitalSelect.value}\n🔧 Procedure: ${procedureSelect.value || 'Not specified'}`);
+            // Format the date nicely
+            const formattedDate = new Date(dateInput.value).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short', 
+                day: 'numeric'
+            });
+            
+            // Concise success message with key details
+            const procedureText = procedureSelect.value || 'Surgery';
+            const surgeonShort = surgeonSelect.value.replace('Dr. ', '');
+            
+            alert(`✅ Surgery Scheduled!\n\n${formattedDate} at ${timeInput.value}\n${procedureText} - Dr. ${surgeonShort}`);
             
             // Refresh calendar and close modal
             generateCalendar(currentMonth, currentYear);
