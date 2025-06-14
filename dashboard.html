@@ -399,6 +399,128 @@
             padding: 40px 20px;
         }
 
+        /* Files Tab Styles */
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .file-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #2c5aa0;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .file-card.form {
+            border-left-color: #28a745;
+        }
+
+        .file-card.case-sheet {
+            border-left-color: #17a2b8;
+        }
+
+        .file-card.guide {
+            border-left-color: #ffc107;
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .file-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .file-icon.form {
+            background: var(--gradient-success);
+        }
+
+        .file-icon.case-sheet {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+        }
+
+        .file-icon.guide {
+            background: var(--gradient-warning);
+        }
+
+        .file-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
+        }
+
+        .file-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .file-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .file-btn {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .file-btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .file-btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .file-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
         /* Moderate Size Slightly Wide Calendar */
         .calendar-container {
             background: var(--bg-card);
@@ -1161,8 +1283,31 @@
             transform: scale(1.2);
         }
 
+        .event-action-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .case-sheet-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .case-sheet-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.3);
+        }
+
         @media (max-width: 768px) {
-            .dashboard-grid, .analytics-grid, .commission-grid {
+            .dashboard-grid, .analytics-grid, .commission-grid, .files-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
@@ -1250,6 +1395,10 @@
             .event-form-grid {
                 grid-template-columns: 1fr;
             }
+
+            .file-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -1282,6 +1431,7 @@
             <button class="nav-tab" onclick="showTab('submissions')">📋 Submissions</button>
             <button class="nav-tab" onclick="showTab('commissions')">💰 Commissions</button>
             <button class="nav-tab" onclick="showTab('relationships')">🤝 Relationships</button>
+            <button class="nav-tab" onclick="showTab('files')">📁 Files</button>
         </div>
 
         <!-- Overview Tab -->
@@ -1857,6 +2007,248 @@
                 </div>
             </div>
         </div>
+
+        <!-- Files Tab -->
+        <div id="filesTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">📁 Document Library</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 25px; text-align: center;">Access important forms, case sheets, and reference materials</p>
+                
+                <div class="files-grid">
+                    <!-- New Account Information Form -->
+                    <div class="file-card form">
+                        <div class="file-header">
+                            <div class="file-icon form">📝</div>
+                            <div>
+                                <div class="file-title">New Account Information Form</div>
+                                <div class="file-description">Required form for setting up new surgeon accounts and hospital partnerships</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Document</span>
+                            <span>Updated: May 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('new-account-form')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('new-account-form')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hammertoe/Akin Case Sheet -->
+                    <div class="file-card case-sheet">
+                        <div class="file-header">
+                            <div class="file-icon case-sheet">📋</div>
+                            <div>
+                                <div class="file-title">Hammertoe/Akin Case Sheet</div>
+                                <div class="file-description">Specialized case submission form for hammertoe corrections and Akin osteotomy procedures</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Form</span>
+                            <span>Updated: June 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('hammertoe-case-sheet')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('hammertoe-case-sheet')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MTP Case Sheet -->
+                    <div class="file-card case-sheet">
+                        <div class="file-header">
+                            <div class="file-icon case-sheet">📋</div>
+                            <div>
+                                <div class="file-title">MTP Case Sheet</div>
+                                <div class="file-description">Detailed case submission form specifically designed for MTP fusion procedures</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Form</span>
+                            <span>Updated: June 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('mtp-case-sheet')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('mtp-case-sheet')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lapidus Case Sheet -->
+                    <div class="file-card case-sheet">
+                        <div class="file-header">
+                            <div class="file-icon case-sheet">📋</div>
+                            <div>
+                                <div class="file-title">Lapidus Case Sheet</div>
+                                <div class="file-description">Comprehensive case submission form for Lapidus bunionectomy procedures</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Form</span>
+                            <span>Updated: June 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('lapidus-case-sheet')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('lapidus-case-sheet')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product Catalog -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">📚</div>
+                            <div>
+                                <div class="file-title">Product Catalog 2025</div>
+                                <div class="file-description">Complete catalog of all Forma Medical products with specifications and pricing</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Catalog</span>
+                            <span>Updated: January 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('product-catalog')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('product-catalog')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Commission Structure Guide -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">💰</div>
+                            <div>
+                                <div class="file-title">Commission Structure Guide</div>
+                                <div class="file-description">Detailed breakdown of commission rates and payment structures by procedure type</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Guide</span>
+                            <span>Updated: March 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('commission-guide')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('commission-guide')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Training Materials -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">🎓</div>
+                            <div>
+                                <div class="file-title">Training Materials</div>
+                                <div class="file-description">Educational resources and training materials for new distributors and ongoing education</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Package</span>
+                            <span>Updated: April 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('training-materials')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('training-materials')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Contact Directory -->
+                    <div class="file-card form">
+                        <div class="file-header">
+                            <div class="file-icon form">📞</div>
+                            <div>
+                                <div class="file-title">Contact Directory</div>
+                                <div class="file-description">Important contact information for Forma Medical staff, support, and emergency contacts</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Directory</span>
+                            <span>Updated: June 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('contact-directory')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('contact-directory')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Reference Guide -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">⚡</div>
+                            <div>
+                                <div class="file-title">Quick Reference Guide</div>
+                                <div class="file-description">Fast reference for common procedures, product codes, and submission requirements</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span>PDF Reference</span>
+                            <span>Updated: May 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('quick-reference')">
+                                📥 Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('quick-reference')">
+                                👁️ Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recently Downloaded Files -->
+                <div class="recent-section" style="margin-top: 30px;">
+                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 20px;">📥 Recently Downloaded</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                            <div>
+                                <div style="font-weight: bold; color: #2c5aa0;">MTP Case Sheet</div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">Downloaded: June 10, 2025</div>
+                            </div>
+                            <button class="file-btn file-btn-secondary" style="padding: 8px 16px; font-size: 12px;" onclick="downloadFile('mtp-case-sheet')">
+                                ↻ Re-download
+                            </button>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                            <div>
+                                <div style="font-weight: bold; color: #2c5aa0;">Product Catalog 2025</div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">Downloaded: June 8, 2025</div>
+                            </div>
+                            <button class="file-btn file-btn-secondary" style="padding: 8px 16px; font-size: 12px;" onclick="downloadFile('product-catalog')">
+                                ↻ Re-download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Surgery Event Modal -->
@@ -2169,7 +2561,7 @@
                 const eventCount = existingEvents.length;
                 title.textContent = `${eventCount} Surgery${eventCount > 1 ? 's' : ''} - ${new Date(dateString).toLocaleDateString()}`;
                 
-                // Create events list
+                // Create events list with "Go to Case Sheet" buttons
                 let eventsListHTML = '<div class="existing-events-list">';
                 existingEvents.forEach((event, index) => {
                     eventsListHTML += `
@@ -2179,7 +2571,12 @@
                                 <div class="event-details">${event.surgeon} • ${event.hospital}</div>
                                 <div class="event-patient">Patient: ${event.patient}</div>
                             </div>
-                            <button class="delete-event-btn" onclick="event.stopPropagation(); deleteEvent('${dateString}', ${index})">❌</button>
+                            <div class="event-action-buttons">
+                                <button class="case-sheet-btn" onclick="event.stopPropagation(); goToCaseSheetFromEvent('${dateString}', ${index})">
+                                    📋 Case Sheet
+                                </button>
+                                <button class="delete-event-btn" onclick="event.stopPropagation(); deleteEvent('${dateString}', ${index})">❌</button>
+                            </div>
                         </div>
                     `;
                 });
@@ -2191,7 +2588,8 @@
                 if (existingList) {
                     existingList.remove();
                 }
-                modalContent.insertAdjacentHTML('afterbegin', eventsListHTML);
+                const formGrid = modalContent.querySelector('.event-form-grid');
+                formGrid.insertAdjacentHTML('beforebegin', eventsListHTML);
                 
                 // Hide form elements
                 document.querySelector('.event-form-grid').style.display = 'none';
@@ -2419,6 +2817,16 @@
             }
         }
 
+        function goToCaseSheetFromEvent(dateString, eventIndex) {
+            const event = scheduledEvents[dateString][eventIndex];
+            alert(`🚀 Taking you to Case Sheet!\n\nPre-filled information:\n📅 Date: ${new Date(dateString).toLocaleDateString()}\n👨‍⚕️ Surgeon: ${event.surgeon}\n🏥 Hospital: ${event.hospital}\n🔧 Procedure: ${event.procedure}\n👤 Patient: ${event.patient}`);
+            
+            // This would navigate to the form with pre-filled data
+            // window.location.href = `form.html?prefill=true&date=${dateString}&surgeon=${encodeURIComponent(event.surgeon)}&hospital=${encodeURIComponent(event.hospital)}&procedure=${encodeURIComponent(event.procedure)}&patient=${encodeURIComponent(event.patient)}`;
+            
+            closeEventModal();
+        }
+
         function cancelEvent() {
             if (confirm('Are you sure you want to cancel all scheduled surgeries for this day?')) {
                 delete scheduledEvents[selectedDate];
@@ -2435,6 +2843,47 @@
                 closeEventModal();
             }
         };
+
+        // File management functions
+        function downloadFile(fileId) {
+            const fileNames = {
+                'new-account-form': 'New_Account_Information_Form.pdf',
+                'hammertoe-case-sheet': 'Hammertoe_Akin_Case_Sheet.pdf',
+                'mtp-case-sheet': 'MTP_Case_Sheet.pdf',
+                'lapidus-case-sheet': 'Lapidus_Case_Sheet.pdf',
+                'product-catalog': 'Forma_Medical_Product_Catalog_2025.pdf',
+                'commission-guide': 'Commission_Structure_Guide.pdf',
+                'training-materials': 'Training_Materials_Package.pdf',
+                'contact-directory': 'Contact_Directory.pdf',
+                'quick-reference': 'Quick_Reference_Guide.pdf'
+            };
+            
+            const fileName = fileNames[fileId] || 'document.pdf';
+            alert(`📥 Downloading: ${fileName}\n\nIn a real application, this would download the file from the server.`);
+            
+            // In a real application, you would:
+            // window.open(`/api/files/download/${fileId}`, '_blank');
+        }
+
+        function viewFile(fileId) {
+            const fileNames = {
+                'new-account-form': 'New Account Information Form',
+                'hammertoe-case-sheet': 'Hammertoe/Akin Case Sheet',
+                'mtp-case-sheet': 'MTP Case Sheet',
+                'lapidus-case-sheet': 'Lapidus Case Sheet',
+                'product-catalog': 'Product Catalog 2025',
+                'commission-guide': 'Commission Structure Guide',
+                'training-materials': 'Training Materials',
+                'contact-directory': 'Contact Directory',
+                'quick-reference': 'Quick Reference Guide'
+            };
+            
+            const fileName = fileNames[fileId] || 'Document';
+            alert(`👁️ Opening: ${fileName}\n\nIn a real application, this would open a preview of the file.`);
+            
+            // In a real application, you would:
+            // window.open(`/api/files/preview/${fileId}`, '_blank');
+        }
 
         // Sample distributor data for demo/fallback
         const sampleDistributor = {
@@ -2525,7 +2974,7 @@
 
         // Initialize dashboard with some demo analytics
         function initializeDashboard() {
-            console.log('Enhanced dashboard initialized with commission transparency and surgery calendar');
+            console.log('Enhanced dashboard initialized with commission transparency, surgery calendar, and files tab');
             
             // Initialize calendar
             generateCalendar(currentMonth, currentYear);
