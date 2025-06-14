@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PO Submission - Forma Medical</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2563eb 50%, #3b82f6 100%);
+            --secondary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --danger-red: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --surface-dark: #0f172a;
+            --surface-medium: #1e293b;
+            --surface-light: #334155;
+            --surface-lighter: #475569;
+            --border-color: #475569;
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(148, 163, 184, 0.2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
+            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--surface-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: var(--shadow-md);
+            }
+            50% {
+                box-shadow: var(--shadow-glow);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Header */
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .company-info h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .company-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Distributor Info Card */
+        .distributor-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .distributor-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
+        }
+
+        .distributor-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .distributor-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
+        }
+
+        /* Form Groups and Layout */
+        .form-section {
+            margin-bottom: 2.5rem;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger-red);
+        }
+
+        /* Input Styles */
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--surface-light);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* File Upload Styles */
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: var(--surface-medium);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--accent-blue);
+            background: var(--surface-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--success-green);
+            background: rgba(16, 185, 129, 0.1);
+            transform: scale(1.02);
+        }
+
+        .file-upload-icon {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .file-upload-text {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-hint {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Uploaded Files List */
+        .uploaded-files {
+            margin-top: 1.5rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .file-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .file-size {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .file-action-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .file-action-btn:hover {
+            background: var(--surface-medium);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .file-action-btn.remove:hover {
+            background: var(--danger-red);
+            border-color: var(--danger-red);
+            color: white;
+        }
+
+        /* Case Selection */
+        .case-selection {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .case-selection::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .case-card {
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .case-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .case-card.selected {
+            border-color: var(--success-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .case-card input[type="radio"] {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--success-green);
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .case-id {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .case-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-submitted {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .case-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .case-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* PO Details Section */
+        .po-details-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .po-details-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success-green), #34d399);
+            border-radius: 16px 16px 0 0;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-success);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            animation: none;
+        }
+
+        /* Progress Indicator */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-icon.active {
+            background: var(--primary-gradient);
+            border-color: var(--accent-blue);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .step-icon.completed {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            border-color: var(--success-green);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .step-label.active {
+            color: var(--accent-blue);
+        }
+
+        .step-label.completed {
+            color: var(--success-green);
+        }
+
+        .step-connector {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            right: -50%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: -1;
+        }
+
+        .step-connector.completed {
+            background: var(--success-green);
+        }
+
+        .progress-step:last-child .step-connector {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0.5rem;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .breadcrumb {
+                align-items: center;
+            }
+
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .case-details {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .progress-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .step-connector {
+                display: none;
+            }
+
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .file-actions {
+                align-self: flex-end;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+        .text-small { font-size: 0.85rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mt-2 { margin-top: 1rem; }
+        .hidden { display: none; }
+        .show { display: block; }
+
+        /* Loading and Success States */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
+            border: 2px solid var(--success-green);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--success-green);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="company-info">
+                        <h1>Forma Medical</h1>
+                        <p>Purchase Order Management</p>
+                    </div>
+                </div>
+                <div class="breadcrumb">
+                    <a href="dashboard.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </a>
+                    <div class="page-title">PO Submission</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Distributor Info Card -->
+        <div class="distributor-card">
+            <h3 id="distributorCompany">
+                <i class="fas fa-building"></i>
+                Loading...
+            </h3>
+            <p id="distributorContact">Contact: Loading...</p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-step">
+                <div class="step-icon active" id="step1Icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="step-label active" id="step1Label">Select Case</div>
+                <div class="step-connector" id="connector1"></div>
+            </div>
+            <div class="progress-step">
+                <div class="step-icon" id="step2Icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="step-label" id="step2Label">PO Details</div>
+                <div class="step-connector" id="connector2"></div>
+            </div>
+            <div class="progress-step">
+                <div class="step-icon" id="step3Icon">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <div class="step-label" id="step3Label">Upload Documents</div>
+                <div class="step-connector" id="connector3"></div>
+            </div>
+            <div class="progress-step">
+                <div class="step-icon" id="step4Icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="step-label" id="step4Label">Review & Submit</div>
+            </div>
+        </div>
+
+        <!-- Main Form -->
+        <div class="form-container">
+            <form id="poForm">
+                <!-- Step 1: Case Selection -->
+                <div class="form-section" id="step1">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h2 class="section-title">Select Approved Case</h2>
+                    </div>
+                    
+                    <div class="case-selection">
+                        <div id="casesList">
+                            <!-- Sample cases - would be loaded dynamically -->
+                            <div class="case-card" onclick="selectCase('CS-1234567890')">
+                                <input type="radio" name="selectedCase" value="CS-1234567890" id="case1">
+                                <div class="case-header">
+                                    <div class="case-id">CS-1234567890</div>
+                                    <div class="case-status status-approved">Approved</div>
+                                </div>
+                                <div class="case-details">
+                                    <div class="case-detail">
+                                        <div class="detail-label">Procedure</div>
+                                        <div class="detail-value">MTP Fusion</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgeon</div>
+                                        <div class="detail-value">Dr. Benjamin Potter</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Hospital</div>
+                                        <div class="detail-value">Holston Valley Surgery Center</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgery Date</div>
+                                        <div class="detail-value">June 15, 2025</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Total Value</div>
+                                        <div class="detail-value">$3,285</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Patient</div>
+                                        <div class="detail-value">J.S.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-card" onclick="selectCase('CS-1234567892')">
+                                <input type="radio" name="selectedCase" value="CS-1234567892" id="case2">
+                                <div class="case-header">
+                                    <div class="case-id">CS-1234567892</div>
+                                    <div class="case-status status-approved">Approved</div>
+                                </div>
+                                <div class="case-details">
+                                    <div class="case-detail">
+                                        <div class="detail-label">Procedure</div>
+                                        <div class="detail-value">Lapidus Procedure</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgeon</div>
+                                        <div class="detail-value">Dr. Michael Wilson</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Hospital</div>
+                                        <div class="detail-value">City General Hospital</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgery Date</div>
+                                        <div class="detail-value">June 22, 2025</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Total Value</div>
+                                        <div class="detail-value">$4,920</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Patient</div>
+                                        <div class="detail-value">R.D.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-card" onclick="selectCase('CS-1234567894')">
+                                <input type="radio" name="selectedCase" value="CS-1234567894" id="case3">
+                                <div class="case-header">
+                                    <div class="case-id">CS-1234567894</div>
+                                    <div class="case-status status-submitted">Awaiting Approval</div>
+                                </div>
+                                <div class="case-details">
+                                    <div class="case-detail">
+                                        <div class="detail-label">Procedure</div>
+                                        <div class="detail-value">Hammertoe Correction</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgeon</div>
+                                        <div class="detail-value">Dr. Sarah Johnson</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Hospital</div>
+                                        <div class="detail-value">Regional Medical Center</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgery Date</div>
+                                        <div class="detail-value">June 25, 2025</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Total Value</div>
+                                        <div class="detail-value">$1,850</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Patient</div>
+                                        <div class="detail-value">M.B.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: PO Details -->
+                <div class="form-section hidden" id="step2">
+                    <div class="po-details-section">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <h2 class="section-title">Purchase Order Details</h2>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="poNumber" class="form-label required">PO Number</label>
+                                <input type="text" id="poNumber" name="poNumber" class="form-input" placeholder="Enter PO number" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="poDate" class="form-label required">PO Date</label>
+                                <input type="date" id="poDate" name="poDate" class="form-input" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vendorName" class="form-label required">Vendor Name</label>
+                                <input type="text" id="vendorName" name="vendorName" class="form-input" placeholder="Forma Medical" value="Forma Medical" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="deliveryDate" class="form-label">Expected Delivery Date</label>
+                                <input type="date" id="deliveryDate" name="deliveryDate" class="form-input">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="purchasingContact" class="form-label">Purchasing Contact</label>
+                                <input type="text" id="purchasingContact" name="purchasingContact" class="form-input" placeholder="Contact person name">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail" class="form-label">Contact Email</label>
+                                <input type="email" id="contactEmail" name="contactEmail" class="form-input" placeholder="contact@hospital.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="specialInstructions" class="form-label">Special Instructions</label>
+                            <textarea id="specialInstructions" name="specialInstructions" class="form-textarea" rows="4" placeholder="Any special delivery instructions or notes..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Document Upload -->
+                <div class="form-section hidden" id="step3">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <h2 class="section-title">Upload PO Documents</h2>
+                    </div>
+                    
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Drop PO documents here or click to browse</div>
+                        <div class="file-upload-hint">Supports PDF, DOC, DOCX, JPG, PNG (Max 10MB each)</div>
+                        <input type="file" class="file-input" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    
+                    <div class="uploaded-files" id="uploadedFiles">
+                        <!-- Uploaded files will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Submit -->
+                <div class="form-section hidden" id="step4">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2 class="section-title">Review & Submit</h2>
+                    </div>
+                    
+                    <div id="reviewSummary">
+                        <!-- Review summary will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" id="prevBtn" class="submit-btn" style="background: var(--surface-light); color: var(--text-secondary); display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" id="nextBtn" class="submit-btn" style="flex: 1;" disabled onclick="nextStep()">
+                        Next Step
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="submitBtn" class="submit-btn" style="display: none;">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit PO
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        console.log('Premium PO Submission System Loading...');
+        
+        // Global variables
+        let currentStep = 1;
+        let selectedCase = null;
+        let uploadedFiles = [];
+        let distributorInfo = null;
+
+        // Initialize when page loads
+        window.onload = function() {
+            console.log('Premium PO system initializing...');
+            
+            // Load distributor info (same pattern as other pages)
+            try {
+                const distributorCode = sessionStorage.getItem('distributorCode');
+                const distributorData = sessionStorage.getItem('distributorData');
+
+                if (distributorCode && distributorData) {
+                    distributorInfo = JSON.parse(distributorData);
+                } else {
+                    // Fallback to demo data
+                    distributorInfo = {
+                        companyName: 'ABC Ortho Solutions',
+                        contactName: 'Demo User',
+                        code: 'ABCOrtho'
+                    };
+                }
+            } catch (error) {
+                console.log('Using demo data');
+                distributorInfo = {
+                    companyName: 'ABC Ortho Solutions',
+                    contactName: 'Demo User',
+                    code: 'ABCOrtho'
+                };
+            }
+            
+            updateDistributorInfo();
+            initializeFileUpload();
+            updateStepDisplay();
+            
+            // Set today's date as default for PO date
+            document.getElementById('poDate').valueAsDate = new Date();
+        };
+
+        function updateDistributorInfo() {
+            document.getElementById('distributorCompany').innerHTML = '<i class="fas fa-building"></i> ' + distributorInfo.companyName;
+            document.getElementById('distributorContact').textContent = 'Contact: ' + distributorInfo.contactName;
+        }
+
+        function selectCase(caseId) {
+            // Remove previous selection
+            document.querySelectorAll('.case-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select new case
+            const selectedCard = document.querySelector(`input[value="${caseId}"]`).closest('.case-card');
+            selectedCard.classList.add('selected');
+            document.querySelector(`input[value="${caseId}"]`).checked = true;
+            
+            selectedCase = caseId;
+            document.getElementById('nextBtn').disabled = false;
+            
+            console.log('Selected case:', caseId);
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                // Validate current step
+                if (!validateStep(currentStep)) {
+                    return;
+                }
+                
+                // Hide current step
+                document.getElementById(`step${currentStep}`).classList.add('hidden');
+                
+                // Move to next step
+                currentStep++;
+                
+                // Show next step
+                document.getElementById(`step${currentStep}`).classList.remove('hidden');
+                
+                updateStepDisplay();
+                updateProgressIndicator();
+                
+                // Special handling for specific steps
+                if (currentStep === 4) {
+                    generateReviewSummary();
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                // Hide current step
+                document.getElementById(`step${currentStep}`).classList.add('hidden');
+                
+                // Move to previous step
+                currentStep--;
+                
+                // Show previous step
+                document.getElementById(`step${currentStep}`).classList.remove('hidden');
+                
+                updateStepDisplay();
+                updateProgressIndicator();
+            }
+        }
+
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    if (!selectedCase) {
+                        alert('Please select a case to continue');
+                        return false;
+                    }
+                    return true;
+                    
+                case 2:
+                    const poNumber = document.getElementById('poNumber').value;
+                    const poDate = document.getElementById('poDate').value;
+                    const vendorName = document.getElementById('vendorName').value;
+                    
+                    if (!poNumber || !poDate || !vendorName) {
+                        alert('Please fill in all required PO details');
+                        return false;
+                    }
+                    return true;
+                    
+                case 3:
+                    if (uploadedFiles.length === 0) {
+                        alert('Please upload at least one PO document');
+                        return false;
+                    }
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+
+        function updateStepDisplay() {
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (currentStep === 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = !selectedCase;
+            } else if (currentStep === 4) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = false;
+            }
+            
+            // Update previous button click handler
+            prevBtn.onclick = prevStep;
+        }
+
+        function updateProgressIndicator() {
+            for (let i = 1; i <= 4; i++) {
+                const icon = document.getElementById(`step${i}Icon`);
+                const label = document.getElementById(`step${i}Label`);
+                const connector = document.getElementById(`connector${i}`);
+                
+                if (i < currentStep) {
+                    // Completed step
+                    icon.classList.remove('active');
+                    icon.classList.add('completed');
+                    label.classList.remove('active');
+                    label.classList.add('completed');
+                    if (connector) {
+                        connector.classList.add('completed');
+                    }
+                } else if (i === currentStep) {
+                    // Current step
+                    icon.classList.remove('completed');
+                    icon.classList.add('active');
+                    label.classList.remove('completed');
+                    label.classList.add('active');
+                } else {
+                    // Future step
+                    icon.classList.remove('active', 'completed');
+                    label.classList.remove('active', 'completed');
+                    if (connector) {
+                        connector.classList.remove('completed');
+                    }
+                }
+            }
+        }
+
+        function initializeFileUpload() {
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('fileInput');
+            
+            // Click to upload
+            fileUploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // Drag and drop
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.classList.remove('dragover');
+            });
+            
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
+                
+                const files = Array.from(e.dataTransfer.files);
+                handleFileUpload(files);
+            });
+            
+            // File input change
+            fileInput.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files);
+                handleFileUpload(files);
+            });
+        }
+
+        function handleFileUpload(files) {
+            files.forEach(file => {
+                // Validate file
+                if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+                    return;
+                }
+                
+                const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert(`File ${file.name} is not a supported format.`);
+                    return;
+                }
+                
+                // Add to uploaded files
+                const fileId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                uploadedFiles.push({
+                    id: fileId,
+                    file: file,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                
+                displayUploadedFile(fileId, file);
+            });
+            
+            // Clear the input
+            document.getElementById('fileInput').value = '';
+        }
+
+        function displayUploadedFile(fileId, file) {
+            const uploadedFilesContainer = document.getElementById('uploadedFiles');
+            
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.id = `file_${fileId}`;
+            
+            const fileIcon = getFileIcon(file.type);
+            const fileSize = formatFileSize(file.size);
+            
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas fa-${fileIcon}"></i>
+                    </div>
+                    <div class="file-details">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${fileSize}</div>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <button type="button" class="file-action-btn" onclick="previewFile('${fileId}')" title="Preview">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button type="button" class="file-action-btn remove" onclick="removeFile('${fileId}')" title="Remove">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            uploadedFilesContainer.appendChild(fileItem);
+        }
+
+        function getFileIcon(mimeType) {
+            if (mimeType.includes('pdf')) return 'file-pdf';
+            if (mimeType.includes('word')) return 'file-word';
+            if (mimeType.includes('image')) return 'file-image';
+            return 'file';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function removeFile(fileId) {
+            // Remove from uploaded files array
+            uploadedFiles = uploadedFiles.filter(file => file.id !== fileId);
+            
+            // Remove from DOM
+            const fileElement = document.getElementById(`file_${fileId}`);
+            if (fileElement) {
+                fileElement.remove();
+            }
+        }
+
+        function previewFile(fileId) {
+            const file = uploadedFiles.find(f => f.id === fileId);
+            if (file) {
+                alert(`Preview functionality for ${file.file.name} would open here in a real application.`);
+            }
+        }
+
+        function generateReviewSummary() {
+            const reviewContainer = document.getElementById('reviewSummary');
+            
+            // Get selected case info
+            const selectedCaseElement = document.querySelector('input[name="selectedCase"]:checked');
+            const caseCard = selectedCaseElement.closest('.case-card');
+            
+            // Get case details
+            const caseId = selectedCaseElement.value;
+            const procedure = caseCard.querySelector('.case-details .case-detail:nth-child(1) .detail-value').textContent;
+            const surgeon = caseCard.querySelector('.case-details .case-detail:nth-child(2) .detail-value').textContent;
+            const hospital = caseCard.querySelector('.case-details .case-detail:nth-child(3) .detail-value').textContent;
+            const totalValue = caseCard.querySelector('.case-details .case-detail:nth-child(5) .detail-value').textContent;
+            
+            // Get PO details
+            const poNumber = document.getElementById('poNumber').value;
+            const poDate = document.getElementById('poDate').value;
+            const vendorName = document.getElementById('vendorName').value;
+            const deliveryDate = document.getElementById('deliveryDate').value;
+            
+            reviewContainer.innerHTML = `
+                <div style="display: grid; gap: 2rem;">
+                    <!-- Case Information -->
+                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clipboard-list"></i>
+                            Selected Case
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <div class="detail-label">Case ID</div>
+                                <div class="detail-value">${caseId}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Procedure</div>
+                                <div class="detail-value">${procedure}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Surgeon</div>
+                                <div class="detail-value">${surgeon}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Hospital</div>
+                                <div class="detail-value">${hospital}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Total Value</div>
+                                <div class="detail-value">${totalValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PO Information -->
+                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <h3 style="color: var(--success-green); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-file-invoice"></i>
+                            Purchase Order Details
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <div class="detail-label">PO Number</div>
+                                <div class="detail-value">${poNumber}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">PO Date</div>
+                                <div class="detail-value">${new Date(poDate).toLocaleDateString()}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Vendor</div>
+                                <div class="detail-value">${vendorName}</div>
+                            </div>
+                            ${deliveryDate ? `
+                            <div>
+                                <div class="detail-label">Expected Delivery</div>
+                                <div class="detail-value">${new Date(deliveryDate).toLocaleDateString()}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Uploaded Documents -->
+                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <h3 style="color: var(--warning-amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-upload"></i>
+                            Uploaded Documents (${uploadedFiles.length})
+                        </h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                            ${uploadedFiles.map(file => `
+                                <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--surface-light); border-radius: 8px;">
+                                    <i class="fas fa-${getFileIcon(file.type)}" style="color: var(--accent-blue);"></i>
+                                    <span style="font-size: 0.9rem;">${file.name}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Form submission
+        document.getElementById('poForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting PO...';
+            submitBtn.disabled = true;
+            
+            // Simulate submission
+            setTimeout(() => {
+                // Show success state
+                submitBtn.classList.remove('loading');
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> PO Submitted Successfully!';
+                submitBtn.style.background = 'linear-gradient(135deg, var(--success-green) 0%, #059669 100%)';
+                
+                // Show success message
+                const successDiv = document.createElement('div');
+                successDiv.className = 'success-message';
+                successDiv.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Purchase Order submitted successfully!</strong><br>
+                        <small>PO Number: ${document.getElementById('poNumber').value}</small>
+                    </div>
+                `;
+                document.querySelector('.form-container').insertBefore(successDiv, document.getElementById('poForm'));
+                
+                // Reset and redirect after delay
+                setTimeout(() => {
+                    if (confirm('Would you like to return to your dashboard?')) {
+                        window.location.href = 'dashboard.html';
+                    }
+                }, 2000);
+            }, 2000);
+        });
+
+        console.log('Premium PO Submission System Ready! 📋✨');
+    </script>
+</body>
+</html>
