@@ -955,8 +955,352 @@
             border-left-color: var(--warning-amber);
         }
 
-        .commission-card.outstanding {
-            border-left-color: var(--danger-red);
+        .submission-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--glass-border);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submission-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .submission-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .submission-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .submission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .submission-id {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .submission-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .submission-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .submission-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .submission-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: 1rem;
+        }
+
+        .po-info {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--success-green);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .days-waiting {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--warning-amber);
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .upcoming-surgery {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .submission-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--surface-light);
+            border-radius: 50%;
+            color: var(--text-muted);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submission-item:hover .submission-action {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .status-scheduled {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        /* Submission Details Modal */
+        .submission-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .submission-modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            margin: 2% auto;
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .submission-modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: 24px 24px 0 0;
+        }
+
+        .submission-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .submission-modal-title {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .modal-close-btn {
+            background: var(--surface-light);
+            border: 1px solid var(--glass-border);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--danger-red);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .submission-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-card {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .detail-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .detail-card.case-info::before {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+        }
+
+        .detail-card.surgery-info::before {
+            background: linear-gradient(90deg, var(--success-green), #34d399);
+        }
+
+        .detail-card.financial-info::before {
+            background: linear-gradient(90deg, var(--warning-amber), #fbbf24);
+        }
+
+        .detail-card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .items-breakdown {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .items-breakdown::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--success-green));
+        }
+
+        .items-breakdown-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .item-breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--surface-light);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .item-breakdown-info {
+            flex: 1;
+        }
+
+        .item-breakdown-code {
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+        }
+
+        .item-breakdown-name {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .item-breakdown-pricing {
+            text-align: right;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         /* Files Grid */
@@ -1663,28 +2007,84 @@
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
                 
                 <div id="allSubmissions">
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>CS-1234567890 • MTP Fusion</h4>
-                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgeon:</strong> Dr. Benjamin Potter • <strong>Date:</strong> 2024-12-15 • <strong>Commission:</strong> $285</p>
+                    <div class="submission-item" onclick="showSubmissionDetails('CS-1234567890')">
+                        <div class="submission-main">
+                            <div class="submission-header">
+                                <div class="submission-id">CS-1234567890</div>
+                                <div class="submission-date">Submitted: Dec 15, 2024</div>
+                            </div>
+                            <div class="submission-info">
+                                <h4>MTP Fusion • Dr. Benjamin Potter</h4>
+                                <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
+                            </div>
                         </div>
-                        <span class="status-badge status-complete">PO Received</span>
+                        <div class="submission-status">
+                            <span class="status-badge status-complete">PO Received</span>
+                            <div class="po-info">PO: FM-2024-1234</div>
+                        </div>
+                        <div class="submission-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
                     </div>
                     
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>CS-1234567891 • Hammertoe Correction</h4>
-                            <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgeon:</strong> Dr. Sarah Johnson • <strong>Date:</strong> 2024-12-18 • <strong>Commission:</strong> $150</p>
+                    <div class="submission-item" onclick="showSubmissionDetails('CS-1234567891')">
+                        <div class="submission-main">
+                            <div class="submission-header">
+                                <div class="submission-id">CS-1234567891</div>
+                                <div class="submission-date">Submitted: Dec 18, 2024</div>
+                            </div>
+                            <div class="submission-info">
+                                <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
+                                <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Dec 22, 2024 • <strong>Patient:</strong> M.B. • <strong>Total:</strong> $1,850</p>
+                            </div>
                         </div>
-                        <span class="status-badge status-pending">Awaiting PO</span>
+                        <div class="submission-status">
+                            <span class="status-badge status-pending">Awaiting PO</span>
+                            <div class="days-waiting">12 days since surgery</div>
+                        </div>
+                        <div class="submission-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
                     </div>
 
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>CS-1234567892 • Lapidus Procedure</h4>
-                            <p><strong>Hospital:</strong> City General Hospital • <strong>Surgeon:</strong> Dr. Michael Wilson • <strong>Date:</strong> 2024-12-12 • <strong>Commission:</strong> $420</p>
+                    <div class="submission-item" onclick="showSubmissionDetails('CS-1234567892')">
+                        <div class="submission-main">
+                            <div class="submission-header">
+                                <div class="submission-id">CS-1234567892</div>
+                                <div class="submission-date">Submitted: Dec 12, 2024</div>
+                            </div>
+                            <div class="submission-info">
+                                <h4>Lapidus Procedure • Dr. Michael Wilson</h4>
+                                <p><strong>Hospital:</strong> City General Hospital • <strong>Surgery Date:</strong> Dec 15, 2024 • <strong>Patient:</strong> R.D. • <strong>Total:</strong> $4,920</p>
+                            </div>
                         </div>
-                        <span class="status-badge status-complete">Invoiced</span>
+                        <div class="submission-status">
+                            <span class="status-badge status-complete">PO Received</span>
+                            <div class="po-info">PO: FM-2024-1567</div>
+                        </div>
+                        <div class="submission-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="submission-item" onclick="showSubmissionDetails('CS-1234567893')">
+                        <div class="submission-main">
+                            <div class="submission-header">
+                                <div class="submission-id">CS-1234567893</div>
+                                <div class="submission-date">Submitted: Jan 8, 2025</div>
+                            </div>
+                            <div class="submission-info">
+                                <h4>Bunion Correction • Dr. Lisa Chen</h4>
+                                <p><strong>Hospital:</strong> Metro Health Center • <strong>Surgery Date:</strong> Jan 12, 2025 • <strong>Patient:</strong> K.M. • <strong>Total:</strong> $2,175</p>
+                            </div>
+                        </div>
+                        <div class="submission-status">
+                            <span class="status-badge status-processing">Surgery Completed</span>
+                            <div class="days-waiting">2 days since surgery</div>
+                        </div>
+                        <div class="submission-action">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2675,13 +3075,305 @@
             document.getElementById('companyName').textContent = distributor.companyName;
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('eventModal');
-            if (event.target === modal) {
-                closeEventModal();
+        function showSubmissionDetails(submissionId) {
+            // Sample data - in real app, this would fetch from your database
+            const submissionData = {
+                'CS-1234567890': {
+                    id: 'CS-1234567890',
+                    submissionDate: 'December 15, 2024',
+                    status: 'PO Received',
+                    statusClass: 'status-complete',
+                    procedure: 'MTP Fusion',
+                    surgeon: 'Dr. Benjamin Potter',
+                    hospital: 'Holston Valley Surgery Center',
+                    surgeryDate: 'December 20, 2024',
+                    patient: 'J.S.',
+                    salesRep: 'Michael Chen',
+                    poNumber: 'FM-2024-1234',
+                    poDate: 'December 22, 2024',
+                    daysSinceSurgery: null,
+                    items: [
+                        { code: '1102.1304.01', name: 'MIS MTP S-Plate, Left', quantity: 1, price: 285.00 },
+                        { code: '1100.2112', name: 'Titanium 2.0mm Implant, 12mm Long', quantity: 3, price: 45.00 },
+                        { code: '6102.1001', name: 'MIS MTP Targeting Instrument, Left', quantity: 1, price: 150.00 }
+                    ],
+                    constructs: [
+                        { code: 'CONST-MTP-001', price: 2800.00 }
+                    ],
+                    totals: {
+                        itemsSubtotal: 615.00,
+                        constructPrice: 2800.00,
+                        grandTotal: 3285.00
+                    },
+                    commission: 285.00
+                },
+                'CS-1234567891': {
+                    id: 'CS-1234567891',
+                    submissionDate: 'December 18, 2024',
+                    status: 'Awaiting PO',
+                    statusClass: 'status-pending',
+                    procedure: 'Hammertoe Correction',
+                    surgeon: 'Dr. Sarah Johnson',
+                    hospital: 'Regional Medical Center',
+                    surgeryDate: 'December 22, 2024',
+                    patient: 'M.B.',
+                    salesRep: 'Jennifer Lee',
+                    poNumber: null,
+                    poDate: null,
+                    daysSinceSurgery: 12,
+                    items: [
+                        { code: '1102.3014.01', name: '3.0mm Non-Locking Screw, 14mm Long', quantity: 2, price: 35.00 },
+                        { code: '6100.2009', name: 'Stainless Steel K-wire, 4 in.', quantity: 4, price: 15.00 }
+                    ],
+                    constructs: [
+                        { code: 'CONST-HT-002', price: 1580.00 }
+                    ],
+                    totals: {
+                        itemsSubtotal: 130.00,
+                        constructPrice: 1580.00,
+                        grandTotal: 1850.00
+                    },
+                    commission: 150.00
+                },
+                'CS-1234567892': {
+                    id: 'CS-1234567892',
+                    submissionDate: 'December 12, 2024',
+                    status: 'PO Received',
+                    statusClass: 'status-complete',
+                    procedure: 'Lapidus Procedure',
+                    surgeon: 'Dr. Michael Wilson',
+                    hospital: 'City General Hospital',
+                    surgeryDate: 'December 15, 2024',
+                    patient: 'R.D.',
+                    salesRep: 'David Park',
+                    poNumber: 'FM-2024-1567',
+                    poDate: 'December 18, 2024',
+                    daysSinceSurgery: null,
+                    items: [
+                        { code: '1102.2305.03', name: 'MTP Standard Plate, Right', quantity: 2, price: 320.00 },
+                        { code: '1102.4130', name: '4.0mm Compression Screw, 30mm Long', quantity: 4, price: 75.00 },
+                        { code: '6102.2001', name: 'MIS MTP Targeting Instrument, Right', quantity: 1, price: 200.00 }
+                    ],
+                    constructs: [
+                        { code: 'CONST-LAP-003', price: 4000.00 }
+                    ],
+                    totals: {
+                        itemsSubtotal: 1240.00,
+                        constructPrice: 4000.00,
+                        grandTotal: 4920.00
+                    },
+                    commission: 420.00
+                },
+                'CS-1234567893': {
+                    id: 'CS-1234567893',
+                    submissionDate: 'January 8, 2025',
+                    status: 'Surgery Completed',
+                    statusClass: 'status-processing',
+                    procedure: 'Bunion Correction',
+                    surgeon: 'Dr. Lisa Chen',
+                    hospital: 'Metro Health Center',
+                    surgeryDate: 'January 12, 2025',
+                    patient: 'K.M.',
+                    salesRep: 'Sarah Wilson',
+                    poNumber: null,
+                    poDate: null,
+                    daysSinceSurgery: 2,
+                    items: [
+                        { code: '1102.3016.02', name: '3.0mm Locking Screw, 16mm Long', quantity: 3, price: 42.00 },
+                        { code: '6100.4007', name: '2.0mm Driver, T7 Hexalobe', quantity: 1, price: 85.00 }
+                    ],
+                    constructs: [
+                        { code: 'CONST-BC-004', price: 1920.00 }
+                    ],
+                    totals: {
+                        itemsSubtotal: 211.00,
+                        constructPrice: 1920.00,
+                        grandTotal: 2175.00
+                    },
+                    commission: 175.00
+                }
+            };
+            
+            const data = submissionData[submissionId];
+            if (!data) return;
+            
+            // Create modal HTML
+            const modalHTML = `
+                <div class="submission-modal" id="submissionModal">
+                    <div class="submission-modal-content">
+                        <div class="submission-modal-header">
+                            <h2 class="submission-modal-title">
+                                <i class="fas fa-clipboard-list"></i>
+                                ${data.id} Details
+                            </h2>
+                            <button class="modal-close-btn" onclick="closeSubmissionModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="submission-details-grid">
+                            <!-- Case Information -->
+                            <div class="detail-card case-info">
+                                <h3 class="detail-card-title">
+                                    <i class="fas fa-file-medical"></i>
+                                    Case Information
+                                </h3>
+                                <div class="detail-row">
+                                    <span class="detail-label">Case ID</span>
+                                    <span class="detail-value">${data.id}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Procedure</span>
+                                    <span class="detail-value">${data.procedure}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Surgeon</span>
+                                    <span class="detail-value">${data.surgeon}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Hospital</span>
+                                    <span class="detail-value">${data.hospital}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Patient</span>
+                                    <span class="detail-value">${data.patient}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Sales Rep</span>
+                                    <span class="detail-value">${data.salesRep}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Surgery Information -->
+                            <div class="detail-card surgery-info">
+                                <h3 class="detail-card-title">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Surgery & Status
+                                </h3>
+                                <div class="detail-row">
+                                    <span class="detail-label">Surgery Date</span>
+                                    <span class="detail-value">${data.surgeryDate}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Submission Date</span>
+                                    <span class="detail-value">${data.submissionDate}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Status</span>
+                                    <span class="status-badge ${data.statusClass}">${data.status}</span>
+                                </div>
+                                ${data.poNumber ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Number</span>
+                                    <span class="detail-value" style="color: var(--success-green);">${data.poNumber}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Date</span>
+                                    <span class="detail-value">${data.poDate}</span>
+                                </div>
+                                ` : ''}
+                                ${data.daysSinceSurgery ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">Days Since Surgery</span>
+                                    <span class="detail-value" style="color: var(--warning-amber);">${data.daysSinceSurgery} days</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                            
+                            <!-- Financial Information -->
+                            <div class="detail-card financial-info">
+                                <h3 class="detail-card-title">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    Financial Summary
+                                </h3>
+                                <div class="detail-row">
+                                    <span class="detail-label">Items Subtotal</span>
+                                    <span class="detail-value">${data.totals.itemsSubtotal.toFixed(2)}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Construct Price</span>
+                                    <span class="detail-value">${data.totals.constructPrice.toFixed(2)}</span>
+                                </div>
+                                <div class="detail-row" style="border-top: 2px solid var(--accent-blue); padding-top: 1rem; margin-top: 1rem;">
+                                    <span class="detail-label" style="font-weight: 700; color: var(--text-primary);">Grand Total</span>
+                                    <span class="detail-value" style="font-size: 1.2rem; color: var(--accent-blue);">${data.totals.grandTotal.toFixed(2)}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Expected Commission</span>
+                                    <span class="detail-value" style="color: var(--success-green);">${data.commission.toFixed(2)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Items Breakdown -->
+                        <div class="items-breakdown">
+                            <h3 class="items-breakdown-title">
+                                <i class="fas fa-list-ul"></i>
+                                Items Used
+                            </h3>
+                            ${data.items.map(item => `
+                                <div class="item-breakdown-row">
+                                    <div class="item-breakdown-info">
+                                        <div class="item-breakdown-code">${item.code}</div>
+                                        <div class="item-breakdown-name">${item.name}</div>
+                                    </div>
+                                    <div class="item-breakdown-pricing">
+                                        Qty: ${item.quantity} × ${item.price.toFixed(2)} = ${(item.quantity * item.price).toFixed(2)}
+                                    </div>
+                                </div>
+                            `).join('')}
+                            
+                            ${data.constructs.length > 0 ? `
+                                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                                    <h4 style="color: var(--warning-amber); margin-bottom: 0.5rem; font-size: 1rem;">
+                                        <i class="fas fa-tools"></i> Constructs
+                                    </h4>
+                                    ${data.constructs.map(construct => `
+                                        <div class="item-breakdown-row">
+                                            <div class="item-breakdown-info">
+                                                <div class="item-breakdown-code">${construct.code}</div>
+                                                <div class="item-breakdown-name">Custom Construct</div>
+                                            </div>
+                                            <div class="item-breakdown-pricing">
+                                                ${construct.price.toFixed(2)}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('submissionModal');
+            if (existingModal) {
+                existingModal.remove();
             }
-        };
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Show modal
+            document.getElementById('submissionModal').style.display = 'block';
+        }
+
+        function closeSubmissionModal() {
+            const modal = document.getElementById('submissionModal');
+            if (modal) {
+                modal.style.display = 'none';
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('submissionModal');
+            if (modal && event.target === modal) {
+                closeSubmissionModal();
+            }
+        });
 
         // Initialize when page loads
         window.addEventListener('load', initializeDashboard);
