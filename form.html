@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PO Submission - Forma Medical</title>
+    <title>Dashboard - Forma Medical</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -35,6 +35,7 @@
             --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
             --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
+            --shadow-warning: 0 0 32px rgba(245, 158, 11, 0.3);
         }
 
         body {
@@ -50,8 +51,8 @@
             overflow-x: hidden;
         }
 
-        .main-container {
-            max-width: 1200px;
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
             animation: fadeInUp 0.8s ease-out;
         }
@@ -121,10 +122,16 @@
 
         .header-content {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .logo-section {
@@ -134,365 +141,209 @@
         }
 
         .logo-icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: var(--primary-gradient);
-            border-radius: 15px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 2rem;
             color: white;
             box-shadow: var(--shadow-md);
             animation: pulse 4s ease-in-out infinite;
         }
 
         .company-info h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.5rem;
         }
 
         .company-info p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
-        .breadcrumb {
+        .header-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .system-status {
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            text-align: right;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
         }
 
-        .back-btn {
-            display: inline-flex;
+        .status-indicator {
+            display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-weight: 600;
             font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
         }
 
-        .back-btn:hover {
-            background: rgba(59, 130, 246, 0.1);
-            transform: translateX(-5px);
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 600;
+        .last-sync {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .last-sync i {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .distributor-info {
+            text-align: right;
+            padding: 1rem 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .distributor-info strong {
             color: var(--text-primary);
+            font-size: 1.1rem;
         }
 
-        /* Distributor Info Card */
-        .distributor-card {
+        .distributor-info div:last-child {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
+            padding: 0.75rem;
             box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
             position: relative;
-            overflow: hidden;
         }
 
-        .distributor-card::before {
+        .nav-tabs::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
+            background: var(--primary-gradient);
+            border-radius: 16px 16px 0 0;
         }
-
-        .distributor-card h3 {
-            font-size: 1.3rem;
+        
+        .nav-tab {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
+            position: relative;
+        }
+        
+        .nav-tab.active {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
 
-        .distributor-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        /* Form Container */
-        .form-container {
+        .dashboard-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .form-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
-        }
-
-        /* Form Groups and Layout */
-        .form-section {
-            margin-bottom: 2.5rem;
-            animation: slideInRight 0.6s ease-out;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-gradient);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            position: relative;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .required::after {
-            content: " *";
-            color: var(--danger-red);
-        }
-
-        /* Input Styles */
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: var(--surface-medium);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            background: var(--surface-light);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .form-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* File Upload Styles */
-        .file-upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            background: var(--surface-medium);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .file-upload-area:hover {
-            border-color: var(--accent-blue);
-            background: var(--surface-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .file-upload-area.dragover {
-            border-color: var(--success-green);
-            background: rgba(16, 185, 129, 0.1);
-            transform: scale(1.02);
-        }
-
-        .file-upload-icon {
-            font-size: 3rem;
-            color: var(--accent-blue);
-            margin-bottom: 1rem;
-        }
-
-        .file-upload-text {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .file-upload-hint {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .file-input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Uploaded Files List */
-        .uploaded-files {
-            margin-top: 1.5rem;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--surface-light);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .file-item:hover {
-            border-color: var(--accent-blue);
-            transform: translateX(5px);
-        }
-
-        .file-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex: 1;
-        }
-
-        .file-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-gradient);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .file-details {
-            flex: 1;
-        }
-
-        .file-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .file-size {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .file-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .file-action-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-        }
-
-        .file-action-btn:hover {
-            background: var(--surface-medium);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .file-action-btn.remove:hover {
-            background: var(--danger-red);
-            border-color: var(--danger-red);
-            color: white;
-        }
-
-        /* Case Selection */
-        .case-selection {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .case-selection::before {
+        .dashboard-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -500,234 +351,835 @@
             right: 0;
             height: 3px;
             background: var(--primary-gradient);
-            border-radius: 16px 16px 0 0;
+            border-radius: 20px 20px 0 0;
         }
 
-        .case-card {
-            background: var(--surface-medium);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
         }
 
-        .case-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
             box-shadow: var(--shadow-sm);
         }
 
-        .case-card.selected {
-            border-color: var(--success-green);
-            background: rgba(16, 185, 129, 0.1);
+        .card-icon.primary {
+            background: var(--primary-gradient);
         }
 
-        .case-card input[type="radio"] {
+        .card-icon.success {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
+        }
+
+        .card-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 20px;
-            height: 20px;
-            accent-color: var(--success-green);
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
         }
 
-        .case-header {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            font-size: 0.85rem;
+            color: var(--success-green);
+            font-weight: 700;
+        }
+
+        /* Recent Section */
+        .recent-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recent-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning-amber), var(--success-green));
+        }
+
+        .recent-item {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            border-radius: 12px;
             margin-bottom: 1rem;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
         }
 
-        .case-id {
+        .recent-item:hover {
+            background: var(--surface-light);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .recent-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent-blue);
         }
 
-        .case-status {
-            padding: 0.25rem 0.75rem;
+        .recent-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
             border-radius: 12px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .status-submitted {
+        .status-pending {
             background: rgba(245, 158, 11, 0.2);
             color: var(--warning-amber);
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        .status-approved {
+        .status-complete {
             background: rgba(16, 185, 129, 0.2);
             color: var(--success-green);
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        .case-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .status-processing {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
             gap: 1rem;
         }
 
-        .case-detail {
+        /* Calendar Styles */
+        .calendar-container {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin: 0 auto 2rem auto;
+            width: 420px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
         }
 
-        .detail-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.25rem;
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
         }
 
-        .detail-value {
-            font-weight: 600;
+        .calendar-nav {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calendar-nav:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        #currentMonth {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(7, 1fr);
+            gap: 2px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex: 1;
+            height: 280px;
+            background: var(--border-color);
+        }
+
+        .calendar-day-header {
+            background: var(--surface-light);
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calendar-day {
+            background: var(--surface-medium);
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: all 0.3s ease;
             color: var(--text-primary);
         }
 
-        /* PO Details Section */
-        .po-details-section {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
-            border: 2px solid rgba(16, 185, 129, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0;
-            position: relative;
+        .calendar-day:hover:not(.other-month) {
+            background: var(--surface-light);
+            transform: scale(1.1);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
         }
 
-        .po-details-section::before {
+        .calendar-day.other-month {
+            color: var(--text-muted);
+            background: var(--surface-dark);
+        }
+
+        .calendar-day.today {
+            background: var(--accent-blue);
+            color: white;
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        .calendar-day.scheduled {
+            background: var(--danger-red);
+            color: white;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+
+        .calendar-day.scheduled::after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+        }
+
+        .event-count {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(255,255,255,0.95);
+            color: var(--danger-red);
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calendar-legend {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.scheduled {
+            background: var(--danger-red);
+        }
+
+        .legend-dot.today {
+            background: var(--accent-blue);
+        }
+
+        .legend-dot.available {
+            background: var(--surface-medium);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .analytics-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analytics-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--success-green), #34d399);
-            border-radius: 16px 16px 0 0;
+            background: var(--primary-gradient);
+        }
+        
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .analytics-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .performance-chart {
+            display: flex;
+            align-items: end;
+            height: 120px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .chart-bar {
+            background: var(--primary-gradient);
+            width: 40px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.8s ease;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .chart-bar:hover {
+            background: linear-gradient(to top, #1e40af, var(--accent-blue));
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
         }
 
-        /* Submit Button */
-        .submit-btn {
-            width: 100%;
+        /* Commission Styles */
+        .commission-summary {
             background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
             color: white;
-            border: none;
-            padding: 1.5rem 2rem;
-            border-radius: 16px;
-            cursor: pointer;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-success);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commission-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: shimmer 20s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
+        }
+
+        .commission-total {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .commission-subtitle {
             font-size: 1.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 2rem;
-            transition: all 0.3s ease;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .commission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .commission-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
             box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        .commission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .commission-card.paid {
+            border-left-color: var(--success-green);
+        }
+
+        .commission-card.pending {
+            border-left-color: var(--warning-amber);
+        }
+
+        .commission-card.outstanding {
+            border-left-color: var(--danger-red);
+        }
+
+        /* Files Grid */
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .file-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent-blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+
+        .file-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .file-card.form {
+            border-left-color: var(--success-green);
+        }
+
+        .file-card.case-sheet {
+            border-left-color: var(--accent-cyan);
+        }
+
+        .file-card.guide {
+            border-left-color: var(--warning-amber);
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .file-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-icon.form {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .file-icon.case-sheet {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
+        }
+
+        .file-icon.guide {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .file-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .file-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            background: var(--surface-medium);
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-actions {
+            display: flex;
             gap: 1rem;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-success);
-            animation: glow 2s ease-in-out infinite;
+        .file-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            animation: none;
+        .file-btn-primary {
+            background: var(--primary-gradient);
+            color: white;
         }
 
-        /* Progress Indicator */
-        .progress-steps {
+        .file-btn-secondary {
+            background: var(--surface-light);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Event Modal */
+        .event-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .event-modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            margin: 3% auto;
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .event-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding: 0 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
         }
 
-        .progress-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            position: relative;
+        .event-modal-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
-        .step-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--surface-medium);
-            border: 2px solid var(--border-color);
+        .close-btn {
+            background: var(--surface-light);
+            border: 1px solid var(--glass-border);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+            border-radius: 50%;
             transition: all 0.3s ease;
         }
 
-        .step-icon.active {
-            background: var(--primary-gradient);
-            border-color: var(--accent-blue);
+        .close-btn:hover {
+            background: var(--danger-red);
             color: white;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .step-icon.completed {
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-            border-color: var(--success-green);
-            color: white;
-        }
-
-        .step-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-align: center;
-        }
-
-        .step-label.active {
-            color: var(--accent-blue);
-        }
-
-        .step-label.completed {
-            color: var(--success-green);
-        }
-
-        .step-connector {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            right: -50%;
-            height: 2px;
-            background: var(--border-color);
-            z-index: -1;
-        }
-
-        .step-connector.completed {
-            background: var(--success-green);
-        }
-
-        .progress-step:last-child .step-connector {
-            display: none;
+            transform: scale(1.1);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .main-container {
+            .container {
                 padding: 0.5rem;
             }
 
@@ -738,60 +1190,71 @@
             .header-content {
                 flex-direction: column;
                 text-align: center;
+                gap: 1.5rem;
             }
 
-            .breadcrumb {
-                align-items: center;
+            .header-right {
+                order: -1;
+                justify-content: center;
             }
 
-            .form-container {
-                padding: 1.5rem;
-            }
-
-            .form-row {
+            .dashboard-grid, 
+            .analytics-grid, 
+            .commission-grid, 
+            .files-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
-            .case-details {
-                grid-template-columns: 1fr;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .section-header {
-                flex-direction: column;
-                text-align: center;
+            .nav-tabs {
+                justify-content: flex-start;
+                padding: 0.5rem;
             }
 
-            .progress-steps {
-                flex-direction: column;
-                gap: 1rem;
+            .nav-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
             }
 
-            .step-connector {
-                display: none;
-            }
-
-            .file-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
+            .calendar-container {
+                width: 340px;
+                max-width: 100%;
             }
 
             .file-actions {
-                align-self: flex-end;
+                flex-direction: column;
+            }
+
+            .commission-total {
+                font-size: 2.5rem;
+            }
+
+            .commission-subtitle {
+                font-size: 1rem;
             }
         }
 
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .text-muted { color: var(--text-muted); }
-        .text-small { font-size: 0.85rem; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mt-2 { margin-top: 1rem; }
-        .hidden { display: none; }
-        .show { display: block; }
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
 
-        /* Loading and Success States */
+            .calendar-container {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .event-modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Loading and animations */
         .loading {
             position: relative;
             overflow: hidden;
@@ -812,792 +1275,1418 @@
             0% { left: -100%; }
             100% { left: 100%; }
         }
-
-        .success-message {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
-            border: 2px solid var(--success-green);
-            border-radius: 12px;
-            padding: 1rem;
-            color: var(--success-green);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-muted);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
     </style>
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
         <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <div class="logo-section">
-                    <div class="logo-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div class="company-info">
-                        <h1>Forma Medical</h1>
-                        <p>Purchase Order Management</p>
+                <div class="header-left">
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="company-info">
+                            <h1>Welcome back, <span id="companyName">ABC Ortho Solutions</span></h1>
+                            <p>Manage your case submissions and track performance</p>
+                        </div>
                     </div>
                 </div>
-                <div class="breadcrumb">
-                    <a href="dashboard.html" class="back-btn">
-                        <i class="fas fa-arrow-left"></i>
-                        Back to Dashboard
+                <div class="header-right">
+                    <div class="system-status">
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span>System Online</span>
+                        </div>
+                        <div class="last-sync">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Last sync: 2 min ago</span>
+                        </div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">
+                <i class="fas fa-chart-line"></i>
+                Overview
+            </button>
+            <button class="nav-tab" onclick="showTab('calendar')">
+                <i class="fas fa-calendar-alt"></i>
+                Calendar
+            </button>
+            <button class="nav-tab" onclick="showTab('analytics')">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
+            </button>
+            <button class="nav-tab" onclick="showTab('submissions')">
+                <i class="fas fa-clipboard-list"></i>
+                Submissions
+            </button>
+            <button class="nav-tab" onclick="showTab('commissions')">
+                <i class="fas fa-dollar-sign"></i>
+                Commissions
+            </button>
+            <button class="nav-tab" onclick="showTab('relationships')">
+                <i class="fas fa-handshake"></i>
+                Relationships
+            </button>
+            <button class="nav-tab" onclick="showTab('files')">
+                <i class="fas fa-folder"></i>
+                Files
+            </button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overviewTab" class="tab-content active">
+            <!-- Quick Actions -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon primary">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Submit New Case Sheet</div>
+                            <div class="card-subtitle">Create a new surgery case submission with our advanced form system</div>
+                        </div>
+                    </div>
+                    <a href="form.html" class="action-btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Submit Case Sheet
                     </a>
-                    <div class="page-title">PO Submission</div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Distributor Info Card -->
-        <div class="distributor-card">
-            <h3 id="distributorCompany">
-                <i class="fas fa-building"></i>
-                Loading...
-            </h3>
-            <p id="distributorContact">Contact: Loading...</p>
-        </div>
-
-        <!-- Progress Steps -->
-        <div class="progress-steps">
-            <div class="progress-step">
-                <div class="step-icon active" id="step1Icon">
-                    <i class="fas fa-clipboard-list"></i>
-                </div>
-                <div class="step-label active" id="step1Label">Select Case</div>
-                <div class="step-connector" id="connector1"></div>
-            </div>
-            <div class="progress-step">
-                <div class="step-icon" id="step2Icon">
-                    <i class="fas fa-file-invoice"></i>
-                </div>
-                <div class="step-label" id="step2Label">PO Details</div>
-                <div class="step-connector" id="connector2"></div>
-            </div>
-            <div class="progress-step">
-                <div class="step-icon" id="step3Icon">
-                    <i class="fas fa-upload"></i>
-                </div>
-                <div class="step-label" id="step3Label">Upload Documents</div>
-                <div class="step-connector" id="connector3"></div>
-            </div>
-            <div class="progress-step">
-                <div class="step-icon" id="step4Icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="step-label" id="step4Label">Review & Submit</div>
-            </div>
-        </div>
-
-        <!-- Main Form -->
-        <div class="form-container">
-            <form id="poForm">
-                <!-- Step 1: Case Selection -->
-                <div class="form-section" id="step1">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-search"></i>
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon success">
+                            <i class="fas fa-file-invoice"></i>
                         </div>
-                        <h2 class="section-title">Select Approved Case</h2>
-                    </div>
-                    
-                    <div class="case-selection">
-                        <div id="casesList">
-                            <!-- Sample cases - would be loaded dynamically -->
-                            <div class="case-card" onclick="selectCase('CS-1234567890')">
-                                <input type="radio" name="selectedCase" value="CS-1234567890" id="case1">
-                                <div class="case-header">
-                                    <div class="case-id">CS-1234567890</div>
-                                    <div class="case-status status-approved">Approved</div>
-                                </div>
-                                <div class="case-details">
-                                    <div class="case-detail">
-                                        <div class="detail-label">Procedure</div>
-                                        <div class="detail-value">MTP Fusion</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Surgeon</div>
-                                        <div class="detail-value">Dr. Benjamin Potter</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Hospital</div>
-                                        <div class="detail-value">Holston Valley Surgery Center</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Surgery Date</div>
-                                        <div class="detail-value">June 15, 2025</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Total Value</div>
-                                        <div class="detail-value">$3,285</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Patient</div>
-                                        <div class="detail-value">J.S.</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="case-card" onclick="selectCase('CS-1234567892')">
-                                <input type="radio" name="selectedCase" value="CS-1234567892" id="case2">
-                                <div class="case-header">
-                                    <div class="case-id">CS-1234567892</div>
-                                    <div class="case-status status-approved">Approved</div>
-                                </div>
-                                <div class="case-details">
-                                    <div class="case-detail">
-                                        <div class="detail-label">Procedure</div>
-                                        <div class="detail-value">Lapidus Procedure</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Surgeon</div>
-                                        <div class="detail-value">Dr. Michael Wilson</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Hospital</div>
-                                        <div class="detail-value">City General Hospital</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Surgery Date</div>
-                                        <div class="detail-value">June 22, 2025</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Total Value</div>
-                                        <div class="detail-value">$4,920</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Patient</div>
-                                        <div class="detail-value">R.D.</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="case-card" onclick="selectCase('CS-1234567894')">
-                                <input type="radio" name="selectedCase" value="CS-1234567894" id="case3">
-                                <div class="case-header">
-                                    <div class="case-id">CS-1234567894</div>
-                                    <div class="case-status status-submitted">Awaiting Approval</div>
-                                </div>
-                                <div class="case-details">
-                                    <div class="case-detail">
-                                        <div class="detail-label">Procedure</div>
-                                        <div class="detail-value">Hammertoe Correction</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Surgeon</div>
-                                        <div class="detail-value">Dr. Sarah Johnson</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Hospital</div>
-                                        <div class="detail-value">Regional Medical Center</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Surgery Date</div>
-                                        <div class="detail-value">June 25, 2025</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Total Value</div>
-                                        <div class="detail-value">$1,850</div>
-                                    </div>
-                                    <div class="case-detail">
-                                        <div class="detail-label">Patient</div>
-                                        <div class="detail-value">M.B.</div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div>
+                            <div class="card-title">Submit PO</div>
+                            <div class="card-subtitle">Submit purchase orders and track procurement status for approved cases</div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Step 2: PO Details -->
-                <div class="form-section hidden" id="step2">
-                    <div class="po-details-section">
-                        <div class="section-header">
-                            <div class="section-icon">
-                                <i class="fas fa-file-invoice"></i>
-                            </div>
-                            <h2 class="section-title">Purchase Order Details</h2>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="poNumber" class="form-label required">PO Number</label>
-                                <input type="text" id="poNumber" name="poNumber" class="form-input" placeholder="Enter PO number" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="poDate" class="form-label required">PO Date</label>
-                                <input type="date" id="poDate" name="poDate" class="form-input" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="vendorName" class="form-label required">Vendor Name</label>
-                                <input type="text" id="vendorName" name="vendorName" class="form-input" placeholder="Forma Medical" value="Forma Medical" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="deliveryDate" class="form-label">Expected Delivery Date</label>
-                                <input type="date" id="deliveryDate" name="deliveryDate" class="form-input">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="purchasingContact" class="form-label">Purchasing Contact</label>
-                                <input type="text" id="purchasingContact" name="purchasingContact" class="form-input" placeholder="Contact person name">
-                            </div>
-                            <div class="form-group">
-                                <label for="contactEmail" class="form-label">Contact Email</label>
-                                <input type="email" id="contactEmail" name="contactEmail" class="form-input" placeholder="contact@hospital.com">
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="specialInstructions" class="form-label">Special Instructions</label>
-                            <textarea id="specialInstructions" name="specialInstructions" class="form-textarea" rows="4" placeholder="Any special delivery instructions or notes..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 3: Document Upload -->
-                <div class="form-section hidden" id="step3">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-upload"></i>
-                        </div>
-                        <h2 class="section-title">Upload PO Documents</h2>
-                    </div>
-                    
-                    <div class="file-upload-area" id="fileUploadArea">
-                        <div class="file-upload-icon">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
-                        <div class="file-upload-text">Drop PO documents here or click to browse</div>
-                        <div class="file-upload-hint">Supports PDF, DOC, DOCX, JPG, PNG (Max 10MB each)</div>
-                        <input type="file" class="file-input" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-                    </div>
-                    
-                    <div class="uploaded-files" id="uploadedFiles">
-                        <!-- Uploaded files will be displayed here -->
-                    </div>
-                </div>
-
-                <!-- Step 4: Review & Submit -->
-                <div class="form-section hidden" id="step4">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h2 class="section-title">Review & Submit</h2>
-                    </div>
-                    
-                    <div id="reviewSummary">
-                        <!-- Review summary will be populated here -->
-                    </div>
-                </div>
-
-                <!-- Navigation Buttons -->
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button type="button" id="prevBtn" class="submit-btn" style="background: var(--surface-light); color: var(--text-secondary); display: none;">
-                        <i class="fas fa-arrow-left"></i>
-                        Previous
-                    </button>
-                    <button type="button" id="nextBtn" class="submit-btn" style="flex: 1;" disabled onclick="nextStep()">
-                        Next Step
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                    <button type="submit" id="submitBtn" class="submit-btn" style="display: none;">
+                    <a href="po-submission.html" class="action-btn btn-success">
                         <i class="fas fa-paper-plane"></i>
                         Submit PO
-                    </button>
+                    </a>
                 </div>
-            </form>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Your Performance
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalSubmissions">12</div>
+                        <div class="stat-label">Cases This Month</div>
+                        <div class="stat-trend">+15% vs last month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="monthlyCommission">$2,450</div>
+                        <div class="stat-label">Monthly Commission</div>
+                        <div class="stat-trend">+22% vs last month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="newSurgeons">3</div>
+                        <div class="stat-label">New Surgeons</div>
+                        <div class="stat-trend">2 this quarter</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="activeHospitals">8</div>
+                        <div class="stat-label">Active Hospitals</div>
+                        <div class="stat-trend">67% market penetration</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Submissions -->
+            <div class="recent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    Recent Submissions
+                </h2>
+                <div id="recentSubmissions">
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>MTP Fusion - Dr. Johnson</h4>
+                            <p>Submitted June 10, 2025 • Patient: JS • Commission: $285</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Hammertoe Correction - Dr. Smith</h4>
+                            <p>Submitted June 8, 2025 • Patient: MB • Commission: $150</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Lapidus Procedure - Dr. Williams</h4>
+                            <p>Submitted June 5, 2025 • Patient: RD • Commission: $420</p>
+                        </div>
+                        <span class="status-badge status-complete">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div id="calendarTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Surgery Calendar
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">Schedule upcoming surgeries and manage your case pipeline</p>
+                
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" onclick="changeMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="currentMonth">June 2025</h3>
+                        <button class="calendar-nav" onclick="changeMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Calendar will be generated by JavaScript -->
+                    </div>
+                    
+                    <div class="calendar-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot scheduled"></div>
+                            <span>Scheduled Surgery</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot today"></div>
+                            <span>Today</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot available"></div>
+                            <span>Available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Surgeries List -->
+                <div class="recent-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">
+                        <i class="fas fa-stethoscope"></i>
+                        Upcoming Surgeries
+                    </h3>
+                    <div id="upcomingSurgeries">
+                        <div class="recent-item">
+                            <div class="recent-info">
+                                <h4>June 15, 2025 • 9:00 AM</h4>
+                                <p><strong>Dr. Benjamin Potter</strong> • MTP Fusion • Holston Valley Surgery Center • Patient: J.S.</p>
+                            </div>
+                            <span class="status-badge status-processing">Scheduled</span>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-info">
+                                <h4>June 18, 2025 • 2:30 PM</h4>
+                                <p><strong>Dr. Sarah Johnson</strong> • Hammertoe Correction • Regional Medical Center • Patient: M.B.</p>
+                            </div>
+                            <span class="status-badge status-processing">Scheduled</span>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-info">
+                                <h4>June 22, 2025 • 11:00 AM</h4>
+                                <p><strong>Dr. Michael Wilson</strong> • Lapidus Procedure • City General Hospital • Patient: R.D.</p>
+                            </div>
+                            <span class="status-badge status-processing">Scheduled</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Performance Analytics
+                </h2>
+                
+                <!-- Key Performance Metrics -->
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-title">
+                            <i class="fas fa-chart-line"></i>
+                            Monthly Performance
+                        </div>
+                        <div class="performance-chart">
+                            <div class="chart-bar" style="height: 60%;" title="This Month: 12 cases"></div>
+                            <div class="chart-bar" style="height: 45%;" title="Last Month: 9 cases"></div>
+                            <div class="chart-bar" style="height: 80%;" title="Best Month: 15 cases"></div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                            <span><strong>This Month:</strong> 12 cases</span>
+                            <span><strong>Last Month:</strong> 9 cases</span>
+                            <span><strong>Best Month:</strong> 15 cases</span>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <div class="analytics-title">
+                            <i class="fas fa-bullseye"></i>
+                            Procedure Mix
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">MTP Fusion</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 45%; border-radius: 6px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <span style="font-weight: 700; color: var(--accent-blue);">45% (5 cases)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Hammertoe</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 30%; border-radius: 6px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <span style="font-weight: 700; color: var(--accent-blue);">30% (4 cases)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Lapidus</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 15%; border-radius: 6px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <span style="font-weight: 700; color: var(--accent-blue);">15% (2 cases)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Akin</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 10%; border-radius: 6px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <span style="font-weight: 700; color: var(--accent-blue);">10% (1 case)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Growth Trends -->
+                <div class="recent-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-rocket"></i>
+                        Growth Trends
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--success-green);">+25%</div>
+                            <div class="stat-label">Quarter Growth</div>
+                            <div class="stat-trend">vs Q3 2024</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--success-green);">+40%</div>
+                            <div class="stat-label">New Surgeon Cases</div>
+                            <div class="stat-trend">vs last quarter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--accent-cyan);">92%</div>
+                            <div class="stat-label">PO Success Rate</div>
+                            <div class="stat-trend">11/12 cases</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--warning-amber);">6.5</div>
+                            <div class="stat-label">Avg Days to PO</div>
+                            <div class="stat-trend">Industry: 8-12 days</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Performers -->
+                <div class="recent-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Top Performers
+                    </h3>
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-title">
+                                <i class="fas fa-user-md"></i>
+                                Top Surgeon
+                            </div>
+                            <div style="text-align: center; padding: 1rem;">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Dr. Benjamin Potter</div>
+                                <div style="color: var(--text-secondary);">5 cases this month</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-title">
+                                <i class="fas fa-hospital"></i>
+                                Top Hospital
+                            </div>
+                            <div style="text-align: center; padding: 1rem;">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Holston Valley Surgery Center</div>
+                                <div style="color: var(--text-secondary);">4 cases this month</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-title">
+                                <i class="fas fa-tools"></i>
+                                Top Product
+                            </div>
+                            <div style="text-align: center; padding: 1rem;">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">MIS MTP Construct</div>
+                                <div style="color: var(--text-secondary);">Used in 8 cases</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Submissions Tab -->
+        <div id="submissionsTab" class="tab-content">
+            <div class="recent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    My Submissions
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
+                
+                <div id="allSubmissions">
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>CS-1234567890 • MTP Fusion</h4>
+                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgeon:</strong> Dr. Benjamin Potter • <strong>Date:</strong> 2024-12-15 • <strong>Commission:</strong> $285</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+                    
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>CS-1234567891 • Hammertoe Correction</h4>
+                            <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgeon:</strong> Dr. Sarah Johnson • <strong>Date:</strong> 2024-12-18 • <strong>Commission:</strong> $150</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>CS-1234567892 • Lapidus Procedure</h4>
+                            <p><strong>Hospital:</strong> City General Hospital • <strong>Surgeon:</strong> Dr. Michael Wilson • <strong>Date:</strong> 2024-12-12 • <strong>Commission:</strong> $420</p>
+                        </div>
+                        <span class="status-badge status-complete">Invoiced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commission Transparency Tab -->
+        <div id="commissionsTab" class="tab-content">
+            <!-- Commission Summary -->
+            <div class="commission-summary">
+                <div class="commission-total">$2,450</div>
+                <div class="commission-subtitle">Total Monthly Commission</div>
+            </div>
+
+            <!-- Commission Overview Stats -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-dollar-sign"></i>
+                    Commission Overview
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--success-green);">$1,855</div>
+                        <div class="stat-label">Paid Commissions</div>
+                        <div class="stat-trend">9 cases completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--warning-amber);">$595</div>
+                        <div class="stat-label">Pending Commissions</div>
+                        <div class="stat-trend">3 cases awaiting PO</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8.7%</div>
+                        <div class="stat-label">Average Commission Rate</div>
+                        <div class="stat-trend">Based on case value</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">PO Success Rate</div>
+                        <div class="stat-trend">11/12 cases approved</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Individual Commission Breakdown -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Commission Breakdown by Case
+                </h2>
+                <div class="commission-grid">
+                    <!-- Commission cards would be dynamically generated -->
+                    <div class="commission-card paid">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567890</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--success-green);">$285</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">MTP Fusion</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Benjamin Potter</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Holston Valley Surgery</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dec 15, 2024</div>
+                            </div>
+                        </div>
+                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Case Value:</span>
+                                <span>$3,200</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Commission Rate:</span>
+                                <span>8.9%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+                                <span>Commission Amount:</span>
+                                <span>$285</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-complete">PO Received - Paid</span>
+                    </div>
+
+                    <div class="commission-card pending">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567891</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--warning-amber);">$150</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Hammertoe Correction</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Sarah Johnson</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Regional Medical Center</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dec 18, 2024</div>
+                            </div>
+                        </div>
+                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Case Value:</span>
+                                <span>$1,850</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Commission Rate:</span>
+                                <span>8.1%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+                                <span>Potential Commission:</span>
+                                <span>$150</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <div class="commission-card paid">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567892</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--success-green);">$420</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Lapidus Procedure</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Michael Wilson</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">City General Hospital</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dec 12, 2024</div>
+                            </div>
+                        </div>
+                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Case Value:</span>
+                                <span>$4,500</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Commission Rate:</span>
+                                <span>9.3%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
+                                <span>Commission Amount:</span>
+                                <span>$420</span>
+                            </div>
+                        </div>
+                        <span class="status-badge status-complete">Invoiced - Paid</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commission Timeline -->
+            <div class="recent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i>
+                    Commission Timeline
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track the progress of your commission payments</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Commission Processed</div>
+                            <div style="color: var(--text-secondary);">CS-1234567890 • MTP Fusion • Dr. Potter • Dec 20, 2024</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--success-green);">$285</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Commission Processed</div>
+                            <div style="color: var(--text-secondary);">CS-1234567892 • Lapidus • Dr. Wilson • Dec 18, 2024</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--success-green);">$420</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Awaiting PO</div>
+                            <div style="color: var(--text-secondary);">CS-1234567891 • Hammertoe • Dr. Johnson • Pending for 5 days</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--warning-amber);">$150</div>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-clipboard"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Case Submitted</div>
+                            <div style="color: var(--text-secondary);">CS-1234567893 • Bunion Correction • Dr. Chen • Dec 22, 2024</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent-blue);">$175</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relationships Tab -->
+        <div id="relationshipsTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-handshake"></i>
+                    Surgeon & Hospital Relationships
+                </h2>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-user-md"></i>
+                            Top Surgeons
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Benjamin Potter</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">5 cases • $1,200 commission</div>
+                                </div>
+                                <span class="status-badge status-complete">Strong</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Sarah Johnson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">3 cases • $750 commission</div>
+                                </div>
+                                <span class="status-badge status-processing">Growing</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Michael Wilson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • $500 commission</div>
+                                </div>
+                                <span class="status-badge status-pending">New</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-hospital"></i>
+                            Top Hospitals
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Holston Valley Surgery Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">6 cases • 3 surgeons</div>
+                                </div>
+                                <span class="status-badge status-complete">Strong</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Regional Medical Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">4 cases • 2 surgeons</div>
+                                </div>
+                                <span class="status-badge status-processing">Growing</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">City General Hospital</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • 1 surgeon</div>
+                                </div>
+                                <span class="status-badge status-pending">Opportunity</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Growth Opportunities -->
+                <div class="recent-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">
+                        <i class="fas fa-bullseye"></i>
+                        Growth Opportunities
+                    </h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                            <div style="font-size: 2rem; color: var(--success-green);">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Increase MTP Cases</div>
+                                <div style="color: var(--text-secondary);">Your MTP conversion rate is above average - great opportunity</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                            <div style="font-size: 2rem; color: var(--accent-cyan);">
+                                <i class="fas fa-hospital"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">New Hospital Target</div>
+                                <div style="color: var(--text-secondary);">Valley Medical Center - untapped market in your territory</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Files Tab -->
+        <div id="filesTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-folder"></i>
+                    Document Library
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">Access important forms, case sheets, and reference materials</p>
+                
+                <div class="files-grid">
+                    <!-- New Account Information Form -->
+                    <div class="file-card form">
+                        <div class="file-header">
+                            <div class="file-icon form">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div>
+                                <div class="file-title">New Account Information Form</div>
+                                <div class="file-description">Required form for setting up new surgeon accounts and hospital partnerships</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF Document</span>
+                            <span>Updated: May 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('new-account-form')">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('new-account-form')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hammertoe/Akin Case Sheet -->
+                    <div class="file-card case-sheet">
+                        <div class="file-header">
+                            <div class="file-icon case-sheet">
+                                <i class="fas fa-clipboard"></i>
+                            </div>
+                            <div>
+                                <div class="file-title">Hammertoe/Akin Case Sheet</div>
+                                <div class="file-description">Specialized case submission form for hammertoe corrections and Akin osteotomy procedures</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF Form</span>
+                            <span>Updated: June 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('hammertoe-case-sheet')">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('hammertoe-case-sheet')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MTP Case Sheet -->
+                    <div class="file-card case-sheet">
+                        <div class="file-header">
+                            <div class="file-icon case-sheet">
+                                <i class="fas fa-clipboard"></i>
+                            </div>
+                            <div>
+                                <div class="file-title">MTP Case Sheet</div>
+                                <div class="file-description">Detailed case submission form specifically designed for MTP fusion procedures</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF Form</span>
+                            <span>Updated: June 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('mtp-case-sheet')">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('mtp-case-sheet')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product Catalog -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div>
+                                <div class="file-title">Product Catalog 2025</div>
+                                <div class="file-description">Complete catalog of all Forma Medical products with specifications and pricing</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF Catalog</span>
+                            <span>Updated: January 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('product-catalog')">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('product-catalog')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Commission Structure Guide -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div>
+                                <div class="file-title">Commission Structure Guide</div>
+                                <div class="file-description">Detailed breakdown of commission rates and payment structures by procedure type</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF Guide</span>
+                            <span>Updated: March 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('commission-guide')">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('commission-guide')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Training Materials -->
+                    <div class="file-card guide">
+                        <div class="file-header">
+                            <div class="file-icon guide">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <div class="file-title">Training Materials</div>
+                                <div class="file-description">Educational resources and training materials for new distributors and ongoing education</div>
+                            </div>
+                        </div>
+                        <div class="file-meta">
+                            <span><i class="fas fa-file-pdf"></i> PDF Package</span>
+                            <span>Updated: April 2025</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="file-btn file-btn-primary" onclick="downloadFile('training-materials')">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                            <button class="file-btn file-btn-secondary" onclick="viewFile('training-materials')">
+                                <i class="fas fa-eye"></i>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recently Downloaded Files -->
+                <div class="recent-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recently Downloaded
+                    </h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                            <div>
+                                <div style="font-weight: 700; color: var(--text-primary);">MTP Case Sheet</div>
+                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Downloaded: June 10, 2025</div>
+                            </div>
+                            <button class="file-btn file-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="downloadFile('mtp-case-sheet')">
+                                <i class="fas fa-redo"></i>
+                                Re-download
+                            </button>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                            <div>
+                                <div style="font-weight: 700; color: var(--text-primary);">Product Catalog 2025</div>
+                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Downloaded: June 8, 2025</div>
+                            </div>
+                            <button class="file-btn file-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="downloadFile('product-catalog')">
+                                <i class="fas fa-redo"></i>
+                                Re-download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Surgery Event Modal -->
+    <div id="eventModal" class="event-modal">
+        <div class="event-modal-content">
+            <div class="event-modal-header">
+                <h2 class="event-modal-title" id="eventModalTitle">Schedule Surgery</h2>
+                <button class="close-btn" onclick="closeEventModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgery Date *</label>
+                    <input type="date" id="eventDate" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgery Time *</label>
+                    <input type="time" id="eventTime" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgeon *</label>
+                    <select id="eventSurgeon" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        <option value="">Select Surgeon</option>
+                        <option value="Dr. Benjamin Potter">Dr. Benjamin Potter</option>
+                        <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                        <option value="Dr. Michael Wilson">Dr. Michael Wilson</option>
+                        <option value="Dr. Lisa Chen">Dr. Lisa Chen</option>
+                        <option value="Dr. Robert Miller">Dr. Robert Miller</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Hospital *</label>
+                    <select id="eventHospital" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        <option value="">Select Hospital</option>
+                        <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
+                        <option value="Regional Medical Center">Regional Medical Center</option>
+                        <option value="City General Hospital">City General Hospital</option>
+                        <option value="Metro Health Center">Metro Health Center</option>
+                        <option value="Valley Medical">Valley Medical</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Procedure Type</label>
+                    <select id="eventProcedure" style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        <option value="">Select Procedure</option>
+                        <option value="MTP Fusion">MTP Fusion</option>
+                        <option value="Hammertoe Correction">Hammertoe Correction</option>
+                        <option value="Lapidus Procedure">Lapidus Procedure</option>
+                        <option value="Bunion Correction">Bunion Correction</option>
+                        <option value="Ankle Fusion">Ankle Fusion</option>
+                        <option value="Akin Osteotomy">Akin Osteotomy</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Patient Initials</label>
+                    <input type="text" id="eventPatient" placeholder="e.g., J.S." maxlength="10" style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; margin-bottom: 2rem;">
+                <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Notes (Optional)</label>
+                <textarea id="eventNotes" rows="3" placeholder="Any additional notes about this surgery..." style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button type="button" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onclick="scheduleEvent()">
+                    <i class="fas fa-calendar-plus"></i>
+                    Schedule Surgery
+                </button>
+                <button type="button" style="background: var(--primary-gradient); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: none;" onclick="goToCaseSheet()" id="caseSheetBtn">
+                    <i class="fas fa-clipboard"></i>
+                    Go to Case Sheet
+                </button>
+                <button type="button" style="background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: none;" onclick="cancelEvent()" id="cancelEventBtn">
+                    <i class="fas fa-times"></i>
+                    Cancel Event
+                </button>
+                <button type="button" style="background: var(--surface-light); color: var(--text-secondary); border: 1px solid var(--glass-border); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onclick="closeEventModal()">
+                    Close
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        console.log('Premium PO Submission System Loading...');
-        
-        // Global variables
-        let currentStep = 1;
-        let selectedCase = null;
-        let uploadedFiles = [];
-        let distributorInfo = null;
+        console.log('Premium Medical Dashboard Loading...');
 
-        // Initialize when page loads
-        window.onload = function() {
-            console.log('Premium PO system initializing...');
+        // Theme functionality with proper persistence
+        function toggleTheme() {
+            // For now, just log the action since we're already in dark theme
+            console.log('Theme toggle clicked - dashboard is optimized for dark theme');
             
-            // Load distributor info (same pattern as other pages)
+            // You could implement light theme variants here if needed
+            const themeToggle = document.querySelector('.theme-toggle i');
+            if (themeToggle.classList.contains('fa-moon')) {
+                themeToggle.className = 'fas fa-sun';
+            } else {
+                themeToggle.className = 'fas fa-moon';
+            }
+        }
+
+        // Calendar functionality
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        let selectedDate = null;
+        let scheduledEvents = {
+            // Sample scheduled surgeries
+            '2025-06-15': [
+                {
+                    id: 'evt1',
+                    surgeon: 'Dr. Benjamin Potter',
+                    hospital: 'Holston Valley Surgery Center',
+                    procedure: 'MTP Fusion',
+                    time: '09:00',
+                    patient: 'J.S.',
+                    notes: 'Regular follow-up case'
+                }
+            ],
+            '2025-06-18': [
+                {
+                    id: 'evt2',
+                    surgeon: 'Dr. Sarah Johnson', 
+                    hospital: 'Regional Medical Center',
+                    procedure: 'Hammertoe Correction',
+                    time: '14:30',
+                    patient: 'M.B.',
+                    notes: 'New patient referral'
+                },
+                {
+                    id: 'evt3',
+                    surgeon: 'Dr. Michael Wilson', 
+                    hospital: 'Regional Medical Center',
+                    procedure: 'Bunion Correction',
+                    time: '16:00',
+                    patient: 'K.L.',
+                    notes: 'Follow-up case'
+                }
+            ],
+            '2025-06-22': [
+                {
+                    id: 'evt4',
+                    surgeon: 'Dr. Michael Wilson',
+                    hospital: 'City General Hospital', 
+                    procedure: 'Lapidus Procedure',
+                    time: '11:00',
+                    patient: 'R.D.',
+                    notes: 'Complex case - requires extra prep'
+                }
+            ]
+        };
+
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        function generateCalendar(month, year) {
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            document.getElementById('currentMonth').textContent = `${months[month]} ${year}`;
+            
+            let calendarHTML = '';
+            
+            // Add day headers first
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                calendarHTML += `<div class="calendar-day-header">${day}</div>`;
+            });
+            
+            let dayCount = 1;
+            let nextMonthDay = 1;
+            
+            // Generate 6 weeks of days (42 days total)
+            for (let week = 0; week < 6; week++) {
+                for (let day = 0; day < 7; day++) {
+                    if (week === 0 && day < firstDay) {
+                        // Previous month days
+                        const prevMonthDay = daysInPrevMonth - (firstDay - day - 1);
+                        const prevMonth = month - 1 < 0 ? 11 : month - 1;
+                        const prevYear = month - 1 < 0 ? year - 1 : year;
+                        const dateString = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(prevMonthDay).padStart(2, '0')}`;
+                        
+                        calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${dateString}')">
+                            <div style="font-size: 0.9rem;">${prevMonthDay}</div>
+                        </div>`;
+                    } else if (dayCount <= daysInMonth) {
+                        // Current month days
+                        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayCount).padStart(2, '0')}`;
+                        const isToday = dateString === new Date().toISOString().split('T')[0];
+                        const dayEvents = scheduledEvents[dateString];
+                        const hasEvents = dayEvents && dayEvents.length > 0;
+                        
+                        let dayClass = 'calendar-day';
+                        if (isToday) dayClass += ' today';
+                        if (hasEvents) dayClass += ' scheduled';
+                        
+                        // Show event count if multiple events
+                        let eventIndicator = '';
+                        if (hasEvents && dayEvents.length > 1) {
+                            eventIndicator = `<div class="event-count">${dayEvents.length}</div>`;
+                        }
+                        
+                        calendarHTML += `<div class="${dayClass}" onclick="selectDate('${dateString}')">
+                            <div style="font-size: 0.9rem;">${dayCount}</div>
+                            ${eventIndicator}
+                        </div>`;
+                        dayCount++;
+                    } else {
+                        // Next month days
+                        const nextMonth = month + 1 > 11 ? 0 : month + 1;
+                        const nextYear = month + 1 > 11 ? year + 1 : year;
+                        const dateString = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(nextMonthDay).padStart(2, '0')}`;
+                        
+                        calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${dateString}')">
+                            <div style="font-size: 0.9rem;">${nextMonthDay}</div>
+                        </div>`;
+                        nextMonthDay++;
+                    }
+                }
+            }
+            
+            document.getElementById('calendarGrid').innerHTML = calendarHTML;
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        }
+
+        function selectDate(dateString) {
+            selectedDate = dateString;
+            const existingEvents = scheduledEvents[dateString];
+            
+            if (existingEvents && existingEvents.length > 0) {
+                showEventModal(dateString, existingEvents);
+            } else {
+                showEventModal(dateString);
+            }
+        }
+
+        function showEventModal(dateString, existingEvents = null) {
+            const modal = document.getElementById('eventModal');
+            const title = document.getElementById('eventModalTitle');
+            const dateInput = document.getElementById('eventDate');
+            
+            dateInput.value = dateString;
+            
+            if (existingEvents && existingEvents.length > 0) {
+                const eventCount = existingEvents.length;
+                title.innerHTML = `<i class="fas fa-calendar-check"></i> ${eventCount} Surgery${eventCount > 1 ? 's' : ''} - ${new Date(dateString).toLocaleDateString()}`;
+            } else {
+                title.innerHTML = '<i class="fas fa-calendar-plus"></i> Schedule Surgery - ' + new Date(dateString).toLocaleDateString();
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+            selectedDate = null;
+        }
+
+        function scheduleEvent() {
+            const dateInput = document.getElementById('eventDate');
+            const timeInput = document.getElementById('eventTime');
+            const surgeonSelect = document.getElementById('eventSurgeon');
+            const hospitalSelect = document.getElementById('eventHospital');
+            const procedureSelect = document.getElementById('eventProcedure');
+            const patientInput = document.getElementById('eventPatient');
+            const notesTextarea = document.getElementById('eventNotes');
+            
+            // Validation
+            if (!dateInput.value || !timeInput.value || !surgeonSelect.value || !hospitalSelect.value) {
+                alert('Please fill in all required fields (Date, Time, Surgeon, Hospital)');
+                return;
+            }
+            
+            // Create new event
+            const newEvent = {
+                id: 'evt_' + Date.now(),
+                surgeon: surgeonSelect.value,
+                hospital: hospitalSelect.value,
+                procedure: procedureSelect.value,
+                time: timeInput.value,
+                patient: patientInput.value,
+                notes: notesTextarea.value
+            };
+            
+            // Add to events array
+            if (!scheduledEvents[dateInput.value]) {
+                scheduledEvents[dateInput.value] = [];
+            }
+            scheduledEvents[dateInput.value].push(newEvent);
+            
+            // Sort events by time
+            scheduledEvents[dateInput.value].sort((a, b) => a.time.localeCompare(b.time));
+            
+            // Success message
+            const formattedDate = new Date(dateInput.value).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short', 
+                day: 'numeric'
+            });
+            
+            const procedureText = procedureSelect.value || 'Surgery';
+            const surgeonShort = surgeonSelect.value.replace('Dr. ', '');
+            
+            alert(`✅ Surgery Scheduled!\n\n${formattedDate} at ${timeInput.value}\n${procedureText} - Dr. ${surgeonShort}`);
+            
+            // Refresh calendar and close modal
+            generateCalendar(currentMonth, currentYear);
+            closeEventModal();
+        }
+
+        function goToCaseSheet() {
+            alert('🚀 Taking you to Case Sheet!\n\nThis would navigate to the form with pre-filled data.');
+        }
+
+        function cancelEvent() {
+            if (confirm('Are you sure you want to cancel this event?')) {
+                delete scheduledEvents[selectedDate];
+                generateCalendar(currentMonth, currentYear);
+                closeEventModal();
+            }
+        }
+
+        // File management functions
+        function downloadFile(fileId) {
+            const fileNames = {
+                'new-account-form': 'New_Account_Information_Form.pdf',
+                'hammertoe-case-sheet': 'Hammertoe_Akin_Case_Sheet.pdf',
+                'mtp-case-sheet': 'MTP_Case_Sheet.pdf',
+                'lapidus-case-sheet': 'Lapidus_Case_Sheet.pdf',
+                'product-catalog': 'Forma_Medical_Product_Catalog_2025.pdf',
+                'commission-guide': 'Commission_Structure_Guide.pdf',
+                'training-materials': 'Training_Materials_Package.pdf'
+            };
+            
+            const fileName = fileNames[fileId] || 'document.pdf';
+            alert(`📥 Downloading: ${fileName}\n\nIn a real application, this would download the file from the server.`);
+        }
+
+        function viewFile(fileId) {
+            const fileNames = {
+                'new-account-form': 'New Account Information Form',
+                'hammertoe-case-sheet': 'Hammertoe/Akin Case Sheet',
+                'mtp-case-sheet': 'MTP Case Sheet',
+                'product-catalog': 'Product Catalog 2025',
+                'commission-guide': 'Commission Structure Guide',
+                'training-materials': 'Training Materials'
+            };
+            
+            const fileName = fileNames[fileId] || 'Document';
+            alert(`👁️ Opening: ${fileName}\n\nIn a real application, this would open a preview of the file.`);
+        }
+
+        // Sample distributor data
+        const sampleDistributor = {
+            companyName: 'ABC Ortho Solutions',
+            code: 'ABCOrtho',
+            region: 'Tennessee Region'
+        };
+
+        // Logout function
+        function logout() {
+            try {
+                sessionStorage.removeItem('distributorCode');
+                sessionStorage.removeItem('distributorData');
+                console.log('Logging out...');
+            } catch (error) {
+                console.log('Session storage not available');
+            }
+            
+            window.location.href = 'index.html';
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            tabContents.forEach(content => content.classList.remove('active'));
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Trigger animations for the active tab
+            if (tabName === 'analytics') {
+                setTimeout(() => {
+                    animateProcedureBars();
+                }, 300);
+            }
+        }
+
+        function animateProcedureBars() {
+            // Animate the procedure bars
+            const bars = document.querySelectorAll('[style*="width:"]');
+            bars.forEach(bar => {
+                const originalWidth = bar.style.width;
+                bar.style.width = '0%';
+                bar.style.transition = 'width 1s ease';
+                setTimeout(() => {
+                    bar.style.width = originalWidth;
+                }, 100);
+            });
+        }
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            let distributor = sampleDistributor;
+            
             try {
                 const distributorCode = sessionStorage.getItem('distributorCode');
                 const distributorData = sessionStorage.getItem('distributorData');
 
                 if (distributorCode && distributorData) {
-                    distributorInfo = JSON.parse(distributorData);
-                } else {
-                    // Fallback to demo data
-                    distributorInfo = {
-                        companyName: 'ABC Ortho Solutions',
-                        contactName: 'Demo User',
-                        code: 'ABCOrtho'
-                    };
+                    distributor = JSON.parse(distributorData);
+                    console.log('Loaded distributor from session:', distributor.companyName);
                 }
             } catch (error) {
                 console.log('Using demo data');
-                distributorInfo = {
-                    companyName: 'ABC Ortho Solutions',
-                    contactName: 'Demo User',
-                    code: 'ABCOrtho'
-                };
             }
             
-            updateDistributorInfo();
-            initializeFileUpload();
-            updateStepDisplay();
+            updateUI(distributor);
+            generateCalendar(currentMonth, currentYear);
             
-            // Set today's date as default for PO date
-            document.getElementById('poDate').valueAsDate = new Date();
+            // Animate elements on load
+            setTimeout(() => {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    stat.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        stat.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            }, 500);
+        }
+
+        function updateUI(distributor) {
+            document.getElementById('companyName').textContent = distributor.companyName;
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('eventModal');
+            if (event.target === modal) {
+                closeEventModal();
+            }
         };
 
-        function updateDistributorInfo() {
-            document.getElementById('distributorCompany').innerHTML = '<i class="fas fa-building"></i> ' + distributorInfo.companyName;
-            document.getElementById('distributorContact').textContent = 'Contact: ' + distributorInfo.contactName;
-        }
+        // Initialize when page loads
+        window.addEventListener('load', initializeDashboard);
 
-        function selectCase(caseId) {
-            // Remove previous selection
-            document.querySelectorAll('.case-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Select new case
-            const selectedCard = document.querySelector(`input[value="${caseId}"]`).closest('.case-card');
-            selectedCard.classList.add('selected');
-            document.querySelector(`input[value="${caseId}"]`).checked = true;
-            
-            selectedCase = caseId;
-            document.getElementById('nextBtn').disabled = false;
-            
-            console.log('Selected case:', caseId);
-        }
-
-        function nextStep() {
-            if (currentStep < 4) {
-                // Validate current step
-                if (!validateStep(currentStep)) {
-                    return;
-                }
-                
-                // Hide current step
-                document.getElementById(`step${currentStep}`).classList.add('hidden');
-                
-                // Move to next step
-                currentStep++;
-                
-                // Show next step
-                document.getElementById(`step${currentStep}`).classList.remove('hidden');
-                
-                updateStepDisplay();
-                updateProgressIndicator();
-                
-                // Special handling for specific steps
-                if (currentStep === 4) {
-                    generateReviewSummary();
-                }
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 1) {
-                // Hide current step
-                document.getElementById(`step${currentStep}`).classList.add('hidden');
-                
-                // Move to previous step
-                currentStep--;
-                
-                // Show previous step
-                document.getElementById(`step${currentStep}`).classList.remove('hidden');
-                
-                updateStepDisplay();
-                updateProgressIndicator();
-            }
-        }
-
-        function validateStep(step) {
-            switch(step) {
-                case 1:
-                    if (!selectedCase) {
-                        alert('Please select a case to continue');
-                        return false;
-                    }
-                    return true;
-                    
-                case 2:
-                    const poNumber = document.getElementById('poNumber').value;
-                    const poDate = document.getElementById('poDate').value;
-                    const vendorName = document.getElementById('vendorName').value;
-                    
-                    if (!poNumber || !poDate || !vendorName) {
-                        alert('Please fill in all required PO details');
-                        return false;
-                    }
-                    return true;
-                    
-                case 3:
-                    if (uploadedFiles.length === 0) {
-                        alert('Please upload at least one PO document');
-                        return false;
-                    }
-                    return true;
-                    
-                default:
-                    return true;
-            }
-        }
-
-        function updateStepDisplay() {
-            // Update navigation buttons
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            if (currentStep === 1) {
-                prevBtn.style.display = 'none';
-                nextBtn.style.display = 'flex';
-                submitBtn.style.display = 'none';
-                nextBtn.disabled = !selectedCase;
-            } else if (currentStep === 4) {
-                prevBtn.style.display = 'flex';
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'flex';
-            } else {
-                prevBtn.style.display = 'flex';
-                nextBtn.style.display = 'flex';
-                submitBtn.style.display = 'none';
-                nextBtn.disabled = false;
-            }
-            
-            // Update previous button click handler
-            prevBtn.onclick = prevStep;
-        }
-
-        function updateProgressIndicator() {
-            for (let i = 1; i <= 4; i++) {
-                const icon = document.getElementById(`step${i}Icon`);
-                const label = document.getElementById(`step${i}Label`);
-                const connector = document.getElementById(`connector${i}`);
-                
-                if (i < currentStep) {
-                    // Completed step
-                    icon.classList.remove('active');
-                    icon.classList.add('completed');
-                    label.classList.remove('active');
-                    label.classList.add('completed');
-                    if (connector) {
-                        connector.classList.add('completed');
-                    }
-                } else if (i === currentStep) {
-                    // Current step
-                    icon.classList.remove('completed');
-                    icon.classList.add('active');
-                    label.classList.remove('completed');
-                    label.classList.add('active');
-                } else {
-                    // Future step
-                    icon.classList.remove('active', 'completed');
-                    label.classList.remove('active', 'completed');
-                    if (connector) {
-                        connector.classList.remove('completed');
-                    }
-                }
-            }
-        }
-
-        function initializeFileUpload() {
-            const fileUploadArea = document.getElementById('fileUploadArea');
-            const fileInput = document.getElementById('fileInput');
-            
-            // Click to upload
-            fileUploadArea.addEventListener('click', () => {
-                fileInput.click();
-            });
-            
-            // Drag and drop
-            fileUploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                fileUploadArea.classList.add('dragover');
-            });
-            
-            fileUploadArea.addEventListener('dragleave', () => {
-                fileUploadArea.classList.remove('dragover');
-            });
-            
-            fileUploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                fileUploadArea.classList.remove('dragover');
-                
-                const files = Array.from(e.dataTransfer.files);
-                handleFileUpload(files);
-            });
-            
-            // File input change
-            fileInput.addEventListener('change', (e) => {
-                const files = Array.from(e.target.files);
-                handleFileUpload(files);
-            });
-        }
-
-        function handleFileUpload(files) {
-            files.forEach(file => {
-                // Validate file
-                if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
-                    return;
-                }
-                
-                const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
-                if (!allowedTypes.includes(file.type)) {
-                    alert(`File ${file.name} is not a supported format.`);
-                    return;
-                }
-                
-                // Add to uploaded files
-                const fileId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                uploadedFiles.push({
-                    id: fileId,
-                    file: file,
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
-                
-                displayUploadedFile(fileId, file);
-            });
-            
-            // Clear the input
-            document.getElementById('fileInput').value = '';
-        }
-
-        function displayUploadedFile(fileId, file) {
-            const uploadedFilesContainer = document.getElementById('uploadedFiles');
-            
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            fileItem.id = `file_${fileId}`;
-            
-            const fileIcon = getFileIcon(file.type);
-            const fileSize = formatFileSize(file.size);
-            
-            fileItem.innerHTML = `
-                <div class="file-info">
-                    <div class="file-icon">
-                        <i class="fas fa-${fileIcon}"></i>
-                    </div>
-                    <div class="file-details">
-                        <div class="file-name">${file.name}</div>
-                        <div class="file-size">${fileSize}</div>
-                    </div>
-                </div>
-                <div class="file-actions">
-                    <button type="button" class="file-action-btn" onclick="previewFile('${fileId}')" title="Preview">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button type="button" class="file-action-btn remove" onclick="removeFile('${fileId}')" title="Remove">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `;
-            
-            uploadedFilesContainer.appendChild(fileItem);
-        }
-
-        function getFileIcon(mimeType) {
-            if (mimeType.includes('pdf')) return 'file-pdf';
-            if (mimeType.includes('word')) return 'file-word';
-            if (mimeType.includes('image')) return 'file-image';
-            return 'file';
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function removeFile(fileId) {
-            // Remove from uploaded files array
-            uploadedFiles = uploadedFiles.filter(file => file.id !== fileId);
-            
-            // Remove from DOM
-            const fileElement = document.getElementById(`file_${fileId}`);
-            if (fileElement) {
-                fileElement.remove();
-            }
-        }
-
-        function previewFile(fileId) {
-            const file = uploadedFiles.find(f => f.id === fileId);
-            if (file) {
-                alert(`Preview functionality for ${file.file.name} would open here in a real application.`);
-            }
-        }
-
-        function generateReviewSummary() {
-            const reviewContainer = document.getElementById('reviewSummary');
-            
-            // Get selected case info
-            const selectedCaseElement = document.querySelector('input[name="selectedCase"]:checked');
-            const caseCard = selectedCaseElement.closest('.case-card');
-            
-            // Get case details
-            const caseId = selectedCaseElement.value;
-            const procedure = caseCard.querySelector('.case-details .case-detail:nth-child(1) .detail-value').textContent;
-            const surgeon = caseCard.querySelector('.case-details .case-detail:nth-child(2) .detail-value').textContent;
-            const hospital = caseCard.querySelector('.case-details .case-detail:nth-child(3) .detail-value').textContent;
-            const totalValue = caseCard.querySelector('.case-details .case-detail:nth-child(5) .detail-value').textContent;
-            
-            // Get PO details
-            const poNumber = document.getElementById('poNumber').value;
-            const poDate = document.getElementById('poDate').value;
-            const vendorName = document.getElementById('vendorName').value;
-            const deliveryDate = document.getElementById('deliveryDate').value;
-            
-            reviewContainer.innerHTML = `
-                <div style="display: grid; gap: 2rem;">
-                    <!-- Case Information -->
-                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <h3 style="color: var(--accent-blue); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-clipboard-list"></i>
-                            Selected Case
-                        </h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                            <div>
-                                <div class="detail-label">Case ID</div>
-                                <div class="detail-value">${caseId}</div>
-                            </div>
-                            <div>
-                                <div class="detail-label">Procedure</div>
-                                <div class="detail-value">${procedure}</div>
-                            </div>
-                            <div>
-                                <div class="detail-label">Surgeon</div>
-                                <div class="detail-value">${surgeon}</div>
-                            </div>
-                            <div>
-                                <div class="detail-label">Hospital</div>
-                                <div class="detail-value">${hospital}</div>
-                            </div>
-                            <div>
-                                <div class="detail-label">Total Value</div>
-                                <div class="detail-value">${totalValue}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- PO Information -->
-                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <h3 style="color: var(--success-green); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-file-invoice"></i>
-                            Purchase Order Details
-                        </h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                            <div>
-                                <div class="detail-label">PO Number</div>
-                                <div class="detail-value">${poNumber}</div>
-                            </div>
-                            <div>
-                                <div class="detail-label">PO Date</div>
-                                <div class="detail-value">${new Date(poDate).toLocaleDateString()}</div>
-                            </div>
-                            <div>
-                                <div class="detail-label">Vendor</div>
-                                <div class="detail-value">${vendorName}</div>
-                            </div>
-                            ${deliveryDate ? `
-                            <div>
-                                <div class="detail-label">Expected Delivery</div>
-                                <div class="detail-value">${new Date(deliveryDate).toLocaleDateString()}</div>
-                            </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                    
-                    <!-- Uploaded Documents -->
-                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <h3 style="color: var(--warning-amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-upload"></i>
-                            Uploaded Documents (${uploadedFiles.length})
-                        </h3>
-                        <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                            ${uploadedFiles.map(file => `
-                                <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--surface-light); border-radius: 8px;">
-                                    <i class="fas fa-${getFileIcon(file.type)}" style="color: var(--accent-blue);"></i>
-                                    <span style="font-size: 0.9rem;">${file.name}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Form submission
-        document.getElementById('poForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            
-            // Show loading state
-            submitBtn.classList.add('loading');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting PO...';
-            submitBtn.disabled = true;
-            
-            // Simulate submission
-            setTimeout(() => {
-                // Show success state
-                submitBtn.classList.remove('loading');
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> PO Submitted Successfully!';
-                submitBtn.style.background = 'linear-gradient(135deg, var(--success-green) 0%, #059669 100%)';
-                
-                // Show success message
-                const successDiv = document.createElement('div');
-                successDiv.className = 'success-message';
-                successDiv.innerHTML = `
-                    <i class="fas fa-check-circle"></i>
-                    <div>
-                        <strong>Purchase Order submitted successfully!</strong><br>
-                        <small>PO Number: ${document.getElementById('poNumber').value}</small>
-                    </div>
-                `;
-                document.querySelector('.form-container').insertBefore(successDiv, document.getElementById('poForm'));
-                
-                // Reset and redirect after delay
-                setTimeout(() => {
-                    if (confirm('Would you like to return to your dashboard?')) {
-                        window.location.href = 'dashboard.html';
-                    }
-                }, 2000);
-            }, 2000);
-        });
-
-        console.log('Premium PO Submission System Ready! 📋✨');
+        console.log('Premium Medical Dashboard Ready! 🏥✨');
     </script>
 </body>
 </html>
