@@ -95,6 +95,10 @@
             font-weight: bold;
             color: #2c5aa0;
         }
+        .required::after {
+            content: " *";
+            color: #dc3545;
+        }
         input, select, textarea {
             width: 100%;
             padding: 12px;
@@ -284,6 +288,73 @@
             padding-top: 15px;
             color: #1e3d6f;
         }
+        
+        /* RESTOCK SECTION */
+        .restock-section {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #c3e6cb;
+            margin: 15px 0;
+        }
+        .restock-section h3 {
+            color: #155724;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: white;
+            border: 2px solid #c3e6cb;
+            transition: all 0.3s ease;
+        }
+        .radio-option:hover {
+            border-color: #2c5aa0;
+            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.1);
+        }
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+            width: auto;
+            accent-color: #2c5aa0;
+        }
+        .radio-option:has(input[type="radio"]:checked) {
+            background: #e8f4f8;
+            border-color: #2c5aa0;
+            color: #2c5aa0;
+            font-weight: bold;
+        }
+        .restock-details {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #c3e6cb;
+        }
+        .restock-details.show {
+            display: block;
+        }
+        .new-address-form {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+        }
+        .new-address-form.show {
+            display: block;
+        }
+        
         .submit-btn {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
@@ -475,6 +546,77 @@
                 </div>
             </div>
             
+            <!-- SIMPLE RESTOCK SECTION -->
+            <div class="restock-section">
+                <h3>📦 Restocks</h3>
+                
+                <div class="form-group">
+                    <label class="required">Need restocks?</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="restockYes" name="restockNeeded" value="yes" onchange="toggleRestockOptions()">
+                            <label for="restockYes">Yes</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="restockNo" name="restockNeeded" value="no" onchange="toggleRestockOptions()">
+                            <label for="restockNo">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restock Details (shown only if "Yes" selected) -->
+                <div id="restockDetails" class="restock-details">
+                    <div class="form-group">
+                        <label for="addressSelect" class="required">Ship to address:</label>
+                        <select id="addressSelect" onchange="handleAddressSelection()">
+                            <option value="">Select shipping address</option>
+                            <option value="existing1">ABC Ortho Solutions - 123 Main St, Nashville, TN 37203</option>
+                            <option value="existing2">Regional Office - 456 Oak Ave, Knoxville, TN 37902</option>
+                            <option value="existing3">Dr. Potter's Office - 789 Medical Dr, Johnson City, TN 37601</option>
+                            <option value="new">+ Add new address</option>
+                        </select>
+                    </div>
+
+                    <!-- Simple New Address Form -->
+                    <div id="newAddressForm" class="new-address-form">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="firstName" class="required">First Name</label>
+                                <input type="text" id="firstName" placeholder="First name">
+                            </div>
+                            <div class="form-col">
+                                <label for="lastName" class="required">Last Name</label>
+                                <input type="text" id="lastName" placeholder="Last name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="streetAddress" class="required">Street Address</label>
+                            <input type="text" id="streetAddress" placeholder="Street address">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label for="city" class="required">City</label>
+                                <input type="text" id="city" placeholder="City">
+                            </div>
+                            <div class="form-col">
+                                <label for="state" class="required">State</label>
+                                <select id="state">
+                                    <option value="">Select State</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="NC">North Carolina</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode" class="required">ZIP Code</label>
+                            <input type="text" id="zipCode" placeholder="ZIP Code" style="max-width: 150px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <button type="submit" class="submit-btn">Submit Case Sheet</button>
         </form>
     </div>
@@ -495,6 +637,83 @@
             {code: "6102.0005", name: "3x13mm Wedge burr"},
             {code: "FCONMTP", name: "MIS MTP Construct"}
         ];
+
+        // RESTOCK FUNCTIONS
+        function toggleRestockOptions() {
+            var restockYes = document.getElementById('restockYes');
+            var restockDetails = document.getElementById('restockDetails');
+            
+            if (restockYes.checked) {
+                restockDetails.classList.add('show');
+                document.getElementById('addressSelect').required = true;
+            } else {
+                restockDetails.classList.remove('show');
+                document.getElementById('addressSelect').required = false;
+                document.getElementById('addressSelect').value = '';
+                document.getElementById('newAddressForm').classList.remove('show');
+            }
+        }
+
+        function handleAddressSelection() {
+            var addressSelect = document.getElementById('addressSelect');
+            var newAddressForm = document.getElementById('newAddressForm');
+            
+            if (addressSelect.value === 'new') {
+                newAddressForm.classList.add('show');
+                // Make new address fields required
+                var requiredFields = ['firstName', 'lastName', 'streetAddress', 'city', 'state', 'zipCode'];
+                requiredFields.forEach(function(field) {
+                    document.getElementById(field).required = true;
+                });
+            } else {
+                newAddressForm.classList.remove('show');
+                // Remove required attributes from new address fields
+                var requiredFields = ['firstName', 'lastName', 'streetAddress', 'city', 'state', 'zipCode'];
+                requiredFields.forEach(function(field) {
+                    var element = document.getElementById(field);
+                    if (element) {
+                        element.required = false;
+                        element.value = '';
+                    }
+                });
+            }
+        }
+
+        // Function to get restock data for form submission
+        function getRestockData() {
+            var restockNeeded = document.querySelector('input[name="restockNeeded"]:checked');
+            
+            if (!restockNeeded || restockNeeded.value === 'no') {
+                return {
+                    restockNeeded: false
+                };
+            }
+            
+            var addressSelect = document.getElementById('addressSelect').value;
+            var shippingAddress = {};
+            
+            if (addressSelect === 'new') {
+                shippingAddress = {
+                    type: 'new',
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    streetAddress: document.getElementById('streetAddress').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    zipCode: document.getElementById('zipCode').value
+                };
+            } else {
+                shippingAddress = {
+                    type: 'existing',
+                    addressId: addressSelect
+                };
+            }
+            
+            return {
+                restockNeeded: true,
+                shippingAddress: shippingAddress
+            };
+        }
 
         // Initialize when page loads
         window.onload = function() {
@@ -709,6 +928,13 @@
                 return;
             }
 
+            // Validate restock section
+            var restockNeeded = document.querySelector('input[name="restockNeeded"]:checked');
+            if (!restockNeeded) {
+                alert('Please indicate whether you need restocks for this case');
+                return;
+            }
+
             // Get selected procedures
             var procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
             var selectedProcedures = [];
@@ -747,6 +973,9 @@
                 itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
             }
 
+            // Get restock data
+            var restockData = getRestockData();
+
             var formData = {
                 distributor: distributorInfo.companyName,
                 distributorCode: distributorInfo.code,
@@ -759,6 +988,7 @@
                 patientId: document.getElementById('patientId').value,
                 constructs: constructs,
                 items: addedItems,
+                restock: restockData, // Include restock information
                 totals: {
                     itemsSubtotal: itemsSubtotal,
                     constructPrice: totalConstructPrice,
@@ -794,6 +1024,10 @@
                 addedItems = [];
                 updateItemsList();
                 updateTotals();
+                
+                // Reset restock section
+                document.getElementById('restockDetails').classList.remove('show');
+                document.getElementById('newAddressForm').classList.remove('show');
                 
                 // Ask to return to dashboard
                 setTimeout(function() {
