@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surgery Case Submission - Forma Medical</title>
+    <title>PO Submission - Forma Medical</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -34,6 +34,7 @@
             --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
+            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
         }
 
         body {
@@ -86,6 +87,15 @@
             }
         }
 
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
         /* Header */
         .header {
             background: var(--glass-bg);
@@ -134,6 +144,7 @@
             font-size: 1.5rem;
             color: white;
             box-shadow: var(--shadow-md);
+            animation: pulse 4s ease-in-out infinite;
         }
 
         .company-info h1 {
@@ -204,7 +215,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--success-green));
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
         }
 
         .distributor-card h3 {
@@ -242,7 +253,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: var(--primary-gradient);
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
         }
 
         /* Form Groups and Layout */
@@ -329,194 +340,66 @@
             color: var(--text-muted);
         }
 
-        .patient-id-input {
-            max-width: 120px;
-            text-transform: uppercase;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        /* Checkbox and Radio Groups */
-        .checkbox-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--surface-medium);
+        /* File Upload Styles */
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
             border-radius: 12px;
-            border: 2px solid var(--border-color);
-        }
-
-        .checkbox-item, .radio-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            background: var(--surface-light);
-            border-radius: 10px;
-            cursor: pointer;
+            padding: 2rem;
+            text-align: center;
+            background: var(--surface-medium);
             transition: all 0.3s ease;
-            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .checkbox-item:hover, .radio-item:hover {
-            background: var(--surface-lighter);
+        .file-upload-area:hover {
+            border-color: var(--accent-blue);
+            background: var(--surface-light);
             transform: translateY(-2px);
             box-shadow: var(--shadow-sm);
         }
 
-        .checkbox-item input, .radio-item input {
-            margin-right: 0.75rem;
-            width: 18px;
-            height: 18px;
-            accent-color: var(--accent-blue);
+        .file-upload-area.dragover {
+            border-color: var(--success-green);
+            background: rgba(16, 185, 129, 0.1);
+            transform: scale(1.02);
         }
 
-        .checkbox-item:has(input:checked), .radio-item:has(input:checked) {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
+        .file-upload-icon {
+            font-size: 3rem;
             color: var(--accent-blue);
-            font-weight: 600;
-        }
-
-        /* Special Sections */
-        .construct-section {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%);
-            border: 2px solid rgba(245, 158, 11, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .construct-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--warning-amber), #fbbf24);
-            border-radius: 16px 16px 0 0;
-        }
-
-        .restock-section {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
-            border: 2px solid rgba(16, 185, 129, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin: 2rem 0;
-            position: relative;
-        }
-
-        .restock-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--success-green), #34d399);
-            border-radius: 16px 16px 0 0;
-        }
-
-        /* Item Search and Management */
-        .search-container {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .search-input {
-            padding-left: 3rem;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--surface-medium);
-            border: 2px solid var(--border-color);
-            border-top: none;
-            border-radius: 0 0 12px 12px;
-            max-height: 300px;
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-            box-shadow: var(--shadow-md);
-        }
-
-        .suggestion-item {
-            padding: 1rem 1.25rem;
-            cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.2s ease;
-        }
-
-        .suggestion-item:hover {
-            background: var(--surface-light);
-            color: var(--accent-blue);
-        }
-
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Item Input Row */
-        .item-input-grid {
-            display: grid;
-            grid-template-columns: 1fr 100px 120px auto;
-            gap: 1rem;
-            align-items: end;
             margin-bottom: 1rem;
         }
 
-        .add-btn {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
+        .file-upload-text {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-upload-hint {
+            color: var(--text-muted);
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow-sm);
         }
 
-        .add-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            animation: glow 2s ease-in-out infinite;
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
 
-        /* Items List */
-        .items-container {
-            background: var(--surface-medium);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            min-height: 120px;
+        /* Uploaded Files List */
+        .uploaded-files {
+            margin-top: 1.5rem;
         }
 
-        .item-row {
+        .file-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -528,58 +411,79 @@
             border: 2px solid transparent;
         }
 
-        .item-row:hover {
+        .file-item:hover {
             border-color: var(--accent-blue);
             transform: translateX(5px);
         }
 
-        .item-details {
-            flex: 2;
-            padding-right: 1rem;
-        }
-
-        .item-code {
-            font-weight: 700;
-            color: var(--accent-blue);
-            font-size: 0.9rem;
-        }
-
-        .item-name {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-top: 0.25rem;
-        }
-
-        .item-pricing {
-            flex: 1;
-            text-align: right;
-            padding-right: 1rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .remove-btn {
-            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
+        .file-info {
             display: flex;
             align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .file-size {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .file-actions {
+            display: flex;
             gap: 0.5rem;
         }
 
-        .remove-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        .file-action-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
         }
 
-        /* Totals Section */
-        .totals-card {
+        .file-action-btn:hover {
+            background: var(--surface-medium);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .file-action-btn.remove:hover {
+            background: var(--danger-red);
+            border-color: var(--danger-red);
+            color: white;
+        }
+
+        /* Case Selection */
+        .case-selection {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
             border: 2px solid rgba(59, 130, 246, 0.3);
             border-radius: 16px;
@@ -588,7 +492,7 @@
             position: relative;
         }
 
-        .totals-card::before {
+        .case-selection::before {
             content: '';
             position: absolute;
             top: 0;
@@ -599,27 +503,113 @@
             border-radius: 16px 16px 0 0;
         }
 
-        .total-row {
+        .case-card {
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .case-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .case-card.selected {
+            border-color: var(--success-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .case-card input[type="radio"] {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--success-green);
+        }
+
+        .case-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .case-id {
             font-size: 1.1rem;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .total-row:last-child {
-            border-bottom: none;
-        }
-
-        .grand-total {
             font-weight: 700;
-            font-size: 1.5rem;
+            color: var(--accent-blue);
+        }
+
+        .case-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-submitted {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .case-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .case-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
             color: var(--text-primary);
-            border-top: 3px solid var(--accent-blue);
-            padding-top: 1rem;
-            margin-top: 1rem;
+        }
+
+        /* PO Details Section */
+        .po-details-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .po-details-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success-green), #34d399);
+            border-radius: 16px 16px 0 0;
         }
 
         /* Submit Button */
@@ -646,8 +636,93 @@
 
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-success);
             animation: glow 2s ease-in-out infinite;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            animation: none;
+        }
+
+        /* Progress Indicator */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .step-icon.active {
+            background: var(--primary-gradient);
+            border-color: var(--accent-blue);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .step-icon.completed {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            border-color: var(--success-green);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .step-label.active {
+            color: var(--accent-blue);
+        }
+
+        .step-label.completed {
+            color: var(--success-green);
+        }
+
+        .step-connector {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            right: -50%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: -1;
+        }
+
+        .step-connector.completed {
+            background: var(--success-green);
+        }
+
+        .progress-step:last-child .step-connector {
+            display: none;
         }
 
         /* Responsive Design */
@@ -677,29 +752,32 @@
                 grid-template-columns: 1fr;
             }
 
-            .item-input-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .item-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .item-pricing {
-                text-align: left;
-                padding-right: 0;
-            }
-
-            .checkbox-grid {
+            .case-details {
                 grid-template-columns: 1fr;
             }
 
             .section-header {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .progress-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .step-connector {
+                display: none;
+            }
+
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .file-actions {
+                align-self: flex-end;
             }
         }
 
@@ -747,6 +825,18 @@
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
     </style>
 </head>
 <body>
@@ -760,7 +850,7 @@
                     </div>
                     <div class="company-info">
                         <h1>Forma Medical</h1>
-                        <p>Minimally Invasive Surgery</p>
+                        <p>Purchase Order Management</p>
                     </div>
                 </div>
                 <div class="breadcrumb">
@@ -768,7 +858,7 @@
                         <i class="fas fa-arrow-left"></i>
                         Back to Dashboard
                     </a>
-                    <div class="page-title">Surgery Case Submission</div>
+                    <div class="page-title">PO Submission</div>
                 </div>
             </div>
         </div>
@@ -782,932 +872,732 @@
             <p id="distributorContact">Contact: Loading...</p>
         </div>
 
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="progress-step">
+                <div class="step-icon active" id="step1Icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="step-label active" id="step1Label">Select Case</div>
+                <div class="step-connector" id="connector1"></div>
+            </div>
+            <div class="progress-step">
+                <div class="step-icon" id="step2Icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="step-label" id="step2Label">PO Details</div>
+                <div class="step-connector" id="connector2"></div>
+            </div>
+            <div class="progress-step">
+                <div class="step-icon" id="step3Icon">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <div class="step-label" id="step3Label">Upload Documents</div>
+                <div class="step-connector" id="connector3"></div>
+            </div>
+            <div class="progress-step">
+                <div class="step-icon" id="step4Icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="step-label" id="step4Label">Review & Submit</div>
+            </div>
+        </div>
+
         <!-- Main Form -->
         <div class="form-container">
-            <form id="caseForm">
-                <!-- Basic Information -->
-                <div class="form-section">
+            <form id="poForm">
+                <!-- Step 1: Case Selection -->
+                <div class="form-section" id="step1">
                     <div class="section-header">
                         <div class="section-icon">
-                            <i class="fas fa-hospital"></i>
+                            <i class="fas fa-search"></i>
                         </div>
-                        <h2 class="section-title">Case Information</h2>
+                        <h2 class="section-title">Select Approved Case</h2>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="hospital" class="form-label required">Hospital/Surgery Center</label>
-                            <input type="text" id="hospital" name="hospital" class="form-input" placeholder="Enter hospital name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="surgeon" class="form-label required">Surgeon Name</label>
-                            <input type="text" id="surgeon" name="surgeon" class="form-input" placeholder="Enter surgeon name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="salesRep" class="form-label required">Sales Representative</label>
-                            <input type="text" id="salesRep" name="salesRep" class="form-input" placeholder="Enter sales rep name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Procedures</label>
-                            <div class="checkbox-grid">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="procedure" value="Hammertoe">
-                                    <span>Hammertoe</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="procedure" value="MTP">
-                                    <span>MTP</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="procedure" value="Lapidus">
-                                    <span>Lapidus</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="procedure" value="Akin">
-                                    <span>Akin</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="caseDate" class="form-label required">Date of Surgery</label>
-                            <input type="date" id="caseDate" name="caseDate" class="form-input" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="patientId" class="form-label required">Patient ID (2 initials)</label>
-                            <input type="text" id="patientId" name="patientId" class="form-input patient-id-input" maxlength="2" pattern="[A-Za-z]{2}" placeholder="JS" required>
-                            <small class="text-muted text-small">e.g., JS for John Smith</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Construct Information -->
-                <div class="construct-section">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3 class="section-title">Construct Information (if applicable)</h3>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="constructCode1" class="form-label">Construct Code 1</label>
-                            <input type="text" id="constructCode1" name="constructCode1" class="form-input" placeholder="Enter construct code">
-                        </div>
-                        <div class="form-group">
-                            <label for="constructPrice1" class="form-label">Construct Price 1</label>
-                            <input type="number" id="constructPrice1" name="constructPrice1" class="form-input" step="0.01" min="0" placeholder="0.00">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="constructCode2" class="form-label">Construct Code 2</label>
-                            <input type="text" id="constructCode2" name="constructCode2" class="form-input" placeholder="Enter construct code">
-                        </div>
-                        <div class="form-group">
-                            <label for="constructPrice2" class="form-label">Construct Price 2</label>
-                            <input type="number" id="constructPrice2" name="constructPrice2" class="form-input" step="0.01" min="0" placeholder="0.00">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="constructCode3" class="form-label">Construct Code 3</label>
-                            <input type="text" id="constructCode3" name="constructCode3" class="form-input" placeholder="Enter construct code">
-                        </div>
-                        <div class="form-group">
-                            <label for="constructPrice3" class="form-label">Construct Price 3</label>
-                            <input type="number" id="constructPrice3" name="constructPrice3" class="form-input" step="0.01" min="0" placeholder="0.00">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Items Used Section -->
-                <div class="form-section">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-list-ul"></i>
-                        </div>
-                        <h2 class="section-title">Items Used</h2>
-                    </div>
-                    
-                    <div class="search-container">
-                        <div class="form-group">
-                            <label for="itemSearch" class="form-label">Search Item</label>
-                            <div style="position: relative;">
-                                <i class="fas fa-search search-icon"></i>
-                                <input type="text" id="itemSearch" class="form-input search-input" placeholder="Search for catalog number or product name..." autocomplete="off">
-                                <div id="suggestions" class="suggestions"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="item-input-grid">
-                        <div class="form-group">
-                            <label for="itemPrice" class="form-label">Unit Price (optional)</label>
-                            <input type="number" id="itemPrice" class="form-input" placeholder="0.00" step="0.01" min="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="itemQuantity" class="form-label">Quantity</label>
-                            <input type="number" id="itemQuantity" class="form-input" placeholder="Qty" min="1">
-                        </div>
-                        <div class="form-group">
-                            <label for="extendedPrice" class="form-label">Extended Price</label>
-                            <input type="text" id="extendedPrice" class="form-input" readonly style="background: var(--surface-dark); color: var(--text-muted);">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">&nbsp;</label>
-                            <button type="button" id="addItem" class="add-btn">
-                                <i class="fas fa-plus"></i>
-                                Add Item
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="items-container">
-                        <div id="itemsList">
-                            <div class="text-center text-muted">
-                                <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                                <p>No items added yet. Search and add items above.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Totals -->
-                <div class="totals-card">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <h3 class="section-title">Cost Summary</h3>
-                    </div>
-                    
-                    <div class="total-row">
-                        <span>Items Subtotal:</span>
-                        <span id="itemsSubtotal">$0.00</span>
-                    </div>
-                    <div class="total-row">
-                        <span>Construct Price:</span>
-                        <span id="constructTotal">$0.00</span>
-                    </div>
-                    <div class="total-row grand-total">
-                        <span>Grand Total:</span>
-                        <span id="grandTotal">$0.00</span>
-                    </div>
-                </div>
-
-                <!-- Restocks Section -->
-                <div class="restock-section">
-                    <div class="section-header">
-                        <div class="section-icon">
-                            <i class="fas fa-shipping-fast"></i>
-                        </div>
-                        <h3 class="section-title">Restocks</h3>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label required">Need restocks?</label>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-                            <label class="radio-item">
-                                <input type="radio" id="restockYes" name="restockNeeded" value="yes" onchange="toggleRestockOptions()">
-                                <span>Yes</span>
-                            </label>
-                            <label class="radio-item">
-                                <input type="radio" id="restockNo" name="restockNeeded" value="no" onchange="toggleRestockOptions()">
-                                <span>No</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div id="restockDetails" class="hidden" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 2px solid var(--border-color);">
-                        <div class="form-group">
-                            <label for="addressSelect" class="form-label required">Ship to address</label>
-                            <select id="addressSelect" class="form-select" onchange="handleAddressSelection()">
-                                <option value="">Select shipping address</option>
-                                <option value="existing1">ABC Ortho Solutions - 123 Main St, Nashville, TN 37203</option>
-                                <option value="existing2">Regional Office - 456 Oak Ave, Knoxville, TN 37902</option>
-                                <option value="existing3">Dr. Potter's Office - 789 Medical Dr, Johnson City, TN 37601</option>
-                                <option value="new">+ Add new address</option>
-                            </select>
-                        </div>
-
-                        <div id="newAddressForm" class="hidden" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--surface-light); border-radius: 12px; border: 2px solid var(--border-color);">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName" class="form-label required">First Name</label>
-                                    <input type="text" id="firstName" class="form-input" placeholder="First name">
+                    <div class="case-selection">
+                        <div id="casesList">
+                            <!-- Sample cases - would be loaded dynamically -->
+                            <div class="case-card" onclick="selectCase('CS-1234567890')">
+                                <input type="radio" name="selectedCase" value="CS-1234567890" id="case1">
+                                <div class="case-header">
+                                    <div class="case-id">CS-1234567890</div>
+                                    <div class="case-status status-approved">Approved</div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="lastName" class="form-label required">Last Name</label>
-                                    <input type="text" id="lastName" class="form-input" placeholder="Last name">
+                                <div class="case-details">
+                                    <div class="case-detail">
+                                        <div class="detail-label">Procedure</div>
+                                        <div class="detail-value">MTP Fusion</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgeon</div>
+                                        <div class="detail-value">Dr. Benjamin Potter</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Hospital</div>
+                                        <div class="detail-value">Holston Valley Surgery Center</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgery Date</div>
+                                        <div class="detail-value">June 15, 2025</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Total Value</div>
+                                        <div class="detail-value">$3,285</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Patient</div>
+                                        <div class="detail-value">J.S.</div>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="case-card" onclick="selectCase('CS-1234567892')">
+                                <input type="radio" name="selectedCase" value="CS-1234567892" id="case2">
+                                <div class="case-header">
+                                    <div class="case-id">CS-1234567892</div>
+                                    <div class="case-status status-approved">Approved</div>
+                                </div>
+                                <div class="case-details">
+                                    <div class="case-detail">
+                                        <div class="detail-label">Procedure</div>
+                                        <div class="detail-value">Lapidus Procedure</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgeon</div>
+                                        <div class="detail-value">Dr. Michael Wilson</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Hospital</div>
+                                        <div class="detail-value">City General Hospital</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgery Date</div>
+                                        <div class="detail-value">June 22, 2025</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Total Value</div>
+                                        <div class="detail-value">$4,920</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Patient</div>
+                                        <div class="detail-value">R.D.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="case-card" onclick="selectCase('CS-1234567894')">
+                                <input type="radio" name="selectedCase" value="CS-1234567894" id="case3">
+                                <div class="case-header">
+                                    <div class="case-id">CS-1234567894</div>
+                                    <div class="case-status status-submitted">Awaiting Approval</div>
+                                </div>
+                                <div class="case-details">
+                                    <div class="case-detail">
+                                        <div class="detail-label">Procedure</div>
+                                        <div class="detail-value">Hammertoe Correction</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgeon</div>
+                                        <div class="detail-value">Dr. Sarah Johnson</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Hospital</div>
+                                        <div class="detail-value">Regional Medical Center</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Surgery Date</div>
+                                        <div class="detail-value">June 25, 2025</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Total Value</div>
+                                        <div class="detail-value">$1,850</div>
+                                    </div>
+                                    <div class="case-detail">
+                                        <div class="detail-label">Patient</div>
+                                        <div class="detail-value">M.B.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: PO Details -->
+                <div class="form-section hidden" id="step2">
+                    <div class="po-details-section">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <h2 class="section-title">Purchase Order Details</h2>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="poNumber" class="form-label required">PO Number</label>
+                                <input type="text" id="poNumber" name="poNumber" class="form-input" placeholder="Enter PO number" required>
                             </div>
                             <div class="form-group">
-                                <label for="streetAddress" class="form-label required">Street Address</label>
-                                <input type="text" id="streetAddress" class="form-input" placeholder="Street address">
+                                <label for="poDate" class="form-label required">PO Date</label>
+                                <input type="date" id="poDate" name="poDate" class="form-input" required>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="city" class="form-label required">City</label>
-                                    <input type="text" id="city" class="form-input" placeholder="City">
-                                </div>
-                                <div class="form-group">
-                                    <label for="state" class="form-label required">State</label>
-                                    <select id="state" class="form-select">
-                                        <option value="">Select State</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="NC">North Carolina</option>
-                                    </select>
-                                </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vendorName" class="form-label required">Vendor Name</label>
+                                <input type="text" id="vendorName" name="vendorName" class="form-input" placeholder="Forma Medical" value="Forma Medical" required>
                             </div>
                             <div class="form-group">
-                                <label for="zipCode" class="form-label required">ZIP Code</label>
-                                <input type="text" id="zipCode" class="form-input" placeholder="ZIP Code" style="max-width: 150px;">
+                                <label for="deliveryDate" class="form-label">Expected Delivery Date</label>
+                                <input type="date" id="deliveryDate" name="deliveryDate" class="form-input">
                             </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="purchasingContact" class="form-label">Purchasing Contact</label>
+                                <input type="text" id="purchasingContact" name="purchasingContact" class="form-input" placeholder="Contact person name">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail" class="form-label">Contact Email</label>
+                                <input type="email" id="contactEmail" name="contactEmail" class="form-input" placeholder="contact@hospital.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="specialInstructions" class="form-label">Special Instructions</label>
+                            <textarea id="specialInstructions" name="specialInstructions" class="form-textarea" rows="4" placeholder="Any special delivery instructions or notes..."></textarea>
                         </div>
                     </div>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i>
-                    Submit Case Sheet
-                </button>
+                <!-- Step 3: Document Upload -->
+                <div class="form-section hidden" id="step3">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <h2 class="section-title">Upload PO Documents</h2>
+                    </div>
+                    
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">Drop PO documents here or click to browse</div>
+                        <div class="file-upload-hint">Supports PDF, DOC, DOCX, JPG, PNG (Max 10MB each)</div>
+                        <input type="file" class="file-input" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                    </div>
+                    
+                    <div class="uploaded-files" id="uploadedFiles">
+                        <!-- Uploaded files will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Submit -->
+                <div class="form-section hidden" id="step4">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h2 class="section-title">Review & Submit</h2>
+                    </div>
+                    
+                    <div id="reviewSummary">
+                        <!-- Review summary will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" id="prevBtn" class="submit-btn" style="background: var(--surface-light); color: var(--text-secondary); display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" id="nextBtn" class="submit-btn" style="flex: 1;" disabled onclick="nextStep()">
+                        Next Step
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" id="submitBtn" class="submit-btn" style="display: none;">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit PO
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-        console.log('Premium Medical Case System Loading...');
+        console.log('Premium PO Submission System Loading...');
         
         // Global variables
-        var distributorInfo = null;
-        var addedItems = [];
-
-        // Enhanced Product database
-        var products = [
-            {code: "1102.1304.01", name: "MIS MTP S-Plate, Left"},
-            {code: "1100.2112", name: "Titanium 2.0mm Implant, Cancellous Head, 12mm Long, Short Thread"},
-            {code: "1102.2304.01", name: "MIS MTP S-Plate, Right"},
-            {code: "1100.2114", name: "Titanium 2.0mm Implant, Cancellous Head, 14mm Long, Short Thread"},
-            {code: "1102.1304.02", name: "Long MIS MTP S-Plate, Left"},
-            {code: "1100.2116", name: "Titanium 2.0mm Implant, Cancellous Head, 16mm Long, Short Thread"},
-            {code: "1102.2304.02", name: "Long MIS MTP S-Plate, Right"},
-            {code: "1100.2118", name: "Titanium 2.0mm Implant, Cancellous Head, 18mm Long, Short Thread"},
-            {code: "1102.1305.03", name: "MTP Standard Plate, Left"},
-            {code: "1100.2120", name: "Titanium 2.0mm Implant, Cancellous Head, 20mm Long, Short Thread"},
-            {code: "1102.2305.03", name: "MTP Standard Plate, Right"},
-            {code: "1100.2125", name: "Titanium 2.0mm Implant, Cancellous Head, 25mm Long, Short Thread"},
-            {code: "1102.3010.01", name: "3.0mm Non-Locking Screw, 10mm Long"},
-            {code: "1100.2130", name: "Titanium 2.0mm Implant, Cancellous Head, 30mm Long, Short Thread"},
-            {code: "1102.3012.01", name: "3.0mm Non-Locking Screw, 12mm Long"},
-            {code: "1100.2135", name: "Titanium 2.0mm Implant, Cancellous Head, 35mm Long, Short Thread"},
-            {code: "1102.3014.01", name: "3.0mm Non-Locking Screw, 14mm Long"},
-            {code: "1100.2140", name: "Titanium 2.0mm Implant, Cancellous Head, 40mm Long, Short Thread"},
-            {code: "1102.3016.01", name: "3.0mm Non-Locking Screw, 16mm Long"},
-            {code: "1100.2612", name: "Titanium 2.5mm Implant, Cancellous Head, 12mm Long, Short Thread"},
-            {code: "1102.3018.01", name: "3.0mm Non-Locking Screw, 18mm Long"},
-            {code: "1100.2614", name: "Titanium 2.5mm Implant, Cancellous Head, 14mm Long, Short Thread"},
-            {code: "1102.3020.01", name: "3.0mm Non-Locking Screw, 20mm Long"},
-            {code: "1100.2616", name: "Titanium 2.5mm Implant, Cancellous Head, 16mm Long, Short Thread"},
-            {code: "1102.3010.02", name: "3.0mm Locking Screw, 10mm Long"},
-            {code: "1100.2618", name: "Titanium 2.5mm Implant, Cancellous Head, 18mm Long, Short Thread"},
-            {code: "1102.3012.02", name: "3.0mm Locking Screw, 12mm Long"},
-            {code: "1100.2620", name: "Titanium 2.5mm Implant, Cancellous Head, 20mm Long, Short Thread"},
-            {code: "1102.3014.02", name: "3.0mm Locking Screw, 14mm Long"},
-            {code: "1100.2622", name: "Titanium 2.5mm Implant, Cancellous Head, 22mm Long, Short Thread"},
-            {code: "1102.3016.02", name: "3.0mm Locking Screw, 16mm Long"},
-            {code: "1100.2624", name: "Titanium 2.5mm Implant, Cancellous Head, 24mm Long, Short Thread"},
-            {code: "1102.3018.02", name: "3.0mm Locking Screw, 18mm Long"},
-            {code: "1100.2625", name: "Titanium 2.5mm Implant, Cancellous Head, 25mm Long, Short Thread"},
-            {code: "1102.3020.02", name: "3.0mm Locking Screw, 20mm Long"},
-            {code: "1100.2626", name: "Titanium 2.5mm Implant, Cancellous Head, 26mm Long, Short Thread"},
-            {code: "1102.4120", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 20mm Long"},
-            {code: "1100.2628", name: "Titanium 2.5mm Implant, Cancellous Head, 28mm Long, Short Thread"},
-            {code: "1102.4122", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 22mm Long"},
-            {code: "1100.2630", name: "Titanium 2.5mm Implant, Cancellous Head, 30mm Long, Short Thread"},
-            {code: "1102.4124", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 24mm Long"},
-            {code: "1100.2632", name: "Titanium 2.5mm Implant, Cancellous Head, 32mm Long, Short Thread"},
-            {code: "1102.4126", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 26mm Long"},
-            {code: "1100.2635", name: "Titanium 2.5mm Implant, Cancellous Head, 35mm Long, Short Thread"},
-            {code: "1102.4128", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 28mm Long"},
-            {code: "1100.2640", name: "Titanium 2.5mm Implant, Cancellous Head, 40mm Long, Short Thread"},
-            {code: "1102.4130", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 30mm Long"},
-            {code: "1100.2645", name: "Titanium 2.5mm Implant, Cancellous Head, 45mm Long, Short Thread"},
-            {code: "1102.4132", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 32mm Long"},
-            {code: "1100.2650", name: "Titanium 2.5mm Implant, Cancellous Head, 50mm Long, Short Thread"},
-            {code: "1102.4134", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 34mm Long"},
-            {code: "1102.4136", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 36mm Long"},
-            {code: "1102.4138", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 38mm Long"},
-            {code: "1102.4140", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 40mm Long"},
-            {code: "6100.1102", name: "MIS Targeting Instrument, Radiopaque Tip, K-wire"},
-            {code: "1102.4220", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 20mm Long"},
-            {code: "1102.4222", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 22mm Long"},
-            {code: "6100.1104", name: "Long Distal Sleeve, MIS Targeting Instrument"},
-            {code: "1102.4224", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 24mm Long"},
-            {code: "6100.2009", name: "Stainless Steel 0.9mm K-wire, 4 in. long"},
-            {code: "1102.4226", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 26mm Long"},
-            {code: "6100.2011", name: "Stainless Steel 1.1mm K-wire, 4 in. long"},
-            {code: "1102.4228", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 28mm Long"},
-            {code: "6100.2609", name: "Stainless Steel 0.9mm K-wire, 6 in. long"},
-            {code: "1102.4230", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 30mm Long"},
-            {code: "6100.2611", name: "Stainless Steel 1.1mm K-wire, 6 in. long"},
-            {code: "1102.4232", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 32mm Long"},
-            {code: "6100.0017", name: "1.7mm Drill, AO Quick Connect, Cannulated"},
-            {code: "1102.4234", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 34mm Long"},
-            {code: "6100.0019", name: "1.9mm Drill, AO Quick Connect, Cannulated"},
-            {code: "1102.4236", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 36mm Long"},
-            {code: "6100.4007", name: "2.0mm Driver, T7 Hexalobe, AO Quick Connect, Cannulated"},
-            {code: "1102.4238", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 38mm Long"},
-            {code: "6100.4008", name: "2.5mm Driver, T8 Hexalobe, AO Quick Connect, Cannulated"},
-            {code: "1102.4240", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 40mm Long"},
-            {code: "6100.4100", name: "Small AO Driver Quick Connect Handle"},
-            {code: "6100.0003", name: "2x13 Shannon Burr"},
-            {code: "6100.0002", name: "2.2mm MIS Burr, Shannon Recta Larga, 20mm"},
-            {code: "6100.9000", name: "Cannulated Depth Gauge"},
-            {code: "6100.2014", name: "1.4mm wire"},
-            {code: "6100.2209", name: "0.9mm Double Trocar K-wires, Stainless Steel, 4\" Long"},
-            {code: "6102.1001", name: "MIS MTP Targeting Instrument, Left"},
-            {code: "6100.2211", name: "0.9mm Double Trocar K-wires, Stainless Steel, 4\" Long"},
-            {code: "6102.2001", name: "MIS MTP Targeting Instrument, Right"},
-            {code: "6100.5001", name: "MIS Akin Targeting Instrument, K-wire Cartridge, Left"},
-            {code: "6102.1002", name: "Long MIS MTP Targeting Instrument, Left"},
-            {code: "6100.5002", name: "MIS Akin Targeting Instrument, K-wire Cartridge, Right"},
-            {code: "6102.2002", name: "Long MIS MTP Targeting Instrument, Right"},
-            {code: "6102.1101", name: "Cannulated Crossing Screw Targeter, Left"},
-            {code: "6102.2101", name: "Cannulated Crossing Screw Targeter, Right"},
-            {code: "6102.0020", name: "2.0mm Drill, AO Quick Connect"},
-            {code: "6102.0027", name: "2.7mm Cannulated Drill, AO Quick Connect"},
-            {code: "6102.2116", name: "Olive K-Wire"},
-            {code: "6102.0039", name: "3.9mm Near Cortex Drill"},
-            {code: "6102.4010", name: "Cannulated T10 Hexalobe Driver"},
-            {code: "6102.4100", name: "AO Quick Connect Handle – fixed, Blue"},
-            {code: "6102.0130", name: "Threaded Drill Guides"},
-            {code: "6102.8102", name: "Distractor, Ratcheting, 2-Hole Tip"},
-            {code: "6102.4008", name: "Solid T8 Hexalobe Driver, AO Quick Connect, Self Retaining"},
-            {code: "6102.4020", name: "T20 Driver"},
-            {code: "6102.1818", name: "Convex Reamer, 18mm"},
-            {code: "6102.1820", name: "Convex Reamer, 20mm"},
-            {code: "6102.1822", name: "Convex Reamer, 22mm"},
-            {code: "6102.1918", name: "Concave Reamer, 18mm"},
-            {code: "6102.1920", name: "Concave Reamer, 20mm"},
-            {code: "6102.1922", name: "Concave Reamer, 22mm"},
-            {code: "6102.9000", name: "Cannulated Depth Gauge"},
-            {code: "6102.9050", name: "Depth Gauge, Telescoping, 50mm"}
-        ];
-
-        // RESTOCK FUNCTIONS
-        function toggleRestockOptions() {
-            var restockYes = document.getElementById('restockYes');
-            var restockDetails = document.getElementById('restockDetails');
-            
-            if (restockYes.checked) {
-                restockDetails.classList.remove('hidden');
-                restockDetails.classList.add('show');
-                document.getElementById('addressSelect').required = true;
-            } else {
-                restockDetails.classList.add('hidden');
-                restockDetails.classList.remove('show');
-                document.getElementById('addressSelect').required = false;
-                document.getElementById('addressSelect').value = '';
-                document.getElementById('newAddressForm').classList.add('hidden');
-            }
-        }
-
-        function handleAddressSelection() {
-            var addressSelect = document.getElementById('addressSelect');
-            var newAddressForm = document.getElementById('newAddressForm');
-            
-            if (addressSelect.value === 'new') {
-                newAddressForm.classList.remove('hidden');
-                newAddressForm.classList.add('show');
-                var requiredFields = ['firstName', 'lastName', 'streetAddress', 'city', 'state', 'zipCode'];
-                requiredFields.forEach(function(field) {
-                    document.getElementById(field).required = true;
-                });
-            } else {
-                newAddressForm.classList.add('hidden');
-                newAddressForm.classList.remove('show');
-                var requiredFields = ['firstName', 'lastName', 'streetAddress', 'city', 'state', 'zipCode'];
-                requiredFields.forEach(function(field) {
-                    var element = document.getElementById(field);
-                    if (element) {
-                        element.required = false;
-                        element.value = '';
-                    }
-                });
-            }
-        }
-
-        function getRestockData() {
-            var restockNeeded = document.querySelector('input[name="restockNeeded"]:checked');
-            
-            if (!restockNeeded || restockNeeded.value === 'no') {
-                return {
-                    restockNeeded: false
-                };
-            }
-            
-            var addressSelect = document.getElementById('addressSelect').value;
-            var shippingAddress = {};
-            
-            if (addressSelect === 'new') {
-                shippingAddress = {
-                    type: 'new',
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
-                    streetAddress: document.getElementById('streetAddress').value,
-                    city: document.getElementById('city').value,
-                    state: document.getElementById('state').value,
-                    zipCode: document.getElementById('zipCode').value
-                };
-            } else {
-                shippingAddress = {
-                    type: 'existing',
-                    addressId: addressSelect
-                };
-            }
-            
-            return {
-                restockNeeded: true,
-                shippingAddress: shippingAddress
-            };
-        }
+        let currentStep = 1;
+        let selectedCase = null;
+        let uploadedFiles = [];
+        let distributorInfo = null;
 
         // Initialize when page loads
         window.onload = function() {
-            console.log('Premium system initializing...');
+            console.log('Premium PO system initializing...');
             
-            var distributorCode = sessionStorage.getItem('distributorCode');
-            var distributorData = sessionStorage.getItem('distributorData');
-            
-            if (!distributorCode || !distributorData) {
-                alert('Please log in to access this page.');
-                window.location.href = 'index.html';
-                return;
+            // Load distributor info (same pattern as other pages)
+            try {
+                const distributorCode = sessionStorage.getItem('distributorCode');
+                const distributorData = sessionStorage.getItem('distributorData');
+
+                if (distributorCode && distributorData) {
+                    distributorInfo = JSON.parse(distributorData);
+                } else {
+                    // Fallback to demo data
+                    distributorInfo = {
+                        companyName: 'ABC Ortho Solutions',
+                        contactName: 'Demo User',
+                        code: 'ABCOrtho'
+                    };
+                }
+            } catch (error) {
+                console.log('Using demo data');
+                distributorInfo = {
+                    companyName: 'ABC Ortho Solutions',
+                    contactName: 'Demo User',
+                    code: 'ABCOrtho'
+                };
             }
             
-            var distributor = JSON.parse(distributorData);
-            document.getElementById('distributorCompany').innerHTML = '<i class="fas fa-building"></i> ' + distributor.companyName;
-            document.getElementById('distributorContact').textContent = 'Contact: ' + distributor.contactName;
-            distributorInfo = distributor;
+            updateDistributorInfo();
+            initializeFileUpload();
+            updateStepDisplay();
             
-            console.log('Distributor loaded:', distributor);
+            // Set today's date as default for PO date
+            document.getElementById('poDate').valueAsDate = new Date();
         };
 
-        // Get DOM elements
-        var itemSearch = document.getElementById('itemSearch');
-        var suggestions = document.getElementById('suggestions');
-        var itemPrice = document.getElementById('itemPrice');
-        var itemQuantity = document.getElementById('itemQuantity');
-        var extendedPrice = document.getElementById('extendedPrice');
-        var addItemBtn = document.getElementById('addItem');
-        var itemsList = document.getElementById('itemsList');
-        var constructPrice1 = document.getElementById('constructPrice1');
-        var constructPrice2 = document.getElementById('constructPrice2');
-        var constructPrice3 = document.getElementById('constructPrice3');
+        function updateDistributorInfo() {
+            document.getElementById('distributorCompany').innerHTML = '<i class="fas fa-building"></i> ' + distributorInfo.companyName;
+            document.getElementById('distributorContact').textContent = 'Contact: ' + distributorInfo.contactName;
+        }
 
-        // Calculate extended price
-        function calculateExtendedPrice() {
-            var price = parseFloat(itemPrice.value) || 0;
-            var quantity = parseInt(itemQuantity.value) || 0;
-            var extended = price * quantity;
-            if (extended > 0) {
-                extendedPrice.value = '$' + extended.toFixed(2);
-            } else {
-                extendedPrice.value = '';
+        function selectCase(caseId) {
+            // Remove previous selection
+            document.querySelectorAll('.case-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select new case
+            const selectedCard = document.querySelector(`input[value="${caseId}"]`).closest('.case-card');
+            selectedCard.classList.add('selected');
+            document.querySelector(`input[value="${caseId}"]`).checked = true;
+            
+            selectedCase = caseId;
+            document.getElementById('nextBtn').disabled = false;
+            
+            console.log('Selected case:', caseId);
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                // Validate current step
+                if (!validateStep(currentStep)) {
+                    return;
+                }
+                
+                // Hide current step
+                document.getElementById(`step${currentStep}`).classList.add('hidden');
+                
+                // Move to next step
+                currentStep++;
+                
+                // Show next step
+                document.getElementById(`step${currentStep}`).classList.remove('hidden');
+                
+                updateStepDisplay();
+                updateProgressIndicator();
+                
+                // Special handling for specific steps
+                if (currentStep === 4) {
+                    generateReviewSummary();
+                }
             }
         }
 
-        // Update totals
-        function updateTotals() {
-            var itemsSubtotal = 0;
-            for (var i = 0; i < addedItems.length; i++) {
-                itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
+        function prevStep() {
+            if (currentStep > 1) {
+                // Hide current step
+                document.getElementById(`step${currentStep}`).classList.add('hidden');
+                
+                // Move to previous step
+                currentStep--;
+                
+                // Show previous step
+                document.getElementById(`step${currentStep}`).classList.remove('hidden');
+                
+                updateStepDisplay();
+                updateProgressIndicator();
+            }
+        }
+
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    if (!selectedCase) {
+                        alert('Please select a case to continue');
+                        return false;
+                    }
+                    return true;
+                    
+                case 2:
+                    const poNumber = document.getElementById('poNumber').value;
+                    const poDate = document.getElementById('poDate').value;
+                    const vendorName = document.getElementById('vendorName').value;
+                    
+                    if (!poNumber || !poDate || !vendorName) {
+                        alert('Please fill in all required PO details');
+                        return false;
+                    }
+                    return true;
+                    
+                case 3:
+                    if (uploadedFiles.length === 0) {
+                        alert('Please upload at least one PO document');
+                        return false;
+                    }
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+
+        function updateStepDisplay() {
+            // Update navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (currentStep === 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = !selectedCase;
+            } else if (currentStep === 4) {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+                nextBtn.disabled = false;
             }
             
-            var constructTotal1 = parseFloat(constructPrice1.value) || 0;
-            var constructTotal2 = parseFloat(constructPrice2.value) || 0;
-            var constructTotal3 = parseFloat(constructPrice3.value) || 0;
-            var totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
-            var grandTotal = itemsSubtotal + totalConstructPrice;
-
-            document.getElementById('itemsSubtotal').textContent = '$' + itemsSubtotal.toFixed(2);
-            document.getElementById('constructTotal').textContent = '$' + totalConstructPrice.toFixed(2);
-            document.getElementById('grandTotal').textContent = '$' + grandTotal.toFixed(2);
+            // Update previous button click handler
+            prevBtn.onclick = prevStep;
         }
 
-        // Enhanced search functionality
-        itemSearch.addEventListener('input', function() {
-            var query = this.value.toLowerCase();
-            if (query.length < 2) {
-                suggestions.style.display = 'none';
-                return;
-            }
-
-            var matches = [];
-            for (var i = 0; i < products.length; i++) {
-                if (products[i].code.toLowerCase().indexOf(query) !== -1 || 
-                    products[i].name.toLowerCase().indexOf(query) !== -1) {
-                    matches.push(products[i]);
-                }
-            }
-            matches = matches.slice(0, 8);
-
-            if (matches.length > 0) {
-                var html = '';
-                for (var i = 0; i < matches.length; i++) {
-                    html += '<div class="suggestion-item" data-code="' + matches[i].code + '" data-name="' + matches[i].name + '">';
-                    html += '<div style="font-weight: 700; color: var(--accent-blue); margin-bottom: 0.25rem;">' + matches[i].code + '</div>';
-                    html += '<div style="font-size: 0.85rem; color: var(--text-secondary);">' + matches[i].name + '</div>';
-                    html += '</div>';
-                }
-                suggestions.innerHTML = html;
-                suggestions.style.display = 'block';
-            } else {
-                suggestions.style.display = 'none';
-            }
-        });
-
-        // Handle suggestion clicks
-        suggestions.addEventListener('click', function(e) {
-            var suggestionItem = e.target.closest('.suggestion-item');
-            if (suggestionItem) {
-                var code = suggestionItem.getAttribute('data-code');
-                var name = suggestionItem.getAttribute('data-name');
+        function updateProgressIndicator() {
+            for (let i = 1; i <= 4; i++) {
+                const icon = document.getElementById(`step${i}Icon`);
+                const label = document.getElementById(`step${i}Label`);
+                const connector = document.getElementById(`connector${i}`);
                 
-                itemSearch.value = code + ' - ' + name;
-                itemSearch.setAttribute('data-selected-code', code);
-                itemSearch.setAttribute('data-selected-name', name);
-                suggestions.style.display = 'none';
-                itemPrice.focus();
-                calculateExtendedPrice();
-            }
-        });
-
-        // Add item with enhanced feedback
-        addItemBtn.addEventListener('click', function() {
-            var selectedCode = itemSearch.getAttribute('data-selected-code');
-            var selectedName = itemSearch.getAttribute('data-selected-name');
-            var price = parseFloat(itemPrice.value) || 0;
-            var quantity = parseInt(itemQuantity.value);
-
-            if (!selectedCode || !quantity) {
-                alert('Please select an item and enter quantity');
-                return;
-            }
-
-            // Add loading state
-            addItemBtn.classList.add('loading');
-            addItemBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
-
-            setTimeout(function() {
-                var existingItemIndex = -1;
-                for (var i = 0; i < addedItems.length; i++) {
-                    if (addedItems[i].code === selectedCode) {
-                        existingItemIndex = i;
-                        break;
+                if (i < currentStep) {
+                    // Completed step
+                    icon.classList.remove('active');
+                    icon.classList.add('completed');
+                    label.classList.remove('active');
+                    label.classList.add('completed');
+                    if (connector) {
+                        connector.classList.add('completed');
+                    }
+                } else if (i === currentStep) {
+                    // Current step
+                    icon.classList.remove('completed');
+                    icon.classList.add('active');
+                    label.classList.remove('completed');
+                    label.classList.add('active');
+                } else {
+                    // Future step
+                    icon.classList.remove('active', 'completed');
+                    label.classList.remove('active', 'completed');
+                    if (connector) {
+                        connector.classList.remove('completed');
                     }
                 }
+            }
+        }
+
+        function initializeFileUpload() {
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('fileInput');
+            
+            // Click to upload
+            fileUploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // Drag and drop
+            fileUploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.add('dragover');
+            });
+            
+            fileUploadArea.addEventListener('dragleave', () => {
+                fileUploadArea.classList.remove('dragover');
+            });
+            
+            fileUploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                fileUploadArea.classList.remove('dragover');
                 
-                if (existingItemIndex >= 0) {
-                    addedItems[existingItemIndex].quantity += quantity;
-                } else {
-                    addedItems.push({
-                        code: selectedCode,
-                        name: selectedName,
-                        quantity: quantity,
-                        price: price
-                    });
+                const files = Array.from(e.dataTransfer.files);
+                handleFileUpload(files);
+            });
+            
+            // File input change
+            fileInput.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files);
+                handleFileUpload(files);
+            });
+        }
+
+        function handleFileUpload(files) {
+            files.forEach(file => {
+                // Validate file
+                if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+                    return;
                 }
-
-                updateItemsList();
-                updateTotals();
                 
-                // Clear inputs with animation
-                itemSearch.value = '';
-                itemPrice.value = '';
-                itemQuantity.value = '';
-                extendedPrice.value = '';
-                itemSearch.removeAttribute('data-selected-code');
-                itemSearch.removeAttribute('data-selected-name');
-
-                // Reset button
-                addItemBtn.classList.remove('loading');
-                addItemBtn.innerHTML = '<i class="fas fa-plus"></i> Add Item';
+                const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert(`File ${file.name} is not a supported format.`);
+                    return;
+                }
                 
-                // Focus back to search
-                itemSearch.focus();
-            }, 300);
-        });
-
-        // Enhanced items list display
-        function updateItemsList() {
-            if (addedItems.length === 0) {
-                itemsList.innerHTML = `
-                    <div class="text-center text-muted">
-                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>No items added yet. Search and add items above.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            var html = '';
-            for (var i = 0; i < addedItems.length; i++) {
-                var item = addedItems[i];
-                html += `
-                    <div class="item-row" style="animation: slideInRight 0.3s ease-out;">
-                        <div class="item-details">
-                            <div class="item-code">${item.code}</div>
-                            <div class="item-name">${item.name}</div>
-                        </div>
-                        <div class="item-pricing">
-                            <div style="font-weight: 600;">Qty: ${item.quantity}</div>
-                            <div style="font-size: 0.9rem;">${item.price.toFixed(2)} × ${item.quantity} = ${(item.quantity * item.price).toFixed(2)}</div>
-                        </div>
-                        <button type="button" class="remove-btn" onclick="removeItem(${i})">
-                            <i class="fas fa-trash"></i>
-                            Remove
-                        </button>
-                    </div>
-                `;
-            }
-            itemsList.innerHTML = html;
+                // Add to uploaded files
+                const fileId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                uploadedFiles.push({
+                    id: fileId,
+                    file: file,
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                
+                displayUploadedFile(fileId, file);
+            });
+            
+            // Clear the input
+            document.getElementById('fileInput').value = '';
         }
 
-        // Enhanced remove item function
-        function removeItem(index) {
-            // Add confirmation for better UX
-            if (confirm('Remove this item from the case?')) {
-                addedItems.splice(index, 1);
-                updateItemsList();
-                updateTotals();
+        function displayUploadedFile(fileId, file) {
+            const uploadedFilesContainer = document.getElementById('uploadedFiles');
+            
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.id = `file_${fileId}`;
+            
+            const fileIcon = getFileIcon(file.type);
+            const fileSize = formatFileSize(file.size);
+            
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <div class="file-icon">
+                        <i class="fas fa-${fileIcon}"></i>
+                    </div>
+                    <div class="file-details">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${fileSize}</div>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <button type="button" class="file-action-btn" onclick="previewFile('${fileId}')" title="Preview">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button type="button" class="file-action-btn remove" onclick="removeFile('${fileId}')" title="Remove">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            uploadedFilesContainer.appendChild(fileItem);
+        }
+
+        function getFileIcon(mimeType) {
+            if (mimeType.includes('pdf')) return 'file-pdf';
+            if (mimeType.includes('word')) return 'file-word';
+            if (mimeType.includes('image')) return 'file-image';
+            return 'file';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function removeFile(fileId) {
+            // Remove from uploaded files array
+            uploadedFiles = uploadedFiles.filter(file => file.id !== fileId);
+            
+            // Remove from DOM
+            const fileElement = document.getElementById(`file_${fileId}`);
+            if (fileElement) {
+                fileElement.remove();
             }
         }
 
-        // Event listeners with enhanced interactions
-        itemPrice.addEventListener('input', calculateExtendedPrice);
-        itemQuantity.addEventListener('input', calculateExtendedPrice);
-        constructPrice1.addEventListener('input', updateTotals);
-        constructPrice2.addEventListener('input', updateTotals);
-        constructPrice3.addEventListener('input', updateTotals);
-
-        // Enhanced Patient ID validation
-        document.getElementById('patientId').addEventListener('input', function() {
-            this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '');
-            if (this.value.length === 2) {
-                this.style.borderColor = 'var(--success-green)';
-                this.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.1)';
-            } else {
-                this.style.borderColor = 'var(--border-color)';
-                this.style.boxShadow = 'none';
+        function previewFile(fileId) {
+            const file = uploadedFiles.find(f => f.id === fileId);
+            if (file) {
+                alert(`Preview functionality for ${file.file.name} would open here in a real application.`);
             }
-        });
+        }
 
-        // Hide suggestions when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-container')) {
-                suggestions.style.display = 'none';
-            }
-        });
+        function generateReviewSummary() {
+            const reviewContainer = document.getElementById('reviewSummary');
+            
+            // Get selected case info
+            const selectedCaseElement = document.querySelector('input[name="selectedCase"]:checked');
+            const caseCard = selectedCaseElement.closest('.case-card');
+            
+            // Get case details
+            const caseId = selectedCaseElement.value;
+            const procedure = caseCard.querySelector('.case-details .case-detail:nth-child(1) .detail-value').textContent;
+            const surgeon = caseCard.querySelector('.case-details .case-detail:nth-child(2) .detail-value').textContent;
+            const hospital = caseCard.querySelector('.case-details .case-detail:nth-child(3) .detail-value').textContent;
+            const totalValue = caseCard.querySelector('.case-details .case-detail:nth-child(5) .detail-value').textContent;
+            
+            // Get PO details
+            const poNumber = document.getElementById('poNumber').value;
+            const poDate = document.getElementById('poDate').value;
+            const vendorName = document.getElementById('vendorName').value;
+            const deliveryDate = document.getElementById('deliveryDate').value;
+            
+            reviewContainer.innerHTML = `
+                <div style="display: grid; gap: 2rem;">
+                    <!-- Case Information -->
+                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <h3 style="color: var(--accent-blue); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clipboard-list"></i>
+                            Selected Case
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <div class="detail-label">Case ID</div>
+                                <div class="detail-value">${caseId}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Procedure</div>
+                                <div class="detail-value">${procedure}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Surgeon</div>
+                                <div class="detail-value">${surgeon}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Hospital</div>
+                                <div class="detail-value">${hospital}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Total Value</div>
+                                <div class="detail-value">${totalValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PO Information -->
+                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <h3 style="color: var(--success-green); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-file-invoice"></i>
+                            Purchase Order Details
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <div class="detail-label">PO Number</div>
+                                <div class="detail-value">${poNumber}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">PO Date</div>
+                                <div class="detail-value">${new Date(poDate).toLocaleDateString()}</div>
+                            </div>
+                            <div>
+                                <div class="detail-label">Vendor</div>
+                                <div class="detail-value">${vendorName}</div>
+                            </div>
+                            ${deliveryDate ? `
+                            <div>
+                                <div class="detail-label">Expected Delivery</div>
+                                <div class="detail-value">${new Date(deliveryDate).toLocaleDateString()}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Uploaded Documents -->
+                    <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <h3 style="color: var(--warning-amber); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-upload"></i>
+                            Uploaded Documents (${uploadedFiles.length})
+                        </h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                            ${uploadedFiles.map(file => `
+                                <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--surface-light); border-radius: 8px;">
+                                    <i class="fas fa-${getFileIcon(file.type)}" style="color: var(--accent-blue);"></i>
+                                    <span style="font-size: 0.9rem;">${file.name}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-        // Enhanced form submission with better UX
-        document.getElementById('caseForm').addEventListener('submit', function(e) {
+        // Form submission
+        document.getElementById('poForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            var submitBtn = document.querySelector('.submit-btn');
+            const submitBtn = document.getElementById('submitBtn');
             
-            if (addedItems.length === 0) {
-                alert('Please add at least one item before submitting');
-                return;
-            }
-
-            // Validate restock section
-            var restockNeeded = document.querySelector('input[name="restockNeeded"]:checked');
-            if (!restockNeeded) {
-                alert('Please indicate whether you need restocks for this case');
-                return;
-            }
-
             // Show loading state
             submitBtn.classList.add('loading');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting Case...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting PO...';
             submitBtn.disabled = true;
-
-            // Get selected procedures
-            var procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
-            var selectedProcedures = [];
-            for (var i = 0; i < procedureCheckboxes.length; i++) {
-                selectedProcedures.push(procedureCheckboxes[i].value);
-            }
-
-            // Get construct information
-            var constructs = [];
-            if (document.getElementById('constructCode1').value) {
-                constructs.push({
-                    code: document.getElementById('constructCode1').value,
-                    price: parseFloat(document.getElementById('constructPrice1').value) || 0
-                });
-            }
-            if (document.getElementById('constructCode2').value) {
-                constructs.push({
-                    code: document.getElementById('constructCode2').value,
-                    price: parseFloat(document.getElementById('constructPrice2').value) || 0
-                });
-            }
-            if (document.getElementById('constructCode3').value) {
-                constructs.push({
-                    code: document.getElementById('constructCode3').value,
-                    price: parseFloat(document.getElementById('constructPrice3').value) || 0
-                });
-            }
-
-            var totalConstructPrice = 0;
-            for (var i = 0; i < constructs.length; i++) {
-                totalConstructPrice += constructs[i].price;
-            }
-
-            var itemsSubtotal = 0;
-            for (var i = 0; i < addedItems.length; i++) {
-                itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
-            }
-
-            // Get restock data
-            var restockData = getRestockData();
-
-            var formData = {
-                distributor: distributorInfo.companyName,
-                distributorCode: distributorInfo.code,
-                distributorContact: distributorInfo.contactName,
-                hospital: document.getElementById('hospital').value,
-                surgeon: document.getElementById('surgeon').value,
-                salesRep: document.getElementById('salesRep').value,
-                procedures: selectedProcedures,
-                caseDate: document.getElementById('caseDate').value,
-                patientId: document.getElementById('patientId').value,
-                constructs: constructs,
-                items: addedItems,
-                restock: restockData,
-                totals: {
-                    itemsSubtotal: itemsSubtotal,
-                    constructPrice: totalConstructPrice,
-                    grandTotal: itemsSubtotal + totalConstructPrice
-                },
-                submissionDate: new Date().toISOString(),
-                status: 'submitted'
-            };
-
-            // Simulate submission process
-            setTimeout(function() {
-                // Store submission locally for demo
-                var submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
-                var submissionId = 'CS-' + Date.now();
-                formData.id = submissionId;
-                submissions.push(formData);
-                localStorage.setItem('submissions', JSON.stringify(submissions));
-
+            
+            // Simulate submission
+            setTimeout(() => {
                 // Show success state
                 submitBtn.classList.remove('loading');
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> Case Submitted Successfully!';
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> PO Submitted Successfully!';
                 submitBtn.style.background = 'linear-gradient(135deg, var(--success-green) 0%, #059669 100%)';
-
+                
                 // Show success message
-                var successDiv = document.createElement('div');
+                const successDiv = document.createElement('div');
                 successDiv.className = 'success-message';
                 successDiv.innerHTML = `
                     <i class="fas fa-check-circle"></i>
                     <div>
-                        <strong>Case sheet submitted successfully!</strong><br>
-                        <small>Submission ID: ${submissionId}</small>
+                        <strong>Purchase Order submitted successfully!</strong><br>
+                        <small>PO Number: ${document.getElementById('poNumber').value}</small>
                     </div>
                 `;
-                document.querySelector('.form-container').insertBefore(successDiv, document.getElementById('caseForm'));
-
-                // Reset form after delay
-                setTimeout(function() {
-                    document.getElementById('caseForm').reset();
-                    addedItems = [];
-                    updateItemsList();
-                    updateTotals();
-                    
-                    // Reset restock section
-                    document.getElementById('restockDetails').classList.add('hidden');
-                    document.getElementById('newAddressForm').classList.add('hidden');
-                    
-                    // Reset submit button
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Case Sheet';
-                    submitBtn.style.background = 'linear-gradient(135deg, var(--success-green) 0%, #059669 100%)';
-                    
-                    // Remove success message
-                    if (successDiv.parentNode) {
-                        successDiv.parentNode.removeChild(successDiv);
-                    }
-                    
-                    // Ask to return to dashboard
+                document.querySelector('.form-container').insertBefore(successDiv, document.getElementById('poForm'));
+                
+                // Reset and redirect after delay
+                setTimeout(() => {
                     if (confirm('Would you like to return to your dashboard?')) {
                         window.location.href = 'dashboard.html';
                     }
-                }, 3000);
-            }, 1500);
+                }, 2000);
+            }, 2000);
         });
 
-        // Enhanced keyboard navigation
-        itemQuantity.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                addItemBtn.click();
-            }
-        });
-
-        itemSearch.addEventListener('keydown', function(e) {
-            var suggestionItems = suggestions.querySelectorAll('.suggestion-item');
-            var activeSuggestion = suggestions.querySelector('.suggestion-item.active');
-            
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                if (activeSuggestion) {
-                    activeSuggestion.classList.remove('active');
-                    var next = activeSuggestion.nextElementSibling;
-                    if (next) {
-                        next.classList.add('active');
-                    } else {
-                        suggestionItems[0].classList.add('active');
-                    }
-                } else if (suggestionItems.length > 0) {
-                    suggestionItems[0].classList.add('active');
-                }
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                if (activeSuggestion) {
-                    activeSuggestion.classList.remove('active');
-                    var prev = activeSuggestion.previousElementSibling;
-                    if (prev) {
-                        prev.classList.add('active');
-                    } else {
-                        suggestionItems[suggestionItems.length - 1].classList.add('active');
-                    }
-                }
-            } else if (e.key === 'Enter' && activeSuggestion) {
-                e.preventDefault();
-                activeSuggestion.click();
-            } else if (e.key === 'Escape') {
-                suggestions.style.display = 'none';
-            }
-        });
-
-        // Add active state styling for keyboard navigation
-        var style = document.createElement('style');
-        style.textContent = `
-            .suggestion-item.active {
-                background: var(--surface-light) !important;
-                color: var(--accent-blue) !important;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Enhanced mobile responsiveness
-        function handleMobileLayout() {
-            if (window.innerWidth <= 768) {
-                // Adjust grid layouts for mobile
-                var itemInputGrid = document.querySelector('.item-input-grid');
-                if (itemInputGrid) {
-                    itemInputGrid.style.gridTemplateColumns = '1fr';
-                }
-            }
-        }
-
-        window.addEventListener('resize', handleMobileLayout);
-        handleMobileLayout();
-
-        // Initialize tooltips and help text
-        function initializeHelperText() {
-            var patientIdInput = document.getElementById('patientId');
-            patientIdInput.addEventListener('focus', function() {
-                this.style.transform = 'scale(1.05)';
-            });
-            patientIdInput.addEventListener('blur', function() {
-                this.style.transform = 'scale(1)';
-            });
-        }
-
-        initializeHelperText();
-
-        console.log('Premium Medical Case System Ready! 🏥✨');
+        console.log('Premium PO Submission System Ready! 📋✨');
     </script>
 </body>
 </html>
