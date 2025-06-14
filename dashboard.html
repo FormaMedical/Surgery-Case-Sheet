@@ -4,533 +4,609 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Forma Medical</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #e9ecef;
-            --bg-card: white;
-            --text-primary: #333;
-            --text-secondary: #666;
-            --text-muted: #999;
-            --border-color: #e9ecef;
-            --shadow: 0 4px 15px rgba(0,0,0,0.1);
-            --gradient-primary: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            --gradient-warning: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
-            --gradient-danger: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --bg-card: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --text-muted: #999999;
-            --border-color: #404040;
-            --shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2563eb 50%, #3b82f6 100%);
+            --secondary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --danger-red: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --surface-dark: #0f172a;
+            --surface-medium: #1e293b;
+            --surface-light: #334155;
+            --surface-lighter: #475569;
+            --border-color: #475569;
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(148, 163, 184, 0.2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
+            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
+            --shadow-warning: 0 0 32px rgba(245, 158, 11, 0.3);
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--surface-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
             min-height: 100vh;
-            padding: 20px;
             color: var(--text-primary);
-            transition: all 0.3s ease;
+            padding: 1rem;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: var(--shadow-md);
+            }
+            50% {
+                box-shadow: var(--shadow-glow);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Header */
         .header {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 20px 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 2rem;
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 2rem;
         }
 
-        .logo {
-            height: 50px;
-            width: auto;
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .welcome-text {
-            color: #2c5aa0;
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+            animation: pulse 4s ease-in-out infinite;
         }
 
-        .welcome-text h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+        .company-info h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
 
-        .welcome-text p {
+        .company-info p {
             color: var(--text-secondary);
-            font-size: 16px;
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         .header-right {
             display: flex;
-            gap: 15px;
+            gap: 1.5rem;
             align-items: center;
         }
 
         .theme-toggle {
-            background: var(--gradient-primary);
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: var(--shadow-sm);
         }
 
         .theme-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: var(--shadow-glow);
         }
 
         .user-info {
             text-align: right;
-            color: var(--text-secondary);
-            font-size: 14px;
+            padding: 1rem 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .user-info strong {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .user-info div:last-child {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
         }
 
         .logout-btn {
-            background: var(--gradient-danger);
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .logout-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
         }
 
         /* Navigation Tabs */
         .nav-tabs {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 10px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.75rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
             display: flex;
-            gap: 5px;
+            gap: 0.5rem;
             overflow-x: auto;
+            position: relative;
+        }
+
+        .nav-tabs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            border-radius: 16px 16px 0 0;
         }
         
         .nav-tab {
             background: transparent;
             border: none;
-            padding: 15px 25px;
-            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--text-secondary);
             transition: all 0.3s ease;
             white-space: nowrap;
-            font-size: 16px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
         }
         
         .nav-tab.active {
-            background: var(--gradient-primary);
+            background: var(--primary-gradient);
             color: white;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+            box-shadow: var(--shadow-glow);
         }
         
         .nav-tab:hover:not(.active) {
-            background: var(--bg-secondary);
-            color: #2c5aa0;
+            background: var(--surface-light);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
         }
         
         .tab-content {
             display: none;
+            animation: fadeInUp 0.6s ease-out;
         }
         
         .tab-content.active {
             display: block;
         }
 
+        /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .dashboard-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
         }
 
         .dashboard-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 1.5rem;
             font-weight: bold;
             color: white;
+            box-shadow: var(--shadow-sm);
         }
 
         .card-icon.primary {
-            background: var(--gradient-primary);
+            background: var(--primary-gradient);
         }
 
         .card-icon.success {
-            background: var(--gradient-success);
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
         }
 
         .card-icon.warning {
-            background: var(--gradient-warning);
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
         }
 
         .card-icon.info {
-            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
         }
 
         .card-title {
-            color: #2c5aa0;
-            font-size: 20px;
-            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .card-subtitle {
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         .action-btn {
             width: 100%;
-            padding: 15px;
+            padding: 1rem 1.5rem;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
-            text-align: center;
-            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-primary {
-            background: var(--gradient-primary);
+            background: var(--primary-gradient);
             color: white;
         }
 
         .btn-success {
-            background: var(--gradient-success);
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
             color: white;
         }
 
-        .btn-outline {
-            background: var(--bg-card);
-            color: #2c5aa0;
-            border: 2px solid #2c5aa0;
-        }
-
         .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            animation: glow 2s ease-in-out infinite;
         }
 
+        /* Stats Section */
         .stats-section {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         .stat-item {
             text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%);
-            transition: transform 0.3s ease;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
         }
 
         .stat-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
         .stat-number {
-            font-size: 36px;
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-label {
             color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
         .stat-trend {
-            font-size: 12px;
-            color: #28a745;
-            margin-top: 5px;
-            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--success-green);
+            font-weight: 700;
         }
 
+        /* Recent Section */
         .recent-section {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recent-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning-amber), var(--success-green));
         }
 
         .recent-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
+            padding: 1.5rem;
             border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+        }
+
+        .recent-item:hover {
+            background: var(--surface-light);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-sm);
         }
 
         .recent-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
         }
 
         .recent-info h4 {
-            color: #2c5aa0;
-            margin-bottom: 5px;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
         }
 
         .recent-info p {
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .status-pending {
-            background: #fff3cd;
-            color: #856404;
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
         .status-complete {
-            background: #d4edda;
-            color: #155724;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .status-processing {
-            background: #cce7ff;
-            color: #004085;
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
         .section-title {
-            color: #2c5aa0;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1rem;
         }
 
-        .empty-state {
-            text-align: center;
-            color: var(--text-secondary);
-            font-style: italic;
-            padding: 40px 20px;
-        }
-
-        /* Files Tab Styles */
-        .files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .file-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            border-left: 5px solid #2c5aa0;
-        }
-
-        .file-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .file-card.form {
-            border-left-color: #28a745;
-        }
-
-        .file-card.case-sheet {
-            border-left-color: #17a2b8;
-        }
-
-        .file-card.guide {
-            border-left-color: #ffc107;
-        }
-
-        .file-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .file-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-        }
-
-        .file-icon.form {
-            background: var(--gradient-success);
-        }
-
-        .file-icon.case-sheet {
-            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
-        }
-
-        .file-icon.guide {
-            background: var(--gradient-warning);
-        }
-
-        .file-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 5px;
-        }
-
-        .file-description {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .file-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        .file-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .file-btn {
-            flex: 1;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .file-btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-        }
-
-        .file-btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .file-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* Moderate Size Slightly Wide Calendar */
+        /* Calendar Styles */
         .calendar-container {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 16px;
-            box-shadow: var(--shadow);
-            margin: 0 auto 20px auto;
-            width: 400px;
-            height: 350px;
-            max-width: 400px;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin: 0 auto 2rem auto;
+            width: 420px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
         }
@@ -539,35 +615,35 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding: 0 8px;
-            height: 40px;
+            margin-bottom: 1rem;
+            padding: 0 0.5rem;
         }
 
         .calendar-nav {
-            background: var(--gradient-primary);
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
 
         .calendar-nav:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+            box-shadow: var(--shadow-glow);
         }
 
         #currentMonth {
-            color: #2c5aa0;
-            font-size: 18px;
-            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
             margin: 0;
         }
 
@@ -576,65 +652,66 @@
             grid-template-columns: repeat(7, 1fr);
             grid-template-rows: repeat(7, 1fr);
             gap: 2px;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             flex: 1;
-            width: 100%;
-            height: 266px;
-            background: #e9ecef;
+            height: 280px;
+            background: var(--border-color);
         }
 
         .calendar-day-header {
-            background: #f8f9fa;
-            color: #666;
-            padding: 0;
+            background: var(--surface-light);
+            color: var(--text-secondary);
             text-align: center;
-            font-weight: 600;
-            font-size: 12px;
-            height: 38px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .calendar-day {
-            background: var(--bg-card);
+            background: var(--surface-medium);
             text-align: center;
             cursor: pointer;
             position: relative;
-            height: 38px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
-            padding: 0;
-            margin: 0;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
         }
 
         .calendar-day:hover:not(.other-month) {
-            background: #e3f2fd;
-            transform: scale(1.05);
+            background: var(--surface-light);
+            transform: scale(1.1);
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
         }
 
         .calendar-day.other-month {
-            color: #ccc;
-            background: #fafafa;
+            color: var(--text-muted);
+            background: var(--surface-dark);
         }
 
         .calendar-day.today {
-            background: #007AFF;
+            background: var(--accent-blue);
             color: white;
-            font-weight: bold;
-            border-radius: 50%;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
 
         .calendar-day.scheduled {
-            background: #FF3B30;
+            background: var(--danger-red);
             color: white;
-            font-weight: bold;
-            border-radius: 4px;
+            font-weight: 700;
+            border-radius: 8px;
         }
 
         .calendar-day.scheduled::after {
@@ -651,427 +728,360 @@
 
         .event-count {
             position: absolute;
-            top: 3px;
-            right: 3px;
+            top: 2px;
+            right: 2px;
             background: rgba(255,255,255,0.95);
-            color: #FF3B30;
-            font-size: 10px;
-            font-weight: bold;
+            color: var(--danger-red);
+            font-size: 0.7rem;
+            font-weight: 700;
             width: 16px;
             height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1;
-            border: 1px solid rgba(255,59,48,0.3);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        .calendar-day-number {
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 1;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: var(--shadow-sm);
         }
 
         .calendar-legend {
             display: flex;
-            gap: 15px;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 12px;
-            height: 24px;
+            margin-top: 1rem;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 12px;
+            gap: 0.5rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
+            font-weight: 600;
         }
 
         .legend-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
         }
 
         .legend-dot.scheduled {
-            background: #FF3B30;
+            background: var(--danger-red);
         }
 
         .legend-dot.today {
-            background: #007AFF;
+            background: var(--accent-blue);
         }
 
         .legend-dot.available {
-            background: var(--bg-card);
-            border: 1px solid #ddd;
+            background: var(--surface-medium);
+            border: 1px solid var(--border-color);
         }
 
-        /* Analytics Specific Styles */
+        /* Analytics Cards */
         .analytics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
         
         .analytics-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
         }
         
         .analytics-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
         
         .analytics-title {
-            color: #2c5aa0;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.75rem;
         }
         
         .performance-chart {
             display: flex;
             align-items: end;
             height: 120px;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%);
-            border-radius: 10px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
         }
         
         .chart-bar {
-            background: var(--gradient-primary);
+            background: var(--primary-gradient);
             width: 40px;
-            border-radius: 6px 6px 0 0;
-            transition: all 0.3s ease;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.8s ease;
             position: relative;
+            box-shadow: var(--shadow-sm);
         }
         
         .chart-bar:hover {
-            background: linear-gradient(to top, #1e4080, #2c5aa0);
+            background: linear-gradient(to top, #1e40af, var(--accent-blue));
             transform: scale(1.05);
-        }
-        
-        .chart-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .procedure-breakdown {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .procedure-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 16px;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%);
-            border-radius: 10px;
-        }
-        
-        .procedure-item span:first-child {
-            min-width: 100px;
-            font-weight: bold;
-            color: #2c5aa0;
-        }
-        
-        .procedure-bar {
-            background: var(--border-color);
-            height: 12px;
-            flex: 1;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        
-        .procedure-fill {
-            background: var(--gradient-primary);
-            height: 100%;
-            border-radius: 6px;
-            transition: width 0.8s ease;
-        }
-        
-        .trend-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .trend-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .trend-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .trend-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: #28a745;
-            margin-bottom: 8px;
-        }
-        
-        .trend-label {
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-        
-        .trend-detail {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .performer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        
-        .performer-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .performer-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .performer-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-        
-        .performer-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 8px;
-        }
-        
-        .performer-stats {
-            font-size: 16px;
-            color: var(--text-secondary);
+            box-shadow: var(--shadow-glow);
         }
 
-        /* Commission Transparency Styles */
+        /* Commission Styles */
         .commission-summary {
-            background: var(--gradient-success);
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
             color: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
             text-align: center;
+            box-shadow: var(--shadow-success);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commission-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: shimmer 20s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
         }
 
         .commission-total {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
         }
 
         .commission-subtitle {
-            font-size: 18px;
+            font-size: 1.2rem;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .commission-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .commission-card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid #2c5aa0;
-            transition: transform 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
         }
 
         .commission-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .commission-card.paid {
-            border-left-color: #28a745;
+            border-left-color: var(--success-green);
         }
 
         .commission-card.pending {
-            border-left-color: #ffc107;
+            border-left-color: var(--warning-amber);
         }
 
         .commission-card.outstanding {
-            border-left-color: #dc3545;
+            border-left-color: var(--danger-red);
         }
 
-        .commission-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .commission-case-id {
-            font-weight: bold;
-            color: #2c5aa0;
-            font-size: 16px;
-        }
-
-        .commission-amount {
-            font-size: 20px;
-            font-weight: bold;
-            color: #28a745;
-        }
-
-        .commission-details {
+        /* Files Grid */
+        .files-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .commission-detail {
-            display: flex;
-            flex-direction: column;
+        .file-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent-blue);
+            position: relative;
+            overflow: hidden;
         }
 
-        .commission-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+        .file-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
         }
 
-        .commission-value {
-            font-weight: bold;
-            color: #2c5aa0;
+        .file-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
         }
 
-        .commission-breakdown {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .file-card.form {
+            border-left-color: var(--success-green);
         }
 
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
+        .file-card.case-sheet {
+            border-left-color: var(--accent-cyan);
         }
 
-        .breakdown-item:last-child {
-            margin-bottom: 0;
-            font-weight: bold;
-            border-top: 1px solid var(--border-color);
-            padding-top: 8px;
+        .file-card.guide {
+            border-left-color: var(--warning-amber);
         }
 
-        .commission-timeline {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        .timeline-item {
+        .file-header {
             display: flex;
             align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .timeline-item:last-child {
-            border-bottom: none;
-        }
-
-        .timeline-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .file-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            font-weight: bold;
-            margin-right: 20px;
+            font-size: 1.3rem;
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-icon.form {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .file-icon.case-sheet {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
+        }
+
+        .file-icon.guide {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .file-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .file-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            background: var(--surface-medium);
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .file-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .file-btn-primary {
+            background: var(--primary-gradient);
             color: white;
         }
 
-        .timeline-icon.complete {
-            background: var(--gradient-success);
-        }
-
-        .timeline-icon.pending {
-            background: var(--gradient-warning);
-        }
-
-        .timeline-icon.outstanding {
-            background: var(--gradient-danger);
-        }
-
-        .timeline-content {
-            flex: 1;
-        }
-
-        .timeline-title {
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 5px;
-        }
-
-        .timeline-description {
+        .file-btn-secondary {
+            background: var(--surface-light);
             color: var(--text-secondary);
-            font-size: 14px;
+            border: 1px solid var(--glass-border);
         }
 
-        .timeline-amount {
-            font-weight: bold;
-            color: #28a745;
-            font-size: 18px;
+        .file-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
-        /* Surgery Event Modal */
+        /* Event Modal */
         .event-modal {
             display: none;
             position: fixed;
@@ -1079,44 +1089,57 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.8);
             z-index: 1000;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
 
         .event-modal-content {
-            background: var(--bg-card);
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            margin: 3% auto;
+            padding: 2.5rem;
+            border-radius: 24px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            max-width: 700px;
+            box-shadow: var(--shadow-lg);
             position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .event-modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #2c5aa0;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
         }
 
         .event-modal-title {
-            color: #2c5aa0;
-            font-size: 24px;
-            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .close-btn {
-            background: none;
-            border: none;
-            font-size: 30px;
+            background: var(--surface-light);
+            border: 1px solid var(--glass-border);
+            font-size: 1.5rem;
             cursor: pointer;
             color: var(--text-secondary);
-            padding: 0;
             width: 40px;
             height: 40px;
             display: flex;
@@ -1127,278 +1150,108 @@
         }
 
         .close-btn:hover {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-        }
-
-        .event-form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .event-form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .event-form-group label {
-            margin-bottom: 8px;
-            color: #2c5aa0;
-            font-weight: bold;
-        }
-
-        .event-form-group input,
-        .event-form-group select,
-        .event-form-group textarea {
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .event-form-group input:focus,
-        .event-form-group select:focus,
-        .event-form-group textarea:focus {
-            outline: none;
-            border-color: #2c5aa0;
-            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
-        }
-
-        .event-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-
-        .event-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-
-        .event-btn-primary {
-            background: var(--gradient-primary);
+            background: var(--danger-red);
             color: white;
+            transform: scale(1.1);
         }
 
-        .event-btn-success {
-            background: var(--gradient-success);
-            color: white;
-        }
-
-        .event-btn-danger {
-            background: var(--gradient-danger);
-            color: white;
-        }
-
-        .event-btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .event-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* Multiple Events List Styles */
-        .existing-events-list {
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .existing-event-item {
-            background: var(--bg-card);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .existing-event-item:hover {
-            border-color: #2c5aa0;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .existing-event-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .event-summary {
-            flex: 1;
-        }
-
-        .event-summary strong {
-            color: #2c5aa0;
-            font-size: 14px;
-        }
-
-        .event-details {
-            color: var(--text-secondary);
-            font-size: 12px;
-            margin-top: 2px;
-        }
-
-        .event-patient {
-            color: var(--text-muted);
-            font-size: 11px;
-            margin-top: 2px;
-        }
-
-        .delete-event-btn {
-            background: none;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            opacity: 0.7;
-        }
-
-        .delete-event-btn:hover {
-            background: #ffebee;
-            opacity: 1;
-            transform: scale(1.2);
-        }
-
-        .event-action-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .case-sheet-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .case-sheet-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.3);
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .dashboard-grid, .analytics-grid, .commission-grid, .files-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
+            .container {
+                padding: 0.5rem;
             }
-            
+
             .header {
+                padding: 1.5rem;
+            }
+
+            .header-content {
                 flex-direction: column;
                 text-align: center;
+                gap: 1.5rem;
             }
-            
-            .header-left, .header-right {
+
+            .header-right {
+                order: -1;
                 justify-content: center;
             }
-            
+
+            .dashboard-grid, 
+            .analytics-grid, 
+            .commission-grid, 
+            .files-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .nav-tabs {
-                justify-content: center;
+                justify-content: flex-start;
+                padding: 0.5rem;
             }
 
-            .commission-details {
-                grid-template-columns: 1fr;
+            .nav-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
             }
 
             .calendar-container {
                 width: 340px;
-                height: 300px;
-                max-width: 340px;
-                padding: 14px;
-            }
-            
-            .calendar-header {
-                height: 36px;
-            }
-            
-            .calendar-grid {
-                height: 224px;
-            }
-            
-            .calendar-day {
-                height: 32px;
-            }
-            
-            .calendar-day-header {
-                height: 32px;
-                font-size: 11px;
-            }
-            
-            .calendar-day-number {
-                font-size: 13px;
-            }
-            
-            .calendar-nav {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
-
-            #currentMonth {
-                font-size: 16px;
-            }
-            
-            .calendar-legend {
-                gap: 12px;
-                height: 22px;
-                margin-top: 10px;
-            }
-            
-            .legend-item {
-                font-size: 11px;
-            }
-
-            .legend-dot {
-                width: 8px;
-                height: 8px;
-            }
-
-            .event-count {
-                width: 14px;
-                height: 14px;
-                font-size: 9px;
-            }
-            
-            .event-form-grid {
-                grid-template-columns: 1fr;
+                max-width: 100%;
             }
 
             .file-actions {
                 flex-direction: column;
             }
+
+            .commission-total {
+                font-size: 2.5rem;
+            }
+
+            .commission-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-container {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .event-modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Loading and animations */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
     </style>
 </head>
@@ -1406,32 +1259,64 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="header-left">
-                <img src="Forma Medical transparent.png" alt="Forma Medical Logo" class="logo">
-                <div class="welcome-text">
-                    <h1>Welcome back, <span id="companyName">ABC Ortho Solutions</span></h1>
-                    <p>Manage your case submissions and track performance</p>
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="company-info">
+                            <h1>Welcome back, <span id="companyName">ABC Ortho Solutions</span></h1>
+                            <p>Manage your case submissions and track performance</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="header-right">
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">🌙</button>
-                <div class="user-info">
-                    <div><strong id="contactName">John Smith</strong></div>
-                    <div id="accessCode">Access Code: ABCOrtho</div>
+                <div class="header-right">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="user-info">
+                        <div><strong id="contactName">John Smith</strong></div>
+                        <div id="accessCode">Access Code: ABCOrtho</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
                 </div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
         </div>
 
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
-            <button class="nav-tab" onclick="showTab('calendar')">📅 Calendar</button>
-            <button class="nav-tab" onclick="showTab('analytics')">📈 Analytics</button>
-            <button class="nav-tab" onclick="showTab('submissions')">📋 Submissions</button>
-            <button class="nav-tab" onclick="showTab('commissions')">💰 Commissions</button>
-            <button class="nav-tab" onclick="showTab('relationships')">🤝 Relationships</button>
-            <button class="nav-tab" onclick="showTab('files')">📁 Files</button>
+            <button class="nav-tab active" onclick="showTab('overview')">
+                <i class="fas fa-chart-line"></i>
+                Overview
+            </button>
+            <button class="nav-tab" onclick="showTab('calendar')">
+                <i class="fas fa-calendar-alt"></i>
+                Calendar
+            </button>
+            <button class="nav-tab" onclick="showTab('analytics')">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
+            </button>
+            <button class="nav-tab" onclick="showTab('submissions')">
+                <i class="fas fa-clipboard-list"></i>
+                Submissions
+            </button>
+            <button class="nav-tab" onclick="showTab('commissions')">
+                <i class="fas fa-dollar-sign"></i>
+                Commissions
+            </button>
+            <button class="nav-tab" onclick="showTab('relationships')">
+                <i class="fas fa-handshake"></i>
+                Relationships
+            </button>
+            <button class="nav-tab" onclick="showTab('files')">
+                <i class="fas fa-folder"></i>
+                Files
+            </button>
         </div>
 
         <!-- Overview Tab -->
@@ -1440,30 +1325,43 @@
             <div class="dashboard-grid">
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <div class="card-icon primary">📋</div>
+                        <div class="card-icon primary">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
                         <div>
                             <div class="card-title">Submit New Case Sheet</div>
-                            <div class="card-subtitle">Create a new surgery case submission</div>
+                            <div class="card-subtitle">Create a new surgery case submission with our advanced form system</div>
                         </div>
                     </div>
-                    <a href="form.html" class="action-btn btn-primary">Submit Case Sheet</a>
+                    <a href="form.html" class="action-btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Submit Case Sheet
+                    </a>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="card-header">
-                        <div class="card-icon success">📊</div>
+                        <div class="card-icon success">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <div>
                             <div class="card-title">View Submissions</div>
-                            <div class="card-subtitle">Track your case history and status</div>
+                            <div class="card-subtitle">Track your case history, status updates, and performance metrics</div>
                         </div>
                     </div>
-                    <a href="submissions.html" class="action-btn btn-success">View All Submissions</a>
+                    <a href="submissions.html" class="action-btn btn-success">
+                        <i class="fas fa-eye"></i>
+                        View All Submissions
+                    </a>
                 </div>
             </div>
 
             <!-- Statistics -->
             <div class="stats-section">
-                <h2 class="section-title">📈 Your Performance</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Your Performance
+                </h2>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-number" id="totalSubmissions">12</div>
@@ -1490,7 +1388,10 @@
 
             <!-- Recent Submissions -->
             <div class="recent-section">
-                <h2 class="section-title">🕒 Recent Submissions</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    Recent Submissions
+                </h2>
                 <div id="recentSubmissions">
                     <div class="recent-item">
                         <div class="recent-info">
@@ -1520,14 +1421,21 @@
         <!-- Calendar Tab -->
         <div id="calendarTab" class="tab-content">
             <div class="stats-section">
-                <h2 class="section-title">📅 Surgery Calendar</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 25px; text-align: center;">Schedule upcoming surgeries and manage your case pipeline</p>
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Surgery Calendar
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">Schedule upcoming surgeries and manage your case pipeline</p>
                 
                 <div class="calendar-container">
                     <div class="calendar-header">
-                        <button class="calendar-nav" onclick="changeMonth(-1)">❮</button>
+                        <button class="calendar-nav" onclick="changeMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
                         <h3 id="currentMonth">June 2025</h3>
-                        <button class="calendar-nav" onclick="changeMonth(1)">❯</button>
+                        <button class="calendar-nav" onclick="changeMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                     
                     <div class="calendar-grid" id="calendarGrid">
@@ -1551,8 +1459,11 @@
                 </div>
 
                 <!-- Upcoming Surgeries List -->
-                <div class="recent-section" style="margin-top: 30px;">
-                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 20px; text-align: center;">📋 Upcoming Surgeries</h3>
+                <div class="recent-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">
+                        <i class="fas fa-stethoscope"></i>
+                        Upcoming Surgeries
+                    </h3>
                     <div id="upcomingSurgeries">
                         <div class="recent-item">
                             <div class="recent-info">
@@ -1580,21 +1491,27 @@
             </div>
         </div>
 
-        <!-- Performance Analytics Tab -->
+        <!-- Analytics Tab -->
         <div id="analyticsTab" class="tab-content">
             <div class="stats-section">
-                <h2 class="section-title">📈 Performance Analytics</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Performance Analytics
+                </h2>
                 
                 <!-- Key Performance Metrics -->
                 <div class="analytics-grid">
                     <div class="analytics-card">
-                        <div class="analytics-title">📊 Monthly Performance</div>
+                        <div class="analytics-title">
+                            <i class="fas fa-chart-line"></i>
+                            Monthly Performance
+                        </div>
                         <div class="performance-chart">
                             <div class="chart-bar" style="height: 60%;" title="This Month: 12 cases"></div>
                             <div class="chart-bar" style="height: 45%;" title="Last Month: 9 cases"></div>
                             <div class="chart-bar" style="height: 80%;" title="Best Month: 15 cases"></div>
                         </div>
-                        <div class="chart-legend">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
                             <span><strong>This Month:</strong> 12 cases</span>
                             <span><strong>Last Month:</strong> 9 cases</span>
                             <span><strong>Best Month:</strong> 15 cases</span>
@@ -1602,82 +1519,110 @@
                     </div>
                     
                     <div class="analytics-card">
-                        <div class="analytics-title">🎯 Procedure Mix</div>
-                        <div class="procedure-breakdown">
-                            <div class="procedure-item">
-                                <span>MTP Fusion</span>
-                                <div class="procedure-bar">
-                                    <div class="procedure-fill" style="width: 45%"></div>
+                        <div class="analytics-title">
+                            <i class="fas fa-bullseye"></i>
+                            Procedure Mix
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">MTP Fusion</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 45%; border-radius: 6px; transition: width 0.8s ease;"></div>
                                 </div>
-                                <span><strong>45%</strong> (5 cases)</span>
+                                <span style="font-weight: 700; color: var(--accent-blue);">45% (5 cases)</span>
                             </div>
-                            <div class="procedure-item">
-                                <span>Hammertoe</span>
-                                <div class="procedure-bar">
-                                    <div class="procedure-fill" style="width: 30%"></div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Hammertoe</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 30%; border-radius: 6px; transition: width 0.8s ease;"></div>
                                 </div>
-                                <span><strong>30%</strong> (4 cases)</span>
+                                <span style="font-weight: 700; color: var(--accent-blue);">30% (4 cases)</span>
                             </div>
-                            <div class="procedure-item">
-                                <span>Lapidus</span>
-                                <div class="procedure-bar">
-                                    <div class="procedure-fill" style="width: 15%"></div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Lapidus</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 15%; border-radius: 6px; transition: width 0.8s ease;"></div>
                                 </div>
-                                <span><strong>15%</strong> (2 cases)</span>
+                                <span style="font-weight: 700; color: var(--accent-blue);">15% (2 cases)</span>
                             </div>
-                            <div class="procedure-item">
-                                <span>Akin</span>
-                                <div class="procedure-bar">
-                                    <div class="procedure-fill" style="width: 10%"></div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Akin</span>
+                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 10%; border-radius: 6px; transition: width 0.8s ease;"></div>
                                 </div>
-                                <span><strong>10%</strong> (1 case)</span>
+                                <span style="font-weight: 700; color: var(--accent-blue);">10% (1 case)</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Growth Trends -->
-                <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 22px;">🚀 Growth Trends</h3>
-                <div class="trend-grid">
-                    <div class="trend-card">
-                        <div class="trend-value">+25%</div>
-                        <div class="trend-label">Quarter Growth</div>
-                        <div class="trend-detail">vs Q3 2024</div>
-                    </div>
-                    <div class="trend-card">
-                        <div class="trend-value">+40%</div>
-                        <div class="trend-label">New Surgeon Cases</div>
-                        <div class="trend-detail">vs last quarter</div>
-                    </div>
-                    <div class="trend-card">
-                        <div class="trend-value">92%</div>
-                        <div class="trend-label">PO Success Rate</div>
-                        <div class="trend-detail">11/12 cases</div>
-                    </div>
-                    <div class="trend-card">
-                        <div class="trend-value">6.5</div>
-                        <div class="trend-label">Avg Days to PO</div>
-                        <div class="trend-detail">Industry: 8-12 days</div>
+                <div class="recent-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-rocket"></i>
+                        Growth Trends
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--success-green);">+25%</div>
+                            <div class="stat-label">Quarter Growth</div>
+                            <div class="stat-trend">vs Q3 2024</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--success-green);">+40%</div>
+                            <div class="stat-label">New Surgeon Cases</div>
+                            <div class="stat-trend">vs last quarter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--accent-cyan);">92%</div>
+                            <div class="stat-label">PO Success Rate</div>
+                            <div class="stat-trend">11/12 cases</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: var(--warning-amber);">6.5</div>
+                            <div class="stat-label">Avg Days to PO</div>
+                            <div class="stat-trend">Industry: 8-12 days</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Top Performers -->
-                <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 22px;">🏆 Top Performers</h3>
-                <div class="performer-grid">
-                    <div class="performer-card">
-                        <div class="performer-title">Top Surgeon</div>
-                        <div class="performer-name">Dr. Benjamin Potter</div>
-                        <div class="performer-stats">5 cases this month</div>
-                    </div>
-                    <div class="performer-card">
-                        <div class="performer-title">Top Hospital</div>
-                        <div class="performer-name">Holston Valley Surgery Center</div>
-                        <div class="performer-stats">4 cases this month</div>
-                    </div>
-                    <div class="performer-card">
-                        <div class="performer-title">Top Product</div>
-                        <div class="performer-name">MIS MTP Construct</div>
-                        <div class="performer-stats">Used in 8 cases</div>
+                <div class="recent-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Top Performers
+                    </h3>
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-title">
+                                <i class="fas fa-user-md"></i>
+                                Top Surgeon
+                            </div>
+                            <div style="text-align: center; padding: 1rem;">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Dr. Benjamin Potter</div>
+                                <div style="color: var(--text-secondary);">5 cases this month</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-title">
+                                <i class="fas fa-hospital"></i>
+                                Top Hospital
+                            </div>
+                            <div style="text-align: center; padding: 1rem;">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Holston Valley Surgery Center</div>
+                                <div style="color: var(--text-secondary);">4 cases this month</div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-title">
+                                <i class="fas fa-tools"></i>
+                                Top Product
+                            </div>
+                            <div style="text-align: center; padding: 1rem;">
+                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">MIS MTP Construct</div>
+                                <div style="color: var(--text-secondary);">Used in 8 cases</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1686,8 +1631,11 @@
         <!-- My Submissions Tab -->
         <div id="submissionsTab" class="tab-content">
             <div class="recent-section">
-                <h2 class="section-title">📋 My Submissions</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 20px;">Track all your case submissions and their current status</p>
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    My Submissions
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
                 
                 <div id="allSubmissions">
                     <div class="recent-item">
@@ -1727,15 +1675,18 @@
 
             <!-- Commission Overview Stats -->
             <div class="stats-section">
-                <h2 class="section-title">💰 Commission Overview</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-dollar-sign"></i>
+                    Commission Overview
+                </h2>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number" style="color: #28a745;">$1,855</div>
+                        <div class="stat-number" style="color: var(--success-green);">$1,855</div>
                         <div class="stat-label">Paid Commissions</div>
                         <div class="stat-trend">9 cases completed</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" style="color: #ffc107;">$595</div>
+                        <div class="stat-number" style="color: var(--warning-amber);">$595</div>
                         <div class="stat-label">Pending Commissions</div>
                         <div class="stat-trend">3 cases awaiting PO</div>
                     </div>
@@ -1754,42 +1705,45 @@
 
             <!-- Individual Commission Breakdown -->
             <div class="stats-section">
-                <h2 class="section-title">📊 Commission Breakdown by Case</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-chart-pie"></i>
+                    Commission Breakdown by Case
+                </h2>
                 <div class="commission-grid">
-                    <!-- Paid Commission Card -->
+                    <!-- Commission cards would be dynamically generated -->
                     <div class="commission-card paid">
-                        <div class="commission-header">
-                            <div class="commission-case-id">CS-1234567890</div>
-                            <div class="commission-amount">$285</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567890</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--success-green);">$285</div>
                         </div>
-                        <div class="commission-details">
-                            <div class="commission-detail">
-                                <div class="commission-label">Procedure</div>
-                                <div class="commission-value">MTP Fusion</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">MTP Fusion</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Surgeon</div>
-                                <div class="commission-value">Dr. Benjamin Potter</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Benjamin Potter</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Hospital</div>
-                                <div class="commission-value">Holston Valley Surgery</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Holston Valley Surgery</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Date</div>
-                                <div class="commission-value">Dec 15, 2024</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dec 15, 2024</div>
                             </div>
                         </div>
-                        <div class="commission-breakdown">
-                            <div class="breakdown-item">
+                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                 <span>Case Value:</span>
                                 <span>$3,200</span>
                             </div>
-                            <div class="breakdown-item">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                 <span>Commission Rate:</span>
                                 <span>8.9%</span>
                             </div>
-                            <div class="breakdown-item">
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
                                 <span>Commission Amount:</span>
                                 <span>$285</span>
                             </div>
@@ -1797,40 +1751,39 @@
                         <span class="status-badge status-complete">PO Received - Paid</span>
                     </div>
 
-                    <!-- Pending Commission Card -->
                     <div class="commission-card pending">
-                        <div class="commission-header">
-                            <div class="commission-case-id">CS-1234567891</div>
-                            <div class="commission-amount">$150</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567891</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--warning-amber);">$150</div>
                         </div>
-                        <div class="commission-details">
-                            <div class="commission-detail">
-                                <div class="commission-label">Procedure</div>
-                                <div class="commission-value">Hammertoe Correction</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Hammertoe Correction</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Surgeon</div>
-                                <div class="commission-value">Dr. Sarah Johnson</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Sarah Johnson</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Hospital</div>
-                                <div class="commission-value">Regional Medical Center</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Regional Medical Center</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Date</div>
-                                <div class="commission-value">Dec 18, 2024</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dec 18, 2024</div>
                             </div>
                         </div>
-                        <div class="commission-breakdown">
-                            <div class="breakdown-item">
+                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                 <span>Case Value:</span>
                                 <span>$1,850</span>
                             </div>
-                            <div class="breakdown-item">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                 <span>Commission Rate:</span>
                                 <span>8.1%</span>
                             </div>
-                            <div class="breakdown-item">
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
                                 <span>Potential Commission:</span>
                                 <span>$150</span>
                             </div>
@@ -1838,40 +1791,39 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <!-- Another Paid Commission Card -->
                     <div class="commission-card paid">
-                        <div class="commission-header">
-                            <div class="commission-case-id">CS-1234567892</div>
-                            <div class="commission-amount">$420</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567892</div>
+                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--success-green);">$420</div>
                         </div>
-                        <div class="commission-details">
-                            <div class="commission-detail">
-                                <div class="commission-label">Procedure</div>
-                                <div class="commission-value">Lapidus Procedure</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Lapidus Procedure</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Surgeon</div>
-                                <div class="commission-value">Dr. Michael Wilson</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Michael Wilson</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Hospital</div>
-                                <div class="commission-value">City General Hospital</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">City General Hospital</div>
                             </div>
-                            <div class="commission-detail">
-                                <div class="commission-label">Date</div>
-                                <div class="commission-value">Dec 12, 2024</div>
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Dec 12, 2024</div>
                             </div>
                         </div>
-                        <div class="commission-breakdown">
-                            <div class="breakdown-item">
+                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                 <span>Case Value:</span>
                                 <span>$4,500</span>
                             </div>
-                            <div class="breakdown-item">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                                 <span>Commission Rate:</span>
                                 <span>9.3%</span>
                             </div>
-                            <div class="breakdown-item">
+                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
                                 <span>Commission Amount:</span>
                                 <span>$420</span>
                             </div>
@@ -1882,44 +1834,57 @@
             </div>
 
             <!-- Commission Timeline -->
-            <div class="commission-timeline">
-                <h2 class="section-title">⏱️ Commission Timeline</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 25px;">Track the progress of your commission payments</p>
+            <div class="recent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i>
+                    Commission Timeline
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track the progress of your commission payments</p>
                 
-                <div class="timeline-item">
-                    <div class="timeline-icon complete">✓</div>
-                    <div class="timeline-content">
-                        <div class="timeline-title">Commission Processed</div>
-                        <div class="timeline-description">CS-1234567890 • MTP Fusion • Dr. Potter • Dec 20, 2024</div>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Commission Processed</div>
+                            <div style="color: var(--text-secondary);">CS-1234567890 • MTP Fusion • Dr. Potter • Dec 20, 2024</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--success-green);">$285</div>
                     </div>
-                    <div class="timeline-amount">$285</div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-icon complete">✓</div>
-                    <div class="timeline-content">
-                        <div class="timeline-title">Commission Processed</div>
-                        <div class="timeline-description">CS-1234567892 • Lapidus • Dr. Wilson • Dec 18, 2024</div>
+                    
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Commission Processed</div>
+                            <div style="color: var(--text-secondary);">CS-1234567892 • Lapidus • Dr. Wilson • Dec 18, 2024</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--success-green);">$420</div>
                     </div>
-                    <div class="timeline-amount">$420</div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-icon pending">⏳</div>
-                    <div class="timeline-content">
-                        <div class="timeline-title">Awaiting PO</div>
-                        <div class="timeline-description">CS-1234567891 • Hammertoe • Dr. Johnson • Pending for 5 days</div>
+                    
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Awaiting PO</div>
+                            <div style="color: var(--text-secondary);">CS-1234567891 • Hammertoe • Dr. Johnson • Pending for 5 days</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--warning-amber);">$150</div>
                     </div>
-                    <div class="timeline-amount">$150</div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-icon pending">📋</div>
-                    <div class="timeline-content">
-                        <div class="timeline-title">Case Submitted</div>
-                        <div class="timeline-description">CS-1234567893 • Bunion Correction • Dr. Chen • Dec 22, 2024</div>
+                    
+                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
+                            <i class="fas fa-clipboard"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Case Submitted</div>
+                            <div style="color: var(--text-secondary);">CS-1234567893 • Bunion Correction • Dr. Chen • Dec 22, 2024</div>
+                        </div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent-blue);">$175</div>
                     </div>
-                    <div class="timeline-amount">$175</div>
                 </div>
             </div>
         </div>
@@ -1927,30 +1892,36 @@
         <!-- Relationships Tab -->
         <div id="relationshipsTab" class="tab-content">
             <div class="stats-section">
-                <h2 class="section-title">🤝 Surgeon & Hospital Relationships</h2>
+                <h2 class="section-title">
+                    <i class="fas fa-handshake"></i>
+                    Surgeon & Hospital Relationships
+                </h2>
                 
                 <div class="analytics-grid">
                     <div class="analytics-card">
-                        <h3 style="color: #2c5aa0; margin-bottom: 20px;">👨‍⚕️ Top Surgeons</h3>
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-user-md"></i>
+                            Top Surgeons
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                                 <div>
-                                    <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">Dr. Benjamin Potter</div>
-                                    <div style="font-size: 14px; color: var(--text-secondary);">5 cases • $1,200 commission</div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Benjamin Potter</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">5 cases • $1,200 commission</div>
                                 </div>
                                 <span class="status-badge status-complete">Strong</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                                 <div>
-                                    <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">Dr. Sarah Johnson</div>
-                                    <div style="font-size: 14px; color: var(--text-secondary);">3 cases • $750 commission</div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Sarah Johnson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">3 cases • $750 commission</div>
                                 </div>
                                 <span class="status-badge status-processing">Growing</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                                 <div>
-                                    <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">Dr. Michael Wilson</div>
-                                    <div style="font-size: 14px; color: var(--text-secondary);">2 cases • $500 commission</div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Michael Wilson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • $500 commission</div>
                                 </div>
                                 <span class="status-badge status-pending">New</span>
                             </div>
@@ -1958,26 +1929,29 @@
                     </div>
                     
                     <div class="analytics-card">
-                        <h3 style="color: #2c5aa0; margin-bottom: 20px;">🏥 Top Hospitals</h3>
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-hospital"></i>
+                            Top Hospitals
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                                 <div>
-                                    <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">Holston Valley Surgery Center</div>
-                                    <div style="font-size: 14px; color: var(--text-secondary);">6 cases • 3 surgeons</div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Holston Valley Surgery Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">6 cases • 3 surgeons</div>
                                 </div>
                                 <span class="status-badge status-complete">Strong</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                                 <div>
-                                    <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">Regional Medical Center</div>
-                                    <div style="font-size: 14px; color: var(--text-secondary);">4 cases • 2 surgeons</div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Regional Medical Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">4 cases • 2 surgeons</div>
                                 </div>
                                 <span class="status-badge status-processing">Growing</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                                 <div>
-                                    <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">City General Hospital</div>
-                                    <div style="font-size: 14px; color: var(--text-secondary);">2 cases • 1 surgeon</div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">City General Hospital</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • 1 surgeon</div>
                                 </div>
                                 <span class="status-badge status-pending">Opportunity</span>
                             </div>
@@ -1986,20 +1960,27 @@
                 </div>
 
                 <!-- Growth Opportunities -->
-                <div class="recent-section" style="margin-top: 30px;">
-                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 22px;">🎯 Growth Opportunities</h3>
-                    <div style="display: flex; flex-direction: column; gap: 15px;">
-                        <div style="display: flex; align-items: center; gap: 15px; padding: 20px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
-                            <div style="font-size: 24px;">📈</div>
+                <div class="recent-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">
+                        <i class="fas fa-bullseye"></i>
+                        Growth Opportunities
+                    </h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                            <div style="font-size: 2rem; color: var(--success-green);">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
                             <div>
-                                <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">Increase MTP Cases</div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Increase MTP Cases</div>
                                 <div style="color: var(--text-secondary);">Your MTP conversion rate is above average - great opportunity</div>
                             </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 15px; padding: 20px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
-                            <div style="font-size: 24px;">🏥</div>
+                        <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
+                            <div style="font-size: 2rem; color: var(--accent-cyan);">
+                                <i class="fas fa-hospital"></i>
+                            </div>
                             <div>
-                                <div style="font-weight: bold; color: #2c5aa0; margin-bottom: 5px;">New Hospital Target</div>
+                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">New Hospital Target</div>
                                 <div style="color: var(--text-secondary);">Valley Medical Center - untapped market in your territory</div>
                             </div>
                         </div>
@@ -2011,29 +1992,36 @@
         <!-- Files Tab -->
         <div id="filesTab" class="tab-content">
             <div class="stats-section">
-                <h2 class="section-title">📁 Document Library</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 25px; text-align: center;">Access important forms, case sheets, and reference materials</p>
+                <h2 class="section-title">
+                    <i class="fas fa-folder"></i>
+                    Document Library
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">Access important forms, case sheets, and reference materials</p>
                 
                 <div class="files-grid">
                     <!-- New Account Information Form -->
                     <div class="file-card form">
                         <div class="file-header">
-                            <div class="file-icon form">📝</div>
+                            <div class="file-icon form">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
                             <div>
                                 <div class="file-title">New Account Information Form</div>
                                 <div class="file-description">Required form for setting up new surgeon accounts and hospital partnerships</div>
                             </div>
                         </div>
                         <div class="file-meta">
-                            <span>PDF Document</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Document</span>
                             <span>Updated: May 2025</span>
                         </div>
                         <div class="file-actions">
                             <button class="file-btn file-btn-primary" onclick="downloadFile('new-account-form')">
-                                📥 Download
+                                <i class="fas fa-download"></i>
+                                Download
                             </button>
                             <button class="file-btn file-btn-secondary" onclick="viewFile('new-account-form')">
-                                👁️ Preview
+                                <i class="fas fa-eye"></i>
+                                Preview
                             </button>
                         </div>
                     </div>
@@ -2041,22 +2029,26 @@
                     <!-- Hammertoe/Akin Case Sheet -->
                     <div class="file-card case-sheet">
                         <div class="file-header">
-                            <div class="file-icon case-sheet">📋</div>
+                            <div class="file-icon case-sheet">
+                                <i class="fas fa-clipboard"></i>
+                            </div>
                             <div>
                                 <div class="file-title">Hammertoe/Akin Case Sheet</div>
                                 <div class="file-description">Specialized case submission form for hammertoe corrections and Akin osteotomy procedures</div>
                             </div>
                         </div>
                         <div class="file-meta">
-                            <span>PDF Form</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Form</span>
                             <span>Updated: June 2025</span>
                         </div>
                         <div class="file-actions">
                             <button class="file-btn file-btn-primary" onclick="downloadFile('hammertoe-case-sheet')">
-                                📥 Download
+                                <i class="fas fa-download"></i>
+                                Download
                             </button>
                             <button class="file-btn file-btn-secondary" onclick="viewFile('hammertoe-case-sheet')">
-                                👁️ Preview
+                                <i class="fas fa-eye"></i>
+                                Preview
                             </button>
                         </div>
                     </div>
@@ -2064,45 +2056,26 @@
                     <!-- MTP Case Sheet -->
                     <div class="file-card case-sheet">
                         <div class="file-header">
-                            <div class="file-icon case-sheet">📋</div>
+                            <div class="file-icon case-sheet">
+                                <i class="fas fa-clipboard"></i>
+                            </div>
                             <div>
                                 <div class="file-title">MTP Case Sheet</div>
                                 <div class="file-description">Detailed case submission form specifically designed for MTP fusion procedures</div>
                             </div>
                         </div>
                         <div class="file-meta">
-                            <span>PDF Form</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Form</span>
                             <span>Updated: June 2025</span>
                         </div>
                         <div class="file-actions">
                             <button class="file-btn file-btn-primary" onclick="downloadFile('mtp-case-sheet')">
-                                📥 Download
+                                <i class="fas fa-download"></i>
+                                Download
                             </button>
                             <button class="file-btn file-btn-secondary" onclick="viewFile('mtp-case-sheet')">
-                                👁️ Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Lapidus Case Sheet -->
-                    <div class="file-card case-sheet">
-                        <div class="file-header">
-                            <div class="file-icon case-sheet">📋</div>
-                            <div>
-                                <div class="file-title">Lapidus Case Sheet</div>
-                                <div class="file-description">Comprehensive case submission form for Lapidus bunionectomy procedures</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span>PDF Form</span>
-                            <span>Updated: June 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('lapidus-case-sheet')">
-                                📥 Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('lapidus-case-sheet')">
-                                👁️ Preview
+                                <i class="fas fa-eye"></i>
+                                Preview
                             </button>
                         </div>
                     </div>
@@ -2110,22 +2083,26 @@
                     <!-- Product Catalog -->
                     <div class="file-card guide">
                         <div class="file-header">
-                            <div class="file-icon guide">📚</div>
+                            <div class="file-icon guide">
+                                <i class="fas fa-book"></i>
+                            </div>
                             <div>
                                 <div class="file-title">Product Catalog 2025</div>
                                 <div class="file-description">Complete catalog of all Forma Medical products with specifications and pricing</div>
                             </div>
                         </div>
                         <div class="file-meta">
-                            <span>PDF Catalog</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Catalog</span>
                             <span>Updated: January 2025</span>
                         </div>
                         <div class="file-actions">
                             <button class="file-btn file-btn-primary" onclick="downloadFile('product-catalog')">
-                                📥 Download
+                                <i class="fas fa-download"></i>
+                                Download
                             </button>
                             <button class="file-btn file-btn-secondary" onclick="viewFile('product-catalog')">
-                                👁️ Preview
+                                <i class="fas fa-eye"></i>
+                                Preview
                             </button>
                         </div>
                     </div>
@@ -2133,22 +2110,26 @@
                     <!-- Commission Structure Guide -->
                     <div class="file-card guide">
                         <div class="file-header">
-                            <div class="file-icon guide">💰</div>
+                            <div class="file-icon guide">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
                             <div>
                                 <div class="file-title">Commission Structure Guide</div>
                                 <div class="file-description">Detailed breakdown of commission rates and payment structures by procedure type</div>
                             </div>
                         </div>
                         <div class="file-meta">
-                            <span>PDF Guide</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Guide</span>
                             <span>Updated: March 2025</span>
                         </div>
                         <div class="file-actions">
                             <button class="file-btn file-btn-primary" onclick="downloadFile('commission-guide')">
-                                📥 Download
+                                <i class="fas fa-download"></i>
+                                Download
                             </button>
                             <button class="file-btn file-btn-secondary" onclick="viewFile('commission-guide')">
-                                👁️ Preview
+                                <i class="fas fa-eye"></i>
+                                Preview
                             </button>
                         </div>
                     </div>
@@ -2156,93 +2137,56 @@
                     <!-- Training Materials -->
                     <div class="file-card guide">
                         <div class="file-header">
-                            <div class="file-icon guide">🎓</div>
+                            <div class="file-icon guide">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
                             <div>
                                 <div class="file-title">Training Materials</div>
                                 <div class="file-description">Educational resources and training materials for new distributors and ongoing education</div>
                             </div>
                         </div>
                         <div class="file-meta">
-                            <span>PDF Package</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Package</span>
                             <span>Updated: April 2025</span>
                         </div>
                         <div class="file-actions">
                             <button class="file-btn file-btn-primary" onclick="downloadFile('training-materials')">
-                                📥 Download
+                                <i class="fas fa-download"></i>
+                                Download
                             </button>
                             <button class="file-btn file-btn-secondary" onclick="viewFile('training-materials')">
-                                👁️ Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Contact Directory -->
-                    <div class="file-card form">
-                        <div class="file-header">
-                            <div class="file-icon form">📞</div>
-                            <div>
-                                <div class="file-title">Contact Directory</div>
-                                <div class="file-description">Important contact information for Forma Medical staff, support, and emergency contacts</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span>PDF Directory</span>
-                            <span>Updated: June 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('contact-directory')">
-                                📥 Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('contact-directory')">
-                                👁️ Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Quick Reference Guide -->
-                    <div class="file-card guide">
-                        <div class="file-header">
-                            <div class="file-icon guide">⚡</div>
-                            <div>
-                                <div class="file-title">Quick Reference Guide</div>
-                                <div class="file-description">Fast reference for common procedures, product codes, and submission requirements</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span>PDF Reference</span>
-                            <span>Updated: May 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('quick-reference')">
-                                📥 Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('quick-reference')">
-                                👁️ Preview
+                                <i class="fas fa-eye"></i>
+                                Preview
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Recently Downloaded Files -->
-                <div class="recent-section" style="margin-top: 30px;">
-                    <h3 style="color: #2c5aa0; margin-bottom: 20px; font-size: 20px;">📥 Recently Downloaded</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                <div class="recent-section" style="margin-top: 2rem;">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recently Downloaded
+                    </h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                             <div>
-                                <div style="font-weight: bold; color: #2c5aa0;">MTP Case Sheet</div>
-                                <div style="font-size: 14px; color: var(--text-secondary);">Downloaded: June 10, 2025</div>
+                                <div style="font-weight: 700; color: var(--text-primary);">MTP Case Sheet</div>
+                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Downloaded: June 10, 2025</div>
                             </div>
-                            <button class="file-btn file-btn-secondary" style="padding: 8px 16px; font-size: 12px;" onclick="downloadFile('mtp-case-sheet')">
-                                ↻ Re-download
+                            <button class="file-btn file-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="downloadFile('mtp-case-sheet')">
+                                <i class="fas fa-redo"></i>
+                                Re-download
                             </button>
                         </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--border-color) 100%); border-radius: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
                             <div>
-                                <div style="font-weight: bold; color: #2c5aa0;">Product Catalog 2025</div>
-                                <div style="font-size: 14px; color: var(--text-secondary);">Downloaded: June 8, 2025</div>
+                                <div style="font-weight: 700; color: var(--text-primary);">Product Catalog 2025</div>
+                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Downloaded: June 8, 2025</div>
                             </div>
-                            <button class="file-btn file-btn-secondary" style="padding: 8px 16px; font-size: 12px;" onclick="downloadFile('product-catalog')">
-                                ↻ Re-download
+                            <button class="file-btn file-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="downloadFile('product-catalog')">
+                                <i class="fas fa-redo"></i>
+                                Re-download
                             </button>
                         </div>
                     </div>
@@ -2256,21 +2200,23 @@
         <div class="event-modal-content">
             <div class="event-modal-header">
                 <h2 class="event-modal-title" id="eventModalTitle">Schedule Surgery</h2>
-                <button class="close-btn" onclick="closeEventModal()">&times;</button>
+                <button class="close-btn" onclick="closeEventModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
-            <div class="event-form-grid">
-                <div class="event-form-group">
-                    <label>Surgery Date *</label>
-                    <input type="date" id="eventDate" required>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgery Date *</label>
+                    <input type="date" id="eventDate" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
                 </div>
-                <div class="event-form-group">
-                    <label>Surgery Time *</label>
-                    <input type="time" id="eventTime" required>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgery Time *</label>
+                    <input type="time" id="eventTime" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
                 </div>
-                <div class="event-form-group">
-                    <label>Surgeon *</label>
-                    <select id="eventSurgeon" required>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgeon *</label>
+                    <select id="eventSurgeon" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
                         <option value="">Select Surgeon</option>
                         <option value="Dr. Benjamin Potter">Dr. Benjamin Potter</option>
                         <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
@@ -2279,9 +2225,9 @@
                         <option value="Dr. Robert Miller">Dr. Robert Miller</option>
                     </select>
                 </div>
-                <div class="event-form-group">
-                    <label>Hospital *</label>
-                    <select id="eventHospital" required>
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Hospital *</label>
+                    <select id="eventHospital" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
                         <option value="">Select Hospital</option>
                         <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
                         <option value="Regional Medical Center">Regional Medical Center</option>
@@ -2290,9 +2236,9 @@
                         <option value="Valley Medical">Valley Medical</option>
                     </select>
                 </div>
-                <div class="event-form-group">
-                    <label>Procedure Type</label>
-                    <select id="eventProcedure">
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Procedure Type</label>
+                    <select id="eventProcedure" style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
                         <option value="">Select Procedure</option>
                         <option value="MTP Fusion">MTP Fusion</option>
                         <option value="Hammertoe Correction">Hammertoe Correction</option>
@@ -2302,28 +2248,31 @@
                         <option value="Akin Osteotomy">Akin Osteotomy</option>
                     </select>
                 </div>
-                <div class="event-form-group">
-                    <label>Patient Initials</label>
-                    <input type="text" id="eventPatient" placeholder="e.g., J.S." maxlength="10">
+                <div style="display: flex; flex-direction: column;">
+                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Patient Initials</label>
+                    <input type="text" id="eventPatient" placeholder="e.g., J.S." maxlength="10" style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
                 </div>
             </div>
             
-            <div class="event-form-group" style="grid-column: 1 / -1;">
-                <label>Notes (Optional)</label>
-                <textarea id="eventNotes" rows="3" placeholder="Any additional notes about this surgery..."></textarea>
+            <div style="display: flex; flex-direction: column; margin-bottom: 2rem;">
+                <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Notes (Optional)</label>
+                <textarea id="eventNotes" rows="3" placeholder="Any additional notes about this surgery..." style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
             </div>
 
-            <div class="event-actions">
-                <button type="button" class="event-btn event-btn-success" onclick="scheduleEvent()">
-                    📅 Schedule Surgery
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button type="button" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onclick="scheduleEvent()">
+                    <i class="fas fa-calendar-plus"></i>
+                    Schedule Surgery
                 </button>
-                <button type="button" class="event-btn event-btn-primary" onclick="goToCaseSheet()" id="caseSheetBtn" style="display: none;">
-                    📋 Go to Case Sheet
+                <button type="button" style="background: var(--primary-gradient); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: none;" onclick="goToCaseSheet()" id="caseSheetBtn">
+                    <i class="fas fa-clipboard"></i>
+                    Go to Case Sheet
                 </button>
-                <button type="button" class="event-btn event-btn-danger" onclick="cancelEvent()" id="cancelEventBtn" style="display: none;">
-                    ❌ Cancel Event
+                <button type="button" style="background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: none;" onclick="cancelEvent()" id="cancelEventBtn">
+                    <i class="fas fa-times"></i>
+                    Cancel Event
                 </button>
-                <button type="button" class="event-btn event-btn-secondary" onclick="closeEventModal()">
+                <button type="button" style="background: var(--surface-light); color: var(--text-secondary); border: 1px solid var(--glass-border); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onclick="closeEventModal()">
                     Close
                 </button>
             </div>
@@ -2331,62 +2280,19 @@
     </div>
 
     <script>
+        console.log('Premium Medical Dashboard Loading...');
+
         // Theme functionality with proper persistence
         function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            // For now, just log the action since we're already in dark theme
+            console.log('Theme toggle clicked - dashboard is optimized for dark theme');
             
-            html.setAttribute('data-theme', newTheme);
-            
-            // Save to localStorage with error handling
-            try {
-                localStorage.setItem('theme', newTheme);
-                console.log('Theme saved to localStorage:', newTheme);
-            } catch (error) {
-                console.log('Could not save theme preference:', error);
-                // Fallback: save to sessionStorage
-                try {
-                    sessionStorage.setItem('theme', newTheme);
-                    console.log('Theme saved to sessionStorage as fallback');
-                } catch (fallbackError) {
-                    console.log('No storage available for theme preference');
-                }
-            }
-            
-            // Update theme toggle icon
-            const themeToggle = document.querySelector('.theme-toggle');
-            if (themeToggle) {
-                themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            }
-            
-            console.log(`Theme switched to: ${newTheme}`);
-        }
-
-        // Initialize theme with better persistence
-        function initializeTheme() {
-            const html = document.documentElement;
-            let savedTheme = 'light'; // Default
-            
-            // Try to get saved theme
-            try {
-                savedTheme = localStorage.getItem('theme') || 'light';
-                console.log('Theme loaded from localStorage:', savedTheme);
-            } catch (error) {
-                try {
-                    savedTheme = sessionStorage.getItem('theme') || 'light';
-                    console.log('Theme loaded from sessionStorage');
-                } catch (fallbackError) {
-                    console.log('No storage available, using default theme');
-                }
-            }
-            
-            html.setAttribute('data-theme', savedTheme);
-            
-            const themeToggle = document.querySelector('.theme-toggle');
-            if (themeToggle) {
-                themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-                console.log('Theme initialized:', savedTheme);
+            // You could implement light theme variants here if needed
+            const themeToggle = document.querySelector('.theme-toggle i');
+            if (themeToggle.classList.contains('fa-moon')) {
+                themeToggle.className = 'fas fa-sun';
+            } else {
+                themeToggle.className = 'fas fa-moon';
             }
         }
 
@@ -2396,7 +2302,7 @@
         let currentYear = currentDate.getFullYear();
         let selectedDate = null;
         let scheduledEvents = {
-            // Sample scheduled surgeries - now arrays to support multiple per day
+            // Sample scheduled surgeries
             '2025-06-15': [
                 {
                     id: 'evt1',
@@ -2475,7 +2381,7 @@
                         const dateString = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(prevMonthDay).padStart(2, '0')}`;
                         
                         calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${dateString}')">
-                            <div class="calendar-day-number">${prevMonthDay}</div>
+                            <div style="font-size: 0.9rem;">${prevMonthDay}</div>
                         </div>`;
                     } else if (dayCount <= daysInMonth) {
                         // Current month days
@@ -2495,7 +2401,7 @@
                         }
                         
                         calendarHTML += `<div class="${dayClass}" onclick="selectDate('${dateString}')">
-                            <div class="calendar-day-number">${dayCount}</div>
+                            <div style="font-size: 0.9rem;">${dayCount}</div>
                             ${eventIndicator}
                         </div>`;
                         dayCount++;
@@ -2506,7 +2412,7 @@
                         const dateString = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(nextMonthDay).padStart(2, '0')}`;
                         
                         calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${dateString}')">
-                            <div class="calendar-day-number">${nextMonthDay}</div>
+                            <div style="font-size: 0.9rem;">${nextMonthDay}</div>
                         </div>`;
                         nextMonthDay++;
                     }
@@ -2533,10 +2439,8 @@
             const existingEvents = scheduledEvents[dateString];
             
             if (existingEvents && existingEvents.length > 0) {
-                // Show existing events
                 showEventModal(dateString, existingEvents);
             } else {
-                // Schedule new event
                 showEventModal(dateString);
             }
         }
@@ -2545,206 +2449,17 @@
             const modal = document.getElementById('eventModal');
             const title = document.getElementById('eventModalTitle');
             const dateInput = document.getElementById('eventDate');
-            const timeInput = document.getElementById('eventTime');
-            const surgeonSelect = document.getElementById('eventSurgeon');
-            const hospitalSelect = document.getElementById('eventHospital');
-            const procedureSelect = document.getElementById('eventProcedure');
-            const patientInput = document.getElementById('eventPatient');
-            const notesTextarea = document.getElementById('eventNotes');
-            const caseSheetBtn = document.getElementById('caseSheetBtn');
-            const cancelEventBtn = document.getElementById('cancelEventBtn');
             
             dateInput.value = dateString;
             
             if (existingEvents && existingEvents.length > 0) {
-                // Show existing events list
                 const eventCount = existingEvents.length;
-                title.textContent = `${eventCount} Surgery${eventCount > 1 ? 's' : ''} - ${new Date(dateString).toLocaleDateString()}`;
-                
-                // Create events list with "Go to Case Sheet" buttons
-                let eventsListHTML = '<div class="existing-events-list">';
-                existingEvents.forEach((event, index) => {
-                    eventsListHTML += `
-                        <div class="existing-event-item" onclick="editEvent('${dateString}', ${index})">
-                            <div class="event-summary">
-                                <strong>${event.time} • ${event.procedure}</strong>
-                                <div class="event-details">${event.surgeon} • ${event.hospital}</div>
-                                <div class="event-patient">Patient: ${event.patient}</div>
-                            </div>
-                            <div class="event-action-buttons">
-                                <button class="case-sheet-btn" onclick="event.stopPropagation(); goToCaseSheetFromEvent('${dateString}', ${index})">
-                                    📋 Case Sheet
-                                </button>
-                                <button class="delete-event-btn" onclick="event.stopPropagation(); deleteEvent('${dateString}', ${index})">❌</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                eventsListHTML += '</div>';
-                
-                // Add to modal
-                const modalContent = document.querySelector('.event-modal-content');
-                let existingList = modalContent.querySelector('.existing-events-list');
-                if (existingList) {
-                    existingList.remove();
-                }
-                const formGrid = modalContent.querySelector('.event-form-grid');
-                formGrid.insertAdjacentHTML('beforebegin', eventsListHTML);
-                
-                // Hide form elements
-                document.querySelector('.event-form-grid').style.display = 'none';
-                document.querySelector('.event-form-group').style.display = 'none';
-                
-                // Show add new button
-                caseSheetBtn.style.display = 'none';
-                cancelEventBtn.innerHTML = '➕ Add Another Surgery';
-                cancelEventBtn.style.display = 'inline-block';
-                cancelEventBtn.onclick = () => showNewEventForm(dateString);
+                title.innerHTML = `<i class="fas fa-calendar-check"></i> ${eventCount} Surgery${eventCount > 1 ? 's' : ''} - ${new Date(dateString).toLocaleDateString()}`;
             } else {
-                // Clean up any existing events list
-                const existingList = document.querySelector('.existing-events-list');
-                if (existingList) {
-                    existingList.remove();
-                }
-                
-                // Show new event form
-                title.textContent = 'Schedule Surgery - ' + new Date(dateString).toLocaleDateString();
-                timeInput.value = '';
-                surgeonSelect.value = '';
-                hospitalSelect.value = '';
-                procedureSelect.value = '';
-                patientInput.value = '';
-                notesTextarea.value = '';
-                
-                // Show form elements
-                document.querySelector('.event-form-grid').style.display = 'grid';
-                document.querySelector('.event-form-group').style.display = 'flex';
-                
-                caseSheetBtn.style.display = 'none';
-                cancelEventBtn.style.display = 'none';
+                title.innerHTML = '<i class="fas fa-calendar-plus"></i> Schedule Surgery - ' + new Date(dateString).toLocaleDateString();
             }
             
             modal.style.display = 'block';
-        }
-
-        function showNewEventForm(dateString) {
-            const title = document.getElementById('eventModalTitle');
-            const timeInput = document.getElementById('eventTime');
-            const surgeonSelect = document.getElementById('eventSurgeon');
-            const hospitalSelect = document.getElementById('eventHospital');
-            const procedureSelect = document.getElementById('eventProcedure');
-            const patientInput = document.getElementById('eventPatient');
-            const notesTextarea = document.getElementById('eventNotes');
-            const cancelEventBtn = document.getElementById('cancelEventBtn');
-            
-            // Clean up events list
-            const existingList = document.querySelector('.existing-events-list');
-            if (existingList) {
-                existingList.remove();
-            }
-            
-            // Show form
-            title.textContent = 'Add Surgery - ' + new Date(dateString).toLocaleDateString();
-            document.querySelector('.event-form-grid').style.display = 'grid';
-            document.querySelector('.event-form-group').style.display = 'flex';
-            
-            // Clear form
-            timeInput.value = '';
-            surgeonSelect.value = '';
-            hospitalSelect.value = '';
-            procedureSelect.value = '';
-            patientInput.value = '';
-            notesTextarea.value = '';
-            
-            cancelEventBtn.innerHTML = '❌ Cancel';
-            cancelEventBtn.onclick = () => closeEventModal();
-        }
-
-        function editEvent(dateString, eventIndex) {
-            const events = scheduledEvents[dateString];
-            const event = events[eventIndex];
-            
-            // Clean up events list
-            const existingList = document.querySelector('.existing-events-list');
-            if (existingList) {
-                existingList.remove();
-            }
-            
-            const title = document.getElementById('eventModalTitle');
-            const timeInput = document.getElementById('eventTime');
-            const surgeonSelect = document.getElementById('eventSurgeon');
-            const hospitalSelect = document.getElementById('eventHospital');
-            const procedureSelect = document.getElementById('eventProcedure');
-            const patientInput = document.getElementById('eventPatient');
-            const notesTextarea = document.getElementById('eventNotes');
-            const caseSheetBtn = document.getElementById('caseSheetBtn');
-            const cancelEventBtn = document.getElementById('cancelEventBtn');
-            
-            // Show form with event data
-            title.textContent = 'Edit Surgery - ' + new Date(dateString).toLocaleDateString();
-            document.querySelector('.event-form-grid').style.display = 'grid';
-            document.querySelector('.event-form-group').style.display = 'flex';
-            
-            timeInput.value = event.time;
-            surgeonSelect.value = event.surgeon;
-            hospitalSelect.value = event.hospital;
-            procedureSelect.value = event.procedure;
-            patientInput.value = event.patient;
-            notesTextarea.value = event.notes;
-            
-            // Change button behavior for editing
-            caseSheetBtn.style.display = 'inline-block';
-            caseSheetBtn.innerHTML = '💾 Update Surgery';
-            caseSheetBtn.onclick = () => updateEvent(dateString, eventIndex);
-            
-            cancelEventBtn.innerHTML = '🗑️ Delete';
-            cancelEventBtn.style.display = 'inline-block';
-            cancelEventBtn.onclick = () => deleteEvent(dateString, eventIndex);
-        }
-
-        function updateEvent(dateString, eventIndex) {
-            const timeInput = document.getElementById('eventTime');
-            const surgeonSelect = document.getElementById('eventSurgeon');
-            const hospitalSelect = document.getElementById('eventHospital');
-            const procedureSelect = document.getElementById('eventProcedure');
-            const patientInput = document.getElementById('eventPatient');
-            const notesTextarea = document.getElementById('eventNotes');
-            
-            // Validation
-            if (!timeInput.value || !surgeonSelect.value || !hospitalSelect.value) {
-                alert('Please fill in all required fields (Time, Surgeon, Hospital)');
-                return;
-            }
-            
-            // Update event
-            scheduledEvents[dateString][eventIndex] = {
-                id: scheduledEvents[dateString][eventIndex].id,
-                surgeon: surgeonSelect.value,
-                hospital: hospitalSelect.value,
-                procedure: procedureSelect.value,
-                time: timeInput.value,
-                patient: patientInput.value,
-                notes: notesTextarea.value
-            };
-            
-            alert('✅ Surgery updated successfully!');
-            generateCalendar(currentMonth, currentYear);
-            closeEventModal();
-        }
-
-        function deleteEvent(dateString, eventIndex) {
-            if (confirm('Are you sure you want to delete this surgery?')) {
-                scheduledEvents[dateString].splice(eventIndex, 1);
-                
-                // Remove date entirely if no events left
-                if (scheduledEvents[dateString].length === 0) {
-                    delete scheduledEvents[dateString];
-                }
-                
-                alert('❌ Surgery deleted successfully!');
-                generateCalendar(currentMonth, currentYear);
-                closeEventModal();
-            }
         }
 
         function closeEventModal() {
@@ -2787,14 +2502,13 @@
             // Sort events by time
             scheduledEvents[dateInput.value].sort((a, b) => a.time.localeCompare(b.time));
             
-            // Format the date nicely
+            // Success message
             const formattedDate = new Date(dateInput.value).toLocaleDateString('en-US', {
                 weekday: 'short',
                 month: 'short', 
                 day: 'numeric'
             });
             
-            // Success message
             const procedureText = procedureSelect.value || 'Surgery';
             const surgeonShort = surgeonSelect.value.replace('Dr. ', '');
             
@@ -2806,43 +2520,16 @@
         }
 
         function goToCaseSheet() {
-            const events = scheduledEvents[selectedDate];
-            if (events && events.length > 0) {
-                // For now, use the first event if multiple
-                const event = events[0];
-                alert(`🚀 Taking you to Case Sheet!\n\nPre-filled information:\n📅 Date: ${new Date(selectedDate).toLocaleDateString()}\n👨‍⚕️ Surgeon: ${event.surgeon}\n🏥 Hospital: ${event.hospital}\n🔧 Procedure: ${event.procedure}\n👤 Patient: ${event.patient}`);
-                
-                // This would navigate to the form with pre-filled data
-                // window.location.href = `form.html?prefill=true&date=${selectedDate}&surgeon=${encodeURIComponent(event.surgeon)}&hospital=${encodeURIComponent(event.hospital)}&procedure=${encodeURIComponent(event.procedure)}&patient=${encodeURIComponent(event.patient)}`;
-            }
-        }
-
-        function goToCaseSheetFromEvent(dateString, eventIndex) {
-            const event = scheduledEvents[dateString][eventIndex];
-            alert(`🚀 Taking you to Case Sheet!\n\nPre-filled information:\n📅 Date: ${new Date(dateString).toLocaleDateString()}\n👨‍⚕️ Surgeon: ${event.surgeon}\n🏥 Hospital: ${event.hospital}\n🔧 Procedure: ${event.procedure}\n👤 Patient: ${event.patient}`);
-            
-            // This would navigate to the form with pre-filled data
-            // window.location.href = `form.html?prefill=true&date=${dateString}&surgeon=${encodeURIComponent(event.surgeon)}&hospital=${encodeURIComponent(event.hospital)}&procedure=${encodeURIComponent(event.procedure)}&patient=${encodeURIComponent(event.patient)}`;
-            
-            closeEventModal();
+            alert('🚀 Taking you to Case Sheet!\n\nThis would navigate to the form with pre-filled data.');
         }
 
         function cancelEvent() {
-            if (confirm('Are you sure you want to cancel all scheduled surgeries for this day?')) {
+            if (confirm('Are you sure you want to cancel this event?')) {
                 delete scheduledEvents[selectedDate];
-                alert('❌ All surgeries cancelled successfully!');
                 generateCalendar(currentMonth, currentYear);
                 closeEventModal();
             }
         }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('eventModal');
-            if (event.target === modal) {
-                closeEventModal();
-            }
-        };
 
         // File management functions
         function downloadFile(fileId) {
@@ -2853,16 +2540,11 @@
                 'lapidus-case-sheet': 'Lapidus_Case_Sheet.pdf',
                 'product-catalog': 'Forma_Medical_Product_Catalog_2025.pdf',
                 'commission-guide': 'Commission_Structure_Guide.pdf',
-                'training-materials': 'Training_Materials_Package.pdf',
-                'contact-directory': 'Contact_Directory.pdf',
-                'quick-reference': 'Quick_Reference_Guide.pdf'
+                'training-materials': 'Training_Materials_Package.pdf'
             };
             
             const fileName = fileNames[fileId] || 'document.pdf';
             alert(`📥 Downloading: ${fileName}\n\nIn a real application, this would download the file from the server.`);
-            
-            // In a real application, you would:
-            // window.open(`/api/files/download/${fileId}`, '_blank');
         }
 
         function viewFile(fileId) {
@@ -2870,72 +2552,99 @@
                 'new-account-form': 'New Account Information Form',
                 'hammertoe-case-sheet': 'Hammertoe/Akin Case Sheet',
                 'mtp-case-sheet': 'MTP Case Sheet',
-                'lapidus-case-sheet': 'Lapidus Case Sheet',
                 'product-catalog': 'Product Catalog 2025',
                 'commission-guide': 'Commission Structure Guide',
-                'training-materials': 'Training Materials',
-                'contact-directory': 'Contact Directory',
-                'quick-reference': 'Quick Reference Guide'
+                'training-materials': 'Training Materials'
             };
             
             const fileName = fileNames[fileId] || 'Document';
             alert(`👁️ Opening: ${fileName}\n\nIn a real application, this would open a preview of the file.`);
-            
-            // In a real application, you would:
-            // window.open(`/api/files/preview/${fileId}`, '_blank');
         }
 
-        // Sample distributor data for demo/fallback
+        // Sample distributor data
         const sampleDistributor = {
             companyName: 'ABC Ortho Solutions',
             contactName: 'John Smith',
             code: 'ABCOrtho'
         };
 
-        // Logout function - redirect to index.html
+        // Logout function
         function logout() {
             try {
-                // Clear session data (production)
                 sessionStorage.removeItem('distributorCode');
                 sessionStorage.removeItem('distributorData');
-                localStorage.removeItem('theme'); // Optionally reset theme
                 console.log('Logging out...');
             } catch (error) {
                 console.log('Session storage not available');
             }
             
-            // Redirect to login page
             window.location.href = 'index.html';
         }
 
-        // Initialize dashboard on load
-        window.addEventListener('load', function() {
-            let distributor = sampleDistributor; // Default fallback
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            tabContents.forEach(content => content.classList.remove('active'));
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Trigger animations for the active tab
+            if (tabName === 'analytics') {
+                setTimeout(() => {
+                    animateProcedureBars();
+                }, 300);
+            }
+        }
+
+        function animateProcedureBars() {
+            // Animate the procedure bars
+            const bars = document.querySelectorAll('[style*="width:"]');
+            bars.forEach(bar => {
+                const originalWidth = bar.style.width;
+                bar.style.width = '0%';
+                bar.style.transition = 'width 1s ease';
+                setTimeout(() => {
+                    bar.style.width = originalWidth;
+                }, 100);
+            });
+        }
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            let distributor = sampleDistributor;
             
             try {
-                // Try to get real session data (for production)
                 const distributorCode = sessionStorage.getItem('distributorCode');
                 const distributorData = sessionStorage.getItem('distributorData');
 
                 if (distributorCode && distributorData) {
-                    // Use real logged-in distributor data
                     distributor = JSON.parse(distributorData);
                     console.log('Loaded distributor from session:', distributor.companyName);
-                } else {
-                    console.log('No session data found, using demo data');
-                    // In production, you'd redirect to login here:
-                    // window.location.href = 'index.html';
                 }
             } catch (error) {
-                // Sandboxed environment or no session storage - use demo data
-                console.log('Session storage not available, using demo data');
+                console.log('Using demo data');
             }
             
-            initializeTheme();
             updateUI(distributor);
-            loadCommissionData(distributor.code);
-            initializeDashboard();
-        });
+            generateCalendar(currentMonth, currentYear);
+            
+            // Animate elements on load
+            setTimeout(() => {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    stat.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        stat.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            }, 500);
+        }
 
         function updateUI(distributor) {
             document.getElementById('companyName').textContent = distributor.companyName;
@@ -2943,57 +2652,18 @@
             document.getElementById('accessCode').textContent = `Access Code: ${distributor.code}`;
         }
 
-        function loadCommissionData(distributorCode) {
-            // In production, this would be an API call:
-            // fetch(`/api/commissions/${distributorCode}`)
-            //     .then(response => response.json())
-            //     .then(data => displayCommissions(data));
-            
-            console.log(`Loading commission data for: ${distributorCode}`);
-            // For now, showing demo data
-        }
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('eventModal');
+            if (event.target === modal) {
+                closeEventModal();
+            }
+        };
 
-        // Tab functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            var tabContents = document.querySelectorAll('.tab-content');
-            var navTabs = document.querySelectorAll('.nav-tab');
-            
-            tabContents.forEach(function(content) {
-                content.classList.remove('active');
-            });
-            
-            navTabs.forEach(function(tab) {
-                tab.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
-        }
+        // Initialize when page loads
+        window.addEventListener('load', initializeDashboard);
 
-        // Initialize dashboard with some demo analytics
-        function initializeDashboard() {
-            console.log('Enhanced dashboard initialized with commission transparency, surgery calendar, and files tab');
-            
-            // Initialize calendar
-            generateCalendar(currentMonth, currentYear);
-            
-            // Animate procedure bars after a short delay
-            setTimeout(function() {
-                var fills = document.querySelectorAll('.procedure-fill');
-                fills.forEach(function(fill) {
-                    var width = fill.style.width;
-                    fill.style.width = '0%';
-                    setTimeout(function() {
-                        fill.style.width = width;
-                    }, 100);
-                });
-            }, 500);
-        }
-
-        // Call initialization when page loads
-        initializeDashboard();
+        console.log('Premium Medical Dashboard Ready! 🏥✨');
     </script>
 </body>
 </html>
