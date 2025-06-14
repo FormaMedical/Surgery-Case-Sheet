@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Forma Medical</title>
+    <title>Surgery Case Submission - Forma Medical</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -34,8 +34,6 @@
             --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
-            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
-            --shadow-warning: 0 0 32px rgba(245, 158, 11, 0.3);
         }
 
         body {
@@ -51,8 +49,8 @@
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
+        .main-container {
+            max-width: 1200px;
             margin: 0 auto;
             animation: fadeInUp 0.8s ease-out;
         }
@@ -88,15 +86,6 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
         /* Header */
         .header {
             background: var(--glass-bg);
@@ -122,16 +111,10 @@
 
         .header-content {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .logo-section {
@@ -141,209 +124,471 @@
         }
 
         .logo-icon {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: var(--primary-gradient);
-            border-radius: 18px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: white;
             box-shadow: var(--shadow-md);
-            animation: pulse 4s ease-in-out infinite;
         }
 
         .company-info h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .company-info p {
             color: var(--text-secondary);
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 0.9rem;
         }
 
-        .header-right {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .system-status {
+        .breadcrumb {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            background: var(--surface-medium);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--success-green);
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .last-sync {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .last-sync i {
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .distributor-info {
+            align-items: flex-end;
             text-align: right;
-            padding: 1rem 1.5rem;
-            background: var(--surface-medium);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
         }
 
-        .distributor-info strong {
-            color: var(--text-primary);
-            font-size: 1.1rem;
-        }
-
-        .distributor-info div:last-child {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        .logout-btn {
-            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            display: flex;
+        .back-btn {
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
         }
 
-        .logout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        .back-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(-5px);
         }
 
-        /* Navigation Tabs */
-        .nav-tabs {
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Distributor Info Card */
+        .distributor-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 0.75rem;
-            box-shadow: var(--shadow-md);
+            padding: 1.5rem;
             margin-bottom: 2rem;
-            display: flex;
-            gap: 0.5rem;
-            overflow-x: auto;
+            text-align: center;
+            box-shadow: var(--shadow-md);
             position: relative;
+            overflow: hidden;
         }
 
-        .nav-tabs::before {
+        .distributor-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--success-green));
+        }
+
+        .distributor-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .distributor-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
             background: var(--primary-gradient);
+        }
+
+        /* Form Groups and Layout */
+        .form-section {
+            margin-bottom: 2.5rem;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger-red);
+        }
+
+        /* Input Styles */
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--surface-light);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .patient-id-input {
+            max-width: 120px;
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Checkbox and Radio Groups */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover, .radio-item:hover {
+            background: var(--surface-lighter);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .checkbox-item input, .radio-item input {
+            margin-right: 0.75rem;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-blue);
+        }
+
+        .checkbox-item:has(input:checked), .radio-item:has(input:checked) {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* Special Sections */
+        .construct-section {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .construct-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning-amber), #fbbf24);
             border-radius: 16px 16px 0 0;
         }
-        
-        .nav-tab {
-            background: transparent;
+
+        .restock-section {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .restock-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success-green), #34d399);
+            border-radius: 16px 16px 0 0;
+        }
+
+        /* Item Search and Management */
+        .search-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            padding-left: 3rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: var(--shadow-md);
+        }
+
+        .suggestion-item {
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-item:hover {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Item Input Row */
+        .item-input-grid {
+            display: grid;
+            grid-template-columns: 1fr 100px 120px auto;
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 1rem;
+        }
+
+        .add-btn {
+            background: var(--primary-gradient);
+            color: white;
             border: none;
             padding: 1rem 1.5rem;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
-            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            white-space: nowrap;
-            font-size: 0.95rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Items List */
+        .items-container {
+            background: var(--surface-medium);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            min-height: 120px;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: var(--surface-light);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .item-row:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        .item-details {
+            flex: 2;
+            padding-right: 1rem;
+        }
+
+        .item-code {
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+        }
+
+        .item-name {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .item-pricing {
+            flex: 1;
+            text-align: right;
+            padding-right: 1rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            position: relative;
         }
-        
-        .nav-tab.active {
-            background: var(--primary-gradient);
-            color: white;
+
+        .remove-btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-glow);
-        }
-        
-        .nav-tab:hover:not(.active) {
-            background: var(--surface-light);
-            color: var(--accent-blue);
-            transform: translateY(-1px);
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .tab-content.active {
-            display: block;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
-        /* Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .dashboard-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+        /* Totals Section */
+        .totals-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
+            margin: 2rem 0;
             position: relative;
-            overflow: hidden;
         }
 
-        .dashboard-card::before {
+        .totals-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -351,835 +596,63 @@
             right: 0;
             height: 3px;
             background: var(--primary-gradient);
-            border-radius: 20px 20px 0 0;
+            border-radius: 16px 16px 0 0;
         }
 
-        .dashboard-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .card-header {
+        .total-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .card-icon.primary {
-            background: var(--primary-gradient);
-        }
-
-        .card-icon.success {
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-        }
-
-        .card-icon.warning {
-            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
-        }
-
-        .card-icon.info {
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
-        }
-
-        .card-title {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-subtitle {
+            padding: 0.75rem 0;
+            font-size: 1.1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.4;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .action-btn {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
+        .total-row:last-child {
+            border-bottom: none;
+        }
+
+        .grand-total {
             font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            border-top: 3px solid var(--accent-blue);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
             cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2rem;
             transition: all 0.3s ease;
-            text-decoration: none;
+            box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            gap: 1rem;
         }
 
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-            color: white;
-        }
-
-        .action-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
             animation: glow 2s ease-in-out infinite;
         }
 
-        /* Stats Section */
-        .stats-section {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem 1.5rem;
-            border-radius: 16px;
-            background: var(--surface-medium);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary-gradient);
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-blue);
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-trend {
-            font-size: 0.85rem;
-            color: var(--success-green);
-            font-weight: 700;
-        }
-
-        /* Recent Section */
-        .recent-section {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .recent-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--warning-amber), var(--success-green));
-        }
-
-        .recent-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            background: var(--surface-medium);
-            border: 1px solid var(--glass-border);
-        }
-
-        .recent-item:hover {
-            background: var(--surface-light);
-            transform: translateX(5px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .recent-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .recent-info h4 {
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .recent-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .status-badge {
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-amber);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .status-complete {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success-green);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        .status-processing {
-            background: rgba(59, 130, 246, 0.2);
-            color: var(--accent-blue);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        .section-title {
-            color: var(--text-primary);
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        /* Calendar Styles */
-        .calendar-container {
-            background: var(--surface-medium);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            margin: 0 auto 2rem auto;
-            width: 420px;
-            max-width: 420px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0 0.5rem;
-        }
-
-        .calendar-nav {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .calendar-nav:hover {
-            transform: scale(1.1);
-            box-shadow: var(--shadow-glow);
-        }
-
-        #currentMonth {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: repeat(7, 1fr);
-            gap: 2px;
-            border-radius: 12px;
-            overflow: hidden;
-            flex: 1;
-            height: 280px;
-            background: var(--border-color);
-        }
-
-        .calendar-day-header {
-            background: var(--surface-light);
-            color: var(--text-secondary);
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .calendar-day {
-            background: var(--surface-medium);
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            transition: all 0.3s ease;
-            color: var(--text-primary);
-        }
-
-        .calendar-day:hover:not(.other-month) {
-            background: var(--surface-light);
-            transform: scale(1.1);
-            border-radius: 8px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .calendar-day.other-month {
-            color: var(--text-muted);
-            background: var(--surface-dark);
-        }
-
-        .calendar-day.today {
-            background: var(--accent-blue);
-            color: white;
-            font-weight: 700;
-            border-radius: 8px;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-        }
-
-        .calendar-day.scheduled {
-            background: var(--danger-red);
-            color: white;
-            font-weight: 700;
-            border-radius: 8px;
-        }
-
-        .calendar-day.scheduled::after {
-            content: '';
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 50%;
-        }
-
-        .event-count {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            background: rgba(255,255,255,0.95);
-            color: var(--danger-red);
-            font-size: 0.7rem;
-            font-weight: 700;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .calendar-legend {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .legend-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .legend-dot.scheduled {
-            background: var(--danger-red);
-        }
-
-        .legend-dot.today {
-            background: var(--accent-blue);
-        }
-
-        .legend-dot.available {
-            background: var(--surface-medium);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Analytics Cards */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .analytics-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .analytics-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-gradient);
-        }
-        
-        .analytics-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .analytics-title {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .performance-chart {
-            display: flex;
-            align-items: end;
-            height: 120px;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: var(--surface-medium);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
-        
-        .chart-bar {
-            background: var(--primary-gradient);
-            width: 40px;
-            border-radius: 8px 8px 0 0;
-            transition: all 0.8s ease;
-            position: relative;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .chart-bar:hover {
-            background: linear-gradient(to top, #1e40af, var(--accent-blue));
-            transform: scale(1.05);
-            box-shadow: var(--shadow-glow);
-        }
-
-        /* Commission Styles */
-        .commission-summary {
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-            color: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            box-shadow: var(--shadow-success);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .commission-summary::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.05) 10px,
-                rgba(255,255,255,0.05) 20px
-            );
-            animation: shimmer 20s linear infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%); }
-            100% { transform: translateX(100%) translateY(100%); }
-        }
-
-        .commission-total {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .commission-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-        }
-
-        .commission-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .commission-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            border-left: 4px solid var(--accent-blue);
-            transition: all 0.3s ease;
-        }
-
-        .commission-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .commission-card.paid {
-            border-left-color: var(--success-green);
-        }
-
-        .commission-card.pending {
-            border-left-color: var(--warning-amber);
-        }
-
-        .commission-card.outstanding {
-            border-left-color: var(--danger-red);
-        }
-
-        /* Files Grid */
-        .files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .file-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--accent-blue);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .file-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary-gradient);
-        }
-
-        .file-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .file-card.form {
-            border-left-color: var(--success-green);
-        }
-
-        .file-card.case-sheet {
-            border-left-color: var(--accent-cyan);
-        }
-
-        .file-card.guide {
-            border-left-color: var(--warning-amber);
-        }
-
-        .file-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .file-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .file-icon.form {
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-        }
-
-        .file-icon.case-sheet {
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
-        }
-
-        .file-icon.guide {
-            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
-        }
-
-        .file-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .file-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-        }
-
-        .file-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            padding: 0.75rem;
-            background: var(--surface-medium);
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .file-actions {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .file-btn {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .file-btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .file-btn-secondary {
-            background: var(--surface-light);
-            color: var(--text-secondary);
-            border: 1px solid var(--glass-border);
-        }
-
-        .file-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Event Modal */
-        .event-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .event-modal-content {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            margin: 3% auto;
-            padding: 2.5rem;
-            border-radius: 24px;
-            width: 90%;
-            max-width: 700px;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .event-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .event-modal-title {
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .close-btn {
-            background: var(--surface-light);
-            border: 1px solid var(--glass-border);
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .close-btn:hover {
-            background: var(--danger-red);
-            color: white;
-            transform: scale(1.1);
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .main-container {
                 padding: 0.5rem;
             }
 
@@ -1190,71 +663,57 @@
             .header-content {
                 flex-direction: column;
                 text-align: center;
-                gap: 1.5rem;
             }
 
-            .header-right {
-                order: -1;
-                justify-content: center;
+            .breadcrumb {
+                align-items: center;
             }
 
-            .dashboard-grid, 
-            .analytics-grid, 
-            .commission-grid, 
-            .files-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-tabs {
-                justify-content: flex-start;
-                padding: 0.5rem;
-            }
-
-            .nav-tab {
-                padding: 0.75rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .calendar-container {
-                width: 340px;
-                max-width: 100%;
-            }
-
-            .file-actions {
-                flex-direction: column;
-            }
-
-            .commission-total {
-                font-size: 2.5rem;
-            }
-
-            .commission-subtitle {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .calendar-container {
-                width: 100%;
-                max-width: 320px;
-            }
-
-            .event-modal-content {
-                margin: 10% auto;
+            .form-container {
                 padding: 1.5rem;
             }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .item-input-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .item-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .item-pricing {
+                text-align: left;
+                padding-right: 0;
+            }
+
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
         }
 
-        /* Loading and animations */
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+        .text-small { font-size: 0.85rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mt-2 { margin-top: 1rem; }
+        .hidden { display: none; }
+        .show { display: block; }
+
+        /* Loading and Success States */
         .loading {
             position: relative;
             overflow: hidden;
@@ -1275,1418 +734,980 @@
             0% { left: -100%; }
             100% { left: 100%; }
         }
+
+        .success-message {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
+            border: 2px solid var(--success-green);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--success-green);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-container">
         <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <div class="header-left">
-                    <div class="logo-section">
-                        <div class="logo-icon">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                        <div class="company-info">
-                            <h1>Welcome back, <span id="companyName">ABC Ortho Solutions</span></h1>
-                            <p>Manage your case submissions and track performance</p>
-                        </div>
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="company-info">
+                        <h1>Forma Medical</h1>
+                        <p>Advanced Surgical Solutions</p>
                     </div>
                 </div>
-                <div class="header-right">
-                    <div class="system-status">
-                        <div class="status-indicator">
-                            <div class="status-dot"></div>
-                            <span>System Online</span>
-                        </div>
-                        <div class="last-sync">
-                            <i class="fas fa-sync-alt"></i>
-                            <span>Last sync: 2 min ago</span>
-                        </div>
-                    </div>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('overview')">
-                <i class="fas fa-chart-line"></i>
-                Overview
-            </button>
-            <button class="nav-tab" onclick="showTab('calendar')">
-                <i class="fas fa-calendar-alt"></i>
-                Calendar
-            </button>
-            <button class="nav-tab" onclick="showTab('analytics')">
-                <i class="fas fa-chart-bar"></i>
-                Analytics
-            </button>
-            <button class="nav-tab" onclick="showTab('submissions')">
-                <i class="fas fa-clipboard-list"></i>
-                Submissions
-            </button>
-            <button class="nav-tab" onclick="showTab('commissions')">
-                <i class="fas fa-dollar-sign"></i>
-                Commissions
-            </button>
-            <button class="nav-tab" onclick="showTab('relationships')">
-                <i class="fas fa-handshake"></i>
-                Relationships
-            </button>
-            <button class="nav-tab" onclick="showTab('files')">
-                <i class="fas fa-folder"></i>
-                Files
-            </button>
-        </div>
-
-        <!-- Overview Tab -->
-        <div id="overviewTab" class="tab-content active">
-            <!-- Quick Actions -->
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon primary">
-                            <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div>
-                            <div class="card-title">Submit New Case Sheet</div>
-                            <div class="card-subtitle">Create a new surgery case submission with our advanced form system</div>
-                        </div>
-                    </div>
-                    <a href="form.html" class="action-btn btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        Submit Case Sheet
+                <div class="breadcrumb">
+                    <a href="dashboard.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
                     </a>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <div class="card-icon success">
-                            <i class="fas fa-file-invoice"></i>
-                        </div>
-                        <div>
-                            <div class="card-title">Submit PO</div>
-                            <div class="card-subtitle">Submit purchase orders and track procurement status for approved cases</div>
-                        </div>
-                    </div>
-                    <a href="po-submission.html" class="action-btn btn-success">
-                        <i class="fas fa-paper-plane"></i>
-                        Submit PO
-                    </a>
-                </div>
-            </div>
-
-            <!-- Statistics -->
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-trophy"></i>
-                    Your Performance
-                </h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalSubmissions">12</div>
-                        <div class="stat-label">Cases This Month</div>
-                        <div class="stat-trend">+15% vs last month</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="monthlyCommission">$2,450</div>
-                        <div class="stat-label">Monthly Commission</div>
-                        <div class="stat-trend">+22% vs last month</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="newSurgeons">3</div>
-                        <div class="stat-label">New Surgeons</div>
-                        <div class="stat-trend">2 this quarter</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="activeHospitals">8</div>
-                        <div class="stat-label">Active Hospitals</div>
-                        <div class="stat-trend">67% market penetration</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Submissions -->
-            <div class="recent-section">
-                <h2 class="section-title">
-                    <i class="fas fa-clock"></i>
-                    Recent Submissions
-                </h2>
-                <div id="recentSubmissions">
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>MTP Fusion - Dr. Johnson</h4>
-                            <p>Submitted June 10, 2025 • Patient: JS • Commission: $285</p>
-                        </div>
-                        <span class="status-badge status-complete">PO Received</span>
-                    </div>
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>Hammertoe Correction - Dr. Smith</h4>
-                            <p>Submitted June 8, 2025 • Patient: MB • Commission: $150</p>
-                        </div>
-                        <span class="status-badge status-pending">Awaiting PO</span>
-                    </div>
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>Lapidus Procedure - Dr. Williams</h4>
-                            <p>Submitted June 5, 2025 • Patient: RD • Commission: $420</p>
-                        </div>
-                        <span class="status-badge status-complete">Complete</span>
-                    </div>
+                    <div class="page-title">Surgery Case Submission</div>
                 </div>
             </div>
         </div>
 
-        <!-- Calendar Tab -->
-        <div id="calendarTab" class="tab-content">
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-calendar-alt"></i>
-                    Surgery Calendar
-                </h2>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">Schedule upcoming surgeries and manage your case pipeline</p>
-                
-                <div class="calendar-container">
-                    <div class="calendar-header">
-                        <button class="calendar-nav" onclick="changeMonth(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <h3 id="currentMonth">June 2025</h3>
-                        <button class="calendar-nav" onclick="changeMonth(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="calendar-grid" id="calendarGrid">
-                        <!-- Calendar will be generated by JavaScript -->
-                    </div>
-                    
-                    <div class="calendar-legend">
-                        <div class="legend-item">
-                            <div class="legend-dot scheduled"></div>
-                            <span>Scheduled Surgery</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot today"></div>
-                            <span>Today</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-dot available"></div>
-                            <span>Available</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Upcoming Surgeries List -->
-                <div class="recent-section" style="margin-top: 2rem;">
-                    <h3 class="section-title">
-                        <i class="fas fa-stethoscope"></i>
-                        Upcoming Surgeries
-                    </h3>
-                    <div id="upcomingSurgeries">
-                        <div class="recent-item">
-                            <div class="recent-info">
-                                <h4>June 15, 2025 • 9:00 AM</h4>
-                                <p><strong>Dr. Benjamin Potter</strong> • MTP Fusion • Holston Valley Surgery Center • Patient: J.S.</p>
-                            </div>
-                            <span class="status-badge status-processing">Scheduled</span>
-                        </div>
-                        <div class="recent-item">
-                            <div class="recent-info">
-                                <h4>June 18, 2025 • 2:30 PM</h4>
-                                <p><strong>Dr. Sarah Johnson</strong> • Hammertoe Correction • Regional Medical Center • Patient: M.B.</p>
-                            </div>
-                            <span class="status-badge status-processing">Scheduled</span>
-                        </div>
-                        <div class="recent-item">
-                            <div class="recent-info">
-                                <h4>June 22, 2025 • 11:00 AM</h4>
-                                <p><strong>Dr. Michael Wilson</strong> • Lapidus Procedure • City General Hospital • Patient: R.D.</p>
-                            </div>
-                            <span class="status-badge status-processing">Scheduled</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Distributor Info Card -->
+        <div class="distributor-card">
+            <h3 id="distributorCompany">
+                <i class="fas fa-building"></i>
+                Loading...
+            </h3>
+            <p id="distributorContact">Contact: Loading...</p>
         </div>
 
-        <!-- Analytics Tab -->
-        <div id="analyticsTab" class="tab-content">
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-chart-bar"></i>
-                    Performance Analytics
-                </h2>
-                
-                <!-- Key Performance Metrics -->
-                <div class="analytics-grid">
-                    <div class="analytics-card">
-                        <div class="analytics-title">
-                            <i class="fas fa-chart-line"></i>
-                            Monthly Performance
-                        </div>
-                        <div class="performance-chart">
-                            <div class="chart-bar" style="height: 60%;" title="This Month: 12 cases"></div>
-                            <div class="chart-bar" style="height: 45%;" title="Last Month: 9 cases"></div>
-                            <div class="chart-bar" style="height: 80%;" title="Best Month: 15 cases"></div>
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
-                            <span><strong>This Month:</strong> 12 cases</span>
-                            <span><strong>Last Month:</strong> 9 cases</span>
-                            <span><strong>Best Month:</strong> 15 cases</span>
-                        </div>
-                    </div>
-                    
-                    <div class="analytics-card">
-                        <div class="analytics-title">
-                            <i class="fas fa-bullseye"></i>
-                            Procedure Mix
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">MTP Fusion</span>
-                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
-                                    <div style="background: var(--primary-gradient); height: 100%; width: 45%; border-radius: 6px; transition: width 0.8s ease;"></div>
-                                </div>
-                                <span style="font-weight: 700; color: var(--accent-blue);">45% (5 cases)</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Hammertoe</span>
-                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
-                                    <div style="background: var(--primary-gradient); height: 100%; width: 30%; border-radius: 6px; transition: width 0.8s ease;"></div>
-                                </div>
-                                <span style="font-weight: 700; color: var(--accent-blue);">30% (4 cases)</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Lapidus</span>
-                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
-                                    <div style="background: var(--primary-gradient); height: 100%; width: 15%; border-radius: 6px; transition: width 0.8s ease;"></div>
-                                </div>
-                                <span style="font-weight: 700; color: var(--accent-blue);">15% (2 cases)</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span style="min-width: 100px; font-weight: 600; color: var(--text-primary);">Akin</span>
-                                <div style="background: var(--border-color); height: 12px; flex: 1; border-radius: 6px; overflow: hidden;">
-                                    <div style="background: var(--primary-gradient); height: 100%; width: 10%; border-radius: 6px; transition: width 0.8s ease;"></div>
-                                </div>
-                                <span style="font-weight: 700; color: var(--accent-blue);">10% (1 case)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Growth Trends -->
-                <div class="recent-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-rocket"></i>
-                        Growth Trends
-                    </h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-number" style="color: var(--success-green);">+25%</div>
-                            <div class="stat-label">Quarter Growth</div>
-                            <div class="stat-trend">vs Q3 2024</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" style="color: var(--success-green);">+40%</div>
-                            <div class="stat-label">New Surgeon Cases</div>
-                            <div class="stat-trend">vs last quarter</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" style="color: var(--accent-cyan);">92%</div>
-                            <div class="stat-label">PO Success Rate</div>
-                            <div class="stat-trend">11/12 cases</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" style="color: var(--warning-amber);">6.5</div>
-                            <div class="stat-label">Avg Days to PO</div>
-                            <div class="stat-trend">Industry: 8-12 days</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Top Performers -->
-                <div class="recent-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-trophy"></i>
-                        Top Performers
-                    </h3>
-                    <div class="analytics-grid">
-                        <div class="analytics-card">
-                            <div class="analytics-title">
-                                <i class="fas fa-user-md"></i>
-                                Top Surgeon
-                            </div>
-                            <div style="text-align: center; padding: 1rem;">
-                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Dr. Benjamin Potter</div>
-                                <div style="color: var(--text-secondary);">5 cases this month</div>
-                            </div>
-                        </div>
-                        <div class="analytics-card">
-                            <div class="analytics-title">
-                                <i class="fas fa-hospital"></i>
-                                Top Hospital
-                            </div>
-                            <div style="text-align: center; padding: 1rem;">
-                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Holston Valley Surgery Center</div>
-                                <div style="color: var(--text-secondary);">4 cases this month</div>
-                            </div>
-                        </div>
-                        <div class="analytics-card">
-                            <div class="analytics-title">
-                                <i class="fas fa-tools"></i>
-                                Top Product
-                            </div>
-                            <div style="text-align: center; padding: 1rem;">
-                                <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">MIS MTP Construct</div>
-                                <div style="color: var(--text-secondary);">Used in 8 cases</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- My Submissions Tab -->
-        <div id="submissionsTab" class="tab-content">
-            <div class="recent-section">
-                <h2 class="section-title">
-                    <i class="fas fa-clipboard-list"></i>
-                    My Submissions
-                </h2>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
-                
-                <div id="allSubmissions">
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>CS-1234567890 • MTP Fusion</h4>
-                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgeon:</strong> Dr. Benjamin Potter • <strong>Date:</strong> 2024-12-15 • <strong>Commission:</strong> $285</p>
-                        </div>
-                        <span class="status-badge status-complete">PO Received</span>
-                    </div>
-                    
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>CS-1234567891 • Hammertoe Correction</h4>
-                            <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgeon:</strong> Dr. Sarah Johnson • <strong>Date:</strong> 2024-12-18 • <strong>Commission:</strong> $150</p>
-                        </div>
-                        <span class="status-badge status-pending">Awaiting PO</span>
-                    </div>
-
-                    <div class="recent-item">
-                        <div class="recent-info">
-                            <h4>CS-1234567892 • Lapidus Procedure</h4>
-                            <p><strong>Hospital:</strong> City General Hospital • <strong>Surgeon:</strong> Dr. Michael Wilson • <strong>Date:</strong> 2024-12-12 • <strong>Commission:</strong> $420</p>
-                        </div>
-                        <span class="status-badge status-complete">Invoiced</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Commission Transparency Tab -->
-        <div id="commissionsTab" class="tab-content">
-            <!-- Commission Summary -->
-            <div class="commission-summary">
-                <div class="commission-total">$2,450</div>
-                <div class="commission-subtitle">Total Monthly Commission</div>
-            </div>
-
-            <!-- Commission Overview Stats -->
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-dollar-sign"></i>
-                    Commission Overview
-                </h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--success-green);">$1,855</div>
-                        <div class="stat-label">Paid Commissions</div>
-                        <div class="stat-trend">9 cases completed</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--warning-amber);">$595</div>
-                        <div class="stat-label">Pending Commissions</div>
-                        <div class="stat-trend">3 cases awaiting PO</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">8.7%</div>
-                        <div class="stat-label">Average Commission Rate</div>
-                        <div class="stat-trend">Based on case value</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">92%</div>
-                        <div class="stat-label">PO Success Rate</div>
-                        <div class="stat-trend">11/12 cases approved</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Individual Commission Breakdown -->
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-chart-pie"></i>
-                    Commission Breakdown by Case
-                </h2>
-                <div class="commission-grid">
-                    <!-- Commission cards would be dynamically generated -->
-                    <div class="commission-card paid">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567890</div>
-                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--success-green);">$285</div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">MTP Fusion</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Benjamin Potter</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Holston Valley Surgery</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Dec 15, 2024</div>
-                            </div>
-                        </div>
-                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Case Value:</span>
-                                <span>$3,200</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Commission Rate:</span>
-                                <span>8.9%</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
-                                <span>Commission Amount:</span>
-                                <span>$285</span>
-                            </div>
-                        </div>
-                        <span class="status-badge status-complete">PO Received - Paid</span>
-                    </div>
-
-                    <div class="commission-card pending">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567891</div>
-                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--warning-amber);">$150</div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Hammertoe Correction</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Sarah Johnson</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Regional Medical Center</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Dec 18, 2024</div>
-                            </div>
-                        </div>
-                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Case Value:</span>
-                                <span>$1,850</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Commission Rate:</span>
-                                <span>8.1%</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
-                                <span>Potential Commission:</span>
-                                <span>$150</span>
-                            </div>
-                        </div>
-                        <span class="status-badge status-pending">Awaiting PO</span>
-                    </div>
-
-                    <div class="commission-card paid">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <div style="font-weight: 700; color: var(--text-primary);">CS-1234567892</div>
-                            <div style="font-size: 1.3rem; font-weight: 700; color: var(--success-green);">$420</div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Procedure</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Lapidus Procedure</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Surgeon</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Dr. Michael Wilson</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Hospital</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">City General Hospital</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">Date</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Dec 12, 2024</div>
-                            </div>
-                        </div>
-                        <div style="background: var(--surface-medium); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Case Value:</span>
-                                <span>$4,500</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Commission Rate:</span>
-                                <span>9.3%</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-weight: 700; border-top: 1px solid var(--border-color); padding-top: 0.5rem;">
-                                <span>Commission Amount:</span>
-                                <span>$420</span>
-                            </div>
-                        </div>
-                        <span class="status-badge status-complete">Invoiced - Paid</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Commission Timeline -->
-            <div class="recent-section">
-                <h2 class="section-title">
-                    <i class="fas fa-history"></i>
-                    Commission Timeline
-                </h2>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track the progress of your commission payments</p>
-                
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Commission Processed</div>
-                            <div style="color: var(--text-secondary);">CS-1234567890 • MTP Fusion • Dr. Potter • Dec 20, 2024</div>
-                        </div>
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--success-green);">$285</div>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Commission Processed</div>
-                            <div style="color: var(--text-secondary);">CS-1234567892 • Lapidus • Dr. Wilson • Dec 18, 2024</div>
-                        </div>
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--success-green);">$420</div>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Awaiting PO</div>
-                            <div style="color: var(--text-secondary);">CS-1234567891 • Hammertoe • Dr. Johnson • Pending for 5 days</div>
-                        </div>
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--warning-amber);">$150</div>
-                    </div>
-                    
-                    <div style="display: flex; align-items: center; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; margin-right: 1.5rem;">
-                            <i class="fas fa-clipboard"></i>
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Case Submitted</div>
-                            <div style="color: var(--text-secondary);">CS-1234567893 • Bunion Correction • Dr. Chen • Dec 22, 2024</div>
-                        </div>
-                        <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent-blue);">$175</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Relationships Tab -->
-        <div id="relationshipsTab" class="tab-content">
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-handshake"></i>
-                    Surgeon & Hospital Relationships
-                </h2>
-                
-                <div class="analytics-grid">
-                    <div class="analytics-card">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                            <i class="fas fa-user-md"></i>
-                            Top Surgeons
-                        </h3>
-                        <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                                <div>
-                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Benjamin Potter</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">5 cases • $1,200 commission</div>
-                                </div>
-                                <span class="status-badge status-complete">Strong</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                                <div>
-                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Sarah Johnson</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">3 cases • $750 commission</div>
-                                </div>
-                                <span class="status-badge status-processing">Growing</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                                <div>
-                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Michael Wilson</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • $500 commission</div>
-                                </div>
-                                <span class="status-badge status-pending">New</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="analytics-card">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+        <!-- Main Form -->
+        <div class="form-container">
+            <form id="caseForm">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">
                             <i class="fas fa-hospital"></i>
-                            Top Hospitals
-                        </h3>
-                        <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                                <div>
-                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Holston Valley Surgery Center</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">6 cases • 3 surgeons</div>
+                        </div>
+                        <h2 class="section-title">Case Information</h2>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="hospital" class="form-label required">Hospital/Surgery Center</label>
+                            <input type="text" id="hospital" name="hospital" class="form-input" placeholder="Enter hospital name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="surgeon" class="form-label required">Surgeon Name</label>
+                            <input type="text" id="surgeon" name="surgeon" class="form-input" placeholder="Enter surgeon name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="salesRep" class="form-label required">Sales Representative</label>
+                            <input type="text" id="salesRep" name="salesRep" class="form-input" placeholder="Enter sales rep name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Procedures</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="procedure" value="Hammertoe">
+                                    <span>Hammertoe</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="procedure" value="MTP">
+                                    <span>MTP</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="procedure" value="Lapidus">
+                                    <span>Lapidus</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="procedure" value="Akin">
+                                    <span>Akin</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="caseDate" class="form-label required">Date of Surgery</label>
+                            <input type="date" id="caseDate" name="caseDate" class="form-input" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientId" class="form-label required">Patient ID (2 initials)</label>
+                            <input type="text" id="patientId" name="patientId" class="form-input patient-id-input" maxlength="2" pattern="[A-Za-z]{2}" placeholder="JS" required>
+                            <small class="text-muted text-small">e.g., JS for John Smith</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Construct Information -->
+                <div class="construct-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="section-title">Construct Information (if applicable)</h3>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="constructCode1" class="form-label">Construct Code 1</label>
+                            <input type="text" id="constructCode1" name="constructCode1" class="form-input" placeholder="Enter construct code">
+                        </div>
+                        <div class="form-group">
+                            <label for="constructPrice1" class="form-label">Construct Price 1</label>
+                            <input type="number" id="constructPrice1" name="constructPrice1" class="form-input" step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="constructCode2" class="form-label">Construct Code 2</label>
+                            <input type="text" id="constructCode2" name="constructCode2" class="form-input" placeholder="Enter construct code">
+                        </div>
+                        <div class="form-group">
+                            <label for="constructPrice2" class="form-label">Construct Price 2</label>
+                            <input type="number" id="constructPrice2" name="constructPrice2" class="form-input" step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="constructCode3" class="form-label">Construct Code 3</label>
+                            <input type="text" id="constructCode3" name="constructCode3" class="form-input" placeholder="Enter construct code">
+                        </div>
+                        <div class="form-group">
+                            <label for="constructPrice3" class="form-label">Construct Price 3</label>
+                            <input type="number" id="constructPrice3" name="constructPrice3" class="form-input" step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Used Section -->
+                <div class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-list-ul"></i>
+                        </div>
+                        <h2 class="section-title">Items Used</h2>
+                    </div>
+                    
+                    <div class="search-container">
+                        <div class="form-group">
+                            <label for="itemSearch" class="form-label">Search Item</label>
+                            <div style="position: relative;">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" id="itemSearch" class="form-input search-input" placeholder="Search for catalog number or product name..." autocomplete="off">
+                                <div id="suggestions" class="suggestions"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="item-input-grid">
+                        <div class="form-group">
+                            <label for="itemPrice" class="form-label">Unit Price (optional)</label>
+                            <input type="number" id="itemPrice" class="form-input" placeholder="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemQuantity" class="form-label">Quantity</label>
+                            <input type="number" id="itemQuantity" class="form-input" placeholder="Qty" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="extendedPrice" class="form-label">Extended Price</label>
+                            <input type="text" id="extendedPrice" class="form-input" readonly style="background: var(--surface-dark); color: var(--text-muted);">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="button" id="addItem" class="add-btn">
+                                <i class="fas fa-plus"></i>
+                                Add Item
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="items-container">
+                        <div id="itemsList">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                <p>No items added yet. Search and add items above.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Totals -->
+                <div class="totals-card">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="section-title">Cost Summary</h3>
+                    </div>
+                    
+                    <div class="total-row">
+                        <span>Items Subtotal:</span>
+                        <span id="itemsSubtotal">$0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Construct Price:</span>
+                        <span id="constructTotal">$0.00</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Grand Total:</span>
+                        <span id="grandTotal">$0.00</span>
+                    </div>
+                </div>
+
+                <!-- Restocks Section -->
+                <div class="restock-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3 class="section-title">Restocks</h3>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label required">Need restocks?</label>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <label class="radio-item">
+                                <input type="radio" id="restockYes" name="restockNeeded" value="yes" onchange="toggleRestockOptions()">
+                                <span>Yes</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" id="restockNo" name="restockNeeded" value="no" onchange="toggleRestockOptions()">
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="restockDetails" class="hidden" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 2px solid var(--border-color);">
+                        <div class="form-group">
+                            <label for="addressSelect" class="form-label required">Ship to address</label>
+                            <select id="addressSelect" class="form-select" onchange="handleAddressSelection()">
+                                <option value="">Select shipping address</option>
+                                <option value="existing1">ABC Ortho Solutions - 123 Main St, Nashville, TN 37203</option>
+                                <option value="existing2">Regional Office - 456 Oak Ave, Knoxville, TN 37902</option>
+                                <option value="existing3">Dr. Potter's Office - 789 Medical Dr, Johnson City, TN 37601</option>
+                                <option value="new">+ Add new address</option>
+                            </select>
+                        </div>
+
+                        <div id="newAddressForm" class="hidden" style="margin-top: 1.5rem; padding: 1.5rem; background: var(--surface-light); border-radius: 12px; border: 2px solid var(--border-color);">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label required">First Name</label>
+                                    <input type="text" id="firstName" class="form-input" placeholder="First name">
                                 </div>
-                                <span class="status-badge status-complete">Strong</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                                <div>
-                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Regional Medical Center</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">4 cases • 2 surgeons</div>
+                                <div class="form-group">
+                                    <label for="lastName" class="form-label required">Last Name</label>
+                                    <input type="text" id="lastName" class="form-input" placeholder="Last name">
                                 </div>
-                                <span class="status-badge status-processing">Growing</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                                <div>
-                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">City General Hospital</div>
-                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • 1 surgeon</div>
+                            <div class="form-group">
+                                <label for="streetAddress" class="form-label required">Street Address</label>
+                                <input type="text" id="streetAddress" class="form-input" placeholder="Street address">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city" class="form-label required">City</label>
+                                    <input type="text" id="city" class="form-input" placeholder="City">
                                 </div>
-                                <span class="status-badge status-pending">Opportunity</span>
+                                <div class="form-group">
+                                    <label for="state" class="form-label required">State</label>
+                                    <select id="state" class="form-select">
+                                        <option value="">Select State</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="NC">North Carolina</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="zipCode" class="form-label required">ZIP Code</label>
+                                <input type="text" id="zipCode" class="form-input" placeholder="ZIP Code" style="max-width: 150px;">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Growth Opportunities -->
-                <div class="recent-section" style="margin-top: 2rem;">
-                    <h3 class="section-title">
-                        <i class="fas fa-bullseye"></i>
-                        Growth Opportunities
-                    </h3>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
-                            <div style="font-size: 2rem; color: var(--success-green);">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div>
-                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Increase MTP Cases</div>
-                                <div style="color: var(--text-secondary);">Your MTP conversion rate is above average - great opportunity</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--surface-medium); border-radius: 12px; border: 1px solid var(--glass-border);">
-                            <div style="font-size: 2rem; color: var(--accent-cyan);">
-                                <i class="fas fa-hospital"></i>
-                            </div>
-                            <div>
-                                <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">New Hospital Target</div>
-                                <div style="color: var(--text-secondary);">Valley Medical Center - untapped market in your territory</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Files Tab -->
-        <div id="filesTab" class="tab-content">
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-folder"></i>
-                    Document Library
-                </h2>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; text-align: center; font-size: 1.1rem;">Access important forms, case sheets, and reference materials</p>
-                
-                <div class="files-grid">
-                    <!-- New Account Information Form -->
-                    <div class="file-card form">
-                        <div class="file-header">
-                            <div class="file-icon form">
-                                <i class="fas fa-file-alt"></i>
-                            </div>
-                            <div>
-                                <div class="file-title">New Account Information Form</div>
-                                <div class="file-description">Required form for setting up new surgeon accounts and hospital partnerships</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span><i class="fas fa-file-pdf"></i> PDF Document</span>
-                            <span>Updated: May 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('new-account-form')">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('new-account-form')">
-                                <i class="fas fa-eye"></i>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Hammertoe/Akin Case Sheet -->
-                    <div class="file-card case-sheet">
-                        <div class="file-header">
-                            <div class="file-icon case-sheet">
-                                <i class="fas fa-clipboard"></i>
-                            </div>
-                            <div>
-                                <div class="file-title">Hammertoe/Akin Case Sheet</div>
-                                <div class="file-description">Specialized case submission form for hammertoe corrections and Akin osteotomy procedures</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span><i class="fas fa-file-pdf"></i> PDF Form</span>
-                            <span>Updated: June 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('hammertoe-case-sheet')">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('hammertoe-case-sheet')">
-                                <i class="fas fa-eye"></i>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- MTP Case Sheet -->
-                    <div class="file-card case-sheet">
-                        <div class="file-header">
-                            <div class="file-icon case-sheet">
-                                <i class="fas fa-clipboard"></i>
-                            </div>
-                            <div>
-                                <div class="file-title">MTP Case Sheet</div>
-                                <div class="file-description">Detailed case submission form specifically designed for MTP fusion procedures</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span><i class="fas fa-file-pdf"></i> PDF Form</span>
-                            <span>Updated: June 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('mtp-case-sheet')">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('mtp-case-sheet')">
-                                <i class="fas fa-eye"></i>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Product Catalog -->
-                    <div class="file-card guide">
-                        <div class="file-header">
-                            <div class="file-icon guide">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <div>
-                                <div class="file-title">Product Catalog 2025</div>
-                                <div class="file-description">Complete catalog of all Forma Medical products with specifications and pricing</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span><i class="fas fa-file-pdf"></i> PDF Catalog</span>
-                            <span>Updated: January 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('product-catalog')">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('product-catalog')">
-                                <i class="fas fa-eye"></i>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Commission Structure Guide -->
-                    <div class="file-card guide">
-                        <div class="file-header">
-                            <div class="file-icon guide">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                            <div>
-                                <div class="file-title">Commission Structure Guide</div>
-                                <div class="file-description">Detailed breakdown of commission rates and payment structures by procedure type</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span><i class="fas fa-file-pdf"></i> PDF Guide</span>
-                            <span>Updated: March 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('commission-guide')">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('commission-guide')">
-                                <i class="fas fa-eye"></i>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Training Materials -->
-                    <div class="file-card guide">
-                        <div class="file-header">
-                            <div class="file-icon guide">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div>
-                                <div class="file-title">Training Materials</div>
-                                <div class="file-description">Educational resources and training materials for new distributors and ongoing education</div>
-                            </div>
-                        </div>
-                        <div class="file-meta">
-                            <span><i class="fas fa-file-pdf"></i> PDF Package</span>
-                            <span>Updated: April 2025</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="file-btn file-btn-primary" onclick="downloadFile('training-materials')">
-                                <i class="fas fa-download"></i>
-                                Download
-                            </button>
-                            <button class="file-btn file-btn-secondary" onclick="viewFile('training-materials')">
-                                <i class="fas fa-eye"></i>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recently Downloaded Files -->
-                <div class="recent-section" style="margin-top: 2rem;">
-                    <h3 class="section-title">
-                        <i class="fas fa-history"></i>
-                        Recently Downloaded
-                    </h3>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                            <div>
-                                <div style="font-weight: 700; color: var(--text-primary);">MTP Case Sheet</div>
-                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Downloaded: June 10, 2025</div>
-                            </div>
-                            <button class="file-btn file-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="downloadFile('mtp-case-sheet')">
-                                <i class="fas fa-redo"></i>
-                                Re-download
-                            </button>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
-                            <div>
-                                <div style="font-weight: 700; color: var(--text-primary);">Product Catalog 2025</div>
-                                <div style="font-size: 0.9rem; color: var(--text-secondary);">Downloaded: June 8, 2025</div>
-                            </div>
-                            <button class="file-btn file-btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="downloadFile('product-catalog')">
-                                <i class="fas fa-redo"></i>
-                                Re-download
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Surgery Event Modal -->
-    <div id="eventModal" class="event-modal">
-        <div class="event-modal-content">
-            <div class="event-modal-header">
-                <h2 class="event-modal-title" id="eventModalTitle">Schedule Surgery</h2>
-                <button class="close-btn" onclick="closeEventModal()">
-                    <i class="fas fa-times"></i>
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Case Sheet
                 </button>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; flex-direction: column;">
-                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgery Date *</label>
-                    <input type="date" id="eventDate" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgery Time *</label>
-                    <input type="time" id="eventTime" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Surgeon *</label>
-                    <select id="eventSurgeon" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                        <option value="">Select Surgeon</option>
-                        <option value="Dr. Benjamin Potter">Dr. Benjamin Potter</option>
-                        <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
-                        <option value="Dr. Michael Wilson">Dr. Michael Wilson</option>
-                        <option value="Dr. Lisa Chen">Dr. Lisa Chen</option>
-                        <option value="Dr. Robert Miller">Dr. Robert Miller</option>
-                    </select>
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Hospital *</label>
-                    <select id="eventHospital" required style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                        <option value="">Select Hospital</option>
-                        <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
-                        <option value="Regional Medical Center">Regional Medical Center</option>
-                        <option value="City General Hospital">City General Hospital</option>
-                        <option value="Metro Health Center">Metro Health Center</option>
-                        <option value="Valley Medical">Valley Medical</option>
-                    </select>
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Procedure Type</label>
-                    <select id="eventProcedure" style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                        <option value="">Select Procedure</option>
-                        <option value="MTP Fusion">MTP Fusion</option>
-                        <option value="Hammertoe Correction">Hammertoe Correction</option>
-                        <option value="Lapidus Procedure">Lapidus Procedure</option>
-                        <option value="Bunion Correction">Bunion Correction</option>
-                        <option value="Ankle Fusion">Ankle Fusion</option>
-                        <option value="Akin Osteotomy">Akin Osteotomy</option>
-                    </select>
-                </div>
-                <div style="display: flex; flex-direction: column;">
-                    <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Patient Initials</label>
-                    <input type="text" id="eventPatient" placeholder="e.g., J.S." maxlength="10" style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                </div>
-            </div>
-            
-            <div style="display: flex; flex-direction: column; margin-bottom: 2rem;">
-                <label style="margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Notes (Optional)</label>
-                <textarea id="eventNotes" rows="3" placeholder="Any additional notes about this surgery..." style="padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
-            </div>
-
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <button type="button" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onclick="scheduleEvent()">
-                    <i class="fas fa-calendar-plus"></i>
-                    Schedule Surgery
-                </button>
-                <button type="button" style="background: var(--primary-gradient); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: none;" onclick="goToCaseSheet()" id="caseSheetBtn">
-                    <i class="fas fa-clipboard"></i>
-                    Go to Case Sheet
-                </button>
-                <button type="button" style="background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: none;" onclick="cancelEvent()" id="cancelEventBtn">
-                    <i class="fas fa-times"></i>
-                    Cancel Event
-                </button>
-                <button type="button" style="background: var(--surface-light); color: var(--text-secondary); border: 1px solid var(--glass-border); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s ease;" onclick="closeEventModal()">
-                    Close
-                </button>
-            </div>
+            </form>
         </div>
     </div>
 
     <script>
-        console.log('Premium Medical Dashboard Loading...');
+        console.log('Premium Medical Case System Loading...');
+        
+        // Global variables
+        var distributorInfo = null;
+        var addedItems = [];
 
-        // Theme functionality with proper persistence
-        function toggleTheme() {
-            // For now, just log the action since we're already in dark theme
-            console.log('Theme toggle clicked - dashboard is optimized for dark theme');
-            
-            // You could implement light theme variants here if needed
-            const themeToggle = document.querySelector('.theme-toggle i');
-            if (themeToggle.classList.contains('fa-moon')) {
-                themeToggle.className = 'fas fa-sun';
-            } else {
-                themeToggle.className = 'fas fa-moon';
-            }
-        }
-
-        // Calendar functionality
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
-        let selectedDate = null;
-        let scheduledEvents = {
-            // Sample scheduled surgeries
-            '2025-06-15': [
-                {
-                    id: 'evt1',
-                    surgeon: 'Dr. Benjamin Potter',
-                    hospital: 'Holston Valley Surgery Center',
-                    procedure: 'MTP Fusion',
-                    time: '09:00',
-                    patient: 'J.S.',
-                    notes: 'Regular follow-up case'
-                }
-            ],
-            '2025-06-18': [
-                {
-                    id: 'evt2',
-                    surgeon: 'Dr. Sarah Johnson', 
-                    hospital: 'Regional Medical Center',
-                    procedure: 'Hammertoe Correction',
-                    time: '14:30',
-                    patient: 'M.B.',
-                    notes: 'New patient referral'
-                },
-                {
-                    id: 'evt3',
-                    surgeon: 'Dr. Michael Wilson', 
-                    hospital: 'Regional Medical Center',
-                    procedure: 'Bunion Correction',
-                    time: '16:00',
-                    patient: 'K.L.',
-                    notes: 'Follow-up case'
-                }
-            ],
-            '2025-06-22': [
-                {
-                    id: 'evt4',
-                    surgeon: 'Dr. Michael Wilson',
-                    hospital: 'City General Hospital', 
-                    procedure: 'Lapidus Procedure',
-                    time: '11:00',
-                    patient: 'R.D.',
-                    notes: 'Complex case - requires extra prep'
-                }
-            ]
-        };
-
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
+        // Enhanced Product database
+        var products = [
+            {code: "1102.1304.01", name: "MIS MTP S-Plate, Left"},
+            {code: "1100.2112", name: "Titanium 2.0mm Implant, Cancellous Head, 12mm Long, Short Thread"},
+            {code: "1102.2304.01", name: "MIS MTP S-Plate, Right"},
+            {code: "1100.2114", name: "Titanium 2.0mm Implant, Cancellous Head, 14mm Long, Short Thread"},
+            {code: "1102.1304.02", name: "Long MIS MTP S-Plate, Left"},
+            {code: "1100.2116", name: "Titanium 2.0mm Implant, Cancellous Head, 16mm Long, Short Thread"},
+            {code: "1102.2304.02", name: "Long MIS MTP S-Plate, Right"},
+            {code: "1100.2118", name: "Titanium 2.0mm Implant, Cancellous Head, 18mm Long, Short Thread"},
+            {code: "1102.1305.03", name: "MTP Standard Plate, Left"},
+            {code: "1100.2120", name: "Titanium 2.0mm Implant, Cancellous Head, 20mm Long, Short Thread"},
+            {code: "1102.2305.03", name: "MTP Standard Plate, Right"},
+            {code: "1100.2125", name: "Titanium 2.0mm Implant, Cancellous Head, 25mm Long, Short Thread"},
+            {code: "1102.3010.01", name: "3.0mm Non-Locking Screw, 10mm Long"},
+            {code: "1100.2130", name: "Titanium 2.0mm Implant, Cancellous Head, 30mm Long, Short Thread"},
+            {code: "1102.3012.01", name: "3.0mm Non-Locking Screw, 12mm Long"},
+            {code: "1100.2135", name: "Titanium 2.0mm Implant, Cancellous Head, 35mm Long, Short Thread"},
+            {code: "1102.3014.01", name: "3.0mm Non-Locking Screw, 14mm Long"},
+            {code: "1100.2140", name: "Titanium 2.0mm Implant, Cancellous Head, 40mm Long, Short Thread"},
+            {code: "1102.3016.01", name: "3.0mm Non-Locking Screw, 16mm Long"},
+            {code: "1100.2612", name: "Titanium 2.5mm Implant, Cancellous Head, 12mm Long, Short Thread"},
+            {code: "1102.3018.01", name: "3.0mm Non-Locking Screw, 18mm Long"},
+            {code: "1100.2614", name: "Titanium 2.5mm Implant, Cancellous Head, 14mm Long, Short Thread"},
+            {code: "1102.3020.01", name: "3.0mm Non-Locking Screw, 20mm Long"},
+            {code: "1100.2616", name: "Titanium 2.5mm Implant, Cancellous Head, 16mm Long, Short Thread"},
+            {code: "1102.3010.02", name: "3.0mm Locking Screw, 10mm Long"},
+            {code: "1100.2618", name: "Titanium 2.5mm Implant, Cancellous Head, 18mm Long, Short Thread"},
+            {code: "1102.3012.02", name: "3.0mm Locking Screw, 12mm Long"},
+            {code: "1100.2620", name: "Titanium 2.5mm Implant, Cancellous Head, 20mm Long, Short Thread"},
+            {code: "1102.3014.02", name: "3.0mm Locking Screw, 14mm Long"},
+            {code: "1100.2622", name: "Titanium 2.5mm Implant, Cancellous Head, 22mm Long, Short Thread"},
+            {code: "1102.3016.02", name: "3.0mm Locking Screw, 16mm Long"},
+            {code: "1100.2624", name: "Titanium 2.5mm Implant, Cancellous Head, 24mm Long, Short Thread"},
+            {code: "1102.3018.02", name: "3.0mm Locking Screw, 18mm Long"},
+            {code: "1100.2625", name: "Titanium 2.5mm Implant, Cancellous Head, 25mm Long, Short Thread"},
+            {code: "1102.3020.02", name: "3.0mm Locking Screw, 20mm Long"},
+            {code: "1100.2626", name: "Titanium 2.5mm Implant, Cancellous Head, 26mm Long, Short Thread"},
+            {code: "1102.4120", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 20mm Long"},
+            {code: "1100.2628", name: "Titanium 2.5mm Implant, Cancellous Head, 28mm Long, Short Thread"},
+            {code: "1102.4122", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 22mm Long"},
+            {code: "1100.2630", name: "Titanium 2.5mm Implant, Cancellous Head, 30mm Long, Short Thread"},
+            {code: "1102.4124", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 24mm Long"},
+            {code: "1100.2632", name: "Titanium 2.5mm Implant, Cancellous Head, 32mm Long, Short Thread"},
+            {code: "1102.4126", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 26mm Long"},
+            {code: "1100.2635", name: "Titanium 2.5mm Implant, Cancellous Head, 35mm Long, Short Thread"},
+            {code: "1102.4128", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 28mm Long"},
+            {code: "1100.2640", name: "Titanium 2.5mm Implant, Cancellous Head, 40mm Long, Short Thread"},
+            {code: "1102.4130", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 30mm Long"},
+            {code: "1100.2645", name: "Titanium 2.5mm Implant, Cancellous Head, 45mm Long, Short Thread"},
+            {code: "1102.4132", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 32mm Long"},
+            {code: "1100.2650", name: "Titanium 2.5mm Implant, Cancellous Head, 50mm Long, Short Thread"},
+            {code: "1102.4134", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 34mm Long"},
+            {code: "1102.4136", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 36mm Long"},
+            {code: "1102.4138", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 38mm Long"},
+            {code: "1102.4140", name: "4.0mm Cannulated Beveled Headless Compression Screw, Partially Threaded, 40mm Long"},
+            {code: "6100.1102", name: "MIS Targeting Instrument, Radiopaque Tip, K-wire"},
+            {code: "1102.4220", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 20mm Long"},
+            {code: "1102.4222", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 22mm Long"},
+            {code: "6100.1104", name: "Long Distal Sleeve, MIS Targeting Instrument"},
+            {code: "1102.4224", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 24mm Long"},
+            {code: "6100.2009", name: "Stainless Steel 0.9mm K-wire, 4 in. long"},
+            {code: "1102.4226", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 26mm Long"},
+            {code: "6100.2011", name: "Stainless Steel 1.1mm K-wire, 4 in. long"},
+            {code: "1102.4228", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 28mm Long"},
+            {code: "6100.2609", name: "Stainless Steel 0.9mm K-wire, 6 in. long"},
+            {code: "1102.4230", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 30mm Long"},
+            {code: "6100.2611", name: "Stainless Steel 1.1mm K-wire, 6 in. long"},
+            {code: "1102.4232", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 32mm Long"},
+            {code: "6100.0017", name: "1.7mm Drill, AO Quick Connect, Cannulated"},
+            {code: "1102.4234", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 34mm Long"},
+            {code: "6100.0019", name: "1.9mm Drill, AO Quick Connect, Cannulated"},
+            {code: "1102.4236", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 36mm Long"},
+            {code: "6100.4007", name: "2.0mm Driver, T7 Hexalobe, AO Quick Connect, Cannulated"},
+            {code: "1102.4238", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 38mm Long"},
+            {code: "6100.4008", name: "2.5mm Driver, T8 Hexalobe, AO Quick Connect, Cannulated"},
+            {code: "1102.4240", name: "4.0mm Cannulated Beveled Headless Screw, Fully Threaded, 40mm Long"},
+            {code: "6100.4100", name: "Small AO Driver Quick Connect Handle"},
+            {code: "6100.0003", name: "2x13 Shannon Burr"},
+            {code: "6100.0002", name: "2.2mm MIS Burr, Shannon Recta Larga, 20mm"},
+            {code: "6100.9000", name: "Cannulated Depth Gauge"},
+            {code: "6100.2014", name: "1.4mm wire"},
+            {code: "6100.2209", name: "0.9mm Double Trocar K-wires, Stainless Steel, 4\" Long"},
+            {code: "6102.1001", name: "MIS MTP Targeting Instrument, Left"},
+            {code: "6100.2211", name: "0.9mm Double Trocar K-wires, Stainless Steel, 4\" Long"},
+            {code: "6102.2001", name: "MIS MTP Targeting Instrument, Right"},
+            {code: "6100.5001", name: "MIS Akin Targeting Instrument, K-wire Cartridge, Left"},
+            {code: "6102.1002", name: "Long MIS MTP Targeting Instrument, Left"},
+            {code: "6100.5002", name: "MIS Akin Targeting Instrument, K-wire Cartridge, Right"},
+            {code: "6102.2002", name: "Long MIS MTP Targeting Instrument, Right"},
+            {code: "6102.1101", name: "Cannulated Crossing Screw Targeter, Left"},
+            {code: "6102.2101", name: "Cannulated Crossing Screw Targeter, Right"},
+            {code: "6102.0020", name: "2.0mm Drill, AO Quick Connect"},
+            {code: "6102.0027", name: "2.7mm Cannulated Drill, AO Quick Connect"},
+            {code: "6102.2116", name: "Olive K-Wire"},
+            {code: "6102.0039", name: "3.9mm Near Cortex Drill"},
+            {code: "6102.4010", name: "Cannulated T10 Hexalobe Driver"},
+            {code: "6102.4100", name: "AO Quick Connect Handle – fixed, Blue"},
+            {code: "6102.0130", name: "Threaded Drill Guides"},
+            {code: "6102.8102", name: "Distractor, Ratcheting, 2-Hole Tip"},
+            {code: "6102.4008", name: "Solid T8 Hexalobe Driver, AO Quick Connect, Self Retaining"},
+            {code: "6102.4020", name: "T20 Driver"},
+            {code: "6102.1818", name: "Convex Reamer, 18mm"},
+            {code: "6102.1820", name: "Convex Reamer, 20mm"},
+            {code: "6102.1822", name: "Convex Reamer, 22mm"},
+            {code: "6102.1918", name: "Concave Reamer, 18mm"},
+            {code: "6102.1920", name: "Concave Reamer, 20mm"},
+            {code: "6102.1922", name: "Concave Reamer, 22mm"},
+            {code: "6102.9000", name: "Cannulated Depth Gauge"},
+            {code: "6102.9050", name: "Depth Gauge, Telescoping, 50mm"}
         ];
 
-        function generateCalendar(month, year) {
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const daysInPrevMonth = new Date(year, month, 0).getDate();
+        // RESTOCK FUNCTIONS
+        function toggleRestockOptions() {
+            var restockYes = document.getElementById('restockYes');
+            var restockDetails = document.getElementById('restockDetails');
             
-            document.getElementById('currentMonth').textContent = `${months[month]} ${year}`;
+            if (restockYes.checked) {
+                restockDetails.classList.remove('hidden');
+                restockDetails.classList.add('show');
+                document.getElementById('addressSelect').required = true;
+            } else {
+                restockDetails.classList.add('hidden');
+                restockDetails.classList.remove('show');
+                document.getElementById('addressSelect').required = false;
+                document.getElementById('addressSelect').value = '';
+                document.getElementById('newAddressForm').classList.add('hidden');
+            }
+        }
+
+        function handleAddressSelection() {
+            var addressSelect = document.getElementById('addressSelect');
+            var newAddressForm = document.getElementById('newAddressForm');
             
-            let calendarHTML = '';
-            
-            // Add day headers first
-            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            dayHeaders.forEach(day => {
-                calendarHTML += `<div class="calendar-day-header">${day}</div>`;
-            });
-            
-            let dayCount = 1;
-            let nextMonthDay = 1;
-            
-            // Generate 6 weeks of days (42 days total)
-            for (let week = 0; week < 6; week++) {
-                for (let day = 0; day < 7; day++) {
-                    if (week === 0 && day < firstDay) {
-                        // Previous month days
-                        const prevMonthDay = daysInPrevMonth - (firstDay - day - 1);
-                        const prevMonth = month - 1 < 0 ? 11 : month - 1;
-                        const prevYear = month - 1 < 0 ? year - 1 : year;
-                        const dateString = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(prevMonthDay).padStart(2, '0')}`;
-                        
-                        calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${dateString}')">
-                            <div style="font-size: 0.9rem;">${prevMonthDay}</div>
-                        </div>`;
-                    } else if (dayCount <= daysInMonth) {
-                        // Current month days
-                        const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayCount).padStart(2, '0')}`;
-                        const isToday = dateString === new Date().toISOString().split('T')[0];
-                        const dayEvents = scheduledEvents[dateString];
-                        const hasEvents = dayEvents && dayEvents.length > 0;
-                        
-                        let dayClass = 'calendar-day';
-                        if (isToday) dayClass += ' today';
-                        if (hasEvents) dayClass += ' scheduled';
-                        
-                        // Show event count if multiple events
-                        let eventIndicator = '';
-                        if (hasEvents && dayEvents.length > 1) {
-                            eventIndicator = `<div class="event-count">${dayEvents.length}</div>`;
-                        }
-                        
-                        calendarHTML += `<div class="${dayClass}" onclick="selectDate('${dateString}')">
-                            <div style="font-size: 0.9rem;">${dayCount}</div>
-                            ${eventIndicator}
-                        </div>`;
-                        dayCount++;
-                    } else {
-                        // Next month days
-                        const nextMonth = month + 1 > 11 ? 0 : month + 1;
-                        const nextYear = month + 1 > 11 ? year + 1 : year;
-                        const dateString = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(nextMonthDay).padStart(2, '0')}`;
-                        
-                        calendarHTML += `<div class="calendar-day other-month" onclick="selectDate('${dateString}')">
-                            <div style="font-size: 0.9rem;">${nextMonthDay}</div>
-                        </div>`;
-                        nextMonthDay++;
+            if (addressSelect.value === 'new') {
+                newAddressForm.classList.remove('hidden');
+                newAddressForm.classList.add('show');
+                var requiredFields = ['firstName', 'lastName', 'streetAddress', 'city', 'state', 'zipCode'];
+                requiredFields.forEach(function(field) {
+                    document.getElementById(field).required = true;
+                });
+            } else {
+                newAddressForm.classList.add('hidden');
+                newAddressForm.classList.remove('show');
+                var requiredFields = ['firstName', 'lastName', 'streetAddress', 'city', 'state', 'zipCode'];
+                requiredFields.forEach(function(field) {
+                    var element = document.getElementById(field);
+                    if (element) {
+                        element.required = false;
+                        element.value = '';
                     }
-                }
+                });
             }
-            
-            document.getElementById('calendarGrid').innerHTML = calendarHTML;
         }
 
-        function changeMonth(direction) {
-            currentMonth += direction;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            } else if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            generateCalendar(currentMonth, currentYear);
-        }
-
-        function selectDate(dateString) {
-            selectedDate = dateString;
-            const existingEvents = scheduledEvents[dateString];
+        function getRestockData() {
+            var restockNeeded = document.querySelector('input[name="restockNeeded"]:checked');
             
-            if (existingEvents && existingEvents.length > 0) {
-                showEventModal(dateString, existingEvents);
+            if (!restockNeeded || restockNeeded.value === 'no') {
+                return {
+                    restockNeeded: false
+                };
+            }
+            
+            var addressSelect = document.getElementById('addressSelect').value;
+            var shippingAddress = {};
+            
+            if (addressSelect === 'new') {
+                shippingAddress = {
+                    type: 'new',
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    streetAddress: document.getElementById('streetAddress').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    zipCode: document.getElementById('zipCode').value
+                };
             } else {
-                showEventModal(dateString);
-            }
-        }
-
-        function showEventModal(dateString, existingEvents = null) {
-            const modal = document.getElementById('eventModal');
-            const title = document.getElementById('eventModalTitle');
-            const dateInput = document.getElementById('eventDate');
-            
-            dateInput.value = dateString;
-            
-            if (existingEvents && existingEvents.length > 0) {
-                const eventCount = existingEvents.length;
-                title.innerHTML = `<i class="fas fa-calendar-check"></i> ${eventCount} Surgery${eventCount > 1 ? 's' : ''} - ${new Date(dateString).toLocaleDateString()}`;
-            } else {
-                title.innerHTML = '<i class="fas fa-calendar-plus"></i> Schedule Surgery - ' + new Date(dateString).toLocaleDateString();
+                shippingAddress = {
+                    type: 'existing',
+                    addressId: addressSelect
+                };
             }
             
-            modal.style.display = 'block';
+            return {
+                restockNeeded: true,
+                shippingAddress: shippingAddress
+            };
         }
 
-        function closeEventModal() {
-            document.getElementById('eventModal').style.display = 'none';
-            selectedDate = null;
-        }
-
-        function scheduleEvent() {
-            const dateInput = document.getElementById('eventDate');
-            const timeInput = document.getElementById('eventTime');
-            const surgeonSelect = document.getElementById('eventSurgeon');
-            const hospitalSelect = document.getElementById('eventHospital');
-            const procedureSelect = document.getElementById('eventProcedure');
-            const patientInput = document.getElementById('eventPatient');
-            const notesTextarea = document.getElementById('eventNotes');
+        // Initialize when page loads
+        window.onload = function() {
+            console.log('Premium system initializing...');
             
-            // Validation
-            if (!dateInput.value || !timeInput.value || !surgeonSelect.value || !hospitalSelect.value) {
-                alert('Please fill in all required fields (Date, Time, Surgeon, Hospital)');
+            var distributorCode = sessionStorage.getItem('distributorCode');
+            var distributorData = sessionStorage.getItem('distributorData');
+            
+            if (!distributorCode || !distributorData) {
+                alert('Please log in to access this page.');
+                window.location.href = 'index.html';
                 return;
             }
             
-            // Create new event
-            const newEvent = {
-                id: 'evt_' + Date.now(),
-                surgeon: surgeonSelect.value,
-                hospital: hospitalSelect.value,
-                procedure: procedureSelect.value,
-                time: timeInput.value,
-                patient: patientInput.value,
-                notes: notesTextarea.value
-            };
+            var distributor = JSON.parse(distributorData);
+            document.getElementById('distributorCompany').innerHTML = '<i class="fas fa-building"></i> ' + distributor.companyName;
+            document.getElementById('distributorContact').textContent = 'Contact: ' + distributor.contactName;
+            distributorInfo = distributor;
             
-            // Add to events array
-            if (!scheduledEvents[dateInput.value]) {
-                scheduledEvents[dateInput.value] = [];
-            }
-            scheduledEvents[dateInput.value].push(newEvent);
-            
-            // Sort events by time
-            scheduledEvents[dateInput.value].sort((a, b) => a.time.localeCompare(b.time));
-            
-            // Success message
-            const formattedDate = new Date(dateInput.value).toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short', 
-                day: 'numeric'
-            });
-            
-            const procedureText = procedureSelect.value || 'Surgery';
-            const surgeonShort = surgeonSelect.value.replace('Dr. ', '');
-            
-            alert(`✅ Surgery Scheduled!\n\n${formattedDate} at ${timeInput.value}\n${procedureText} - Dr. ${surgeonShort}`);
-            
-            // Refresh calendar and close modal
-            generateCalendar(currentMonth, currentYear);
-            closeEventModal();
-        }
-
-        function goToCaseSheet() {
-            alert('🚀 Taking you to Case Sheet!\n\nThis would navigate to the form with pre-filled data.');
-        }
-
-        function cancelEvent() {
-            if (confirm('Are you sure you want to cancel this event?')) {
-                delete scheduledEvents[selectedDate];
-                generateCalendar(currentMonth, currentYear);
-                closeEventModal();
-            }
-        }
-
-        // File management functions
-        function downloadFile(fileId) {
-            const fileNames = {
-                'new-account-form': 'New_Account_Information_Form.pdf',
-                'hammertoe-case-sheet': 'Hammertoe_Akin_Case_Sheet.pdf',
-                'mtp-case-sheet': 'MTP_Case_Sheet.pdf',
-                'lapidus-case-sheet': 'Lapidus_Case_Sheet.pdf',
-                'product-catalog': 'Forma_Medical_Product_Catalog_2025.pdf',
-                'commission-guide': 'Commission_Structure_Guide.pdf',
-                'training-materials': 'Training_Materials_Package.pdf'
-            };
-            
-            const fileName = fileNames[fileId] || 'document.pdf';
-            alert(`📥 Downloading: ${fileName}\n\nIn a real application, this would download the file from the server.`);
-        }
-
-        function viewFile(fileId) {
-            const fileNames = {
-                'new-account-form': 'New Account Information Form',
-                'hammertoe-case-sheet': 'Hammertoe/Akin Case Sheet',
-                'mtp-case-sheet': 'MTP Case Sheet',
-                'product-catalog': 'Product Catalog 2025',
-                'commission-guide': 'Commission Structure Guide',
-                'training-materials': 'Training Materials'
-            };
-            
-            const fileName = fileNames[fileId] || 'Document';
-            alert(`👁️ Opening: ${fileName}\n\nIn a real application, this would open a preview of the file.`);
-        }
-
-        // Sample distributor data
-        const sampleDistributor = {
-            companyName: 'ABC Ortho Solutions',
-            code: 'ABCOrtho',
-            region: 'Tennessee Region'
+            console.log('Distributor loaded:', distributor);
         };
 
-        // Logout function
-        function logout() {
-            try {
-                sessionStorage.removeItem('distributorCode');
-                sessionStorage.removeItem('distributorData');
-                console.log('Logging out...');
-            } catch (error) {
-                console.log('Session storage not available');
-            }
-            
-            window.location.href = 'index.html';
-        }
+        // Get DOM elements
+        var itemSearch = document.getElementById('itemSearch');
+        var suggestions = document.getElementById('suggestions');
+        var itemPrice = document.getElementById('itemPrice');
+        var itemQuantity = document.getElementById('itemQuantity');
+        var extendedPrice = document.getElementById('extendedPrice');
+        var addItemBtn = document.getElementById('addItem');
+        var itemsList = document.getElementById('itemsList');
+        var constructPrice1 = document.getElementById('constructPrice1');
+        var constructPrice2 = document.getElementById('constructPrice2');
+        var constructPrice3 = document.getElementById('constructPrice3');
 
-        // Tab functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            const navTabs = document.querySelectorAll('.nav-tab');
-            
-            tabContents.forEach(content => content.classList.remove('active'));
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected tab
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
-            
-            // Trigger animations for the active tab
-            if (tabName === 'analytics') {
-                setTimeout(() => {
-                    animateProcedureBars();
-                }, 300);
+        // Calculate extended price
+        function calculateExtendedPrice() {
+            var price = parseFloat(itemPrice.value) || 0;
+            var quantity = parseInt(itemQuantity.value) || 0;
+            var extended = price * quantity;
+            if (extended > 0) {
+                extendedPrice.value = '$' + extended.toFixed(2);
+            } else {
+                extendedPrice.value = '';
             }
         }
 
-        function animateProcedureBars() {
-            // Animate the procedure bars
-            const bars = document.querySelectorAll('[style*="width:"]');
-            bars.forEach(bar => {
-                const originalWidth = bar.style.width;
-                bar.style.width = '0%';
-                bar.style.transition = 'width 1s ease';
-                setTimeout(() => {
-                    bar.style.width = originalWidth;
-                }, 100);
-            });
+        // Update totals
+        function updateTotals() {
+            var itemsSubtotal = 0;
+            for (var i = 0; i < addedItems.length; i++) {
+                itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
+            }
+            
+            var constructTotal1 = parseFloat(constructPrice1.value) || 0;
+            var constructTotal2 = parseFloat(constructPrice2.value) || 0;
+            var constructTotal3 = parseFloat(constructPrice3.value) || 0;
+            var totalConstructPrice = constructTotal1 + constructTotal2 + constructTotal3;
+            var grandTotal = itemsSubtotal + totalConstructPrice;
+
+            document.getElementById('itemsSubtotal').textContent = '$' + itemsSubtotal.toFixed(2);
+            document.getElementById('constructTotal').textContent = '$' + totalConstructPrice.toFixed(2);
+            document.getElementById('grandTotal').textContent = '$' + grandTotal.toFixed(2);
         }
 
-        // Initialize dashboard
-        function initializeDashboard() {
-            let distributor = sampleDistributor;
-            
-            try {
-                const distributorCode = sessionStorage.getItem('distributorCode');
-                const distributorData = sessionStorage.getItem('distributorData');
+        // Enhanced search functionality
+        itemSearch.addEventListener('input', function() {
+            var query = this.value.toLowerCase();
+            if (query.length < 2) {
+                suggestions.style.display = 'none';
+                return;
+            }
 
-                if (distributorCode && distributorData) {
-                    distributor = JSON.parse(distributorData);
-                    console.log('Loaded distributor from session:', distributor.companyName);
+            var matches = [];
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].code.toLowerCase().indexOf(query) !== -1 || 
+                    products[i].name.toLowerCase().indexOf(query) !== -1) {
+                    matches.push(products[i]);
                 }
-            } catch (error) {
-                console.log('Using demo data');
             }
+            matches = matches.slice(0, 8);
+
+            if (matches.length > 0) {
+                var html = '';
+                for (var i = 0; i < matches.length; i++) {
+                    html += '<div class="suggestion-item" data-code="' + matches[i].code + '" data-name="' + matches[i].name + '">';
+                    html += '<div style="font-weight: 700; color: var(--accent-blue); margin-bottom: 0.25rem;">' + matches[i].code + '</div>';
+                    html += '<div style="font-size: 0.85rem; color: var(--text-secondary);">' + matches[i].name + '</div>';
+                    html += '</div>';
+                }
+                suggestions.innerHTML = html;
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // Handle suggestion clicks
+        suggestions.addEventListener('click', function(e) {
+            var suggestionItem = e.target.closest('.suggestion-item');
+            if (suggestionItem) {
+                var code = suggestionItem.getAttribute('data-code');
+                var name = suggestionItem.getAttribute('data-name');
+                
+                itemSearch.value = code + ' - ' + name;
+                itemSearch.setAttribute('data-selected-code', code);
+                itemSearch.setAttribute('data-selected-name', name);
+                suggestions.style.display = 'none';
+                itemPrice.focus();
+                calculateExtendedPrice();
+            }
+        });
+
+        // Add item with enhanced feedback
+        addItemBtn.addEventListener('click', function() {
+            var selectedCode = itemSearch.getAttribute('data-selected-code');
+            var selectedName = itemSearch.getAttribute('data-selected-name');
+            var price = parseFloat(itemPrice.value) || 0;
+            var quantity = parseInt(itemQuantity.value);
+
+            if (!selectedCode || !quantity) {
+                alert('Please select an item and enter quantity');
+                return;
+            }
+
+            // Add loading state
+            addItemBtn.classList.add('loading');
+            addItemBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+
+            setTimeout(function() {
+                var existingItemIndex = -1;
+                for (var i = 0; i < addedItems.length; i++) {
+                    if (addedItems[i].code === selectedCode) {
+                        existingItemIndex = i;
+                        break;
+                    }
+                }
+                
+                if (existingItemIndex >= 0) {
+                    addedItems[existingItemIndex].quantity += quantity;
+                } else {
+                    addedItems.push({
+                        code: selectedCode,
+                        name: selectedName,
+                        quantity: quantity,
+                        price: price
+                    });
+                }
+
+                updateItemsList();
+                updateTotals();
+                
+                // Clear inputs with animation
+                itemSearch.value = '';
+                itemPrice.value = '';
+                itemQuantity.value = '';
+                extendedPrice.value = '';
+                itemSearch.removeAttribute('data-selected-code');
+                itemSearch.removeAttribute('data-selected-name');
+
+                // Reset button
+                addItemBtn.classList.remove('loading');
+                addItemBtn.innerHTML = '<i class="fas fa-plus"></i> Add Item';
+                
+                // Focus back to search
+                itemSearch.focus();
+            }, 300);
+        });
+
+        // Enhanced items list display
+        function updateItemsList() {
+            if (addedItems.length === 0) {
+                itemsList.innerHTML = `
+                    <div class="text-center text-muted">
+                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>No items added yet. Search and add items above.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < addedItems.length; i++) {
+                var item = addedItems[i];
+                html += `
+                    <div class="item-row" style="animation: slideInRight 0.3s ease-out;">
+                        <div class="item-details">
+                            <div class="item-code">${item.code}</div>
+                            <div class="item-name">${item.name}</div>
+                        </div>
+                        <div class="item-pricing">
+                            <div style="font-weight: 600;">Qty: ${item.quantity}</div>
+                            <div style="font-size: 0.9rem;">${item.price.toFixed(2)} × ${item.quantity} = ${(item.quantity * item.price).toFixed(2)}</div>
+                        </div>
+                        <button type="button" class="remove-btn" onclick="removeItem(${i})">
+                            <i class="fas fa-trash"></i>
+                            Remove
+                        </button>
+                    </div>
+                `;
+            }
+            itemsList.innerHTML = html;
+        }
+
+        // Enhanced remove item function
+        function removeItem(index) {
+            // Add confirmation for better UX
+            if (confirm('Remove this item from the case?')) {
+                addedItems.splice(index, 1);
+                updateItemsList();
+                updateTotals();
+            }
+        }
+
+        // Event listeners with enhanced interactions
+        itemPrice.addEventListener('input', calculateExtendedPrice);
+        itemQuantity.addEventListener('input', calculateExtendedPrice);
+        constructPrice1.addEventListener('input', updateTotals);
+        constructPrice2.addEventListener('input', updateTotals);
+        constructPrice3.addEventListener('input', updateTotals);
+
+        // Enhanced Patient ID validation
+        document.getElementById('patientId').addEventListener('input', function() {
+            this.value = this.value.toUpperCase().replace(/[^A-Z]/g, '');
+            if (this.value.length === 2) {
+                this.style.borderColor = 'var(--success-green)';
+                this.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.1)';
+            } else {
+                this.style.borderColor = 'var(--border-color)';
+                this.style.boxShadow = 'none';
+            }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // Enhanced form submission with better UX
+        document.getElementById('caseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            updateUI(distributor);
-            generateCalendar(currentMonth, currentYear);
+            var submitBtn = document.querySelector('.submit-btn');
             
-            // Animate elements on load
-            setTimeout(() => {
-                const statNumbers = document.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    stat.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        stat.style.transform = 'scale(1)';
-                    }, 200);
+            if (addedItems.length === 0) {
+                alert('Please add at least one item before submitting');
+                return;
+            }
+
+            // Validate restock section
+            var restockNeeded = document.querySelector('input[name="restockNeeded"]:checked');
+            if (!restockNeeded) {
+                alert('Please indicate whether you need restocks for this case');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting Case...';
+            submitBtn.disabled = true;
+
+            // Get selected procedures
+            var procedureCheckboxes = document.querySelectorAll('input[name="procedure"]:checked');
+            var selectedProcedures = [];
+            for (var i = 0; i < procedureCheckboxes.length; i++) {
+                selectedProcedures.push(procedureCheckboxes[i].value);
+            }
+
+            // Get construct information
+            var constructs = [];
+            if (document.getElementById('constructCode1').value) {
+                constructs.push({
+                    code: document.getElementById('constructCode1').value,
+                    price: parseFloat(document.getElementById('constructPrice1').value) || 0
                 });
-            }, 500);
-        }
-
-        function updateUI(distributor) {
-            document.getElementById('companyName').textContent = distributor.companyName;
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('eventModal');
-            if (event.target === modal) {
-                closeEventModal();
             }
-        };
+            if (document.getElementById('constructCode2').value) {
+                constructs.push({
+                    code: document.getElementById('constructCode2').value,
+                    price: parseFloat(document.getElementById('constructPrice2').value) || 0
+                });
+            }
+            if (document.getElementById('constructCode3').value) {
+                constructs.push({
+                    code: document.getElementById('constructCode3').value,
+                    price: parseFloat(document.getElementById('constructPrice3').value) || 0
+                });
+            }
 
-        // Initialize when page loads
-        window.addEventListener('load', initializeDashboard);
+            var totalConstructPrice = 0;
+            for (var i = 0; i < constructs.length; i++) {
+                totalConstructPrice += constructs[i].price;
+            }
 
-        console.log('Premium Medical Dashboard Ready! 🏥✨');
+            var itemsSubtotal = 0;
+            for (var i = 0; i < addedItems.length; i++) {
+                itemsSubtotal += addedItems[i].price * addedItems[i].quantity;
+            }
+
+            // Get restock data
+            var restockData = getRestockData();
+
+            var formData = {
+                distributor: distributorInfo.companyName,
+                distributorCode: distributorInfo.code,
+                distributorContact: distributorInfo.contactName,
+                hospital: document.getElementById('hospital').value,
+                surgeon: document.getElementById('surgeon').value,
+                salesRep: document.getElementById('salesRep').value,
+                procedures: selectedProcedures,
+                caseDate: document.getElementById('caseDate').value,
+                patientId: document.getElementById('patientId').value,
+                constructs: constructs,
+                items: addedItems,
+                restock: restockData,
+                totals: {
+                    itemsSubtotal: itemsSubtotal,
+                    constructPrice: totalConstructPrice,
+                    grandTotal: itemsSubtotal + totalConstructPrice
+                },
+                submissionDate: new Date().toISOString(),
+                status: 'submitted'
+            };
+
+            // Simulate submission process
+            setTimeout(function() {
+                // Store submission locally for demo
+                var submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+                var submissionId = 'CS-' + Date.now();
+                formData.id = submissionId;
+                submissions.push(formData);
+                localStorage.setItem('submissions', JSON.stringify(submissions));
+
+                // Show success state
+                submitBtn.classList.remove('loading');
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Case Submitted Successfully!';
+                submitBtn.style.background = 'linear-gradient(135deg, var(--success-green) 0%, #059669 100%)';
+
+                // Show success message
+                var successDiv = document.createElement('div');
+                successDiv.className = 'success-message';
+                successDiv.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Case sheet submitted successfully!</strong><br>
+                        <small>Submission ID: ${submissionId}</small>
+                    </div>
+                `;
+                document.querySelector('.form-container').insertBefore(successDiv, document.getElementById('caseForm'));
+
+                // Reset form after delay
+                setTimeout(function() {
+                    document.getElementById('caseForm').reset();
+                    addedItems = [];
+                    updateItemsList();
+                    updateTotals();
+                    
+                    // Reset restock section
+                    document.getElementById('restockDetails').classList.add('hidden');
+                    document.getElementById('newAddressForm').classList.add('hidden');
+                    
+                    // Reset submit button
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Case Sheet';
+                    submitBtn.style.background = 'linear-gradient(135deg, var(--success-green) 0%, #059669 100%)';
+                    
+                    // Remove success message
+                    if (successDiv.parentNode) {
+                        successDiv.parentNode.removeChild(successDiv);
+                    }
+                    
+                    // Ask to return to dashboard
+                    if (confirm('Would you like to return to your dashboard?')) {
+                        window.location.href = 'dashboard.html';
+                    }
+                }, 3000);
+            }, 1500);
+        });
+
+        // Enhanced keyboard navigation
+        itemQuantity.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addItemBtn.click();
+            }
+        });
+
+        itemSearch.addEventListener('keydown', function(e) {
+            var suggestionItems = suggestions.querySelectorAll('.suggestion-item');
+            var activeSuggestion = suggestions.querySelector('.suggestion-item.active');
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (activeSuggestion) {
+                    activeSuggestion.classList.remove('active');
+                    var next = activeSuggestion.nextElementSibling;
+                    if (next) {
+                        next.classList.add('active');
+                    } else {
+                        suggestionItems[0].classList.add('active');
+                    }
+                } else if (suggestionItems.length > 0) {
+                    suggestionItems[0].classList.add('active');
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (activeSuggestion) {
+                    activeSuggestion.classList.remove('active');
+                    var prev = activeSuggestion.previousElementSibling;
+                    if (prev) {
+                        prev.classList.add('active');
+                    } else {
+                        suggestionItems[suggestionItems.length - 1].classList.add('active');
+                    }
+                }
+            } else if (e.key === 'Enter' && activeSuggestion) {
+                e.preventDefault();
+                activeSuggestion.click();
+            } else if (e.key === 'Escape') {
+                suggestions.style.display = 'none';
+            }
+        });
+
+        // Add active state styling for keyboard navigation
+        var style = document.createElement('style');
+        style.textContent = `
+            .suggestion-item.active {
+                background: var(--surface-light) !important;
+                color: var(--accent-blue) !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Enhanced mobile responsiveness
+        function handleMobileLayout() {
+            if (window.innerWidth <= 768) {
+                // Adjust grid layouts for mobile
+                var itemInputGrid = document.querySelector('.item-input-grid');
+                if (itemInputGrid) {
+                    itemInputGrid.style.gridTemplateColumns = '1fr';
+                }
+            }
+        }
+
+        window.addEventListener('resize', handleMobileLayout);
+        handleMobileLayout();
+
+        // Initialize tooltips and help text
+        function initializeHelperText() {
+            var patientIdInput = document.getElementById('patientId');
+            patientIdInput.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            patientIdInput.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        }
+
+        initializeHelperText();
+
+        console.log('Premium Medical Case System Ready! 🏥✨');
     </script>
 </body>
 </html>
