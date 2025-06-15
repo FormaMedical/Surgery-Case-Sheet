@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Forma Medical</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2563eb 50%, #3b82f6 100%);
+            --secondary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --danger-red: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --surface-dark: #0f172a;
+            --surface-medium: #1e293b;
+            --surface-light: #334155;
+            --surface-lighter: #475569;
+            --border-color: #475569;
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(148, 163, 184, 0.2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
+            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
+            --shadow-warning: 0 0 32px rgba(245, 158, 11, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--surface-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: var(--shadow-md);
+            }
+            50% {
+                box-shadow: var(--shadow-glow);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Header */
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .company-info h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-info p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .system-status {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .last-sync {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .last-sync i {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .distributor-info {
+            text-align: right;
+            padding: 1rem 1.5rem;
+            background: var(--surface-medium);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .distributor-info strong {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .distributor-info div:last-child {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.75rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .nav-tabs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .nav-tab {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+        
+        .nav-tab.active {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-icon.primary {
+            background: var(--primary-gradient);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
+        }
+
+        .card-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-cyan));
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            font-size: 0.85rem;
+            color: var(--success-green);
+            font-weight: 700;
+        }
+
+        /* Recent Section */
+        .recent-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recent-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--warning-amber), var(--success-green));
+        }
+
+        .recent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+        }
+
+        .recent-item:hover {
+            background: var(--surface-light);
+            transform: translateX(5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .recent-info h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .recent-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .status-complete {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-processing {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .analytics-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+        
+        .analytics-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .analytics-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0.5rem;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .header-right {
+                order: -1;
+                justify-content: center;
+            }
+
+            .dashboard-grid, 
+            .analytics-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-tabs {
+                justify-content: flex-start;
+                padding: 0.5rem;
+            }
+
+            .nav-tab {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading and animations */
+        .loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="company-info">
+                            <h1>Welcome back, <span id="companyName">ABC Ortho Solutions</span></h1>
+                            <p>Manage your case submissions and track performance</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="system-status">
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span>System Online</span>
+                        </div>
+                        <div class="last-sync">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Last sync: 2 min ago</span>
+                        </div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">
+                <i class="fas fa-chart-line"></i>
+                Overview
+            </button>
+            <button class="nav-tab" onclick="showTab('analytics')">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
+            </button>
+            <button class="nav-tab" onclick="showTab('submissions')">
+                <i class="fas fa-clipboard-list"></i>
+                Submissions
+            </button>
+            <button class="nav-tab" onclick="showTab('relationships')">
+                <i class="fas fa-handshake"></i>
+                Relationships
+            </button>
+            <button class="nav-tab management-access" onclick="goToManagement()" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%); color: white; margin-left: auto;">
+                <i class="fas fa-shield-alt"></i>
+                Management
+            </button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overviewTab" class="tab-content active">
+            <!-- Quick Actions -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon primary">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Submit New Case Sheet</div>
+                            <div class="card-subtitle">Create a new surgery case submission with our advanced form system</div>
+                        </div>
+                    </div>
+                    <a href="form.html" class="action-btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Submit Case Sheet
+                    </a>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <div class="card-icon success">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">Submit PO</div>
+                            <div class="card-subtitle">Submit purchase orders and track procurement status for approved cases</div>
+                        </div>
+                    </div>
+                    <a href="po-submission.html" class="action-btn btn-success">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit PO
+                    </a>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Your Performance
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalSubmissions">12</div>
+                        <div class="stat-label">Cases This Month</div>
+                        <div class="stat-trend">+15% vs last month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="monthlyCommission">$2,450</div>
+                        <div class="stat-label">Monthly Commission</div>
+                        <div class="stat-trend">+22% vs last month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="newSurgeons">3</div>
+                        <div class="stat-label">New Surgeons</div>
+                        <div class="stat-trend">2 this quarter</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="activeHospitals">8</div>
+                        <div class="stat-label">Active Hospitals</div>
+                        <div class="stat-trend">67% market penetration</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Submissions -->
+            <div class="recent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    Recent Submissions
+                </h2>
+                <div id="recentSubmissions">
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Lapidus Procedure • Dr. Michael Wilson</h4>
+                            <p><strong>Hospital:</strong> City General Hospital • <strong>Surgery Date:</strong> Dec 15, 2024 • <strong>Patient:</strong> R.D. • <strong>Total:</strong> $4,920</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Bunion Correction • Dr. Lisa Chen</h4>
+                            <p><strong>Hospital:</strong> Metro Health Center • <strong>Surgery Date:</strong> Jan 12, 2025 • <strong>Patient:</strong> K.M. • <strong>Total:</strong> $2,175</p>
+                        </div>
+                        <span class="status-badge status-processing">Surgery Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commissions Tab -->
+        <div id="commissionsTab" class="tab-content">
+            <!-- Commission Summary -->
+            <div style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem; text-align: center; box-shadow: var(--shadow-success); position: relative; overflow: hidden;">
+                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; position: relative; z-index: 1;">$2,450</div>
+                <div style="font-size: 1.2rem; opacity: 0.9; position: relative; z-index: 1;">Total Monthly Commission</div>
+            </div>
+
+            <!-- Commission Overview Stats -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-dollar-sign"></i>
+                    Commission Overview
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--success-green);">$1,855</div>
+                        <div class="stat-label">Paid Commissions</div>
+                        <div class="stat-trend">9 cases completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--warning-amber);">$595</div>
+                        <div class="stat-label">Pending Commissions</div>
+                        <div class="stat-trend">3 cases awaiting PO</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8.7%</div>
+                        <div class="stat-label">Average Commission Rate</div>
+                        <div class="stat-trend">Based on case value</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div class="stat-label">PO Success Rate</div>
+                        <div class="stat-trend">11/12 cases approved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Relationships Tab -->
+        <div id="relationshipsTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-handshake"></i>
+                    Surgeon & Hospital Relationships
+                </h2>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-user-md"></i>
+                            Top Surgeons
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Benjamin Potter</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">5 cases • $1,200 commission</div>
+                                </div>
+                                <span class="status-badge status-complete">Strong</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Sarah Johnson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">3 cases • $750 commission</div>
+                                </div>
+                                <span class="status-badge status-processing">Growing</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Michael Wilson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • $500 commission</div>
+                                </div>
+                                <span class="status-badge status-pending">New</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-hospital"></i>
+                            Top Hospitals
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Holston Valley Surgery Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">6 cases • 3 surgeons</div>
+                                </div>
+                                <span class="status-badge status-complete">Strong</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Regional Medical Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">4 cases • 2 surgeons</div>
+                                </div>
+                                <span class="status-badge status-processing">Growing</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">City General Hospital</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • 1 surgeon</div>
+                                </div>
+                                <span class="status-badge status-pending">Opportunity</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('Enhanced Medical Dashboard Loading...');
+
+        // Sample distributor data
+        const sampleDistributor = {
+            companyName: 'ABC Ortho Solutions',
+            code: 'ABCOrtho',
+            region: 'Tennessee Region'
+        };
+
+        // Logout function
+        function logout() {
+            window.location.href = 'index.html';
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            tabContents.forEach(content => content.classList.remove('active'));
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Trigger animations for the active tab
+            if (tabName === 'analytics') {
+                setTimeout(() => {
+                    animateChartBars();
+                }, 300);
+            }
+        }
+
+        function animateChartBars() {
+            // Animate the revenue trend chart on hover
+            const chartBars = document.querySelectorAll('[data-value]');
+            chartBars.forEach((bar, index) => {
+                bar.addEventListener('mouseenter', function() {
+                    const valueLabel = this.querySelector('div');
+                    if (valueLabel) {
+                        valueLabel.style.opacity = '1';
+                    }
+                });
+                
+                bar.addEventListener('mouseleave', function() {
+                    const valueLabel = this.querySelector('div');
+                    if (valueLabel) {
+                        valueLabel.style.opacity = '0';
+                    }
+                });
+            });
+        }
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            let distributor = sampleDistributor;
+            updateUI(distributor);
+            
+            // Animate elements on load
+            setTimeout(() => {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    stat.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        stat.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            }, 500);
+        }
+
+        function updateUI(distributor) {
+            document.getElementById('companyName').textContent = distributor.companyName;
+        }
+
+        // Remove the commissions tab content since it's now in Management Dashboard
+        const commissionsTab = document.getElementById('commissionsTab');
+        if (commissionsTab) {
+            commissionsTab.remove();
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', initializeDashboard);
+
+        console.log('Enhanced Medical Dashboard Ready! 🏥✨');
+    </script>
+</body>
+</html> class="recent-info">
+                            <h4>MTP Fusion - Dr. Johnson</h4>
+                            <p>Submitted June 10, 2025 • Patient: JS • Commission: $285</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Hammertoe Correction - Dr. Smith</h4>
+                            <p>Submitted June 8, 2025 • Patient: MB • Commission: $150</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Lapidus Procedure - Dr. Williams</h4>
+                            <p>Submitted June 5, 2025 • Patient: RD • Commission: $420</p>
+                        </div>
+                        <span class="status-badge status-complete">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content">
+            <!-- Performance Overview Dashboard -->
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Performance Analytics
+                </h2>
+                
+                <!-- Key Metrics Row -->
+                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--accent-blue);">$28,450</div>
+                        <div class="stat-label">Total Case Value</div>
+                        <div class="stat-trend">+18% vs last month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--success-green);">$2,450</div>
+                        <div class="stat-label">Commission Earned</div>
+                        <div class="stat-trend">8.6% avg rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Cases This Month</div>
+                        <div class="stat-trend">+33% vs last month</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--warning-amber);">6.5</div>
+                        <div class="stat-label">Avg Days to PO</div>
+                        <div class="stat-trend">Industry: 8-12 days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" style="color: var(--accent-cyan);">92%</div>
+                        <div class="stat-label">PO Success Rate</div>
+                        <div class="stat-trend">11/12 cases approved</div>
+                    </div>
+                </div>
+
+                <!-- Advanced Analytics Grid -->
+                <div class="analytics-grid">
+                    <!-- Revenue Trend Analysis -->
+                    <div class="analytics-card" style="grid-column: span 2;">
+                        <div class="analytics-title">
+                            <i class="fas fa-chart-line"></i>
+                            6-Month Revenue Trend
+                        </div>
+                        <div style="display: flex; align-items: end; height: 140px; gap: 1rem; margin: 1.5rem 0; padding: 1rem; background: var(--surface-medium); border-radius: 12px; position: relative;">
+                            <!-- Month labels at bottom -->
+                            <div style="position: absolute; bottom: -25px; left: 0; right: 0; display: flex; justify-content: space-around; font-size: 0.8rem; color: var(--text-muted);">
+                                <span>Jan</span>
+                                <span>Feb</span>
+                                <span>Mar</span>
+                                <span>Apr</span>
+                                <span>May</span>
+                                <span>Jun</span>
+                            </div>
+                            <!-- Bars -->
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <div style="background: linear-gradient(to top, #1e40af, var(--accent-blue)); width: 100%; height: 45%; border-radius: 4px 4px 0 0; transition: all 0.8s ease; position: relative;" data-value="$18,200">
+                                    <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--text-muted); opacity: 0; transition: opacity 0.3s;">$18.2k</div>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <div style="background: linear-gradient(to top, #1e40af, var(--accent-blue)); width: 100%; height: 55%; border-radius: 4px 4px 0 0; transition: all 0.8s ease; position: relative;" data-value="$22,100">
+                                    <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--text-muted); opacity: 0; transition: opacity 0.3s;">$22.1k</div>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <div style="background: linear-gradient(to top, #1e40af, var(--accent-blue)); width: 100%; height: 70%; border-radius: 4px 4px 0 0; transition: all 0.8s ease; position: relative;" data-value="$28,900">
+                                    <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--text-muted); opacity: 0; transition: opacity 0.3s;">$28.9k</div>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <div style="background: linear-gradient(to top, #1e40af, var(--accent-blue)); width: 100%; height: 60%; border-radius: 4px 4px 0 0; transition: all 0.8s ease; position: relative;" data-value="$24,300">
+                                    <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--text-muted); opacity: 0; transition: opacity 0.3s;">$24.3k</div>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <div style="background: linear-gradient(to top, #1e40af, var(--accent-blue)); width: 100%; height: 75%; border-radius: 4px 4px 0 0; transition: all 0.8s ease; position: relative;" data-value="$31,200">
+                                    <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--text-muted); opacity: 0; transition: opacity 0.3s;">$31.2k</div>
+                                </div>
+                            </div>
+                            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                                <div style="background: linear-gradient(to top, var(--success-green), #34d399); width: 100%; height: 85%; border-radius: 4px 4px 0 0; transition: all 0.8s ease; position: relative; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);" data-value="$35,450">
+                                    <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: var(--success-green); font-weight: 700; opacity: 0; transition: opacity 0.3s;">$35.5k</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                            <div style="display: flex; gap: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--accent-blue); border-radius: 2px;"></div>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Previous Months</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <div style="width: 12px; height: 12px; background: var(--success-green); border-radius: 2px;"></div>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Current Month</span>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--success-green);">+13.7%</div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">vs Last Month</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Procedure Mix (Enhanced) -->
+                    <div class="analytics-card">
+                        <div class="analytics-title">
+                            <i class="fas fa-chart-pie"></i>
+                            Procedure Analysis
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 80px; font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">MTP Fusion</span>
+                                <div style="background: var(--border-color); height: 10px; flex: 1; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: var(--primary-gradient); height: 100%; width: 42%; border-radius: 5px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: end; min-width: 60px;">
+                                    <span style="font-weight: 700; color: var(--accent-blue); font-size: 0.9rem;">42%</span>
+                                    <span style="font-size: 0.7rem; color: var(--text-muted);">5 cases</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 80px; font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Hammertoe</span>
+                                <div style="background: var(--border-color); height: 10px; flex: 1; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: linear-gradient(90deg, var(--accent-cyan), #22d3ee); height: 100%; width: 33%; border-radius: 5px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: end; min-width: 60px;">
+                                    <span style="font-weight: 700; color: var(--accent-cyan); font-size: 0.9rem;">33%</span>
+                                    <span style="font-size: 0.7rem; color: var(--text-muted);">4 cases</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 80px; font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Lapidus</span>
+                                <div style="background: var(--border-color); height: 10px; flex: 1; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: linear-gradient(90deg, var(--success-green), #34d399); height: 100%; width: 17%; border-radius: 5px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: end; min-width: 60px;">
+                                    <span style="font-weight: 700; color: var(--success-green); font-size: 0.9rem;">17%</span>
+                                    <span style="font-size: 0.7rem; color: var(--text-muted);">2 cases</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span style="min-width: 80px; font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">Bunion</span>
+                                <div style="background: var(--border-color); height: 10px; flex: 1; border-radius: 5px; overflow: hidden;">
+                                    <div style="background: linear-gradient(90deg, var(--warning-amber), #fbbf24); height: 100%; width: 8%; border-radius: 5px; transition: width 0.8s ease;"></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: end; min-width: 60px;">
+                                    <span style="font-weight: 700; color: var(--warning-amber); font-size: 0.9rem;">8%</span>
+                                    <span style="font-size: 0.7rem; color: var(--text-muted);">1 case</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem;">Procedure Insights</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                                • MTP Fusion avg value: <span style="color: var(--accent-blue); font-weight: 600;">$3,200</span><br>
+                                • Best commission rate on Lapidus procedures<br>
+                                • 18% increase in complex procedure adoption
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Surgeon Performance Matrix -->
+                    <div class="analytics-card" style="grid-column: span 2;">
+                        <div class="analytics-title">
+                            <i class="fas fa-users"></i>
+                            Surgeon Performance Matrix
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                                <thead>
+                                    <tr style="background: var(--surface-light); border-radius: 8px;">
+                                        <th style="padding: 1rem; text-align: left; color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Surgeon</th>
+                                        <th style="padding: 1rem; text-align: center; color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Cases</th>
+                                        <th style="padding: 1rem; text-align: center; color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Avg Value</th>
+                                        <th style="padding: 1rem; text-align: center; color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Commission</th>
+                                        <th style="padding: 1rem; text-align: center; color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">PO Rate</th>
+                                        <th style="padding: 1rem; text-align: center; color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 1rem;">
+                                            <div style="font-weight: 600; color: var(--text-primary);">Dr. Benjamin Potter</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Holston Valley</div>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: var(--success-green); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">5</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--text-primary);">$3,200</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--success-green);">$1,200</td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: rgba(16, 185, 129, 0.2); color: var(--success-green); padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600;">100%</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <i class="fas fa-arrow-up" style="color: var(--success-green);"></i>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 1rem;">
+                                            <div style="font-weight: 600; color: var(--text-primary);">Dr. Sarah Johnson</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Regional Medical</div>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: var(--accent-blue); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">3</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--text-primary);">$2,150</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--success-green);">$530</td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: rgba(245, 158, 11, 0.2); color: var(--warning-amber); padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600;">67%</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <i class="fas fa-arrow-up" style="color: var(--success-green);"></i>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 1rem;">
+                                            <div style="font-weight: 600; color: var(--text-primary);">Dr. Michael Wilson</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-muted);">City General</div>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: var(--accent-cyan); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">2</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--text-primary);">$3,550</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--success-green);">$485</td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: rgba(16, 185, 129, 0.2); color: var(--success-green); padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600;">100%</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <i class="fas fa-arrow-right" style="color: var(--text-muted);"></i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 1rem;">
+                                            <div style="font-weight: 600; color: var(--text-primary);">Dr. Lisa Chen</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Metro Health</div>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: var(--warning-amber); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">2</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--text-primary);">$2,175</td>
+                                        <td style="padding: 1rem; text-align: center; font-weight: 600; color: var(--success-green);">$235</td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <span style="background: rgba(16, 185, 129, 0.2); color: var(--success-green); padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600;">100%</span>
+                                        </td>
+                                        <td style="padding: 1rem; text-align: center;">
+                                            <i class="fas fa-arrow-up" style="color: var(--success-green);"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Market Opportunities -->
+                    <div class="analytics-card">
+                        <div class="analytics-title">
+                            <i class="fas fa-target"></i>
+                            Growth Opportunities
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-arrow-trend-up" style="color: var(--success-green);"></i>
+                                    <span style="font-weight: 600; color: var(--success-green);">High Impact</span>
+                                </div>
+                                <div style="font-size: 0.9rem; color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">Expand MTP Cases with Dr. Johnson</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Potential +$8,500 monthly revenue</div>
+                            </div>
+                            
+                            <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-hospital" style="color: var(--accent-blue);"></i>
+                                    <span style="font-weight: 600; color: var(--accent-blue);">New Market</span>
+                                </div>
+                                <div style="font-size: 0.9rem; color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">Target Valley Medical Center</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Untapped market in your territory</div>
+                            </div>
+                            
+                            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 1rem;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                    <i class="fas fa-chart-line" style="color: var(--warning-amber);"></i>
+                                    <span style="font-weight: 600; color: var(--warning-amber);">Efficiency</span>
+                                </div>
+                                <div style="font-size: 0.9rem; color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">Improve PO Turnaround</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary);">Target 4-day average vs current 6.5</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Intelligence Insights -->
+                <div class="recent-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        AI-Powered Insights
+                    </h3>
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--success-green) 0%, #34d399 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Best Performance Day</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Tuesdays show 40% higher case closure rates</div>
+                                </div>
+                            </div>
+                            <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                                💡 Schedule important surgeon meetings on Tuesdays
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-blue) 0%, #3b82f6 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Seasonal Pattern</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">June traditionally +25% vs spring months</div>
+                                </div>
+                            </div>
+                            <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                                📈 Peak surgery season - maximize outreach efforts
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-card">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--warning-amber) 0%, #f59e0b 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">Product Mix Optimization</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">MTP procedures yield 35% higher commissions</div>
+                                </div>
+                            </div>
+                            <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                                🎯 Focus on complex procedure training opportunities
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submissions Tab -->
+        <div id="submissionsTab" class="tab-content">
+            <div class="recent-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    My Submissions
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
+                
+                <div id="allSubmissions">
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>MTP Fusion • Dr. Benjamin Potter</h4>
+                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+                    
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
+                            <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Dec 22, 2024 • <strong>Patient:</strong> M.B. • <strong>Total:</strong> $1,850</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <div class="recent-item">
+                        <div
