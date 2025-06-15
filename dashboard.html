@@ -2585,7 +2585,18 @@
             document.querySelectorAll('.quick-filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            
+            // Find and activate the correct button
+            const filterButtons = document.querySelectorAll('.quick-filter-btn');
+            filterButtons.forEach(btn => {
+                if (btn.textContent.includes('All Time') && filter === 'all') btn.classList.add('active');
+                if (btn.textContent.includes('Today') && filter === 'today') btn.classList.add('active');
+                if (btn.textContent.includes('Yesterday') && filter === 'yesterday') btn.classList.add('active');
+                if (btn.textContent.includes('This Week') && filter === 'thisWeek') btn.classList.add('active');
+                if (btn.textContent.includes('Last Week') && filter === 'lastWeek') btn.classList.add('active');
+                if (btn.textContent.includes('This Month') && filter === 'thisMonth') btn.classList.add('active');
+                if (btn.textContent.includes('Last Month') && filter === 'lastMonth') btn.classList.add('active');
+            });
             
             applyFilters();
         }
@@ -2597,7 +2608,15 @@
             document.querySelectorAll('.sort-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target?.classList.add('active');
+            
+            // Find the clicked button and mark it active
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            sortButtons.forEach(btn => {
+                if (btn.textContent.includes('Newest') && sortType === 'date-desc') btn.classList.add('active');
+                if (btn.textContent.includes('Oldest') && sortType === 'date-asc') btn.classList.add('active');
+                if (btn.textContent.includes('Highest') && sortType === 'value-desc') btn.classList.add('active');
+                if (btn.textContent.includes('Status') && sortType === 'status') btn.classList.add('active');
+            });
             
             const container = document.getElementById('allSubmissions');
             const items = Array.from(container.querySelectorAll('.recent-item[style*="flex"]'));
