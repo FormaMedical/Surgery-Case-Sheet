@@ -645,388 +645,6 @@
             gap: 0.75rem;
         }
 
-        /* Inventory Styles */
-        .inventory-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .inventory-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .update-reminder {
-            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-        }
-
-        .update-reminder:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-warning);
-        }
-
-        .last-updated {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tray-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .tray-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tray-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-gradient);
-        }
-
-        .tray-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .tray-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .tray-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            background: var(--primary-gradient);
-            box-shadow: var(--shadow-md);
-        }
-
-        .tray-info h3 {
-            color: var(--text-primary);
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .tray-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-
-        .tray-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--surface-medium);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .status-group {
-            text-align: center;
-        }
-
-        .status-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent-blue);
-            display: block;
-        }
-
-        .status-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 0.25rem;
-        }
-
-        .tray-items {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tray-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--surface-light);
-            border-radius: 10px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-
-        .tray-item:hover {
-            background: var(--surface-lighter);
-            transform: translateX(5px);
-        }
-
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .item-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            color: white;
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-        }
-
-        .item-details h4 {
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .item-details p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        .item-quantity {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .quantity-input {
-            width: 80px;
-            padding: 0.5rem;
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            background: var(--surface-medium);
-            color: var(--text-primary);
-            text-align: center;
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .quantity-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .quantity-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .quantity-btn {
-            width: 24px;
-            height: 24px;
-            border: none;
-            border-radius: 4px;
-            background: var(--accent-blue);
-            color: white;
-            cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .quantity-btn:hover {
-            background: var(--accent-cyan);
-            transform: scale(1.1);
-        }
-
-        .tray-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .tray-btn {
-            flex: 1;
-            padding: 1rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .tray-btn.primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .tray-btn.success {
-            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
-            color: white;
-        }
-
-        .tray-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Reminder Modal */
-        .reminder-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 1rem;
-        }
-
-        .reminder-content {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reminder-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--warning-amber), var(--success-green));
-        }
-
-        .reminder-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2rem;
-            color: white;
-            box-shadow: var(--shadow-warning);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .reminder-title {
-            color: var(--text-primary);
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .reminder-text {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
-        .reminder-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .reminder-btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .reminder-btn.primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .reminder-btn.secondary {
-            background: var(--surface-medium);
-            color: var(--text-secondary);
-            border: 1px solid var(--glass-border);
-        }
-
-        .reminder-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -1049,8 +667,7 @@
             }
 
             .dashboard-grid, 
-            .analytics-grid,
-            .tray-grid {
+            .analytics-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
@@ -1068,38 +685,540 @@
                 padding: 0.75rem 1rem;
                 font-size: 0.85rem;
             }
-
-            .inventory-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .inventory-actions {
-                justify-content: center;
-            }
-
-            .tray-status {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .item-quantity {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .tray-actions {
-                flex-direction: column;
-            }
         }
 
         @media (max-width: 480px) {
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .tray-grid {
+        /* File Library Styles */
+        .file-category {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            background: var(--primary-gradient);
+        }
+
+        .category-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .file-item {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .file-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-blue);
+        }
+
+        .file-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .file-icon.pdf {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+        }
+
+        .file-icon.excel {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .file-icon.word {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+        }
+
+        .file-icon.image {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-meta {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .file-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .file-btn.primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .file-btn.secondary {
+            background: var(--surface-light);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-files {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-files input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .search-files input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .files-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .file-meta {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .file-actions {
+                flex-direction: column;
+            }
+        }
+        .filter-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .filter-input, .filter-select {
+            padding: 0.75rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .quick-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            background: var(--surface-medium);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .quick-filter-btn:hover {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .quick-filter-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .clear-filters-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--surface-medium);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .clear-filters-btn:hover {
+            background: var(--danger-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .submissions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .results-info {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-btn {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-btn:hover {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+        }
+
+        .sort-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .submissions-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .sort-controls {
+                justify-content: center;
+            }
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .case-id {
+            font-family: 'Courier New', monospace;
+            background: var(--surface-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .po-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .po-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .po-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .calendar-day {
+            min-height: 120px;
+            padding: 0.5rem;
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: var(--surface-medium);
+        }
+
+        .calendar-day:hover {
+            background: var(--surface-light);
+        }
+
+        .calendar-day.other-month {
+            color: var(--text-muted);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .calendar-day.today {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .calendar-day.selected {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid var(--success-green);
+        }
+
+        .day-number {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .surgery-item {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .surgery-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .surgery-item.high-priority {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .surgery-item.urgent {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Form Styles */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        select option {
+            background: var(--surface-medium);
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .calendar-day {
+                min-height: 80px;
+                font-size: 0.85rem;
+            }
+
+            .surgery-item {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
             }
         }
 
@@ -1186,10 +1305,6 @@
             <button class="nav-tab" onclick="showTab('relationships')">
                 <i class="fas fa-handshake"></i>
                 Relationships
-            </button>
-            <button class="nav-tab" onclick="showTab('inventory')">
-                <i class="fas fa-boxes"></i>
-                Inventory
             </button>
             <button class="nav-tab" onclick="showTab('management')" style="margin-left: auto; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white;">
                 <i class="fas fa-users-cog"></i>
@@ -1337,7 +1452,127 @@
             </div>
         </div>
 
-        <!-- Analytics Tab -->
+        <!-- Surgery Modal -->
+        <div id="surgeryModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 id="modalTitle" style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Add Surgery</h2>
+                    <button onclick="closeSurgeryModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <form id="surgeryForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Date</label>
+                            <input type="date" id="surgeryDate" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Time</label>
+                            <input type="time" id="surgeryTime" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Procedure Type</label>
+                        <select id="procedureType" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                            <option value="">Select Procedure</option>
+                            <option value="MTP Fusion">MTP Fusion</option>
+                            <option value="Hammertoe Correction">Hammertoe Correction</option>
+                            <option value="Lapidus Procedure">Lapidus Procedure</option>
+                            <option value="Bunion Correction">Bunion Correction</option>
+                            <option value="Ankle Fusion">Ankle Fusion</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Surgeon</label>
+                        <select id="surgeonName" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                            <option value="">Select Surgeon</option>
+                            <option value="Dr. Benjamin Potter">Dr. Benjamin Potter</option>
+                            <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                            <option value="Dr. Michael Wilson">Dr. Michael Wilson</option>
+                            <option value="Dr. Lisa Chen">Dr. Lisa Chen</option>
+                            <option value="Dr. Robert Martinez">Dr. Robert Martinez</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Hospital/Facility</label>
+                        <select id="hospitalName" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                            <option value="">Select Hospital</option>
+                            <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
+                            <option value="Regional Medical Center">Regional Medical Center</option>
+                            <option value="City General Hospital">City General Hospital</option>
+                            <option value="Metro Health Center">Metro Health Center</option>
+                            <option value="Valley Medical Center">Valley Medical Center</option>
+                        </select>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Patient Initials</label>
+                            <input type="text" id="patientInitials" placeholder="e.g., J.D." required maxlength="10" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Case Priority</label>
+                            <select id="casePriority" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                                <option value="Standard">Standard</option>
+                                <option value="High">High Priority</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Notes</label>
+                        <textarea id="surgeryNotes" rows="3" placeholder="Additional notes about the surgery..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button type="button" onclick="closeSurgeryModal()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer;">
+                            Cancel
+                        </button>
+                        <button type="submit" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer;">
+                            <i class="fas fa-save"></i>
+                            Save Surgery
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Surgery Details Modal -->
+        <div id="surgeryDetailsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Surgery Details</h2>
+                    <button onclick="closeSurgeryDetailsModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div id="surgeryDetailsContent" style="margin-bottom: 2rem;">
+                    <!-- Content will be filled by JavaScript -->
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="editSelectedSurgery()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-edit"></i>
+                        Edit
+                    </button>
+                    <button onclick="submitCaseFromCalendar()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Case
+                    </button>
+                    <button onclick="deleteSelectedSurgery()" style="padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%); color: white; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div id="analyticsTab" class="tab-content">
             <!-- Performance Overview Dashboard -->
             <div class="stats-section">
@@ -1513,13 +1748,240 @@
                 </h2>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
                 
-                <!-- Sample submissions content would go here -->
-                <div class="recent-item">
-                    <div class="recent-info">
-                        <h4>MTP Fusion • Dr. Benjamin Potter</h4>
-                        <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
+                <!-- Advanced Filters -->
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <i class="fas fa-search"></i> Search Cases
+                            </label>
+                            <input type="text" id="searchFilter" class="filter-input" placeholder="Search by surgeon, hospital, or patient..." oninput="applyFilters()">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <i class="fas fa-hospital"></i> Hospital
+                            </label>
+                            <select id="hospitalFilter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Hospitals</option>
+                                <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
+                                <option value="Regional Medical Center">Regional Medical Center</option>
+                                <option value="City General Hospital">City General Hospital</option>
+                                <option value="Metro Health Center">Metro Health Center</option>
+                                <option value="Valley Medical Center">Valley Medical Center</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <i class="fas fa-clipboard-check"></i> Status
+                            </label>
+                            <select id="statusFilter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Statuses</option>
+                                <option value="PO Received">PO Received</option>
+                                <option value="Awaiting PO">Awaiting PO</option>
+                            </select>
+                        </div>
+                        
+                        <button class="clear-filters-btn" onclick="clearAllFilters()">
+                            <i class="fas fa-times"></i>
+                            Clear
+                        </button>
                     </div>
-                    <span class="status-badge status-complete">PO Received</span>
+                    
+                    <!-- Quick Date Filters -->
+                    <div style="margin-top: 1rem;">
+                        <div class="filter-label" style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-calendar"></i> Quick Date Filters
+                        </div>
+                        <div class="quick-filters">
+                            <button class="quick-filter-btn active" onclick="applyDateFilter('all')">All Time</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('today')">Today</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('yesterday')">Yesterday</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('thisWeek')">This Week</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('lastWeek')">Last Week</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('thisMonth')">This Month</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('lastMonth')">Last Month</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Header -->
+                <div class="submissions-header">
+                    <div class="results-info">
+                        <i class="fas fa-list"></i>
+                        <span id="resultsCount">8 cases found</span>
+                        <span id="filterStatus"></span>
+                    </div>
+                    <div class="sort-controls">
+                        <span style="color: var(--text-muted); font-size: 0.85rem; margin-right: 0.5rem;">Sort by:</span>
+                        <button class="sort-btn active" onclick="applySorting('date-desc')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Newest First
+                        </button>
+                        <button class="sort-btn" onclick="applySorting('date-asc')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Oldest First
+                        </button>
+                        <button class="sort-btn" onclick="applySorting('value-desc')">
+                            <i class="fas fa-dollar-sign"></i>
+                            Highest Value
+                        </button>
+                        <button class="sort-btn" onclick="applySorting('status')">
+                            <i class="fas fa-filter"></i>
+                            Status
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="allSubmissions">
+                    <div class="recent-item" data-case-id="CS-1234567890" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="J.S." data-status="PO Received" data-date="2024-12-20" data-submitted="2024-12-10" data-value="3285" onclick="showSubmissionDetails('CS-1234567890')">
+                        <div class="recent-info">
+                            <h4>MTP Fusion • Dr. Benjamin Potter</h4>
+                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+                    
+                    <div class="recent-item" data-case-id="CS-1234567891" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="M.B." data-status="Awaiting PO" data-date="2024-12-22" data-submitted="2024-12-12" data-value="1850" onclick="showSubmissionDetails('CS-1234567891')">
+                        <div class="recent-info">
+                            <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
+                            <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Dec 22, 2024 • <strong>Patient:</strong> M.B. • <strong>Total:</strong> $1,850</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <div class="recent-item" data-case-id="CS-1234567892" data-surgeon="Dr. Michael Wilson" data-hospital="City General Hospital" data-patient="R.D." data-status="PO Received" data-date="2024-12-15" data-submitted="2024-12-03" data-value="4920" onclick="showSubmissionDetails('CS-1234567892')">
+                        <div class="recent-info">
+                            <h4>Lapidus Procedure • Dr. Michael Wilson</h4>
+                            <p><strong>Hospital:</strong> City General Hospital • <strong>Surgery Date:</strong> Dec 15, 2024 • <strong>Patient:</strong> R.D. • <strong>Total:</strong> $4,920</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+
+                    <div class="recent-item" data-case-id="CS-1234567893" data-surgeon="Dr. Lisa Chen" data-hospital="Metro Health Center" data-patient="K.M." data-status="Awaiting PO" data-date="2025-01-12" data-submitted="2024-12-28" data-value="2175" onclick="showSubmissionDetails('CS-1234567893')">
+                        <div class="recent-info">
+                            <h4>Bunion Correction • Dr. Lisa Chen</h4>
+                            <p><strong>Hospital:</strong> Metro Health Center • <strong>Surgery Date:</strong> Jan 12, 2025 • <strong>Patient:</strong> K.M. • <strong>Total:</strong> $2,175</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <div class="recent-item" data-case-id="CS-1234567894" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="T.R." data-status="PO Received" data-date="2025-01-08" data-submitted="2024-12-22" data-value="3450" onclick="showSubmissionDetails('CS-1234567894')">
+                        <div class="recent-info">
+                            <h4>MTP Fusion • Dr. Benjamin Potter</h4>
+                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 8, 2025 • <strong>Patient:</strong> T.R. • <strong>Total:</strong> $3,450</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+
+                    <div class="recent-item" data-case-id="CS-1234567895" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="D.K." data-status="Awaiting PO" data-date="2025-01-05" data-submitted="2024-12-18" data-value="1920" onclick="showSubmissionDetails('CS-1234567895')">
+                        <div class="recent-info">
+                            <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
+                            <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Jan 5, 2025 • <strong>Patient:</strong> D.K. • <strong>Total:</strong> $1,920</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+
+                    <div class="recent-item" data-case-id="CS-1234567896" data-surgeon="Dr. Robert Martinez" data-hospital="Valley Medical Center" data-patient="A.L." data-status="PO Received" data-date="2024-12-28" data-submitted="2024-12-15" data-value="5200" onclick="showSubmissionDetails('CS-1234567896')">
+                        <div class="recent-info">
+                            <h4>Ankle Fusion • Dr. Robert Martinez</h4>
+                            <p><strong>Hospital:</strong> Valley Medical Center • <strong>Surgery Date:</strong> Dec 28, 2024 • <strong>Patient:</strong> A.L. • <strong>Total:</strong> $5,200</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+
+                    <div class="recent-item" data-case-id="CS-1234567897" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="M.K." data-status="Awaiting PO" data-date="2025-01-15" data-submitted="2025-01-02" data-value="3120" onclick="showSubmissionDetails('CS-1234567897')">
+                        <div class="recent-info">
+                            <h4>MTP Fusion • Dr. Benjamin Potter</h4>
+                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 15, 2025 • <strong>Patient:</strong> M.K. • <strong>Total:</strong> $3,120</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div id="noResults" style="display: none; text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                    <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-blue);"></i>
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">No cases found</h3>
+                    <p style="font-size: 1.1rem;">Try adjusting your filters or search terms</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Details Modal -->
+        <div id="submissionDetailsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Case Details</h2>
+                    <button onclick="closeSubmissionDetailsModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div id="submissionDetailsContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Commissions Tab - REMOVED -->
+
+        <!-- Management Tab -->
+        <div id="managementTab" class="tab-content">
+            <!-- Password Protection Modal -->
+            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
+                    <div style="margin-bottom: 2rem;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
+                            <i class="fas fa-shield-alt" style="font-size: 2rem; color: white;"></i>
+                        </div>
+                        <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">Management Access</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Enter password to access management dashboard</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <input type="password" id="managementPassword" placeholder="Enter password" style="width: 100%; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-primary); font-size: 1rem; text-align: center;" onkeypress="handlePasswordKeypress(event)">
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="cancelManagementAccess()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Cancel
+                        </button>
+                        <button onclick="verifyManagementPassword()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Access
+                        </button>
+                    </div>
+                    
+                    <div id="passwordError" style="display: none; color: var(--danger-red); font-size: 0.85rem; margin-top: 1rem; font-weight: 600;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Incorrect password. Please try again.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Management Dashboard Content (Hidden until authenticated) -->
+            <div id="managementContent" style="display: none;">
+                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-lg);">
+                        <i class="fas fa-users-cog" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 2rem;">Management Dashboard</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary);">Access comprehensive management tools and team oversight</p>
+                    
+                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="management-dashboard.html" style="text-decoration: none;">
+                            <button style="padding: 1.5rem 3rem; border: none; border-radius: 16px; background: var(--primary-gradient); color: white; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-md);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
+                                <i class="fas fa-external-link-alt"></i>
+                                Launch Management Dashboard
+                            </button>
+                        </a>
+                        
+                        <button onclick="logoutManagement()" style="padding: 1.5rem 3rem; border: 1px solid var(--glass-border); border-radius: 16px; background: var(--surface-medium); color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1533,18 +1995,375 @@
                 </h2>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Access all essential Forma Medical documents and resources</p>
                 
-                <!-- Sample file content would go here -->
-                <div class="recent-item">
-                    <div class="recent-info">
-                        <h4>MTP Case Sheet</h4>
-                        <p><strong>Type:</strong> PDF • <strong>Size:</strong> 1.2 MB • <strong>Updated:</strong> Dec 15, 2024</p>
+                <!-- Search Files -->
+                <div class="search-files">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-search" style="color: var(--text-muted); font-size: 1.2rem;"></i>
+                        <input type="text" id="fileSearch" placeholder="Search files and documents..." oninput="searchFiles()">
                     </div>
-                    <span class="status-badge status-complete">Available</span>
+                </div>
+
+                <!-- Case Sheets & Forms -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Case Sheets & Forms</div>
+                            <div class="category-description">Essential forms for case submissions and documentation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="mtp fusion case sheet form">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">MTP Case Sheet</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 1.2 MB</span>
+                                        <span>Updated: Dec 15, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('mtp-case-sheet.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('mtp-case-sheet.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="hammertoe akin case sheet form">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Hammertoe/Akin Case Sheet</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 1.1 MB</span>
+                                        <span>Updated: Dec 10, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('hammertoe-case-sheet.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('hammertoe-case-sheet.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="lapidus case sheet form">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Lapidus Case Sheet</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 1.3 MB</span>
+                                        <span>Updated: Dec 8, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('lapidus-case-sheet.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('lapidus-case-sheet.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="new account information sheet onboarding">
+                            <div class="file-header">
+                                <div class="file-icon word">
+                                    <i class="fas fa-file-word"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">New Account Information Sheet</div>
+                                    <div class="file-meta">
+                                        <span>DOCX • 0.8 MB</span>
+                                        <span>Updated: Nov 28, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('new-account-info.docx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('new-account-info.docx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Catalogs -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Product Catalogs & Specifications</div>
+                            <div class="category-description">Detailed product information and technical specifications</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="product catalog implants systems">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">2025 Product Catalog</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 8.4 MB</span>
+                                        <span>Updated: Jan 1, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('2025-product-catalog.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('2025-product-catalog.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="pricing price list costs">
+                            <div class="file-header">
+                                <div class="file-icon excel">
+                                    <i class="fas fa-file-excel"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Current Price List</div>
+                                    <div class="file-meta">
+                                        <span>XLSX • 0.9 MB</span>
+                                        <span>Updated: Dec 20, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('price-list-2025.xlsx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('price-list-2025.xlsx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="technical specifications implant dimensions">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Technical Specifications Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 3.2 MB</span>
+                                        <span>Updated: Dec 5, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('tech-specs.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('tech-specs.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training & Educational -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Training & Educational Materials</div>
+                            <div class="category-description">Resources for professional development and product training</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="surgical technique guide procedures">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Surgical Technique Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 5.7 MB</span>
+                                        <span>Updated: Nov 15, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('surgical-techniques.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('surgical-techniques.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="sales training presentation">
+                            <div class="file-header">
+                                <div class="file-icon" style="background: linear-gradient(135deg, #e11d48 0%, #be185d 100%);">
+                                    <i class="fas fa-file-powerpoint"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Sales Training Presentation</div>
+                                    <div class="file-meta">
+                                        <span>PPTX • 12.3 MB</span>
+                                        <span>Updated: Dec 1, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('sales-training.pptx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('sales-training.pptx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="compliance regulatory fda">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Regulatory Compliance Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 2.1 MB</span>
+                                        <span>Updated: Nov 10, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('compliance-guide.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('compliance-guide.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Materials -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Marketing & Promotional Materials</div>
+                            <div class="category-description">Brochures, flyers, and marketing resources for client presentations</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="company brochure marketing">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Company Brochure</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 4.8 MB</span>
+                                        <span>Updated: Dec 18, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('company-brochure.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('company-brochure.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="logo brand assets graphics">
+                            <div class="file-header">
+                                <div class="file-icon image">
+                                    <i class="fas fa-file-image"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Brand Assets Package</div>
+                                    <div class="file-meta">
+                                        <span>ZIP • 15.2 MB</span>
+                                        <span>Updated: Oct 25, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('brand-assets.zip')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('brand-assets.zip')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Relationships Tab -->
         <div id="relationshipsTab" class="tab-content">
             <div class="stats-section">
                 <h2 class="section-title">
@@ -1615,632 +2434,10 @@
                 </div>
             </div>
         </div>
-
-        <!-- Inventory Tab -->
-        <div id="inventoryTab" class="tab-content">
-            <div class="stats-section">
-                <div class="inventory-header">
-                    <div>
-                        <h2 class="section-title">
-                            <i class="fas fa-boxes"></i>
-                            Medical Tray Inventory
-                        </h2>
-                        <p style="color: var(--text-secondary); font-size: 1.1rem;">Manage and track your medical instrument trays</p>
-                    </div>
-                    <div class="inventory-actions">
-                        <div class="last-updated">
-                            <i class="fas fa-clock"></i>
-                            <span>Last updated: <span id="lastInventoryUpdate">5 days ago</span></span>
-                        </div>
-                        <button class="update-reminder" onclick="showInventoryReminder()">
-                            <i class="fas fa-bell"></i>
-                            Update Inventory
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Inventory Overview Stats -->
-                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--success-green);" id="totalTrays">5</div>
-                        <div class="stat-label">Total Trays</div>
-                        <div class="stat-trend">All categories</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--accent-blue);" id="totalItems">47</div>
-                        <div class="stat-label">Total Items</div>
-                        <div class="stat-trend">Across all trays</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--warning-amber);" id="lowStockItems">3</div>
-                        <div class="stat-label">Low Stock</div>
-                        <div class="stat-trend">Need attention</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--accent-cyan);">92%</div>
-                        <div class="stat-label">Availability</div>
-                        <div class="stat-trend">Ready for surgery</div>
-                    </div>
-                </div>
-
-                <!-- Medical Trays Grid -->
-                <div class="tray-grid">
-                    <!-- Hammertoe/Akin Tray -->
-                    <div class="tray-card">
-                        <div class="tray-header">
-                            <div class="tray-icon" style="background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);">
-                                <i class="fas fa-hand-paper"></i>
-                            </div>
-                            <div class="tray-info">
-                                <h3>Hammertoe/Akin Tray</h3>
-                                <p>Complete set for hammertoe correction and Akin osteotomy procedures</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tray-status">
-                            <div class="status-group">
-                                <span class="status-number" id="hammertoeTotal">12</span>
-                                <div class="status-label">Total Items</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="hammertoeAvailable">10</span>
-                                <div class="status-label">Available</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--warning-amber);" id="hammertoeLow">2</span>
-                                <div class="status-label">Low Stock</div>
-                            </div>
-                        </div>
-
-                        <div class="tray-items">
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-tools"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Correction Implants</h4>
-                                        <p>Size: 10mm - 25mm</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="8" min="0" max="20" data-tray="hammertoe" data-item="implants">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('hammertoe', 'implants', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('hammertoe', 'implants', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-cog"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>K-Wires (2.0mm)</h4>
-                                        <p>Temporary fixation</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="15" min="0" max="30" data-tray="hammertoe" data-item="kwires">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('hammertoe', 'kwires', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('hammertoe', 'kwires', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);">
-                                        <i class="fas fa-exclamation"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Fixation Screws</h4>
-                                        <p>2.7mm diameter</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="2" min="0" max="20" data-tray="hammertoe" data-item="screws" style="border-color: var(--warning-amber);">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('hammertoe', 'screws', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('hammertoe', 'screws', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tray-actions">
-                            <button class="tray-btn primary" onclick="updateTray('hammertoe')">
-                                <i class="fas fa-save"></i>
-                                Update Tray
-                            </button>
-                            <button class="tray-btn success" onclick="requestRestockTray('hammertoe')">
-                                <i class="fas fa-plus"></i>
-                                Request Restock
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- MTP Tray -->
-                    <div class="tray-card">
-                        <div class="tray-header">
-                            <div class="tray-icon" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);">
-                                <i class="fas fa-bone"></i>
-                            </div>
-                            <div class="tray-info">
-                                <h3>MTP Tray</h3>
-                                <p>Metatarsophalangeal joint fusion instruments and implants</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tray-status">
-                            <div class="status-group">
-                                <span class="status-number" id="mtpTotal">15</span>
-                                <div class="status-label">Total Items</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="mtpAvailable">14</span>
-                                <div class="status-label">Available</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--warning-amber);" id="mtpLow">1</span>
-                                <div class="status-label">Low Stock</div>
-                            </div>
-                        </div>
-
-                        <div class="tray-items">
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-puzzle-piece"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Fusion Plate System</h4>
-                                        <p>Various sizes available</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="6" min="0" max="15" data-tray="mtp" data-item="plates">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('mtp', 'plates', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('mtp', 'plates', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-grip-lines"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Compression Screws</h4>
-                                        <p>3.5mm diameter</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="12" min="0" max="25" data-tray="mtp" data-item="compression">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('mtp', 'compression', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('mtp', 'compression', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);">
-                                        <i class="fas fa-exclamation"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Bone Graft Substitute</h4>
-                                        <p>15cc containers</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="3" min="0" max="10" data-tray="mtp" data-item="graft" style="border-color: var(--warning-amber);">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('mtp', 'graft', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('mtp', 'graft', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tray-actions">
-                            <button class="tray-btn primary" onclick="updateTray('mtp')">
-                                <i class="fas fa-save"></i>
-                                Update Tray
-                            </button>
-                            <button class="tray-btn success" onclick="requestRestockTray('mtp')">
-                                <i class="fas fa-plus"></i>
-                                Request Restock
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- MTP-TMT Lapidus Tray -->
-                    <div class="tray-card">
-                        <div class="tray-header">
-                            <div class="tray-icon" style="background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);">
-                                <i class="fas fa-wrench"></i>
-                            </div>
-                            <div class="tray-info">
-                                <h3>MTP-TMT Lapidus Tray</h3>
-                                <p>Specialized instruments for Lapidus bunionectomy procedures</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tray-status">
-                            <div class="status-group">
-                                <span class="status-number" id="lapidusTotal">10</span>
-                                <div class="status-label">Total Items</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="lapidusAvailable">10</span>
-                                <div class="status-label">Available</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="lapidusLow">0</span>
-                                <div class="status-label">Low Stock</div>
-                            </div>
-                        </div>
-
-                        <div class="tray-items">
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-layer-group"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Lapidus Plate System</h4>
-                                        <p>Heavy-duty fusion plates</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="4" min="0" max="10" data-tray="lapidus" data-item="plates">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('lapidus', 'plates', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('lapidus', 'plates', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-bolt"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Compression Screws</h4>
-                                        <p>4.0mm diameter</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="8" min="0" max="20" data-tray="lapidus" data-item="screws">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('lapidus', 'screws', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('lapidus', 'screws', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-cubes"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Bone Graft Allograft</h4>
-                                        <p>20cc containers</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="5" min="0" max="15" data-tray="lapidus" data-item="allograft">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('lapidus', 'allograft', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('lapidus', 'allograft', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tray-actions">
-                            <button class="tray-btn primary" onclick="updateTray('lapidus')">
-                                <i class="fas fa-save"></i>
-                                Update Tray
-                            </button>
-                            <button class="tray-btn success" onclick="requestRestockTray('lapidus')">
-                                <i class="fas fa-plus"></i>
-                                Request Restock
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Lab Tray -->
-                    <div class="tray-card">
-                        <div class="tray-header">
-                            <div class="tray-icon" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);">
-                                <i class="fas fa-flask"></i>
-                            </div>
-                            <div class="tray-info">
-                                <h3>Lab Tray</h3>
-                                <p>Laboratory testing and preparation instruments</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tray-status">
-                            <div class="status-group">
-                                <span class="status-number" id="labTotal">8</span>
-                                <div class="status-label">Total Items</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="labAvailable">8</span>
-                                <div class="status-label">Available</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="labLow">0</span>
-                                <div class="status-label">Low Stock</div>
-                            </div>
-                        </div>
-
-                        <div class="tray-items">
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-vial"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Sample Containers</h4>
-                                        <p>Sterile collection tubes</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="12" min="0" max="25" data-tray="lab" data-item="containers">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('lab', 'containers', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('lab', 'containers', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-cut"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Surgical Blades</h4>
-                                        <p>Various sizes</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="10" min="0" max="20" data-tray="lab" data-item="blades">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('lab', 'blades', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('lab', 'blades', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-eyedropper"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Testing Reagents</h4>
-                                        <p>Chemical solutions</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="6" min="0" max="15" data-tray="lab" data-item="reagents">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('lab', 'reagents', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('lab', 'reagents', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tray-actions">
-                            <button class="tray-btn primary" onclick="updateTray('lab')">
-                                <i class="fas fa-save"></i>
-                                Update Tray
-                            </button>
-                            <button class="tray-btn success" onclick="requestRestockTray('lab')">
-                                <i class="fas fa-plus"></i>
-                                Request Restock
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Demo Pelican Set -->
-                    <div class="tray-card">
-                        <div class="tray-header">
-                            <div class="tray-icon" style="background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <div class="tray-info">
-                                <h3>Demo Pelican Set</h3>
-                                <p>Demonstration and training instrument case</p>
-                            </div>
-                        </div>
-                        
-                        <div class="tray-status">
-                            <div class="status-group">
-                                <span class="status-number" id="demoTotal">6</span>
-                                <div class="status-label">Total Items</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="demoAvailable">6</span>
-                                <div class="status-label">Available</div>
-                            </div>
-                            <div class="status-group">
-                                <span class="status-number" style="color: var(--success-green);" id="demoLow">0</span>
-                                <div class="status-label">Low Stock</div>
-                            </div>
-                        </div>
-
-                        <div class="tray-items">
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-play-circle"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Demo Implants</h4>
-                                        <p>Sample implant set</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="1" min="0" max="3" data-tray="demo" data-item="implants">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('demo', 'implants', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('demo', 'implants', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-tools"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Demo Instruments</h4>
-                                        <p>Training tools</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="1" min="0" max="3" data-tray="demo" data-item="instruments">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('demo', 'instruments', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('demo', 'instruments', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tray-item">
-                                <div class="item-info">
-                                    <div class="item-icon">
-                                        <i class="fas fa-book"></i>
-                                    </div>
-                                    <div class="item-details">
-                                        <h4>Training Materials</h4>
-                                        <p>Manuals and guides</p>
-                                    </div>
-                                </div>
-                                <div class="item-quantity">
-                                    <input type="number" class="quantity-input" value="1" min="0" max="5" data-tray="demo" data-item="materials">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn" onclick="adjustQuantity('demo', 'materials', 1)">+</button>
-                                        <button class="quantity-btn" onclick="adjustQuantity('demo', 'materials', -1)">-</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tray-actions">
-                            <button class="tray-btn primary" onclick="updateTray('demo')">
-                                <i class="fas fa-save"></i>
-                                Update Tray
-                            </button>
-                            <button class="tray-btn success" onclick="requestRestockTray('demo')">
-                                <i class="fas fa-plus"></i>
-                                Request Restock
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Management Tab -->
-        <div id="managementTab" class="tab-content">
-            <!-- Password Protection Modal -->
-            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-                <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
-                    <div style="margin-bottom: 2rem;">
-                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
-                            <i class="fas fa-shield-alt" style="font-size: 2rem; color: white;"></i>
-                        </div>
-                        <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">Management Access</h2>
-                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Enter password to access management dashboard</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <input type="password" id="managementPassword" placeholder="Enter password" style="width: 100%; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-primary); font-size: 1rem; text-align: center;" onkeypress="handlePasswordKeypress(event)">
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem;">
-                        <button onclick="cancelManagementAccess()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
-                            Cancel
-                        </button>
-                        <button onclick="verifyManagementPassword()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
-                            Access
-                        </button>
-                    </div>
-                    
-                    <div id="passwordError" style="display: none; color: var(--danger-red); font-size: 0.85rem; margin-top: 1rem; font-weight: 600;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Incorrect password. Please try again.
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Management Dashboard Content (Hidden until authenticated) -->
-            <div id="managementContent" style="display: none;">
-                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
-                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-lg);">
-                        <i class="fas fa-users-cog" style="font-size: 3rem; color: white;"></i>
-                    </div>
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 2rem;">Management Dashboard</h3>
-                    <p style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary);">Access comprehensive management tools and team oversight</p>
-                    
-                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="management-dashboard.html" style="text-decoration: none;">
-                            <button style="padding: 1.5rem 3rem; border: none; border-radius: 16px; background: var(--primary-gradient); color: white; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-md);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
-                                <i class="fas fa-external-link-alt"></i>
-                                Launch Management Dashboard
-                            </button>
-                        </a>
-                        
-                        <button onclick="logoutManagement()" style="padding: 1.5rem 3rem; border: 1px solid var(--glass-border); border-radius: 16px; background: var(--surface-medium); color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Inventory Reminder Modal -->
-        <div id="inventoryReminderModal" class="reminder-modal">
-            <div class="reminder-content">
-                <div class="reminder-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <h2 class="reminder-title">Weekly Inventory Update</h2>
-                <p class="reminder-text">
-                    It's time to update your medical tray inventory! Regular updates help us ensure you have the supplies you need for upcoming surgeries.
-                </p>
-                <div class="reminder-actions">
-                    <button class="reminder-btn secondary" onclick="dismissInventoryReminder()">
-                        Remind Me Later
-                    </button>
-                    <button class="reminder-btn primary" onclick="startInventoryUpdate()">
-                        Update Now
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
-        console.log('Enhanced Medical Dashboard with Inventory Loading...');
+        console.log('Enhanced Medical Dashboard Loading...');
 
         // Sample distributor data
         const sampleDistributor = {
@@ -2249,73 +2446,969 @@
             region: 'Tennessee Region'
         };
 
-        // Inventory data storage
-        let inventoryData = {
-            lastUpdated: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
-            trays: {
-                hammertoe: {
-                    implants: 8,
-                    kwires: 15,
-                    screws: 2
-                },
-                mtp: {
-                    plates: 6,
-                    compression: 12,
-                    graft: 3
-                },
-                lapidus: {
-                    plates: 4,
-                    screws: 8,
-                    allograft: 5
-                },
-                lab: {
-                    containers: 12,
-                    blades: 10,
-                    reagents: 6
-                },
-                demo: {
-                    implants: 1,
-                    instruments: 1,
-                    materials: 1
-                }
-            }
-        };
-
         // Logout function
         function logout() {
             window.location.href = 'index.html';
         }
 
-        // Tab functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            const navTabs = document.querySelectorAll('.nav-tab');
+        // File search and management functions
+        function searchFiles() {
+            const searchTerm = document.getElementById('fileSearch').value.toLowerCase();
+            const fileItems = document.querySelectorAll('.file-item');
             
-            tabContents.forEach(content => content.classList.remove('active'));
-            navTabs.forEach(tab => tab.classList.remove('active'));
+            fileItems.forEach(item => {
+                const keywords = item.getAttribute('data-keywords').toLowerCase();
+                const fileName = item.querySelector('.file-name').textContent.toLowerCase();
+                
+                if (keywords.includes(searchTerm) || fileName.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = searchTerm ? 'none' : 'block';
+                }
+            });
             
-            // Show selected tab
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
+            // Show/hide categories based on visible files
+            const categories = document.querySelectorAll('.file-category');
+            categories.forEach(category => {
+                const visibleFiles = category.querySelectorAll('.file-item[style*="block"], .file-item:not([style*="none"])');
+                if (searchTerm && visibleFiles.length === 0) {
+                    category.style.display = 'none';
+                } else {
+                    category.style.display = 'block';
+                }
+            });
+        }
+
+        function downloadFile(filename) {
+            // In a real implementation, this would trigger actual file download
+            alert(`Downloading ${filename}...\n\nIn a real implementation, this would start the file download.`);
             
-            // Special handling for management tab
-            if (tabName === 'management') {
-                document.getElementById('passwordModal').style.display = 'flex';
-                document.getElementById('managementContent').style.display = 'none';
-                document.getElementById('passwordError').style.display = 'none';
-                document.getElementById('managementPassword').value = '';
-                setTimeout(() => {
-                    document.getElementById('managementPassword').focus();
-                }, 100);
-            }
+            // Simulate download analytics
+            console.log(`File downloaded: ${filename} by ${sampleDistributor.companyName}`);
+        }
+
+        function previewFile(filename) {
+            // In a real implementation, this would open file preview
+            alert(`Opening preview for ${filename}...\n\nIn a real implementation, this would open the file in a preview modal or new tab.`);
             
-            // Special handling for inventory tab
-            if (tabName === 'inventory') {
-                updateInventoryDisplay();
-                checkInventoryReminder();
+            // Simulate preview analytics
+            console.log(`File previewed: ${filename} by ${sampleDistributor.companyName}`);
+        }
+
+        // Filtering and sorting functionality
+        let currentDateFilter = 'all';
+        let currentSort = 'date-desc';
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            const allItems = document.querySelectorAll('#allSubmissions .recent-item');
+            let visibleCount = 0;
+
+            allItems.forEach(item => {
+                const surgeon = item.getAttribute('data-surgeon').toLowerCase();
+                const hospital = item.getAttribute('data-hospital');
+                const patient = item.getAttribute('data-patient').toLowerCase();
+                const status = item.getAttribute('data-status');
+                const date = new Date(item.getAttribute('data-date'));
+                
+                // Text search
+                const matchesSearch = !searchTerm || 
+                    surgeon.includes(searchTerm) || 
+                    hospital.toLowerCase().includes(searchTerm) || 
+                    patient.includes(searchTerm);
+                
+                // Hospital filter
+                const matchesHospital = !hospitalFilter || hospital === hospitalFilter;
+                
+                // Status filter
+                const matchesStatus = !statusFilter || status === statusFilter;
+                
+                // Date filter
+                const matchesDate = checkDateFilter(date, currentDateFilter);
+                
+                if (matchesSearch && matchesHospital && matchesStatus && matchesDate) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            updateResultsInfo(visibleCount);
+            applySorting(currentSort);
+        }
+
+        function checkDateFilter(itemDate, filter) {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            const startOfLastWeek = new Date(startOfWeek);
+            startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+            const endOfLastWeek = new Date(startOfWeek);
+            endOfLastWeek.setDate(endOfLastWeek.getDate() - 1);
+            
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+
+            switch (filter) {
+                case 'all':
+                    return true;
+                case 'today':
+                    return itemDate.toDateString() === today.toDateString();
+                case 'yesterday':
+                    return itemDate.toDateString() === yesterday.toDateString();
+                case 'thisWeek':
+                    return itemDate >= startOfWeek && itemDate <= today;
+                case 'lastWeek':
+                    return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
+                case 'thisMonth':
+                    return itemDate >= startOfMonth && itemDate <= today;
+                case 'lastMonth':
+                    return itemDate >= startOfLastMonth && itemDate <= endOfLastMonth;
+                default:
+                    return true;
             }
         }
+
+        function applyDateFilter(filter) {
+            currentDateFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find and activate the correct button
+            const filterButtons = document.querySelectorAll('.quick-filter-btn');
+            filterButtons.forEach(btn => {
+                if (btn.textContent.includes('All Time') && filter === 'all') btn.classList.add('active');
+                if (btn.textContent.includes('Today') && filter === 'today') btn.classList.add('active');
+                if (btn.textContent.includes('Yesterday') && filter === 'yesterday') btn.classList.add('active');
+                if (btn.textContent.includes('This Week') && filter === 'thisWeek') btn.classList.add('active');
+                if (btn.textContent.includes('Last Week') && filter === 'lastWeek') btn.classList.add('active');
+                if (btn.textContent.includes('This Month') && filter === 'thisMonth') btn.classList.add('active');
+                if (btn.textContent.includes('Last Month') && filter === 'lastMonth') btn.classList.add('active');
+            });
+            
+            applyFilters();
+        }
+
+        function applySorting(sortType) {
+            currentSort = sortType;
+            
+            // Update active sort button
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find the clicked button and mark it active
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            sortButtons.forEach(btn => {
+                if (btn.textContent.includes('Newest') && sortType === 'date-desc') btn.classList.add('active');
+                if (btn.textContent.includes('Oldest') && sortType === 'date-asc') btn.classList.add('active');
+                if (btn.textContent.includes('Highest') && sortType === 'value-desc') btn.classList.add('active');
+                if (btn.textContent.includes('Status') && sortType === 'status') btn.classList.add('active');
+            });
+            
+            const container = document.getElementById('allSubmissions');
+            const items = Array.from(container.querySelectorAll('.recent-item[style*="flex"]'));
+            
+            items.sort((a, b) => {
+                switch (sortType) {
+                    case 'date-desc':
+                        return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
+                    case 'date-asc':
+                        return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
+                    case 'value-desc':
+                        return parseInt(b.getAttribute('data-value')) - parseInt(a.getAttribute('data-value'));
+                    case 'status':
+                        const statusOrder = { 'Awaiting PO': 0, 'PO Received': 1 };
+                        return statusOrder[a.getAttribute('data-status')] - statusOrder[b.getAttribute('data-status')];
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Re-append sorted items
+            items.forEach(item => container.appendChild(item));
+        }
+
+        function clearAllFilters() {
+            document.getElementById('searchFilter').value = '';
+            document.getElementById('hospitalFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            
+            // Reset date filter to "All Time"
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.quick-filter-btn').classList.add('active');
+            currentDateFilter = 'all';
+            
+            applyFilters();
+        }
+
+        function updateResultsInfo(count) {
+            const resultsCount = document.getElementById('resultsCount');
+            const filterStatus = document.getElementById('filterStatus');
+            const noResults = document.getElementById('noResults');
+            const submissionsList = document.getElementById('allSubmissions');
+            
+            if (count === 0) {
+                noResults.style.display = 'block';
+                submissionsList.style.display = 'none';
+                resultsCount.textContent = 'No cases found';
+            } else {
+                noResults.style.display = 'none';
+                submissionsList.style.display = 'block';
+                resultsCount.textContent = `${count} case${count !== 1 ? 's' : ''} found`;
+            }
+            
+            // Show active filters
+            const activeFilters = [];
+            const searchTerm = document.getElementById('searchFilter').value;
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            if (searchTerm) activeFilters.push(`Search: "${searchTerm}"`);
+            if (hospitalFilter) activeFilters.push(`Hospital: ${hospitalFilter}`);
+            if (statusFilter) activeFilters.push(`Status: ${statusFilter}`);
+            if (currentDateFilter !== 'all') {
+                const filterNames = {
+                    'today': 'Today',
+                    'yesterday': 'Yesterday',
+                    'thisWeek': 'This Week',
+                    'lastWeek': 'Last Week',
+                    'thisMonth': 'This Month',
+                    'lastMonth': 'Last Month'
+                };
+                activeFilters.push(`Date: ${filterNames[currentDateFilter]}`);
+            }
+            
+            if (activeFilters.length > 0) {
+                filterStatus.innerHTML = `<span style="color: var(--accent-blue);">• Filtered by: ${activeFilters.join(', ')}</span>`;
+            } else {
+                filterStatus.innerHTML = '';
+            }
+        }
+
+        // Submission details data
+        const submissionDetails = {
+            'CS-1234567890': {
+                id: 'CS-1234567890',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'J.S.',
+                surgeryDate: 'Dec 20, 2024',
+                submissionDate: 'Dec 10, 2024',
+                caseValue: '$3,285',
+                status: 'PO Received',
+                poNumber: 'PO-HV-2024-1156',
+                poReceivedDate: 'Dec 18, 2024',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Surgical Guide Kit', partNumber: 'SG-MTP-01', quantity: 1, unitCost: '$125' }
+                ],
+                notes: 'Patient has good bone quality. Standard MTP fusion procedure.',
+                surgeonNotes: 'Routine case, expect standard healing time',
+                priority: 'Standard'
+            },
+            'CS-1234567891': {
+                id: 'CS-1234567891',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'M.B.',
+                surgeryDate: 'Dec 22, 2024',
+                submissionDate: 'Dec 12, 2024',
+                caseValue: '$1,850',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
+                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 2, unitCost: '$45' },
+                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 3, unitCost: '$95' }
+                ],
+                notes: 'Patient has diabetes, monitor wound healing closely',
+                surgeonNotes: 'Patient requires special attention due to diabetes',
+                priority: 'High',
+                daysWaiting: 8
+            },
+            'CS-1234567892': {
+                id: 'CS-1234567892',
+                procedure: 'Lapidus Procedure',
+                surgeon: 'Dr. Michael Wilson',
+                hospital: 'City General Hospital',
+                patient: 'R.D.',
+                surgeryDate: 'Dec 15, 2024',
+                submissionDate: 'Dec 3, 2024',
+                caseValue: '$4,920',
+                status: 'PO Received',
+                poNumber: 'PO-CG-2024-0892',
+                poReceivedDate: 'Dec 12, 2024',
+                instruments: [
+                    { name: 'Lapidus Plate System', partNumber: 'LAP-PL-001', quantity: 1, unitCost: '$1,850' },
+                    { name: 'Compression Screws 4.0mm', partNumber: 'CS-40-004', quantity: 4, unitCost: '$225' },
+                    { name: 'Bone Graft Allograft', partNumber: 'BG-AL-20CC', quantity: 1, unitCost: '$680' },
+                    { name: 'Suture Anchors', partNumber: 'SA-35-002', quantity: 2, unitCost: '$165' },
+                    { name: 'Surgical Drill Bits', partNumber: 'DB-SET-01', quantity: 1, unitCost: '$85' }
+                ],
+                notes: 'Complex bunion deformity requiring Lapidus procedure',
+                surgeonNotes: 'Severe hallux valgus, good candidate for Lapidus',
+                priority: 'Standard'
+            },
+            'CS-1234567893': {
+                id: 'CS-1234567893',
+                procedure: 'Bunion Correction',
+                surgeon: 'Dr. Lisa Chen',
+                hospital: 'Metro Health Center',
+                patient: 'K.M.',
+                surgeryDate: 'Jan 12, 2025',
+                submissionDate: 'Dec 28, 2024',
+                caseValue: '$2,175',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Bunion Correction Plate', partNumber: 'BC-PL-002', quantity: 1, unitCost: '$950' },
+                    { name: 'Osteotomy Screws 3.0mm', partNumber: 'OS-30-003', quantity: 3, unitCost: '$155' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-10CC', quantity: 1, unitCost: '$385' },
+                    { name: 'Wire Guide System', partNumber: 'WG-BC-01', quantity: 1, unitCost: '$125' }
+                ],
+                notes: 'Young patient, active lifestyle, requires strong fixation',
+                surgeonNotes: 'Athlete - needs reliable fixation for early return to activity',
+                priority: 'High',
+                daysWaiting: 3
+            },
+            'CS-1234567894': {
+                id: 'CS-1234567894',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'T.R.',
+                surgeryDate: 'Jan 8, 2025',
+                submissionDate: 'Dec 22, 2024',
+                caseValue: '$3,450',
+                status: 'PO Received',
+                poNumber: 'PO-HV-2025-0034',
+                poReceivedDate: 'Jan 2, 2025',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Hardware Removal Kit', partNumber: 'HR-KIT-01', quantity: 1, unitCost: '$285' },
+                    { name: 'Revision Surgical Tools', partNumber: 'RST-SET-02', quantity: 1, unitCost: '$165' }
+                ],
+                notes: 'Revision case - previous hardware removal required',
+                surgeonNotes: 'Revision MTP fusion, remove old hardware first',
+                priority: 'Standard'
+            },
+            'CS-1234567895': {
+                id: 'CS-1234567895',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'D.K.',
+                surgeryDate: 'Jan 5, 2025',
+                submissionDate: 'Dec 18, 2024',
+                caseValue: '$1,920',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
+                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 3, unitCost: '$45' },
+                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 2, unitCost: '$95' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-05CC', quantity: 1, unitCost: '$245' }
+                ],
+                notes: 'Multiple toe deformities, may require additional procedures',
+                surgeonNotes: 'Consider addressing adjacent toes if needed',
+                priority: 'Standard',
+                daysWaiting: 12
+            },
+            'CS-1234567896': {
+                id: 'CS-1234567896',
+                procedure: 'Ankle Fusion',
+                surgeon: 'Dr. Robert Martinez',
+                hospital: 'Valley Medical Center',
+                patient: 'A.L.',
+                surgeryDate: 'Dec 28, 2024',
+                submissionDate: 'Dec 15, 2024',
+                caseValue: '$5,200',
+                status: 'PO Received',
+                poNumber: 'PO-VM-2024-0756',
+                poReceivedDate: 'Dec 25, 2024',
+                instruments: [
+                    { name: 'Ankle Fusion Plate System', partNumber: 'AF-PL-001', quantity: 1, unitCost: '$2,450' },
+                    { name: 'Compression Screws 6.5mm', partNumber: 'CS-65-006', quantity: 6, unitCost: '$385' },
+                    { name: 'Bone Graft Allograft', partNumber: 'BG-AL-25CC', quantity: 1, unitCost: '$895' },
+                    { name: 'Surgical Guides Set', partNumber: 'SG-AF-01', quantity: 1, unitCost: '$325' },
+                    { name: 'Specialized Drill Bits', partNumber: 'DB-AF-SET', quantity: 1, unitCost: '$145' }
+                ],
+                notes: 'Post-traumatic arthritis, complex case requiring specialized implants',
+                surgeonNotes: 'Traumatic arthritis from old injury, needs strong fixation',
+                priority: 'High'
+            },
+            'CS-1234567897': {
+                id: 'CS-1234567897',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'M.K.',
+                surgeryDate: 'Jan 15, 2025',
+                submissionDate: 'Jan 2, 2025',
+                caseValue: '$3,120',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Bilateral Planning Kit', partNumber: 'BPK-MTP-01', quantity: 1, unitCost: '$95' }
+                ],
+                notes: 'Bilateral procedure planned, this is the first side',
+                surgeonNotes: 'Plan bilateral MTP fusion, start with right side',
+                priority: 'Standard',
+                daysWaiting: 5
+            }
+        };
+
+        function showSubmissionDetails(caseId) {
+            const submission = submissionDetails[caseId];
+            if (!submission) return;
+
+            const modal = document.getElementById('submissionDetailsModal');
+            const content = document.getElementById('submissionDetailsContent');
+
+            const statusColor = submission.status === 'PO Received' ? 'var(--success-green)' : 'var(--warning-amber)';
+            const priorityColor = submission.priority === 'High' ? 'var(--warning-amber)' : 
+                                 submission.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
+
+            content.innerHTML = `
+                <!-- Case Header -->
+                <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--text-primary); font-size: 1.3rem; margin-bottom: 0.5rem;">${submission.procedure}</h3>
+                            <div class="case-id">Case ID: ${submission.id}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: rgba(59, 130, 246, 0.2); color: ${statusColor}; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: 1px solid ${statusColor}30;">${submission.status}</span>
+                            ${submission.status === 'Awaiting PO' ? `<div style="color: var(--warning-amber); font-size: 0.8rem; margin-top: 0.5rem;"><i class="fas fa-clock"></i> ${submission.daysWaiting} days waiting</div>` : ''}
+                        </div>
+                    </div>
+                    <div style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700; text-align: center; margin-top: 1rem;">${submission.caseValue}</div>
+                </div>
+
+                <!-- Case Details -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <!-- Surgery Information -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-user-md"></i> Surgery Information
+                        </h4>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                            <div class="detail-row">
+                                <span class="detail-label">Surgeon:</span>
+                                <span class="detail-value">${submission.surgeon}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Hospital:</span>
+                                <span class="detail-value">${submission.hospital}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Patient:</span>
+                                <span class="detail-value">${submission.patient}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Surgery Date:</span>
+                                <span class="detail-value">${submission.surgeryDate}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Priority:</span>
+                                <span style="background: rgba(59, 130, 246, 0.2); color: ${priorityColor}; padding: 0.25rem 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${priorityColor}30;">${submission.priority}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submission Information -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clipboard-check"></i> Submission Info
+                        </h4>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                            <div class="detail-row">
+                                <span class="detail-label">Submitted:</span>
+                                <span class="detail-value">${submission.submissionDate}</span>
+                            </div>
+                            ${submission.poNumber ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Number:</span>
+                                    <span class="detail-value case-id">${submission.poNumber}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Received:</span>
+                                    <span class="detail-value">${submission.poReceivedDate}</span>
+                                </div>
+                            ` : `
+                                <div class="detail-row">
+                                    <span class="detail-label">Days Waiting:</span>
+                                    <span class="detail-value" style="color: var(--warning-amber);">${submission.daysWaiting} days</span>
+                                </div>
+                            `}
+                            <div class="detail-row">
+                                <span class="detail-label">Case Value:</span>
+                                <span class="detail-value" style="color: var(--success-green); font-size: 1.1rem;">${submission.caseValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instruments & Parts -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-tools"></i> Instruments & Parts Used
+                    </h4>
+                    <div style="background: var(--surface-light); border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border);">
+                        <!-- Parts Table Header -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-bottom: 1px solid var(--border-color); display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; font-weight: 700; color: var(--text-primary); font-size: 0.9rem;">
+                            <div>Part Description</div>
+                            <div>Part Number</div>
+                            <div style="text-align: center;">Qty</div>
+                            <div style="text-align: right;">Unit Cost</div>
+                        </div>
+                        <!-- Parts List -->
+                        ${submission.instruments.map((instrument, index) => `
+                            <div style="padding: 1rem; border-bottom: ${index < submission.instruments.length - 1 ? '1px solid var(--border-color)' : 'none'}; display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; align-items: center; transition: all 0.3s ease; ${index % 2 === 0 ? 'background: rgba(255, 255, 255, 0.02)' : ''}">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">${instrument.name}</div>
+                                    <div style="color: var(--text-muted); font-size: 0.8rem;">
+                                        <i class="fas fa-box" style="margin-right: 0.25rem;"></i>
+                                        Medical Device
+                                    </div>
+                                </div>
+                                <div>
+                                    <span style="font-family: 'Courier New', monospace; background: var(--surface-dark); color: var(--accent-cyan); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${instrument.partNumber}</span>
+                                </div>
+                                <div style="text-align: center;">
+                                    <span style="background: var(--primary-gradient); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 700; font-size: 0.85rem;">${instrument.quantity}</span>
+                                </div>
+                                <div style="text-align: right; color: var(--success-green); font-weight: 700; font-size: 1rem;">${instrument.unitCost}</div>
+                            </div>
+                        `).join('')}
+                        
+                        <!-- Total Section -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-top: 2px solid var(--accent-blue);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 700; font-size: 1rem;">Total Case Value</div>
+                                    <div style="color: var(--text-muted); font-size: 0.85rem;">${submission.instruments.length} items</div>
+                                </div>
+                                <div style="color: var(--success-green); font-weight: 800; font-size: 1.5rem;">${submission.caseValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-sticky-note"></i> Case Notes
+                    </h4>
+                    <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                        <div style="margin-bottom: 1rem;">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Distributor Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.notes}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Surgeon Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.surgeonNotes}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                ${submission.status === 'Awaiting PO' ? `
+                    <div class="po-actions">
+                        <button onclick="closeSubmissionDetailsModal()" class="po-btn" style="background: var(--surface-medium); color: var(--text-secondary); border: 1px solid var(--glass-border);">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                        <button onclick="submitPOForCase('${submission.id}')" class="po-btn" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white;">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit PO
+                        </button>
+                    </div>
+                ` : `
+                    <div style="text-align: center;">
+                        <button onclick="closeSubmissionDetailsModal()" class="po-btn" style="background: var(--primary-gradient); color: white; max-width: 200px;">
+                            <i class="fas fa-check"></i>
+                            Close
+                        </button>
+                    </div>
+                `}
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSubmissionDetailsModal() {
+            document.getElementById('submissionDetailsModal').style.display = 'none';
+        }
+
+        function submitPOForCase(caseId) {
+            const submission = submissionDetails[caseId];
+            if (submission) {
+                // Store case data for PO submission form
+                const poData = {
+                    caseId: submission.id,
+                    procedure: submission.procedure,
+                    surgeon: submission.surgeon,
+                    hospital: submission.hospital,
+                    patient: submission.patient,
+                    surgeryDate: submission.surgeryDate,
+                    caseValue: submission.caseValue,
+                    instruments: submission.instruments,
+                    notes: submission.notes
+                };
+                
+                // Store in sessionStorage to transfer to PO form
+                sessionStorage.setItem('prefilledPO', JSON.stringify(poData));
+                
+                // Navigate to PO submission form
+                window.open('https://formamedical.github.io/Surgery-Case-Sheet/po-submission.html', '_blank');
+            }
+        }
+
+        // Calendar functionality
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedSurgery = null;
+        let editingSurgery = null;
+        let surgeries = [
+            // Sample data
+            {
+                id: 1,
+                date: '2024-12-20',
+                time: '09:00',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'J.S.',
+                priority: 'Standard',
+                notes: 'Regular follow-up case'
+            },
+            {
+                id: 2,
+                date: '2024-12-22',
+                time: '14:30',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'M.B.',
+                priority: 'High',
+                notes: 'Patient has diabetes, monitor closely'
+            }
+        ];
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and days in month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+            // Previous month's trailing days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayNumber = daysInPrevMonth - i;
+                const dayElement = createDayElement(dayNumber, true);
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Current month's days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday = isCurrentMonth && day === today.getDate();
+                const dayElement = createDayElement(day, false, isToday);
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Next month's leading days
+            const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+            const remainingCells = totalCells - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayElement = createDayElement(day, true);
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function createDayElement(dayNumber, isOtherMonth, isToday = false) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            if (isOtherMonth) dayElement.classList.add('other-month');
+            if (isToday) dayElement.classList.add('today');
+
+            const dayDate = isOtherMonth ? null : 
+                `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+
+            dayElement.innerHTML = `
+                <div class="day-number">${dayNumber}</div>
+                <div class="surgeries-container"></div>
+            `;
+
+            if (!isOtherMonth && dayDate) {
+                const daySurgeries = surgeries.filter(surgery => surgery.date === dayDate);
+                const surgeriesContainer = dayElement.querySelector('.surgeries-container');
+                
+                daySurgeries.forEach(surgery => {
+                    const surgeryElement = document.createElement('div');
+                    surgeryElement.className = `surgery-item ${surgery.priority.toLowerCase().replace(' ', '-')}`;
+                    surgeryElement.innerHTML = `
+                        <i class="fas fa-clock" style="font-size: 0.6rem;"></i>
+                        ${surgery.time} ${surgery.procedure}
+                    `;
+                    surgeryElement.onclick = (e) => {
+                        e.stopPropagation();
+                        showSurgeryDetails(surgery);
+                    };
+                    surgeriesContainer.appendChild(surgeryElement);
+                });
+
+                dayElement.onclick = () => selectDate(dayDate, dayElement);
+            }
+
+            return dayElement;
+        }
+
+        function selectDate(date, element) {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day.selected').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Select new date
+            element.classList.add('selected');
+            selectedDate = date;
+            
+            // Open surgery modal for adding new surgery
+            openSurgeryModal(date);
+        }
+
+        function openSurgeryModal(date = null, surgery = null) {
+            const modal = document.getElementById('surgeryModal');
+            const form = document.getElementById('surgeryForm');
+            const title = document.getElementById('modalTitle');
+
+            if (surgery) {
+                // Editing mode
+                title.textContent = 'Edit Surgery';
+                editingSurgery = surgery;
+                
+                // Populate form with surgery data
+                document.getElementById('surgeryDate').value = surgery.date;
+                document.getElementById('surgeryTime').value = surgery.time;
+                document.getElementById('procedureType').value = surgery.procedure;
+                document.getElementById('surgeonName').value = surgery.surgeon;
+                document.getElementById('hospitalName').value = surgery.hospital;
+                document.getElementById('patientInitials').value = surgery.patient;
+                document.getElementById('casePriority').value = surgery.priority;
+                document.getElementById('surgeryNotes').value = surgery.notes || '';
+            } else {
+                // Adding mode
+                title.textContent = 'Add Surgery';
+                editingSurgery = null;
+                form.reset();
+                
+                if (date) {
+                    document.getElementById('surgeryDate').value = date;
+                }
+            }
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('surgeryTime').focus();
+            }, 100);
+        }
+
+        function closeSurgeryModal() {
+            document.getElementById('surgeryModal').style.display = 'none';
+            editingSurgery = null;
+        }
+
+        function showSurgeryDetails(surgery) {
+            selectedSurgery = surgery;
+            const modal = document.getElementById('surgeryDetailsModal');
+            const content = document.getElementById('surgeryDetailsContent');
+
+            const priorityColor = surgery.priority === 'High' ? 'var(--warning-amber)' : 
+                                 surgery.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
+
+            content.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Date & Time</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${formatDate(surgery.date)} at ${formatTime(surgery.time)}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Priority</div>
+                            <span style="background: rgba(59, 130, 246, 0.2); color: ${priorityColor}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${priorityColor}30;">${surgery.priority}</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Procedure</div>
+                        <div style="color: var(--text-primary); font-weight: 600; font-size: 1.1rem;">${surgery.procedure}</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Surgeon</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${surgery.surgeon}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Patient</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${surgery.patient}</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Hospital</div>
+                        <div style="color: var(--text-primary); font-weight: 600;">${surgery.hospital}</div>
+                    </div>
+                    
+                    ${surgery.notes ? `
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Notes</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${surgery.notes}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSurgeryDetailsModal() {
+            document.getElementById('surgeryDetailsModal').style.display = 'none';
+            selectedSurgery = null;
+        }
+
+        function editSelectedSurgery() {
+            closeSurgeryDetailsModal();
+            openSurgeryModal(null, selectedSurgery);
+        }
+
+        function deleteSelectedSurgery() {
+            if (selectedSurgery && confirm('Are you sure you want to delete this surgery?')) {
+                surgeries = surgeries.filter(s => s.id !== selectedSurgery.id);
+                renderCalendar();
+                closeSurgeryDetailsModal();
+            }
+        }
+
+        function submitCaseFromCalendar() {
+            if (selectedSurgery) {
+                // Store surgery data for case sheet form
+                const surgeryData = {
+                    procedure: selectedSurgery.procedure,
+                    surgeon: selectedSurgery.surgeon,
+                    hospital: selectedSurgery.hospital,
+                    patient: selectedSurgery.patient,
+                    date: selectedSurgery.date,
+                    time: selectedSurgery.time,
+                    notes: selectedSurgery.notes,
+                    priority: selectedSurgery.priority
+                };
+                
+                // Store in sessionStorage to transfer to form
+                sessionStorage.setItem('prefilledSurgery', JSON.stringify(surgeryData));
+                
+                // Navigate to case sheet form
+                window.location.href = 'form.html';
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            renderCalendar();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        // Handle surgery form submission
+        document.getElementById('surgeryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: editingSurgery ? editingSurgery.id : Date.now(),
+                date: document.getElementById('surgeryDate').value,
+                time: document.getElementById('surgeryTime').value,
+                procedure: document.getElementById('procedureType').value,
+                surgeon: document.getElementById('surgeonName').value,
+                hospital: document.getElementById('hospitalName').value,
+                patient: document.getElementById('patientInitials').value,
+                priority: document.getElementById('casePriority').value,
+                notes: document.getElementById('surgeryNotes').value
+            };
+
+            if (editingSurgery) {
+                // Update existing surgery
+                const index = surgeries.findIndex(s => s.id === editingSurgery.id);
+                if (index !== -1) {
+                    surgeries[index] = formData;
+                }
+            } else {
+                // Add new surgery
+                surgeries.push(formData);
+            }
+
+            renderCalendar();
+            closeSurgeryModal();
+        });
 
         // Management authentication functions
         function handlePasswordKeypress(event) {
@@ -2326,7 +3419,7 @@
 
         function verifyManagementPassword() {
             const password = document.getElementById('managementPassword').value;
-            const correctPassword = 'admin123';
+            const correctPassword = 'admin123'; // You can change this to any password
             
             if (password === correctPassword) {
                 document.getElementById('passwordModal').style.display = 'none';
@@ -2354,198 +3447,89 @@
             document.getElementById('managementPassword').value = '';
         }
 
-        // Inventory Management Functions
-        function updateInventoryDisplay() {
-            // Update last updated time
-            const timeDiff = Date.now() - inventoryData.lastUpdated.getTime();
-            const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            document.getElementById('lastInventoryUpdate').textContent = `${daysDiff} days ago`;
-
-            // Calculate totals
-            let totalItems = 0;
-            let lowStockCount = 0;
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            const navTabs = document.querySelectorAll('.nav-tab');
             
-            Object.keys(inventoryData.trays).forEach(trayName => {
-                const tray = inventoryData.trays[trayName];
-                Object.keys(tray).forEach(itemName => {
-                    const quantity = tray[itemName];
-                    totalItems += quantity;
-                    if (quantity <= 3) lowStockCount++;
+            tabContents.forEach(content => content.classList.remove('active'));
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Special handling for management tab
+            if (tabName === 'management') {
+                document.getElementById('passwordModal').style.display = 'flex';
+                document.getElementById('managementContent').style.display = 'none';
+                document.getElementById('passwordError').style.display = 'none';
+                document.getElementById('managementPassword').value = '';
+                setTimeout(() => {
+                    document.getElementById('managementPassword').focus();
+                }, 100);
+            }
+            
+            // Special handling for calendar tab
+            if (tabName === 'calendar') {
+                setTimeout(() => {
+                    renderCalendar();
+                }, 100);
+            }
+            
+            // Special handling for submissions tab
+            if (tabName === 'submissions') {
+                setTimeout(() => {
+                    // Clear any pre-filled search values
+                    document.getElementById('searchFilter').value = '';
+                    document.getElementById('hospitalFilter').value = '';
+                    document.getElementById('statusFilter').value = '';
+                    
+                    // Reset date filter to "All Time"
+                    document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelector('.quick-filter-btn').classList.add('active');
+                    currentDateFilter = 'all';
+                    
+                    // Apply filters to show all results
+                    applyFilters();
+                }, 100);
+            }
+            
+            // Trigger animations for the active tab
+            if (tabName === 'analytics') {
+                setTimeout(() => {
+                    animateChartBars();
+                }, 300);
+            }
+        }
+
+        function animateChartBars() {
+            // Animate the revenue trend chart on hover
+            const chartBars = document.querySelectorAll('[data-value]');
+            chartBars.forEach((bar, index) => {
+                bar.addEventListener('mouseenter', function() {
+                    const valueLabel = this.querySelector('div');
+                    if (valueLabel) {
+                        valueLabel.style.opacity = '1';
+                    }
+                });
+                
+                bar.addEventListener('mouseleave', function() {
+                    const valueLabel = this.querySelector('div');
+                    if (valueLabel) {
+                        valueLabel.style.opacity = '0';
+                    }
                 });
             });
-
-            // Update overview stats
-            document.getElementById('totalItems').textContent = totalItems;
-            document.getElementById('lowStockItems').textContent = lowStockCount;
-
-            // Update tray status displays
-            updateTrayStatus('hammertoe', inventoryData.trays.hammertoe);
-            updateTrayStatus('mtp', inventoryData.trays.mtp);
-            updateTrayStatus('lapidus', inventoryData.trays.lapidus);
-            updateTrayStatus('lab', inventoryData.trays.lab);
-            updateTrayStatus('demo', inventoryData.trays.demo);
-        }
-
-        function updateTrayStatus(trayName, trayData) {
-            const items = Object.values(trayData);
-            const total = items.length;
-            const available = items.filter(qty => qty > 3).length;
-            const lowStock = items.filter(qty => qty <= 3).length;
-
-            if (document.getElementById(trayName + 'Total')) {
-                document.getElementById(trayName + 'Total').textContent = total;
-            }
-            if (document.getElementById(trayName + 'Available')) {
-                document.getElementById(trayName + 'Available').textContent = available;
-            }
-            if (document.getElementById(trayName + 'Low')) {
-                document.getElementById(trayName + 'Low').textContent = lowStock;
-            }
-        }
-
-        function adjustQuantity(trayName, itemName, change) {
-            const currentValue = inventoryData.trays[trayName][itemName];
-            const newValue = Math.max(0, currentValue + change);
-            
-            inventoryData.trays[trayName][itemName] = newValue;
-            
-            // Update input field
-            const input = document.querySelector(`[data-tray="${trayName}"][data-item="${itemName}"]`);
-            if (input) {
-                input.value = newValue;
-                // Add warning styling for low stock
-                if (newValue <= 3) {
-                    input.style.borderColor = 'var(--warning-amber)';
-                } else {
-                    input.style.borderColor = 'var(--glass-border)';
-                }
-            }
-            
-            updateInventoryDisplay();
-        }
-
-        function updateTray(trayName) {
-            // Get all inputs for this tray
-            const inputs = document.querySelectorAll(`[data-tray="${trayName}"]`);
-            
-            inputs.forEach(input => {
-                const itemName = input.getAttribute('data-item');
-                const quantity = parseInt(input.value) || 0;
-                inventoryData.trays[trayName][itemName] = quantity;
-            });
-
-            inventoryData.lastUpdated = new Date();
-            updateInventoryDisplay();
-            
-            // Show success message
-            showNotification(`${trayName} tray updated successfully!`, 'success');
-        }
-
-        function requestRestockTray(trayName) {
-            // Simulate restock request
-            showNotification(`Restock request submitted for ${trayName} tray. You will be contacted within 24 hours.`, 'info');
-            
-            // Log the request (in real implementation, this would go to server)
-            console.log(`Restock requested for ${trayName} tray by ${sampleDistributor.companyName}`);
-        }
-
-        function showInventoryReminder() {
-            document.getElementById('inventoryReminderModal').style.display = 'flex';
-        }
-
-        function dismissInventoryReminder() {
-            document.getElementById('inventoryReminderModal').style.display = 'none';
-            
-            // Set reminder for next week
-            const nextReminder = new Date();
-            nextReminder.setDate(nextReminder.getDate() + 7);
-            localStorage.setItem('nextInventoryReminder', nextReminder.toISOString());
-        }
-
-        function startInventoryUpdate() {
-            document.getElementById('inventoryReminderModal').style.display = 'none';
-            
-            // Focus on first tray input
-            const firstInput = document.querySelector('.quantity-input');
-            if (firstInput) {
-                firstInput.focus();
-                firstInput.select();
-            }
-        }
-
-        function checkInventoryReminder() {
-            const nextReminder = localStorage.getItem('nextInventoryReminder');
-            if (!nextReminder || new Date() >= new Date(nextReminder)) {
-                // Show reminder after a short delay
-                setTimeout(() => {
-                    showInventoryReminder();
-                }, 2000);
-            }
-        }
-
-        function showNotification(message, type = 'info') {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 2rem;
-                right: 2rem;
-                background: var(--glass-bg);
-                backdrop-filter: blur(20px);
-                border: 1px solid var(--glass-border);
-                border-radius: 12px;
-                padding: 1rem 1.5rem;
-                color: var(--text-primary);
-                font-weight: 600;
-                box-shadow: var(--shadow-lg);
-                z-index: 1001;
-                animation: slideInRight 0.3s ease-out;
-                max-width: 300px;
-            `;
-            
-            const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle';
-            const color = type === 'success' ? 'var(--success-green)' : type === 'error' ? 'var(--danger-red)' : 'var(--accent-blue)';
-            
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <i class="fas fa-${icon}" style="color: ${color}; font-size: 1.2rem;"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Auto remove after 4 seconds
-            setTimeout(() => {
-                notification.style.animation = 'slideInRight 0.3s ease-out reverse';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 4000);
         }
 
         // Initialize dashboard
         function initializeDashboard() {
             let distributor = sampleDistributor;
             updateUI(distributor);
-            updateInventoryDisplay();
-            
-            // Set up weekly reminder check
-            const lastCheck = localStorage.getItem('lastInventoryCheck');
-            const today = new Date().toDateString();
-            
-            if (lastCheck !== today) {
-                localStorage.setItem('lastInventoryCheck', today);
-                // Check if it's been a week since last update
-                const daysSinceUpdate = Math.floor((Date.now() - inventoryData.lastUpdated.getTime()) / (1000 * 60 * 60 * 24));
-                if (daysSinceUpdate >= 7) {
-                    setTimeout(() => {
-                        showInventoryReminder();
-                    }, 3000);
-                }
-            }
             
             // Animate elements on load
             setTimeout(() => {
@@ -2563,35 +3547,13 @@
             document.getElementById('companyName').textContent = distributor.companyName;
         }
 
-        // Add input event listeners for real-time updates
-        document.addEventListener('DOMContentLoaded', function() {
-            const quantityInputs = document.querySelectorAll('.quantity-input');
-            quantityInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    const trayName = this.getAttribute('data-tray');
-                    const itemName = this.getAttribute('data-item');
-                    const quantity = parseInt(this.value) || 0;
-                    
-                    inventoryData.trays[trayName][itemName] = quantity;
-                    
-                    // Update styling based on quantity
-                    if (quantity <= 3) {
-                        this.style.borderColor = 'var(--warning-amber)';
-                    } else {
-                        this.style.borderColor = 'var(--glass-border)';
-                    }
-                    
-                    updateInventoryDisplay();
-                });
-            });
-        });
-
         // Initialize when page loads
         window.addEventListener('load', function() {
             initializeDashboard();
+            renderCalendar(); // Initialize calendar
         });
 
-        console.log('Enhanced Medical Dashboard with Inventory Ready! 🏥📦✨');
+        console.log('Enhanced Medical Dashboard Ready! 🏥✨');
     </script>
 </body>
 </html>
