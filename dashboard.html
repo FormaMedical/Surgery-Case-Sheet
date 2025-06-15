@@ -693,6 +693,96 @@
             }
         }
 
+        /* Calendar Styles */
+        .calendar-day {
+            min-height: 120px;
+            padding: 0.5rem;
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: var(--surface-medium);
+        }
+
+        .calendar-day:hover {
+            background: var(--surface-light);
+        }
+
+        .calendar-day.other-month {
+            color: var(--text-muted);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .calendar-day.today {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .calendar-day.selected {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid var(--success-green);
+        }
+
+        .day-number {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .surgery-item {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .surgery-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .surgery-item.high-priority {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .surgery-item.urgent {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Form Styles */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        select option {
+            background: var(--surface-medium);
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .calendar-day {
+                min-height: 80px;
+                font-size: 0.85rem;
+            }
+
+            .surgery-item {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.4rem;
+            }
+        }
+
         /* Loading and animations */
         .loading {
             position: relative;
@@ -756,6 +846,10 @@
             <button class="nav-tab active" onclick="showTab('overview')">
                 <i class="fas fa-chart-line"></i>
                 Overview
+            </button>
+            <button class="nav-tab" onclick="showTab('calendar')">
+                <i class="fas fa-calendar-alt"></i>
+                Surgery Calendar
             </button>
             <button class="nav-tab" onclick="showTab('analytics')">
                 <i class="fas fa-chart-bar"></i>
@@ -868,7 +962,174 @@
             </div>
         </div>
 
-        <!-- Analytics Tab -->
+        <!-- Calendar Tab -->
+        <div id="calendarTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    Surgery Calendar
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Schedule and manage your upcoming surgeries with ease</p>
+                
+                <!-- Calendar Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <button onclick="previousMonth()" style="background: var(--surface-medium); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.75rem; color: var(--text-primary); cursor: pointer; transition: all 0.3s ease;">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="currentMonth" style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700; min-width: 200px; text-align: center;">December 2024</h3>
+                        <button onclick="nextMonth()" style="background: var(--surface-medium); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.75rem; color: var(--text-primary); cursor: pointer; transition: all 0.3s ease;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <button onclick="goToToday()" style="background: var(--primary-gradient); color: white; border: none; border-radius: 12px; padding: 0.75rem 1.5rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fas fa-calendar-day"></i>
+                        Today
+                    </button>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div id="calendarContainer" style="background: var(--surface-medium); border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border);">
+                    <!-- Calendar Header Days -->
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); background: var(--surface-light);">
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary); border-right: 1px solid var(--border-color);">Sun</div>
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary); border-right: 1px solid var(--border-color);">Mon</div>
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary); border-right: 1px solid var(--border-color);">Tue</div>
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary); border-right: 1px solid var(--border-color);">Wed</div>
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary); border-right: 1px solid var(--border-color);">Thu</div>
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary); border-right: 1px solid var(--border-color);">Fri</div>
+                        <div style="padding: 1rem; text-align: center; font-weight: 700; color: var(--text-primary);">Sat</div>
+                    </div>
+                    
+                    <!-- Calendar Days -->
+                    <div id="calendarGrid" style="display: grid; grid-template-columns: repeat(7, 1fr);">
+                        <!-- Days will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Surgery Modal -->
+        <div id="surgeryModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 id="modalTitle" style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Add Surgery</h2>
+                    <button onclick="closeSurgeryModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <form id="surgeryForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Date</label>
+                            <input type="date" id="surgeryDate" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Time</label>
+                            <input type="time" id="surgeryTime" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Procedure Type</label>
+                        <select id="procedureType" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                            <option value="">Select Procedure</option>
+                            <option value="MTP Fusion">MTP Fusion</option>
+                            <option value="Hammertoe Correction">Hammertoe Correction</option>
+                            <option value="Lapidus Procedure">Lapidus Procedure</option>
+                            <option value="Bunion Correction">Bunion Correction</option>
+                            <option value="Ankle Fusion">Ankle Fusion</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Surgeon</label>
+                        <select id="surgeonName" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                            <option value="">Select Surgeon</option>
+                            <option value="Dr. Benjamin Potter">Dr. Benjamin Potter</option>
+                            <option value="Dr. Sarah Johnson">Dr. Sarah Johnson</option>
+                            <option value="Dr. Michael Wilson">Dr. Michael Wilson</option>
+                            <option value="Dr. Lisa Chen">Dr. Lisa Chen</option>
+                            <option value="Dr. Robert Martinez">Dr. Robert Martinez</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Hospital/Facility</label>
+                        <select id="hospitalName" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                            <option value="">Select Hospital</option>
+                            <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
+                            <option value="Regional Medical Center">Regional Medical Center</option>
+                            <option value="City General Hospital">City General Hospital</option>
+                            <option value="Metro Health Center">Metro Health Center</option>
+                            <option value="Valley Medical Center">Valley Medical Center</option>
+                        </select>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Patient Initials</label>
+                            <input type="text" id="patientInitials" placeholder="e.g., J.D." required maxlength="10" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                        </div>
+                        <div>
+                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Case Priority</label>
+                            <select id="casePriority" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
+                                <option value="Standard">Standard</option>
+                                <option value="High">High Priority</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Notes</label>
+                        <textarea id="surgeryNotes" rows="3" placeholder="Additional notes about the surgery..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <button type="button" onclick="closeSurgeryModal()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer;">
+                            Cancel
+                        </button>
+                        <button type="submit" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer;">
+                            <i class="fas fa-save"></i>
+                            Save Surgery
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Surgery Details Modal -->
+        <div id="surgeryDetailsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Surgery Details</h2>
+                    <button onclick="closeSurgeryDetailsModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div id="surgeryDetailsContent" style="margin-bottom: 2rem;">
+                    <!-- Content will be filled by JavaScript -->
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button onclick="editSelectedSurgery()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-edit"></i>
+                        Edit
+                    </button>
+                    <button onclick="submitCaseFromCalendar()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Case
+                    </button>
+                    <button onclick="deleteSelectedSurgery()" style="padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%); color: white; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
         <div id="analyticsTab" class="tab-content">
             <!-- Performance Overview Dashboard -->
             <div class="stats-section">
@@ -1245,6 +1506,331 @@
             window.location.href = 'index.html';
         }
 
+        // Calendar functionality
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedSurgery = null;
+        let editingSurgery = null;
+        let surgeries = [
+            // Sample data
+            {
+                id: 1,
+                date: '2024-12-20',
+                time: '09:00',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'J.S.',
+                priority: 'Standard',
+                notes: 'Regular follow-up case'
+            },
+            {
+                id: 2,
+                date: '2024-12-22',
+                time: '14:30',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'M.B.',
+                priority: 'High',
+                notes: 'Patient has diabetes, monitor closely'
+            }
+        ];
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and days in month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+            // Previous month's trailing days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayNumber = daysInPrevMonth - i;
+                const dayElement = createDayElement(dayNumber, true);
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Current month's days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday = isCurrentMonth && day === today.getDate();
+                const dayElement = createDayElement(day, false, isToday);
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Next month's leading days
+            const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+            const remainingCells = totalCells - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayElement = createDayElement(day, true);
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function createDayElement(dayNumber, isOtherMonth, isToday = false) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            if (isOtherMonth) dayElement.classList.add('other-month');
+            if (isToday) dayElement.classList.add('today');
+
+            const dayDate = isOtherMonth ? null : 
+                `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+
+            dayElement.innerHTML = `
+                <div class="day-number">${dayNumber}</div>
+                <div class="surgeries-container"></div>
+            `;
+
+            if (!isOtherMonth && dayDate) {
+                const daySurgeries = surgeries.filter(surgery => surgery.date === dayDate);
+                const surgeriesContainer = dayElement.querySelector('.surgeries-container');
+                
+                daySurgeries.forEach(surgery => {
+                    const surgeryElement = document.createElement('div');
+                    surgeryElement.className = `surgery-item ${surgery.priority.toLowerCase().replace(' ', '-')}`;
+                    surgeryElement.innerHTML = `
+                        <i class="fas fa-clock" style="font-size: 0.6rem;"></i>
+                        ${surgery.time} ${surgery.procedure}
+                    `;
+                    surgeryElement.onclick = (e) => {
+                        e.stopPropagation();
+                        showSurgeryDetails(surgery);
+                    };
+                    surgeriesContainer.appendChild(surgeryElement);
+                });
+
+                dayElement.onclick = () => selectDate(dayDate, dayElement);
+            }
+
+            return dayElement;
+        }
+
+        function selectDate(date, element) {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day.selected').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Select new date
+            element.classList.add('selected');
+            selectedDate = date;
+            
+            // Open surgery modal for adding new surgery
+            openSurgeryModal(date);
+        }
+
+        function openSurgeryModal(date = null, surgery = null) {
+            const modal = document.getElementById('surgeryModal');
+            const form = document.getElementById('surgeryForm');
+            const title = document.getElementById('modalTitle');
+
+            if (surgery) {
+                // Editing mode
+                title.textContent = 'Edit Surgery';
+                editingSurgery = surgery;
+                
+                // Populate form with surgery data
+                document.getElementById('surgeryDate').value = surgery.date;
+                document.getElementById('surgeryTime').value = surgery.time;
+                document.getElementById('procedureType').value = surgery.procedure;
+                document.getElementById('surgeonName').value = surgery.surgeon;
+                document.getElementById('hospitalName').value = surgery.hospital;
+                document.getElementById('patientInitials').value = surgery.patient;
+                document.getElementById('casePriority').value = surgery.priority;
+                document.getElementById('surgeryNotes').value = surgery.notes || '';
+            } else {
+                // Adding mode
+                title.textContent = 'Add Surgery';
+                editingSurgery = null;
+                form.reset();
+                
+                if (date) {
+                    document.getElementById('surgeryDate').value = date;
+                }
+            }
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('surgeryTime').focus();
+            }, 100);
+        }
+
+        function closeSurgeryModal() {
+            document.getElementById('surgeryModal').style.display = 'none';
+            editingSurgery = null;
+        }
+
+        function showSurgeryDetails(surgery) {
+            selectedSurgery = surgery;
+            const modal = document.getElementById('surgeryDetailsModal');
+            const content = document.getElementById('surgeryDetailsContent');
+
+            const priorityColor = surgery.priority === 'High' ? 'var(--warning-amber)' : 
+                                 surgery.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
+
+            content.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Date & Time</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${formatDate(surgery.date)} at ${formatTime(surgery.time)}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Priority</div>
+                            <span style="background: rgba(59, 130, 246, 0.2); color: ${priorityColor}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${priorityColor}30;">${surgery.priority}</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Procedure</div>
+                        <div style="color: var(--text-primary); font-weight: 600; font-size: 1.1rem;">${surgery.procedure}</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Surgeon</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${surgery.surgeon}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Patient</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${surgery.patient}</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Hospital</div>
+                        <div style="color: var(--text-primary); font-weight: 600;">${surgery.hospital}</div>
+                    </div>
+                    
+                    ${surgery.notes ? `
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Notes</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${surgery.notes}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSurgeryDetailsModal() {
+            document.getElementById('surgeryDetailsModal').style.display = 'none';
+            selectedSurgery = null;
+        }
+
+        function editSelectedSurgery() {
+            closeSurgeryDetailsModal();
+            openSurgeryModal(null, selectedSurgery);
+        }
+
+        function deleteSelectedSurgery() {
+            if (selectedSurgery && confirm('Are you sure you want to delete this surgery?')) {
+                surgeries = surgeries.filter(s => s.id !== selectedSurgery.id);
+                renderCalendar();
+                closeSurgeryDetailsModal();
+            }
+        }
+
+        function submitCaseFromCalendar() {
+            if (selectedSurgery) {
+                // Store surgery data for case sheet form
+                const surgeryData = {
+                    procedure: selectedSurgery.procedure,
+                    surgeon: selectedSurgery.surgeon,
+                    hospital: selectedSurgery.hospital,
+                    patient: selectedSurgery.patient,
+                    date: selectedSurgery.date,
+                    time: selectedSurgery.time,
+                    notes: selectedSurgery.notes,
+                    priority: selectedSurgery.priority
+                };
+                
+                // Store in sessionStorage to transfer to form
+                sessionStorage.setItem('prefilledSurgery', JSON.stringify(surgeryData));
+                
+                // Navigate to case sheet form
+                window.location.href = 'form.html';
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            renderCalendar();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        // Handle surgery form submission
+        document.getElementById('surgeryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: editingSurgery ? editingSurgery.id : Date.now(),
+                date: document.getElementById('surgeryDate').value,
+                time: document.getElementById('surgeryTime').value,
+                procedure: document.getElementById('procedureType').value,
+                surgeon: document.getElementById('surgeonName').value,
+                hospital: document.getElementById('hospitalName').value,
+                patient: document.getElementById('patientInitials').value,
+                priority: document.getElementById('casePriority').value,
+                notes: document.getElementById('surgeryNotes').value
+            };
+
+            if (editingSurgery) {
+                // Update existing surgery
+                const index = surgeries.findIndex(s => s.id === editingSurgery.id);
+                if (index !== -1) {
+                    surgeries[index] = formData;
+                }
+            } else {
+                // Add new surgery
+                surgeries.push(formData);
+            }
+
+            renderCalendar();
+            closeSurgeryModal();
+        });
+
         // Management authentication functions
         function handlePasswordKeypress(event) {
             if (event.key === 'Enter') {
@@ -1306,6 +1892,13 @@
                 }, 100);
             }
             
+            // Special handling for calendar tab
+            if (tabName === 'calendar') {
+                setTimeout(() => {
+                    renderCalendar();
+                }, 100);
+            }
+            
             // Trigger animations for the active tab
             if (tabName === 'analytics') {
                 setTimeout(() => {
@@ -1356,7 +1949,10 @@
         }
 
         // Initialize when page loads
-        window.addEventListener('load', initializeDashboard);
+        window.addEventListener('load', function() {
+            initializeDashboard();
+            renderCalendar(); // Initialize calendar
+        });
 
         console.log('Enhanced Medical Dashboard Ready! 🏥✨');
     </script>
