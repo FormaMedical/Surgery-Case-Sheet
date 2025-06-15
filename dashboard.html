@@ -765,13 +765,13 @@
                 <i class="fas fa-clipboard-list"></i>
                 Submissions
             </button>
-            <button class="nav-tab" onclick="showTab('commissions')">
-                <i class="fas fa-dollar-sign"></i>
-                Commissions
-            </button>
             <button class="nav-tab" onclick="showTab('relationships')">
                 <i class="fas fa-handshake"></i>
                 Relationships
+            </button>
+            <button class="nav-tab" onclick="showTab('management')" style="margin-left: auto; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white;">
+                <i class="fas fa-users-cog"></i>
+                Management
             </button>
         </div>
 
@@ -825,8 +825,8 @@
                         <div class="stat-trend">+15% vs last month</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" id="monthlyCommission">$2,450</div>
-                        <div class="stat-label">Monthly Commission</div>
+                        <div class="stat-number" id="caseValue">$28,450</div>
+                        <div class="stat-label">Total Case Value</div>
                         <div class="stat-trend">+22% vs last month</div>
                     </div>
                     <div class="stat-item">
@@ -1096,40 +1096,62 @@
             </div>
         </div>
 
-        <!-- Commissions Tab -->
-        <div id="commissionsTab" class="tab-content">
-            <!-- Commission Summary -->
-            <div style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem; text-align: center; box-shadow: var(--shadow-success); position: relative; overflow: hidden;">
-                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; position: relative; z-index: 1;">$2,450</div>
-                <div style="font-size: 1.2rem; opacity: 0.9; position: relative; z-index: 1;">Total Monthly Commission</div>
-            </div>
+        <!-- Commissions Tab - REMOVED -->
 
-            <!-- Commission Overview Stats -->
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-dollar-sign"></i>
-                    Commission Overview
-                </h2>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--success-green);">$1,855</div>
-                        <div class="stat-label">Paid Commissions</div>
-                        <div class="stat-trend">9 cases completed</div>
+        <!-- Management Tab -->
+        <div id="managementTab" class="tab-content">
+            <!-- Password Protection Modal -->
+            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
+                    <div style="margin-bottom: 2rem;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
+                            <i class="fas fa-shield-alt" style="font-size: 2rem; color: white;"></i>
+                        </div>
+                        <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">Management Access</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Enter password to access management dashboard</p>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--warning-amber);">$595</div>
-                        <div class="stat-label">Pending Commissions</div>
-                        <div class="stat-trend">3 cases awaiting PO</div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <input type="password" id="managementPassword" placeholder="Enter password" style="width: 100%; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-primary); font-size: 1rem; text-align: center;" onkeypress="handlePasswordKeypress(event)">
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">8.7%</div>
-                        <div class="stat-label">Average Commission Rate</div>
-                        <div class="stat-trend">Based on case value</div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="cancelManagementAccess()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Cancel
+                        </button>
+                        <button onclick="verifyManagementPassword()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Access
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">92%</div>
-                        <div class="stat-label">PO Success Rate</div>
-                        <div class="stat-trend">11/12 cases approved</div>
+                    
+                    <div id="passwordError" style="display: none; color: var(--danger-red); font-size: 0.85rem; margin-top: 1rem; font-weight: 600;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Incorrect password. Please try again.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Management Dashboard Content (Hidden until authenticated) -->
+            <div id="managementContent" style="display: none;">
+                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-lg);">
+                        <i class="fas fa-users-cog" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 2rem;">Management Dashboard</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary);">Access comprehensive management tools and team oversight</p>
+                    
+                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="management-dashboard.html" style="text-decoration: none;">
+                            <button style="padding: 1.5rem 3rem; border: none; border-radius: 16px; background: var(--primary-gradient); color: white; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-md);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
+                                <i class="fas fa-external-link-alt"></i>
+                                Launch Management Dashboard
+                            </button>
+                        </a>
+                        
+                        <button onclick="logoutManagement()" style="padding: 1.5rem 3rem; border: 1px solid var(--glass-border); border-radius: 16px; background: var(--surface-medium); color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1223,6 +1245,43 @@
             window.location.href = 'index.html';
         }
 
+        // Management authentication functions
+        function handlePasswordKeypress(event) {
+            if (event.key === 'Enter') {
+                verifyManagementPassword();
+            }
+        }
+
+        function verifyManagementPassword() {
+            const password = document.getElementById('managementPassword').value;
+            const correctPassword = 'admin123'; // You can change this to any password
+            
+            if (password === correctPassword) {
+                document.getElementById('passwordModal').style.display = 'none';
+                document.getElementById('managementContent').style.display = 'block';
+                document.getElementById('passwordError').style.display = 'none';
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('managementPassword').value = '';
+                document.getElementById('managementPassword').focus();
+            }
+        }
+
+        function cancelManagementAccess() {
+            showTab('overview');
+            document.getElementById('passwordModal').style.display = 'flex';
+            document.getElementById('managementContent').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('managementPassword').value = '';
+        }
+
+        function logoutManagement() {
+            document.getElementById('passwordModal').style.display = 'flex';
+            document.getElementById('managementContent').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('managementPassword').value = '';
+        }
+
         // Tab functionality
         function showTab(tabName) {
             // Hide all tab contents
@@ -1235,6 +1294,17 @@
             // Show selected tab
             document.getElementById(tabName + 'Tab').classList.add('active');
             event.target.classList.add('active');
+            
+            // Special handling for management tab
+            if (tabName === 'management') {
+                document.getElementById('passwordModal').style.display = 'flex';
+                document.getElementById('managementContent').style.display = 'none';
+                document.getElementById('passwordError').style.display = 'none';
+                document.getElementById('managementPassword').value = '';
+                setTimeout(() => {
+                    document.getElementById('managementPassword').focus();
+                }, 100);
+            }
             
             // Trigger animations for the active tab
             if (tabName === 'analytics') {
