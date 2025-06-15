@@ -693,7 +693,168 @@
             }
         }
 
-        /* Submission Detail Modal Styles */
+        /* Filter Styles */
+        .filter-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .filter-input, .filter-select {
+            padding: 0.75rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .quick-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            background: var(--surface-medium);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .quick-filter-btn:hover {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+            transform: translateY(-1px);
+        }
+
+        .quick-filter-btn.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .clear-filters-btn {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--surface-medium);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .clear-filters-btn:hover {
+            background: var(--danger-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .submissions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .results-info {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-btn {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-btn:hover {
+            background: var(--surface-light);
+            color: var(--accent-blue);
+        }
+
+        .sort-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .submissions-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .sort-controls {
+                justify-content: center;
+            }
+        }
         .detail-row {
             display: flex;
             justify-content: space-between;
@@ -1361,8 +1522,94 @@
                 </h2>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
                 
+                <!-- Advanced Filters -->
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <i class="fas fa-search"></i> Search Cases
+                            </label>
+                            <input type="text" id="searchFilter" class="filter-input" placeholder="Search by surgeon, hospital, or patient..." oninput="applyFilters()">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <i class="fas fa-hospital"></i> Hospital
+                            </label>
+                            <select id="hospitalFilter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Hospitals</option>
+                                <option value="Holston Valley Surgery Center">Holston Valley Surgery Center</option>
+                                <option value="Regional Medical Center">Regional Medical Center</option>
+                                <option value="City General Hospital">City General Hospital</option>
+                                <option value="Metro Health Center">Metro Health Center</option>
+                                <option value="Valley Medical Center">Valley Medical Center</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">
+                                <i class="fas fa-clipboard-check"></i> Status
+                            </label>
+                            <select id="statusFilter" class="filter-select" onchange="applyFilters()">
+                                <option value="">All Statuses</option>
+                                <option value="PO Received">PO Received</option>
+                                <option value="Awaiting PO">Awaiting PO</option>
+                            </select>
+                        </div>
+                        
+                        <button class="clear-filters-btn" onclick="clearAllFilters()">
+                            <i class="fas fa-times"></i>
+                            Clear
+                        </button>
+                    </div>
+                    
+                    <!-- Quick Date Filters -->
+                    <div style="margin-top: 1rem;">
+                        <div class="filter-label" style="margin-bottom: 0.5rem;">
+                            <i class="fas fa-calendar"></i> Quick Date Filters
+                        </div>
+                        <div class="quick-filters">
+                            <button class="quick-filter-btn active" onclick="applyDateFilter('all')">All Time</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('today')">Today</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('yesterday')">Yesterday</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('thisWeek')">This Week</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('lastWeek')">Last Week</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('thisMonth')">This Month</button>
+                            <button class="quick-filter-btn" onclick="applyDateFilter('lastMonth')">Last Month</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Header -->
+                <div class="submissions-header">
+                    <div class="results-info">
+                        <i class="fas fa-list"></i>
+                        <span id="resultsCount">8 cases found</span>
+                        <span id="filterStatus"></span>
+                    </div>
+                    <div class="sort-controls">
+                        <span style="color: var(--text-muted); font-size: 0.85rem; margin-right: 0.5rem;">Sort by:</span>
+                        <button class="sort-btn active" onclick="applySorting('date-desc')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Newest First
+                        </button>
+                        <button class="sort-btn" onclick="applySorting('date-asc')">
+                            <i class="fas fa-calendar-alt"></i>
+                            Oldest First
+                        </button>
+                        <button class="sort-btn" onclick="applySorting('value-desc')">
+                            <i class="fas fa-dollar-sign"></i>
+                            Highest Value
+                        </button>
+                        <button class="sort-btn" onclick="applySorting('status')">
+                            <i class="fas fa-filter"></i>
+                            Status
+                        </button>
+                    </div>
+                </div>
+                
                 <div id="allSubmissions">
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567890')">
+                    <div class="recent-item" data-case-id="CS-1234567890" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="J.S." data-status="PO Received" data-date="2024-12-20" data-submitted="2024-12-10" data-value="3285" onclick="showSubmissionDetails('CS-1234567890')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
@@ -1370,7 +1617,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
                     
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567891')">
+                    <div class="recent-item" data-case-id="CS-1234567891" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="M.B." data-status="Awaiting PO" data-date="2024-12-22" data-submitted="2024-12-12" data-value="1850" onclick="showSubmissionDetails('CS-1234567891')">
                         <div class="recent-info">
                             <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
                             <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Dec 22, 2024 • <strong>Patient:</strong> M.B. • <strong>Total:</strong> $1,850</p>
@@ -1378,7 +1625,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567892')">
+                    <div class="recent-item" data-case-id="CS-1234567892" data-surgeon="Dr. Michael Wilson" data-hospital="City General Hospital" data-patient="R.D." data-status="PO Received" data-date="2024-12-15" data-submitted="2024-12-03" data-value="4920" onclick="showSubmissionDetails('CS-1234567892')">
                         <div class="recent-info">
                             <h4>Lapidus Procedure • Dr. Michael Wilson</h4>
                             <p><strong>Hospital:</strong> City General Hospital • <strong>Surgery Date:</strong> Dec 15, 2024 • <strong>Patient:</strong> R.D. • <strong>Total:</strong> $4,920</p>
@@ -1386,7 +1633,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567893')">
+                    <div class="recent-item" data-case-id="CS-1234567893" data-surgeon="Dr. Lisa Chen" data-hospital="Metro Health Center" data-patient="K.M." data-status="Awaiting PO" data-date="2025-01-12" data-submitted="2024-12-28" data-value="2175" onclick="showSubmissionDetails('CS-1234567893')">
                         <div class="recent-info">
                             <h4>Bunion Correction • Dr. Lisa Chen</h4>
                             <p><strong>Hospital:</strong> Metro Health Center • <strong>Surgery Date:</strong> Jan 12, 2025 • <strong>Patient:</strong> K.M. • <strong>Total:</strong> $2,175</p>
@@ -1394,7 +1641,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567894')">
+                    <div class="recent-item" data-case-id="CS-1234567894" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="T.R." data-status="PO Received" data-date="2025-01-08" data-submitted="2024-12-22" data-value="3450" onclick="showSubmissionDetails('CS-1234567894')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 8, 2025 • <strong>Patient:</strong> T.R. • <strong>Total:</strong> $3,450</p>
@@ -1402,7 +1649,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567895')">
+                    <div class="recent-item" data-case-id="CS-1234567895" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="D.K." data-status="Awaiting PO" data-date="2025-01-05" data-submitted="2024-12-18" data-value="1920" onclick="showSubmissionDetails('CS-1234567895')">
                         <div class="recent-info">
                             <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
                             <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Jan 5, 2025 • <strong>Patient:</strong> D.K. • <strong>Total:</strong> $1,920</p>
@@ -1410,7 +1657,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567896')">
+                    <div class="recent-item" data-case-id="CS-1234567896" data-surgeon="Dr. Robert Martinez" data-hospital="Valley Medical Center" data-patient="A.L." data-status="PO Received" data-date="2024-12-28" data-submitted="2024-12-15" data-value="5200" onclick="showSubmissionDetails('CS-1234567896')">
                         <div class="recent-info">
                             <h4>Ankle Fusion • Dr. Robert Martinez</h4>
                             <p><strong>Hospital:</strong> Valley Medical Center • <strong>Surgery Date:</strong> Dec 28, 2024 • <strong>Patient:</strong> A.L. • <strong>Total:</strong> $5,200</p>
@@ -1418,13 +1665,20 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567897')">
+                    <div class="recent-item" data-case-id="CS-1234567897" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="M.K." data-status="Awaiting PO" data-date="2025-01-15" data-submitted="2025-01-02" data-value="3120" onclick="showSubmissionDetails('CS-1234567897')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 15, 2025 • <strong>Patient:</strong> M.K. • <strong>Total:</strong> $3,120</p>
                         </div>
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div id="noResults" style="display: none; text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                    <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-blue);"></i>
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">No cases found</h3>
+                    <p style="font-size: 1.1rem;">Try adjusting your filters or search terms</p>
                 </div>
             </div>
         </div>
@@ -1592,6 +1846,192 @@
         // Logout function
         function logout() {
             window.location.href = 'index.html';
+        }
+
+        // Filtering and sorting functionality
+        let currentDateFilter = 'all';
+        let currentSort = 'date-desc';
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            const allItems = document.querySelectorAll('#allSubmissions .recent-item');
+            let visibleCount = 0;
+
+            allItems.forEach(item => {
+                const surgeon = item.getAttribute('data-surgeon').toLowerCase();
+                const hospital = item.getAttribute('data-hospital');
+                const patient = item.getAttribute('data-patient').toLowerCase();
+                const status = item.getAttribute('data-status');
+                const date = new Date(item.getAttribute('data-date'));
+                
+                // Text search
+                const matchesSearch = !searchTerm || 
+                    surgeon.includes(searchTerm) || 
+                    hospital.toLowerCase().includes(searchTerm) || 
+                    patient.includes(searchTerm);
+                
+                // Hospital filter
+                const matchesHospital = !hospitalFilter || hospital === hospitalFilter;
+                
+                // Status filter
+                const matchesStatus = !statusFilter || status === statusFilter;
+                
+                // Date filter
+                const matchesDate = checkDateFilter(date, currentDateFilter);
+                
+                if (matchesSearch && matchesHospital && matchesStatus && matchesDate) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            updateResultsInfo(visibleCount);
+            applySorting(currentSort);
+        }
+
+        function checkDateFilter(itemDate, filter) {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            const startOfLastWeek = new Date(startOfWeek);
+            startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+            const endOfLastWeek = new Date(startOfWeek);
+            endOfLastWeek.setDate(endOfLastWeek.getDate() - 1);
+            
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+
+            switch (filter) {
+                case 'all':
+                    return true;
+                case 'today':
+                    return itemDate.toDateString() === today.toDateString();
+                case 'yesterday':
+                    return itemDate.toDateString() === yesterday.toDateString();
+                case 'thisWeek':
+                    return itemDate >= startOfWeek && itemDate <= today;
+                case 'lastWeek':
+                    return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
+                case 'thisMonth':
+                    return itemDate >= startOfMonth && itemDate <= today;
+                case 'lastMonth':
+                    return itemDate >= startOfLastMonth && itemDate <= endOfLastMonth;
+                default:
+                    return true;
+            }
+        }
+
+        function applyDateFilter(filter) {
+            currentDateFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyFilters();
+        }
+
+        function applySorting(sortType) {
+            currentSort = sortType;
+            
+            // Update active sort button
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target?.classList.add('active');
+            
+            const container = document.getElementById('allSubmissions');
+            const items = Array.from(container.querySelectorAll('.recent-item[style*="flex"]'));
+            
+            items.sort((a, b) => {
+                switch (sortType) {
+                    case 'date-desc':
+                        return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
+                    case 'date-asc':
+                        return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
+                    case 'value-desc':
+                        return parseInt(b.getAttribute('data-value')) - parseInt(a.getAttribute('data-value'));
+                    case 'status':
+                        const statusOrder = { 'Awaiting PO': 0, 'PO Received': 1 };
+                        return statusOrder[a.getAttribute('data-status')] - statusOrder[b.getAttribute('data-status')];
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Re-append sorted items
+            items.forEach(item => container.appendChild(item));
+        }
+
+        function clearAllFilters() {
+            document.getElementById('searchFilter').value = '';
+            document.getElementById('hospitalFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            
+            // Reset date filter to "All Time"
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.quick-filter-btn').classList.add('active');
+            currentDateFilter = 'all';
+            
+            applyFilters();
+        }
+
+        function updateResultsInfo(count) {
+            const resultsCount = document.getElementById('resultsCount');
+            const filterStatus = document.getElementById('filterStatus');
+            const noResults = document.getElementById('noResults');
+            const submissionsList = document.getElementById('allSubmissions');
+            
+            if (count === 0) {
+                noResults.style.display = 'block';
+                submissionsList.style.display = 'none';
+                resultsCount.textContent = 'No cases found';
+            } else {
+                noResults.style.display = 'none';
+                submissionsList.style.display = 'block';
+                resultsCount.textContent = `${count} case${count !== 1 ? 's' : ''} found`;
+            }
+            
+            // Show active filters
+            const activeFilters = [];
+            const searchTerm = document.getElementById('searchFilter').value;
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            if (searchTerm) activeFilters.push(`Search: "${searchTerm}"`);
+            if (hospitalFilter) activeFilters.push(`Hospital: ${hospitalFilter}`);
+            if (statusFilter) activeFilters.push(`Status: ${statusFilter}`);
+            if (currentDateFilter !== 'all') {
+                const filterNames = {
+                    'today': 'Today',
+                    'yesterday': 'Yesterday',
+                    'thisWeek': 'This Week',
+                    'lastWeek': 'Last Week',
+                    'thisMonth': 'This Month',
+                    'lastMonth': 'Last Month'
+                };
+                activeFilters.push(`Date: ${filterNames[currentDateFilter]}`);
+            }
+            
+            if (activeFilters.length > 0) {
+                filterStatus.innerHTML = `<span style="color: var(--accent-blue);">• Filtered by: ${activeFilters.join(', ')}</span>`;
+            } else {
+                filterStatus.innerHTML = '';
+            }
         }
 
         // Submission details data
