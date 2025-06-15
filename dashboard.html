@@ -693,7 +693,229 @@
             }
         }
 
-        /* Filter Styles */
+        /* File Library Styles */
+        .file-category {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            background: var(--primary-gradient);
+        }
+
+        .category-title {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .file-item {
+            background: var(--surface-medium);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .file-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-blue);
+        }
+
+        .file-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .file-icon.pdf {
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
+        }
+
+        .file-icon.excel {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+        }
+
+        .file-icon.word {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+        }
+
+        .file-icon.image {
+            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-meta {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .file-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .file-btn.primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .file-btn.secondary {
+            background: var(--surface-light);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .file-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-files {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-files input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .search-files input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .files-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .file-meta {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .file-actions {
+                flex-direction: column;
+            }
+        }
         .filter-section {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -1075,6 +1297,10 @@
             <button class="nav-tab" onclick="showTab('submissions')">
                 <i class="fas fa-clipboard-list"></i>
                 Submissions
+            </button>
+            <button class="nav-tab" onclick="showTab('files')">
+                <i class="fas fa-folder-open"></i>
+                Files & Resources
             </button>
             <button class="nav-tab" onclick="showTab('relationships')">
                 <i class="fas fa-handshake"></i>
@@ -1760,7 +1986,384 @@
             </div>
         </div>
 
-        <!-- Relationships Tab -->
+        <!-- Files & Resources Tab -->
+        <div id="filesTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-folder-open"></i>
+                    Files & Resources
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Access all essential Forma Medical documents and resources</p>
+                
+                <!-- Search Files -->
+                <div class="search-files">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-search" style="color: var(--text-muted); font-size: 1.2rem;"></i>
+                        <input type="text" id="fileSearch" placeholder="Search files and documents..." oninput="searchFiles()">
+                    </div>
+                </div>
+
+                <!-- Case Sheets & Forms -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Case Sheets & Forms</div>
+                            <div class="category-description">Essential forms for case submissions and documentation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="mtp fusion case sheet form">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">MTP Case Sheet</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 1.2 MB</span>
+                                        <span>Updated: Dec 15, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('mtp-case-sheet.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('mtp-case-sheet.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="hammertoe akin case sheet form">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Hammertoe/Akin Case Sheet</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 1.1 MB</span>
+                                        <span>Updated: Dec 10, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('hammertoe-case-sheet.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('hammertoe-case-sheet.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="lapidus case sheet form">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Lapidus Case Sheet</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 1.3 MB</span>
+                                        <span>Updated: Dec 8, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('lapidus-case-sheet.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('lapidus-case-sheet.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="new account information sheet onboarding">
+                            <div class="file-header">
+                                <div class="file-icon word">
+                                    <i class="fas fa-file-word"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">New Account Information Sheet</div>
+                                    <div class="file-meta">
+                                        <span>DOCX • 0.8 MB</span>
+                                        <span>Updated: Nov 28, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('new-account-info.docx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('new-account-info.docx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Catalogs -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Product Catalogs & Specifications</div>
+                            <div class="category-description">Detailed product information and technical specifications</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="product catalog implants systems">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">2025 Product Catalog</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 8.4 MB</span>
+                                        <span>Updated: Jan 1, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('2025-product-catalog.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('2025-product-catalog.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="pricing price list costs">
+                            <div class="file-header">
+                                <div class="file-icon excel">
+                                    <i class="fas fa-file-excel"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Current Price List</div>
+                                    <div class="file-meta">
+                                        <span>XLSX • 0.9 MB</span>
+                                        <span>Updated: Dec 20, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('price-list-2025.xlsx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('price-list-2025.xlsx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="technical specifications implant dimensions">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Technical Specifications Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 3.2 MB</span>
+                                        <span>Updated: Dec 5, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('tech-specs.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('tech-specs.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training & Educational -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Training & Educational Materials</div>
+                            <div class="category-description">Resources for professional development and product training</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="surgical technique guide procedures">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Surgical Technique Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 5.7 MB</span>
+                                        <span>Updated: Nov 15, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('surgical-techniques.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('surgical-techniques.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="sales training presentation">
+                            <div class="file-header">
+                                <div class="file-icon" style="background: linear-gradient(135deg, #e11d48 0%, #be185d 100%);">
+                                    <i class="fas fa-file-powerpoint"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Sales Training Presentation</div>
+                                    <div class="file-meta">
+                                        <span>PPTX • 12.3 MB</span>
+                                        <span>Updated: Dec 1, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('sales-training.pptx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('sales-training.pptx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="compliance regulatory fda">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Regulatory Compliance Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 2.1 MB</span>
+                                        <span>Updated: Nov 10, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('compliance-guide.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('compliance-guide.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Materials -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Marketing & Promotional Materials</div>
+                            <div class="category-description">Brochures, flyers, and marketing resources for client presentations</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="company brochure marketing">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Company Brochure</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 4.8 MB</span>
+                                        <span>Updated: Dec 18, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('company-brochure.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('company-brochure.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="logo brand assets graphics">
+                            <div class="file-header">
+                                <div class="file-icon image">
+                                    <i class="fas fa-file-image"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Brand Assets Package</div>
+                                    <div class="file-meta">
+                                        <span>ZIP • 15.2 MB</span>
+                                        <span>Updated: Oct 25, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('brand-assets.zip')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('brand-assets.zip')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="relationshipsTab" class="tab-content">
             <div class="stats-section">
                 <h2 class="section-title">
@@ -1846,6 +2449,50 @@
         // Logout function
         function logout() {
             window.location.href = 'index.html';
+        }
+
+        // File search and management functions
+        function searchFiles() {
+            const searchTerm = document.getElementById('fileSearch').value.toLowerCase();
+            const fileItems = document.querySelectorAll('.file-item');
+            
+            fileItems.forEach(item => {
+                const keywords = item.getAttribute('data-keywords').toLowerCase();
+                const fileName = item.querySelector('.file-name').textContent.toLowerCase();
+                
+                if (keywords.includes(searchTerm) || fileName.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = searchTerm ? 'none' : 'block';
+                }
+            });
+            
+            // Show/hide categories based on visible files
+            const categories = document.querySelectorAll('.file-category');
+            categories.forEach(category => {
+                const visibleFiles = category.querySelectorAll('.file-item[style*="block"], .file-item:not([style*="none"])');
+                if (searchTerm && visibleFiles.length === 0) {
+                    category.style.display = 'none';
+                } else {
+                    category.style.display = 'block';
+                }
+            });
+        }
+
+        function downloadFile(filename) {
+            // In a real implementation, this would trigger actual file download
+            alert(`Downloading ${filename}...\n\nIn a real implementation, this would start the file download.`);
+            
+            // Simulate download analytics
+            console.log(`File downloaded: ${filename} by ${sampleDistributor.companyName}`);
+        }
+
+        function previewFile(filename) {
+            // In a real implementation, this would open file preview
+            alert(`Opening preview for ${filename}...\n\nIn a real implementation, this would open the file in a preview modal or new tab.`);
+            
+            // Simulate preview analytics
+            console.log(`File previewed: ${filename} by ${sampleDistributor.companyName}`);
         }
 
         // Filtering and sorting functionality
