@@ -14,7 +14,6 @@
 
         :root {
             --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2563eb 50%, #3b82f6 100%);
-            --secondary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             --accent-blue: #3b82f6;
             --accent-cyan: #06b6d4;
             --success-green: #10b981;
@@ -26,16 +25,12 @@
             --surface-dark: #0f172a;
             --surface-medium: #1e293b;
             --surface-light: #334155;
-            --surface-lighter: #475569;
             --border-color: #475569;
             --glass-bg: rgba(30, 41, 59, 0.8);
             --glass-border: rgba(148, 163, 184, 0.2);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
             --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
             --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
-            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
-            --shadow-warning: 0 0 32px rgba(245, 158, 11, 0.3);
         }
 
         body {
@@ -43,38 +38,15 @@
             background: var(--surface-dark);
             background-image: 
                 radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
             min-height: 100vh;
             color: var(--text-primary);
             padding: 1rem;
-            overflow-x: hidden;
         }
 
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
         }
 
         /* Header */
@@ -87,7 +59,6 @@
             margin-bottom: 2rem;
             box-shadow: var(--shadow-lg);
             position: relative;
-            overflow: hidden;
         }
 
         .header::before {
@@ -108,12 +79,6 @@
             gap: 2rem;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
         .logo-section {
             display: flex;
             align-items: center;
@@ -131,7 +96,6 @@
             font-size: 2rem;
             color: white;
             box-shadow: var(--shadow-md);
-            animation: pulse 4s ease-in-out infinite;
         }
 
         .company-info h1 {
@@ -148,39 +112,6 @@
             color: var(--text-secondary);
             font-size: 1rem;
             font-weight: 500;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .access-level {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);
-            border-radius: 12px;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            color: white;
-        }
-
-        .access-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .access-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
         }
 
         .back-btn {
@@ -216,20 +147,8 @@
             display: flex;
             gap: 0.5rem;
             overflow-x: auto;
-            position: relative;
         }
 
-        .nav-tabs::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--danger-red), var(--warning-amber), var(--success-green));
-            border-radius: 16px 16px 0 0;
-        }
-        
         .nav-tab {
             background: transparent;
             border: none;
@@ -244,27 +163,24 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            position: relative;
         }
-        
+
         .nav-tab.active {
             background: var(--primary-gradient);
             color: white;
             transform: translateY(-2px);
             box-shadow: var(--shadow-glow);
         }
-        
+
         .nav-tab:hover:not(.active) {
             background: var(--surface-light);
             color: var(--accent-blue);
-            transform: translateY(-1px);
         }
-        
+
         .tab-content {
             display: none;
-            animation: fadeInUp 0.6s ease-out;
         }
-        
+
         .tab-content.active {
             display: block;
         }
@@ -279,7 +195,6 @@
             box-shadow: var(--shadow-md);
             margin-bottom: 2rem;
             position: relative;
-            overflow: hidden;
         }
 
         .stats-section::before {
@@ -294,7 +209,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-top: 2rem;
         }
@@ -306,18 +221,6 @@
             background: var(--surface-medium);
             border: 1px solid var(--glass-border);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--primary-gradient);
         }
 
         .stat-item:hover {
@@ -330,10 +233,6 @@
             font-weight: 800;
             color: var(--accent-blue);
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .stat-label {
@@ -357,103 +256,6 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-        }
-
-        /* Rep Cards */
-        .reps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .rep-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .rep-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary-gradient);
-        }
-
-        .rep-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .rep-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .rep-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .rep-info h3 {
-            color: var(--text-primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .rep-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .rep-metrics {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .metric {
-            text-align: center;
-            padding: 1rem;
-            background: var(--surface-medium);
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .metric-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-blue);
-            margin-bottom: 0.25rem;
-        }
-
-        .metric-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         /* Commission Table */
@@ -495,7 +297,6 @@
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .status-approved {
@@ -525,7 +326,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -548,32 +348,6 @@
 
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* Territory Map Placeholder */
-        .territory-map {
-            background: var(--surface-medium);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .territory-map::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--success-green));
         }
 
         /* Responsive Design */
@@ -581,28 +355,9 @@
             .container {
                 padding: 0.5rem;
             }
-
-            .header {
-                padding: 1.5rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
-            }
-
-            .reps-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
+            
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .rep-metrics {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -618,33 +373,19 @@
         <!-- Header -->
         <div class="header">
             <div class="header-content">
-                <div class="header-left">
-                    <div class="logo-section">
-                        <div class="logo-icon">
-                            <i class="fas fa-users-cog"></i>
-                        </div>
-                        <div class="company-info">
-                            <h1>Management Dashboard</h1>
-                            <p>Comprehensive oversight of distributor operations and team performance</p>
-                        </div>
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <div class="company-info">
+                        <h1>Management Dashboard</h1>
+                        <p>Comprehensive oversight of distributor operations</p>
                     </div>
                 </div>
-                <div class="header-right">
-                    <div class="access-level">
-                        <div class="access-indicator">
-                            <div class="access-dot"></div>
-                            <span>Management Access</span>
-                        </div>
-                        <div style="font-size: 0.8rem; opacity: 0.9;">
-                            <i class="fas fa-shield-alt"></i>
-                            Restricted Data Access
-                        </div>
-                    </div>
-                    <a href="dashboard.html" class="back-btn">
-                        <i class="fas fa-arrow-left"></i>
-                        Back to Dashboard
-                    </a>
-                </div>
+                <a href="dashboard.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
             </div>
         </div>
 
@@ -654,17 +395,9 @@
                 <i class="fas fa-chart-line"></i>
                 Team Overview
             </button>
-            <button class="nav-tab" onclick="showTab('reps')">
-                <i class="fas fa-users"></i>
-                Sales Reps
-            </button>
             <button class="nav-tab" onclick="showTab('commissions')">
                 <i class="fas fa-dollar-sign"></i>
                 Commission Management
-            </button>
-            <button class="nav-tab" onclick="showTab('territory')">
-                <i class="fas fa-map-marked-alt"></i>
-                Territory Analysis
             </button>
             <button class="nav-tab" onclick="showTab('reports')">
                 <i class="fas fa-file-chart-column"></i>
@@ -674,7 +407,6 @@
 
         <!-- Team Overview Tab -->
         <div id="overviewTab" class="tab-content active">
-            <!-- Executive Summary -->
             <div class="stats-section">
                 <h2 class="section-title">
                     <i class="fas fa-crown"></i>
@@ -688,7 +420,7 @@
                     </div>
                     <div class="stat-item">
                         <div class="stat-number" style="color: var(--warning-amber);">$12,240</div>
-                        <div class="stat-label">Total Commissions Paid</div>
+                        <div class="stat-label">Total Commissions</div>
                         <div class="stat-trend">9.6% of revenue</div>
                     </div>
                     <div class="stat-item">
@@ -703,138 +435,18 @@
                     </div>
                     <div class="stat-item">
                         <div class="stat-number" style="color: var(--accent-cyan);">94%</div>
-                        <div class="stat-label">Team PO Success Rate</div>
+                        <div class="stat-label">Team Success Rate</div>
                         <div class="stat-trend">Above industry average</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--accent-blue);">5.2</div>
-                        <div class="stat-label">Avg Days to PO</div>
-                        <div class="stat-trend">Excellent performance</div>
-                    </div>
                 </div>
             </div>
 
-            <!-- Top Performers -->
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-trophy"></i>
-                    Top Performers This Month
-                </h2>
-                <div class="reps-grid">
-                    <div class="rep-card">
-                        <div class="rep-header">
-                            <div class="rep-avatar">MJ</div>
-                            <div class="rep-info">
-                                <h3>Michael Johnson</h3>
-                                <p>Senior Territory Rep • East Tennessee</p>
-                            </div>
-                        </div>
-                        <div class="rep-metrics">
-                            <div class="metric">
-                                <div class="metric-value">$28,450</div>
-                                <div class="metric-label">Revenue</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">$2,450</div>
-                                <div class="metric-label">Commission</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">12</div>
-                                <div class="metric-label">Cases</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="action-btn btn-primary">
-                                <i class="fas fa-eye"></i>
-                                View Details
-                            </button>
-                            <button class="action-btn btn-success">
-                                <i class="fas fa-check"></i>
-                                Approve Commission
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="rep-card">
-                        <div class="rep-header">
-                            <div class="rep-avatar">SC</div>
-                            <div class="rep-info">
-                                <h3>Sarah Chen</h3>
-                                <p>Territory Rep • Nashville Metro</p>
-                            </div>
-                        </div>
-                        <div class="rep-metrics">
-                            <div class="metric">
-                                <div class="metric-value">$24,200</div>
-                                <div class="metric-label">Revenue</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">$2,100</div>
-                                <div class="metric-label">Commission</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">9</div>
-                                <div class="metric-label">Cases</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="action-btn btn-primary">
-                                <i class="fas fa-eye"></i>
-                                View Details
-                            </button>
-                            <button class="action-btn btn-success">
-                                <i class="fas fa-check"></i>
-                                Approve Commission
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="rep-card">
-                        <div class="rep-header">
-                            <div class="rep-avatar">DW</div>
-                            <div class="rep-info">
-                                <h3>David Wilson</h3>
-                                <p>Territory Rep • Knoxville Region</p>
-                            </div>
-                        </div>
-                        <div class="rep-metrics">
-                            <div class="metric">
-                                <div class="metric-value">$19,800</div>
-                                <div class="metric-label">Revenue</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">$1,750</div>
-                                <div class="metric-label">Commission</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">8</div>
-                                <div class="metric-label">Cases</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="action-btn btn-primary">
-                                <i class="fas fa-eye"></i>
-                                View Details
-                            </button>
-                            <button class="action-btn btn-warning">
-                                <i class="fas fa-clock"></i>
-                                Review Pending
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sales Reps Tab -->
-        <div id="repsTab" class="tab-content">
+            <!-- Team Performance -->
             <div class="stats-section">
                 <h2 class="section-title">
                     <i class="fas fa-users"></i>
-                    Sales Representative Management
+                    Team Performance
                 </h2>
-                
-                <!-- All Reps Overview -->
                 <div class="commission-table">
                     <table>
                         <thead>
@@ -845,101 +457,41 @@
                                 <th>Revenue</th>
                                 <th>Commission</th>
                                 <th>Success Rate</th>
-                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">MJ</div>
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary);">Michael Johnson</div>
-                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Senior Rep</div>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td style="font-weight: 600; color: var(--text-primary);">Michael Johnson</td>
                                 <td>East Tennessee</td>
-                                <td><span style="background: var(--success-green); color: white; padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem;">12</span></td>
-                                <td style="font-weight: 600; color: var(--text-primary);">$28,450</td>
-                                <td style="font-weight: 600; color: var(--success-green);">$2,450</td>
+                                <td>12</td>
+                                <td style="font-weight: 600;">$28,450</td>
+                                <td style="color: var(--success-green); font-weight: 600;">$2,450</td>
                                 <td><span class="status-badge status-approved">92%</span></td>
-                                <td><span class="status-badge status-paid">Active</span></td>
                                 <td>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button class="action-btn btn-primary">Details</button>
-                                        <button class="action-btn btn-success">Approve</button>
-                                    </div>
+                                    <button class="action-btn btn-primary">Details</button>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-cyan); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">SC</div>
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary);">Sarah Chen</div>
-                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Territory Rep</div>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td style="font-weight: 600; color: var(--text-primary);">Sarah Chen</td>
                                 <td>Nashville Metro</td>
-                                <td><span style="background: var(--accent-blue); color: white; padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem;">9</span></td>
-                                <td style="font-weight: 600; color: var(--text-primary);">$24,200</td>
-                                <td style="font-weight: 600; color: var(--success-green);">$2,100</td>
+                                <td>9</td>
+                                <td style="font-weight: 600;">$24,200</td>
+                                <td style="color: var(--success-green); font-weight: 600;">$2,100</td>
                                 <td><span class="status-badge status-approved">89%</span></td>
-                                <td><span class="status-badge status-paid">Active</span></td>
                                 <td>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button class="action-btn btn-primary">Details</button>
-                                        <button class="action-btn btn-success">Approve</button>
-                                    </div>
+                                    <button class="action-btn btn-primary">Details</button>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--warning-amber); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">DW</div>
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary);">David Wilson</div>
-                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Territory Rep</div>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td style="font-weight: 600; color: var(--text-primary);">David Wilson</td>
                                 <td>Knoxville Region</td>
-                                <td><span style="background: var(--accent-cyan); color: white; padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem;">8</span></td>
-                                <td style="font-weight: 600; color: var(--text-primary);">$19,800</td>
-                                <td style="font-weight: 600; color: var(--warning-amber);">$1,750</td>
+                                <td>8</td>
+                                <td style="font-weight: 600;">$19,800</td>
+                                <td style="color: var(--warning-amber); font-weight: 600;">$1,750</td>
                                 <td><span class="status-badge status-pending">75%</span></td>
-                                <td><span class="status-badge status-pending">Review</span></td>
                                 <td>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button class="action-btn btn-primary">Details</button>
-                                        <button class="action-btn btn-warning">Review</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 1rem;">
-                                        <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--success-green); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">KM</div>
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary);">Kelly Martinez</div>
-                                            <div style="font-size: 0.8rem; color: var(--text-muted);">Junior Rep</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Memphis Metro</td>
-                                <td><span style="background: var(--warning-amber); color: white; padding: 0.25rem 0.5rem; border-radius: 8px; font-size: 0.8rem;">6</span></td>
-                                <td style="font-weight: 600; color: var(--text-primary);">$15,200</td>
-                                <td style="font-weight: 600; color: var(--success-green);">$1,350</td>
-                                <td><span class="status-badge status-approved">100%</span></td>
-                                <td><span class="status-badge status-paid">Active</span></td>
-                                <td>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button class="action-btn btn-primary">Details</button>
-                                        <button class="action-btn btn-success">Approve</button>
-                                    </div>
+                                    <button class="action-btn btn-warning">Review</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -950,26 +502,23 @@
 
         <!-- Commission Management Tab -->
         <div id="commissionsTab" class="tab-content">
-            <!-- Commission Summary -->
-            <div style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem; text-align: center; box-shadow: var(--shadow-success); position: relative; overflow: hidden;">
-                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; position: relative; z-index: 1;">$12,240</div>
-                <div style="font-size: 1.2rem; opacity: 0.9; position: relative; z-index: 1;">Total Team Commissions This Month</div>
+            <div style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem; text-align: center;">
+                <div style="font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem;">$12,240</div>
+                <div style="font-size: 1.2rem; opacity: 0.9;">Total Team Commissions This Month</div>
             </div>
 
             <div class="stats-section">
                 <h2 class="section-title">
                     <i class="fas fa-dollar-sign"></i>
-                    Commission Management & Approval
+                    Commission Management
                 </h2>
                 
-                <!-- Commission Breakdown Table -->
                 <div class="commission-table">
                     <table>
                         <thead>
                             <tr>
                                 <th>Case ID</th>
                                 <th>Representative</th>
-                                <th>Surgeon</th>
                                 <th>Procedure</th>
                                 <th>Case Value</th>
                                 <th>Commission</th>
@@ -979,131 +528,40 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="font-weight: 600; color: var(--accent-blue);">CS-1234567890</td>
+                                <td style="color: var(--accent-blue); font-weight: 600;">CS-1234567890</td>
                                 <td>Michael Johnson</td>
-                                <td>Dr. Benjamin Potter</td>
                                 <td>MTP Fusion</td>
                                 <td style="font-weight: 600;">$3,285</td>
-                                <td style="font-weight: 600; color: var(--success-green);">$285</td>
+                                <td style="color: var(--success-green); font-weight: 600;">$285</td>
                                 <td><span class="status-badge status-approved">Approved</span></td>
                                 <td>
-                                    <button class="action-btn btn-success">
-                                        <i class="fas fa-check"></i>
-                                        Pay Commission
-                                    </button>
+                                    <button class="action-btn btn-success">Pay</button>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600; color: var(--accent-blue);">CS-1234567891</td>
+                                <td style="color: var(--accent-blue); font-weight: 600;">CS-1234567891</td>
                                 <td>Sarah Chen</td>
-                                <td>Dr. Sarah Johnson</td>
                                 <td>Hammertoe Correction</td>
                                 <td style="font-weight: 600;">$1,850</td>
-                                <td style="font-weight: 600; color: var(--warning-amber);">$150</td>
-                                <td><span class="status-badge status-pending">Pending PO</span></td>
+                                <td style="color: var(--warning-amber); font-weight: 600;">$150</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
                                 <td>
-                                    <button class="action-btn btn-warning">
-                                        <i class="fas fa-clock"></i>
-                                        Awaiting PO
-                                    </button>
+                                    <button class="action-btn btn-warning">Review</button>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600; color: var(--accent-blue);">CS-1234567892</td>
+                                <td style="color: var(--accent-blue); font-weight: 600;">CS-1234567892</td>
                                 <td>Michael Johnson</td>
-                                <td>Dr. Michael Wilson</td>
                                 <td>Lapidus Procedure</td>
                                 <td style="font-weight: 600;">$4,920</td>
-                                <td style="font-weight: 600; color: var(--success-green);">$420</td>
+                                <td style="color: var(--success-green); font-weight: 600;">$420</td>
                                 <td><span class="status-badge status-paid">Paid</span></td>
                                 <td>
-                                    <button class="action-btn btn-primary">
-                                        <i class="fas fa-receipt"></i>
-                                        View Receipt
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 600; color: var(--accent-blue);">CS-1234567893</td>
-                                <td>David Wilson</td>
-                                <td>Dr. Lisa Chen</td>
-                                <td>Bunion Correction</td>
-                                <td style="font-weight: 600;">$2,175</td>
-                                <td style="font-weight: 600; color: var(--warning-amber);">$175</td>
-                                <td><span class="status-badge status-pending">Under Review</span></td>
-                                <td>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button class="action-btn btn-success">
-                                            <i class="fas fa-check"></i>
-                                            Approve
-                                        </button>
-                                        <button class="action-btn btn-warning">
-                                            <i class="fas fa-eye"></i>
-                                            Review
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 600; color: var(--accent-blue);">CS-1234567894</td>
-                                <td>Kelly Martinez</td>
-                                <td>Dr. Robert Kim</td>
-                                <td>Ankle Fusion</td>
-                                <td style="font-weight: 600;">$5,400</td>
-                                <td style="font-weight: 600; color: var(--success-green);">$465</td>
-                                <td><span class="status-badge status-approved">Approved</span></td>
-                                <td>
-                                    <button class="action-btn btn-success">
-                                        <i class="fas fa-check"></i>
-                                        Pay Commission
-                                    </button>
+                                    <button class="action-btn btn-primary">Receipt</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Territory Analysis Tab -->
-        <div id="territoryTab" class="tab-content">
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-map-marked-alt"></i>
-                    Territory Coverage Analysis
-                </h2>
-                
-                <!-- Territory Map Placeholder -->
-                <div class="territory-map">
-                    <div style="text-align: center;">
-                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 1rem; color: var(--accent-blue);"></i>
-                        <p>Interactive Territory Map</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Geographic distribution of cases, surgeons, and hospitals</p>
-                    </div>
-                </div>
-
-                <!-- Territory Stats -->
-                <div class="stats-grid" style="margin-top: 2rem;">
-                    <div class="stat-item">
-                        <div class="stat-number">4</div>
-                        <div class="stat-label">Active Territories</div>
-                        <div class="stat-trend">Tennessee coverage</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">23</div>
-                        <div class="stat-label">Hospitals Covered</div>
-                        <div class="stat-trend">78% market penetration</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">67</div>
-                        <div class="stat-label">Active Surgeons</div>
-                        <div class="stat-trend">Growing network</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">12</div>
-                        <div class="stat-label">Target Opportunities</div>
-                        <div class="stat-trend">Expansion potential</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1113,13 +571,13 @@
             <div class="stats-section">
                 <h2 class="section-title">
                     <i class="fas fa-file-chart-column"></i>
-                    Executive Reports & Analytics
+                    Executive Reports
                 </h2>
                 
                 <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
                     <i class="fas fa-chart-bar" style="font-size: 4rem; margin-bottom: 2rem; color: var(--accent-blue);"></i>
                     <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Advanced Reporting Suite</h3>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Generate comprehensive reports for executive review and business planning</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Generate comprehensive reports for executive review</p>
                     
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                         <button class="action-btn btn-primary" style="padding: 1rem 2rem;">
@@ -1130,10 +588,6 @@
                             <i class="fas fa-chart-line"></i>
                             Performance Analysis
                         </button>
-                        <button class="action-btn btn-warning" style="padding: 1rem 2rem;">
-                            <i class="fas fa-dollar-sign"></i>
-                            Commission Report
-                        </button>
                     </div>
                 </div>
             </div>
@@ -1141,42 +595,24 @@
     </div>
 
     <script>
-        console.log('Management Dashboard Loading...');
-
-        // Tab functionality
         function showTab(tabName) {
-            // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
             const navTabs = document.querySelectorAll('.nav-tab');
             
             tabContents.forEach(content => content.classList.remove('active'));
             navTabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected tab
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        // Initialize dashboard
-        function initializeManagementDashboard() {
-            console.log('Management Dashboard initialized');
+            const targetTab = document.getElementById(tabName + 'Tab');
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
             
-            // Animate elements on load
-            setTimeout(() => {
-                const statNumbers = document.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    stat.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        stat.style.transform = 'scale(1)';
-                    }, 200);
-                });
-            }, 500);
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
         }
 
-        // Initialize when page loads
-        window.addEventListener('load', initializeManagementDashboard);
-
-        console.log('Management Dashboard Ready! 👑🏥');
+        console.log('Management Dashboard Ready!');
     </script>
 </body>
 </html>
