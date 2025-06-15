@@ -1190,16 +1190,42 @@
             document.getElementById('companyName').textContent = distributor.companyName;
         }
 
-        // Navigation to Management Dashboard
+        // Navigation to Management Dashboard with PIN Protection
         function goToManagement() {
-            // In a real application, you'd check user permissions here
-            const hasManagementAccess = true; // This would be determined by user role
+            // Management access PIN - in a real app, this would be more secure
+            const MANAGEMENT_PIN = '2025';
+            const MAX_ATTEMPTS = 3;
+            let attempts = 0;
             
-            if (hasManagementAccess) {
-                window.location.href = 'management-dashboard.html';
-            } else {
-                alert('🚫 Access Denied\n\nManagement dashboard access is restricted to authorized personnel only.');
+            function promptForPIN() {
+                const enteredPIN = prompt('🔐 Management Access Required\n\nPlease enter the management PIN:');
+                
+                // User cancelled
+                if (enteredPIN === null) {
+                    return false;
+                }
+                
+                // Check PIN
+                if (enteredPIN === MANAGEMENT_PIN) {
+                    alert('✅ Access Granted\n\nWelcome to Management Dashboard!');
+                    window.location.href = 'management-dashboard.html';
+                    return true;
+                } else {
+                    attempts++;
+                    
+                    if (attempts >= MAX_ATTEMPTS) {
+                        alert('🚫 Access Denied\n\nToo many failed attempts. Please contact your administrator for assistance.');
+                        return false;
+                    } else {
+                        const remainingAttempts = MAX_ATTEMPTS - attempts;
+                        alert(`❌ Incorrect PIN\n\nAttempts remaining: ${remainingAttempts}`);
+                        return promptForPIN(); // Recursive call for retry
+                    }
+                }
             }
+            
+            // Start the PIN prompt process
+            promptForPIN();
         }
 
         // File management functions
