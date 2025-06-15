@@ -693,7 +693,63 @@
             }
         }
 
-        /* Calendar Styles */
+        /* Submission Detail Modal Styles */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .case-id {
+            font-family: 'Courier New', monospace;
+            background: var(--surface-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .po-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .po-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .po-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
         .calendar-day {
             min-height: 120px;
             padding: 0.5rem;
@@ -1306,7 +1362,7 @@
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track all your case submissions and their current status</p>
                 
                 <div id="allSubmissions">
-                    <div class="recent-item">
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567890')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
@@ -1314,7 +1370,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
                     
-                    <div class="recent-item">
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567891')">
                         <div class="recent-info">
                             <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
                             <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Dec 22, 2024 • <strong>Patient:</strong> M.B. • <strong>Total:</strong> $1,850</p>
@@ -1322,7 +1378,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item">
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567892')">
                         <div class="recent-info">
                             <h4>Lapidus Procedure • Dr. Michael Wilson</h4>
                             <p><strong>Hospital:</strong> City General Hospital • <strong>Surgery Date:</strong> Dec 15, 2024 • <strong>Patient:</strong> R.D. • <strong>Total:</strong> $4,920</p>
@@ -1330,29 +1386,61 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item">
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567893')">
                         <div class="recent-info">
                             <h4>Bunion Correction • Dr. Lisa Chen</h4>
                             <p><strong>Hospital:</strong> Metro Health Center • <strong>Surgery Date:</strong> Jan 12, 2025 • <strong>Patient:</strong> K.M. • <strong>Total:</strong> $2,175</p>
                         </div>
-                        <span class="status-badge status-processing">Surgery Completed</span>
+                        <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item">
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567894')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 8, 2025 • <strong>Patient:</strong> T.R. • <strong>Total:</strong> $3,450</p>
                         </div>
-                        <span class="status-badge status-complete">Complete</span>
+                        <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item">
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567895')">
                         <div class="recent-info">
                             <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
                             <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Jan 5, 2025 • <strong>Patient:</strong> D.K. • <strong>Total:</strong> $1,920</p>
                         </div>
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
+
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567896')">
+                        <div class="recent-info">
+                            <h4>Ankle Fusion • Dr. Robert Martinez</h4>
+                            <p><strong>Hospital:</strong> Valley Medical Center • <strong>Surgery Date:</strong> Dec 28, 2024 • <strong>Patient:</strong> A.L. • <strong>Total:</strong> $5,200</p>
+                        </div>
+                        <span class="status-badge status-complete">PO Received</span>
+                    </div>
+
+                    <div class="recent-item" onclick="showSubmissionDetails('CS-1234567897')">
+                        <div class="recent-info">
+                            <h4>MTP Fusion • Dr. Benjamin Potter</h4>
+                            <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 15, 2025 • <strong>Patient:</strong> M.K. • <strong>Total:</strong> $3,120</p>
+                        </div>
+                        <span class="status-badge status-pending">Awaiting PO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Details Modal -->
+        <div id="submissionDetailsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Case Details</h2>
+                    <button onclick="closeSubmissionDetailsModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div id="submissionDetailsContent">
+                    <!-- Content will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -1504,6 +1592,391 @@
         // Logout function
         function logout() {
             window.location.href = 'index.html';
+        }
+
+        // Submission details data
+        const submissionDetails = {
+            'CS-1234567890': {
+                id: 'CS-1234567890',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'J.S.',
+                surgeryDate: 'Dec 20, 2024',
+                submissionDate: 'Dec 10, 2024',
+                caseValue: '$3,285',
+                status: 'PO Received',
+                poNumber: 'PO-HV-2024-1156',
+                poReceivedDate: 'Dec 18, 2024',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Surgical Guide Kit', partNumber: 'SG-MTP-01', quantity: 1, unitCost: '$125' }
+                ],
+                notes: 'Patient has good bone quality. Standard MTP fusion procedure.',
+                surgeonNotes: 'Routine case, expect standard healing time',
+                priority: 'Standard'
+            },
+            'CS-1234567891': {
+                id: 'CS-1234567891',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'M.B.',
+                surgeryDate: 'Dec 22, 2024',
+                submissionDate: 'Dec 12, 2024',
+                caseValue: '$1,850',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
+                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 2, unitCost: '$45' },
+                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 3, unitCost: '$95' }
+                ],
+                notes: 'Patient has diabetes, monitor wound healing closely',
+                surgeonNotes: 'Patient requires special attention due to diabetes',
+                priority: 'High',
+                daysWaiting: 8
+            },
+            'CS-1234567892': {
+                id: 'CS-1234567892',
+                procedure: 'Lapidus Procedure',
+                surgeon: 'Dr. Michael Wilson',
+                hospital: 'City General Hospital',
+                patient: 'R.D.',
+                surgeryDate: 'Dec 15, 2024',
+                submissionDate: 'Dec 3, 2024',
+                caseValue: '$4,920',
+                status: 'PO Received',
+                poNumber: 'PO-CG-2024-0892',
+                poReceivedDate: 'Dec 12, 2024',
+                instruments: [
+                    { name: 'Lapidus Plate System', partNumber: 'LAP-PL-001', quantity: 1, unitCost: '$1,850' },
+                    { name: 'Compression Screws 4.0mm', partNumber: 'CS-40-004', quantity: 4, unitCost: '$225' },
+                    { name: 'Bone Graft Allograft', partNumber: 'BG-AL-20CC', quantity: 1, unitCost: '$680' },
+                    { name: 'Suture Anchors', partNumber: 'SA-35-002', quantity: 2, unitCost: '$165' },
+                    { name: 'Surgical Drill Bits', partNumber: 'DB-SET-01', quantity: 1, unitCost: '$85' }
+                ],
+                notes: 'Complex bunion deformity requiring Lapidus procedure',
+                surgeonNotes: 'Severe hallux valgus, good candidate for Lapidus',
+                priority: 'Standard'
+            },
+            'CS-1234567893': {
+                id: 'CS-1234567893',
+                procedure: 'Bunion Correction',
+                surgeon: 'Dr. Lisa Chen',
+                hospital: 'Metro Health Center',
+                patient: 'K.M.',
+                surgeryDate: 'Jan 12, 2025',
+                submissionDate: 'Dec 28, 2024',
+                caseValue: '$2,175',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Bunion Correction Plate', partNumber: 'BC-PL-002', quantity: 1, unitCost: '$950' },
+                    { name: 'Osteotomy Screws 3.0mm', partNumber: 'OS-30-003', quantity: 3, unitCost: '$155' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-10CC', quantity: 1, unitCost: '$385' },
+                    { name: 'Wire Guide System', partNumber: 'WG-BC-01', quantity: 1, unitCost: '$125' }
+                ],
+                notes: 'Young patient, active lifestyle, requires strong fixation',
+                surgeonNotes: 'Athlete - needs reliable fixation for early return to activity',
+                priority: 'High',
+                daysWaiting: 3
+            },
+            'CS-1234567894': {
+                id: 'CS-1234567894',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'T.R.',
+                surgeryDate: 'Jan 8, 2025',
+                submissionDate: 'Dec 22, 2024',
+                caseValue: '$3,450',
+                status: 'PO Received',
+                poNumber: 'PO-HV-2025-0034',
+                poReceivedDate: 'Jan 2, 2025',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Hardware Removal Kit', partNumber: 'HR-KIT-01', quantity: 1, unitCost: '$285' },
+                    { name: 'Revision Surgical Tools', partNumber: 'RST-SET-02', quantity: 1, unitCost: '$165' }
+                ],
+                notes: 'Revision case - previous hardware removal required',
+                surgeonNotes: 'Revision MTP fusion, remove old hardware first',
+                priority: 'Standard'
+            },
+            'CS-1234567895': {
+                id: 'CS-1234567895',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'D.K.',
+                surgeryDate: 'Jan 5, 2025',
+                submissionDate: 'Dec 18, 2024',
+                caseValue: '$1,920',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
+                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 3, unitCost: '$45' },
+                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 2, unitCost: '$95' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-05CC', quantity: 1, unitCost: '$245' }
+                ],
+                notes: 'Multiple toe deformities, may require additional procedures',
+                surgeonNotes: 'Consider addressing adjacent toes if needed',
+                priority: 'Standard',
+                daysWaiting: 12
+            },
+            'CS-1234567896': {
+                id: 'CS-1234567896',
+                procedure: 'Ankle Fusion',
+                surgeon: 'Dr. Robert Martinez',
+                hospital: 'Valley Medical Center',
+                patient: 'A.L.',
+                surgeryDate: 'Dec 28, 2024',
+                submissionDate: 'Dec 15, 2024',
+                caseValue: '$5,200',
+                status: 'PO Received',
+                poNumber: 'PO-VM-2024-0756',
+                poReceivedDate: 'Dec 25, 2024',
+                instruments: [
+                    { name: 'Ankle Fusion Plate System', partNumber: 'AF-PL-001', quantity: 1, unitCost: '$2,450' },
+                    { name: 'Compression Screws 6.5mm', partNumber: 'CS-65-006', quantity: 6, unitCost: '$385' },
+                    { name: 'Bone Graft Allograft', partNumber: 'BG-AL-25CC', quantity: 1, unitCost: '$895' },
+                    { name: 'Surgical Guides Set', partNumber: 'SG-AF-01', quantity: 1, unitCost: '$325' },
+                    { name: 'Specialized Drill Bits', partNumber: 'DB-AF-SET', quantity: 1, unitCost: '$145' }
+                ],
+                notes: 'Post-traumatic arthritis, complex case requiring specialized implants',
+                surgeonNotes: 'Traumatic arthritis from old injury, needs strong fixation',
+                priority: 'High'
+            },
+            'CS-1234567897': {
+                id: 'CS-1234567897',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'M.K.',
+                surgeryDate: 'Jan 15, 2025',
+                submissionDate: 'Jan 2, 2025',
+                caseValue: '$3,120',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Bilateral Planning Kit', partNumber: 'BPK-MTP-01', quantity: 1, unitCost: '$95' }
+                ],
+                notes: 'Bilateral procedure planned, this is the first side',
+                surgeonNotes: 'Plan bilateral MTP fusion, start with right side',
+                priority: 'Standard',
+                daysWaiting: 5
+            }
+        };
+
+        function showSubmissionDetails(caseId) {
+            const submission = submissionDetails[caseId];
+            if (!submission) return;
+
+            const modal = document.getElementById('submissionDetailsModal');
+            const content = document.getElementById('submissionDetailsContent');
+
+            const statusColor = submission.status === 'PO Received' ? 'var(--success-green)' : 'var(--warning-amber)';
+            const priorityColor = submission.priority === 'High' ? 'var(--warning-amber)' : 
+                                 submission.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
+
+            content.innerHTML = `
+                <!-- Case Header -->
+                <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--text-primary); font-size: 1.3rem; margin-bottom: 0.5rem;">${submission.procedure}</h3>
+                            <div class="case-id">Case ID: ${submission.id}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: rgba(59, 130, 246, 0.2); color: ${statusColor}; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: 1px solid ${statusColor}30;">${submission.status}</span>
+                            ${submission.status === 'Awaiting PO' ? `<div style="color: var(--warning-amber); font-size: 0.8rem; margin-top: 0.5rem;"><i class="fas fa-clock"></i> ${submission.daysWaiting} days waiting</div>` : ''}
+                        </div>
+                    </div>
+                    <div style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700; text-align: center; margin-top: 1rem;">${submission.caseValue}</div>
+                </div>
+
+                <!-- Case Details -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <!-- Surgery Information -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-user-md"></i> Surgery Information
+                        </h4>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                            <div class="detail-row">
+                                <span class="detail-label">Surgeon:</span>
+                                <span class="detail-value">${submission.surgeon}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Hospital:</span>
+                                <span class="detail-value">${submission.hospital}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Patient:</span>
+                                <span class="detail-value">${submission.patient}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Surgery Date:</span>
+                                <span class="detail-value">${submission.surgeryDate}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Priority:</span>
+                                <span style="background: rgba(59, 130, 246, 0.2); color: ${priorityColor}; padding: 0.25rem 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${priorityColor}30;">${submission.priority}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submission Information -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clipboard-check"></i> Submission Info
+                        </h4>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                            <div class="detail-row">
+                                <span class="detail-label">Submitted:</span>
+                                <span class="detail-value">${submission.submissionDate}</span>
+                            </div>
+                            ${submission.poNumber ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Number:</span>
+                                    <span class="detail-value case-id">${submission.poNumber}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Received:</span>
+                                    <span class="detail-value">${submission.poReceivedDate}</span>
+                                </div>
+                            ` : `
+                                <div class="detail-row">
+                                    <span class="detail-label">Days Waiting:</span>
+                                    <span class="detail-value" style="color: var(--warning-amber);">${submission.daysWaiting} days</span>
+                                </div>
+                            `}
+                            <div class="detail-row">
+                                <span class="detail-label">Case Value:</span>
+                                <span class="detail-value" style="color: var(--success-green); font-size: 1.1rem;">${submission.caseValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instruments & Parts -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-tools"></i> Instruments & Parts Used
+                    </h4>
+                    <div style="background: var(--surface-light); border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border);">
+                        <!-- Parts Table Header -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-bottom: 1px solid var(--border-color); display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; font-weight: 700; color: var(--text-primary); font-size: 0.9rem;">
+                            <div>Part Description</div>
+                            <div>Part Number</div>
+                            <div style="text-align: center;">Qty</div>
+                            <div style="text-align: right;">Unit Cost</div>
+                        </div>
+                        <!-- Parts List -->
+                        ${submission.instruments.map((instrument, index) => `
+                            <div style="padding: 1rem; border-bottom: ${index < submission.instruments.length - 1 ? '1px solid var(--border-color)' : 'none'}; display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; align-items: center; transition: all 0.3s ease; ${index % 2 === 0 ? 'background: rgba(255, 255, 255, 0.02)' : ''}">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">${instrument.name}</div>
+                                    <div style="color: var(--text-muted); font-size: 0.8rem;">
+                                        <i class="fas fa-box" style="margin-right: 0.25rem;"></i>
+                                        Medical Device
+                                    </div>
+                                </div>
+                                <div>
+                                    <span style="font-family: 'Courier New', monospace; background: var(--surface-dark); color: var(--accent-cyan); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${instrument.partNumber}</span>
+                                </div>
+                                <div style="text-align: center;">
+                                    <span style="background: var(--primary-gradient); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 700; font-size: 0.85rem;">${instrument.quantity}</span>
+                                </div>
+                                <div style="text-align: right; color: var(--success-green); font-weight: 700; font-size: 1rem;">${instrument.unitCost}</div>
+                            </div>
+                        `).join('')}
+                        
+                        <!-- Total Section -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-top: 2px solid var(--accent-blue);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 700; font-size: 1rem;">Total Case Value</div>
+                                    <div style="color: var(--text-muted); font-size: 0.85rem;">${submission.instruments.length} items</div>
+                                </div>
+                                <div style="color: var(--success-green); font-weight: 800; font-size: 1.5rem;">${submission.caseValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-sticky-note"></i> Case Notes
+                    </h4>
+                    <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                        <div style="margin-bottom: 1rem;">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Distributor Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.notes}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Surgeon Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.surgeonNotes}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                ${submission.status === 'Awaiting PO' ? `
+                    <div class="po-actions">
+                        <button onclick="closeSubmissionDetailsModal()" class="po-btn" style="background: var(--surface-medium); color: var(--text-secondary); border: 1px solid var(--glass-border);">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                        <button onclick="submitPOForCase('${submission.id}')" class="po-btn" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white;">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit PO
+                        </button>
+                    </div>
+                ` : `
+                    <div style="text-align: center;">
+                        <button onclick="closeSubmissionDetailsModal()" class="po-btn" style="background: var(--primary-gradient); color: white; max-width: 200px;">
+                            <i class="fas fa-check"></i>
+                            Close
+                        </button>
+                    </div>
+                `}
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSubmissionDetailsModal() {
+            document.getElementById('submissionDetailsModal').style.display = 'none';
+        }
+
+        function submitPOForCase(caseId) {
+            const submission = submissionDetails[caseId];
+            if (submission) {
+                // Store case data for PO submission form
+                const poData = {
+                    caseId: submission.id,
+                    procedure: submission.procedure,
+                    surgeon: submission.surgeon,
+                    hospital: submission.hospital,
+                    patient: submission.patient,
+                    surgeryDate: submission.surgeryDate,
+                    caseValue: submission.caseValue,
+                    instruments: submission.instruments,
+                    notes: submission.notes
+                };
+                
+                // Store in sessionStorage to transfer to PO form
+                sessionStorage.setItem('prefilledPO', JSON.stringify(poData));
+                
+                // Navigate to PO submission form
+                window.open('https://formamedical.github.io/Surgery-Case-Sheet/po-submission.html', '_blank');
+            }
         }
 
         // Calendar functionality
