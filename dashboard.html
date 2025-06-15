@@ -2812,6 +2812,26 @@
                 }, 100);
             }
             
+            // Special handling for submissions tab
+            if (tabName === 'submissions') {
+                setTimeout(() => {
+                    // Clear any pre-filled search values
+                    document.getElementById('searchFilter').value = '';
+                    document.getElementById('hospitalFilter').value = '';
+                    document.getElementById('statusFilter').value = '';
+                    
+                    // Reset date filter to "All Time"
+                    document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelector('.quick-filter-btn').classList.add('active');
+                    currentDateFilter = 'all';
+                    
+                    // Apply filters to show all results
+                    applyFilters();
+                }, 100);
+            }
+            
             // Trigger animations for the active tab
             if (tabName === 'analytics') {
                 setTimeout(() => {
