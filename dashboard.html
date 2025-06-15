@@ -784,13 +784,13 @@
                 <i class="fas fa-clipboard-list"></i>
                 Submissions
             </button>
-            <button class="nav-tab" onclick="showTab('commissions')">
-                <i class="fas fa-dollar-sign"></i>
-                Commissions
-            </button>
             <button class="nav-tab" onclick="showTab('relationships')">
                 <i class="fas fa-handshake"></i>
                 Relationships
+            </button>
+            <button class="nav-tab management-access" onclick="goToManagement()" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%); color: white; margin-left: auto;">
+                <i class="fas fa-shield-alt"></i>
+                Management
             </button>
         </div>
 
@@ -1074,6 +1074,12 @@
 
         function updateUI(distributor) {
             document.getElementById('companyName').textContent = distributor.companyName;
+        }
+
+        // Remove the commissions tab content since it's now in Management Dashboard
+        const commissionsTab = document.getElementById('commissionsTab');
+        if (commissionsTab) {
+            commissionsTab.remove();
         }
 
         // Initialize when page loads
