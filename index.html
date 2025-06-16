@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forma Medical - Distributor Portal</title>
+    <title>Medical Dashboard - Distributor Portal</title>
     <style>
         * {
             margin: 0;
@@ -11,26 +11,84 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a365d 0%, #2563eb 50%, #3b82f6 100%);
+            --secondary-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --danger-red: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --surface-dark: #0f172a;
+            --surface-medium: #1e293b;
+            --surface-light: #334155;
+            --surface-lighter: #475569;
+            --border-color: #475569;
+            --glass-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(148, 163, 184, 0.2);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 32px rgba(59, 130, 246, 0.3);
+            --shadow-success: 0 0 32px rgba(16, 185, 129, 0.3);
+            --shadow-warning: 0 0 32px rgba(245, 158, 11, 0.3);
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--surface-dark);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
             min-height: 100vh;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            animation: float 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
         }
 
         .login-container {
-            background: white;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            padding: 45px;
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
             text-align: center;
             position: relative;
             overflow: hidden;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .login-container::before {
@@ -39,35 +97,56 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #2c5aa0, #20c997, #2c5aa0);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 20px 20px 0 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+            0% { background-position: -300% 0; }
+            100% { background-position: 300% 0; }
         }
 
         .logo {
-            height: 80px;
+            height: 90px;
             width: auto;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             max-width: 100%;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         h1 {
-            color: #2c5aa0;
-            font-size: 28px;
-            margin-bottom: 10px;
-            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 32px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .subtitle {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 16px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+            font-weight: 500;
         }
 
         .form-group {
@@ -77,90 +156,161 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #2c5aa0;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--accent-blue);
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        input[type="text"] {
+        select {
             width: 100%;
-            padding: 15px 20px;
-            border: 3px solid #e1e8ed;
+            padding: 16px 20px;
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
             font-size: 16px;
             transition: all 0.3s ease;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        input[type="text"]:focus {
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus, select:focus {
             outline: none;
-            border-color: #2c5aa0;
-            box-shadow: 0 0 0 4px rgba(44, 90, 160, 0.1);
+            border-color: var(--accent-blue);
+            box-shadow: 
+                0 0 0 3px rgba(59, 130, 246, 0.1),
+                var(--shadow-glow);
             transform: translateY(-2px);
+        }
+
+        input[type="text"]::placeholder, input[type="password"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        .company-select {
+            background: var(--surface-medium);
         }
 
         .login-btn {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            padding: 18px;
+            background: var(--primary-gradient);
             color: white;
             border: none;
             border-radius: 12px;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+            box-shadow: var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
         }
 
         .login-btn:hover {
-            background: linear-gradient(135deg, #1e3d6f 0%, #2c5aa0 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(44, 90, 160, 0.4);
+            background: var(--primary-gradient);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: var(--shadow-md);
+            }
+            50% {
+                box-shadow: var(--shadow-glow);
+            }
         }
 
         .login-btn:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message, .success-message {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-weight: 600;
+            display: none;
+            animation: slideIn 0.3s ease;
         }
 
         .error-message {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            background: linear-gradient(135deg, var(--danger-red) 0%, #dc2626 100%);
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-weight: bold;
+            border: 1px solid rgba(239, 68, 68, 0.3);
             animation: shake 0.5s ease-in-out;
-            display: none;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            color: white;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
         .loading {
             display: none;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .loading-spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #2c5aa0;
+            border: 4px solid rgba(148, 163, 184, 0.3);
+            border-top: 4px solid var(--accent-blue);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            margin: 0 auto 15px;
         }
 
         @keyframes spin {
@@ -168,10 +318,16 @@
             100% { transform: rotate(360deg); }
         }
 
+        .loading-text {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
         .features {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid #f1f3f4;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid var(--glass-border);
         }
 
         .feature-list {
@@ -183,56 +339,112 @@
 
         .feature-item {
             flex: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
         }
 
         .feature-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #2c5aa0 0%, #20c997 100%);
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 10px;
+            margin: 0 auto 12px;
             color: white;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
+            box-shadow: var(--shadow-glow);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-lg);
         }
 
         .feature-text {
-            font-size: 12px;
-            color: #666;
-            font-weight: bold;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
         }
 
         .footer {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #f1f3f4;
-            color: #999;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
             font-size: 12px;
+            font-weight: 500;
         }
 
         .demo-hint {
-            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-            border: 2px solid #ffeaa7;
-            color: #856404;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-top: 20px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--warning-amber);
+            padding: 18px 22px;
+            border-radius: 12px;
+            margin-top: 25px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .company-badge {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            transform: scale(1.2);
+            accent-color: var(--accent-blue);
+        }
+
+        .remember-me label {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: none;
+            letter-spacing: normal;
+            color: var(--text-secondary);
         }
 
         @media (max-width: 480px) {
             .login-container {
-                padding: 30px 20px;
+                padding: 35px 25px;
                 margin: 10px;
+                border-radius: 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
             }
             
             .feature-list {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
             }
             
             .feature-item {
@@ -244,26 +456,73 @@
             
             .feature-icon {
                 margin: 0;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
             }
+        }
+
+        /* Additional animations */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .logo:hover {
+            animation: pulse 1s ease-in-out;
+        }
+
+        /* Select dropdown styling */
+        select option {
+            background: var(--surface-medium);
+            color: var(--text-primary);
+            padding: 10px;
+        }
+
+        /* Enhanced focus states */
+        input[type="text"]:focus, 
+        input[type="password"]:focus, 
+        select:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 
+                0 0 0 3px rgba(59, 130, 246, 0.1),
+                var(--shadow-glow);
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <img src="Forma Medical transparent.png" alt="Forma Medical Logo" class="logo">
+        <img src="Forma Medical transparent.png" alt="Medical Dashboard Logo" class="logo">
         
         <h1>Distributor Portal</h1>
         <p class="subtitle">Access your personalized dashboard</p>
         
         <form id="loginForm">
             <div class="form-group">
-                <label for="accessCode">Access Code</label>
+                <label for="username">Username</label>
                 <input type="text" 
-                       id="accessCode" 
-                       name="accessCode" 
-                       placeholder="Enter your code"
-                       maxlength="20"
+                       id="username" 
+                       name="username" 
+                       placeholder="Enter your username"
                        required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       placeholder="Enter your password"
+                       required>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">Remember me for 30 days</label>
             </div>
             
             <button type="submit" class="login-btn" id="loginBtn">
@@ -273,16 +532,13 @@
         
         <div class="loading" id="loading">
             <div class="loading-spinner"></div>
-            <p style="margin-top: 10px; color: #666;">Verifying access...</p>
+            <p class="loading-text">Verifying credentials...</p>
         </div>
         
-        <div class="error-message" id="errorMessage">
-            Invalid access code. Please check and try again.
-        </div>
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
         
-        <div class="demo-hint">
-            <strong>Demo Access Code:</strong> ABCOrtho
-        </div>
+
         
         <div class="features">
             <div class="feature-list">
@@ -302,96 +558,194 @@
         </div>
         
         <div class="footer">
-            <p>&copy; 2025 Forma Medical. All rights reserved.</p>
+            <p>&copy; 2025 Medical Dashboard Portal. All rights reserved.</p>
         </div>
     </div>
 
     <script>
-        // Distributor database - this would normally be in your backend
-        const distributors = {
-            'ABCORTHO': {
-                code: 'ABCOrtho',
-                companyName: 'ABC Ortho Solutions',
-                contactName: 'John Smith',
-                email: 'john@abcortho.com',
-                phone: '555-123-4567'
+        // User database - now checking all companies for username/password match
+        const users = {
+            'admin': {
+                password: 'forma2025',
+                role: 'distributor_admin',
+                company: 'Forma Medical',
+                companyKey: 'formamedical',
+                permissions: ['view_all', 'manage_cases', 'view_reports', 'admin_access']
+            },
+            'hike_admin': {
+                password: 'hike2025',
+                role: 'distributor_admin', 
+                company: 'Hike Medical Solutions',
+                companyKey: 'hikemedical',
+                permissions: ['view_all', 'manage_cases', 'view_reports', 'admin_access']
             }
-            // Add more distributors here as needed
         };
 
+        // Session management
+        let currentSession = null;
+        const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
+        const REMEMBER_DURATION = 30 * 24 * 60 * 60 * 1000; // 30 days
+
         const loginForm = document.getElementById('loginForm');
-        const accessCodeInput = document.getElementById('accessCode');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
         const loginBtn = document.getElementById('loginBtn');
         const loading = document.getElementById('loading');
         const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
 
-        // Auto-uppercase and format input
-        accessCodeInput.addEventListener('input', function() {
-            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        // Check for existing session on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            checkExistingSession();
+            usernameInput.focus();
         });
+
+        function checkExistingSession() {
+            const savedSession = localStorage.getItem('medicalDashboardSession');
+            const rememberMe = localStorage.getItem('rememberMeSession');
+            
+            if (savedSession) {
+                const session = JSON.parse(savedSession);
+                const now = new Date().getTime();
+                
+                if (now < session.expiresAt) {
+                    currentSession = session;
+                    redirectToDashboard(session.user);
+                    return;
+                }
+            }
+            
+            if (rememberMe) {
+                const session = JSON.parse(rememberMe);
+                const now = new Date().getTime();
+                
+                if (now < session.expiresAt) {
+                    currentSession = session;
+                    redirectToDashboard(session.user);
+                    return;
+                }
+            }
+            
+            // Clear expired sessions
+            localStorage.removeItem('medicalDashboardSession');
+            localStorage.removeItem('rememberMeSession');
+        }
 
         // Handle form submission
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            attemptLogin();
+        });
+
+        function attemptLogin() {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+            const rememberMe = rememberMeCheckbox.checked;
             
-            const accessCode = accessCodeInput.value.trim().toUpperCase();
+            // Clear previous messages
+            hideMessages();
             
-            if (!accessCode) {
-                showError('Please enter your access code');
+            // Validate inputs
+            if (!username || !password) {
+                showError('Please fill in all fields');
                 return;
             }
 
             // Show loading
             loginBtn.style.display = 'none';
             loading.style.display = 'block';
-            errorMessage.style.display = 'none';
 
             // Simulate API call delay
             setTimeout(() => {
-                if (distributors[accessCode]) {
-                    // Success - store session and redirect
-                    sessionStorage.setItem('distributorCode', accessCode);
-                    sessionStorage.setItem('distributorData', JSON.stringify(distributors[accessCode]));
+                // Check credentials - now searches all users regardless of company
+                if (users[username] && users[username].password === password) {
+                    const user = users[username];
+                    
+                    // Create session
+                    const now = new Date().getTime();
+                    const sessionDuration = rememberMe ? REMEMBER_DURATION : SESSION_DURATION;
+                    
+                    currentSession = {
+                        user: {
+                            username: username,
+                            company: user.company,
+                            role: user.role,
+                            permissions: user.permissions,
+                            companyKey: user.companyKey
+                        },
+                        createdAt: now,
+                        expiresAt: now + sessionDuration
+                    };
+                    
+                    // Save session
+                    if (rememberMe) {
+                        localStorage.setItem('rememberMeSession', JSON.stringify(currentSession));
+                    } else {
+                        localStorage.setItem('medicalDashboardSession', JSON.stringify(currentSession));
+                    }
+
+                    // Store legacy session for compatibility
+                    sessionStorage.setItem('distributorCode', user.companyKey.toUpperCase());
+                    sessionStorage.setItem('distributorData', JSON.stringify({
+                        code: user.companyKey.toUpperCase(),
+                        companyName: user.company,
+                        contactName: username,
+                        role: user.role
+                    }));
+                    
+                    showSuccess(`Welcome back! Redirecting to ${user.company} dashboard...`);
                     
                     // Success animation
-                    document.body.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
-                    loading.innerHTML = '<div style="color: #28a745; font-size: 18px; font-weight: bold;">✓ Access Granted!</div>';
+                    document.body.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
                     
-                    // Redirect to dashboard
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        redirectToDashboard(currentSession.user);
                     }, 1500);
+                    
                 } else {
-                    // Error
-                    showError('Invalid access code. Please check and try again.');
+                    showError('Invalid username or password. Please try again.');
                     resetForm();
                 }
             }, 1500);
-        });
+        }
+
+        function redirectToDashboard(user) {
+            // Redirect to your main dashboard page
+            window.location.href = 'dashboard.html';
+        }
 
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
-            accessCodeInput.style.borderColor = '#dc3545';
-            accessCodeInput.focus();
+            successMessage.style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
         }
 
         function resetForm() {
             loginBtn.style.display = 'block';
             loading.style.display = 'none';
-            accessCodeInput.style.borderColor = '#e1e8ed';
+            usernameInput.focus();
         }
 
         // Enter key support
-        accessCodeInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                loginForm.dispatchEvent(new Event('submit'));
-            }
-        });
-
-        // Auto-focus on load
-        window.addEventListener('load', function() {
-            accessCodeInput.focus();
+        [usernameInput, passwordInput].forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
         });
     </script>
 </body>
