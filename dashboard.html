@@ -3639,14 +3639,15 @@
         <!-- All your HTML content goes here... -->
 
 
-<script>
-document.querySelectorAll('.nav-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
+ <script>
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
         this.classList.add('active');
         const tabId = this.getAttribute('data-tab');
         document.getElementById('tab-' + tabId).classList.add('active');
+      });
     });
 
 
