@@ -3439,6 +3439,54 @@
             document.getElementById('passwordError').style.display = 'none';
             document.getElementById('managementPassword').value = '';
         }
+        function logout() {
+    // Clear all session data
+    localStorage.removeItem('medicalDashboardSession');
+    localStorage.removeItem('rememberMeSession');
+    sessionStorage.removeItem('distributorCode');
+    sessionStorage.removeItem('distributorData');
+    
+    // Clear any other session data you might have
+    sessionStorage.clear();
+    
+    // Optional: Show logout message
+    console.log('User logged out successfully');
+    
+    // Redirect back to login page
+    window.location.href = 'index.html'; // or whatever your login page is named
+}
+
+// Optional: Auto-logout after session expires (30 minutes)
+function checkSessionExpiry() {
+    const session = localStorage.getItem('medicalDashboardSession') || localStorage.getItem('rememberMeSession');
+    
+    if (session) {
+        const sessionData = JSON.parse(session);
+        const now = new Date().getTime();
+        
+        if (now > sessionData.expiresAt) {
+            alert('Your session has expired. Please log in again.');
+            logout();
+        }
+    } else {
+        // No session found, redirect to login
+        logout();
+    }
+}
+
+// Check session every 5 minutes
+setInterval(checkSessionExpiry, 5 * 60 * 1000);
+
+// Check session on page load
+window.addEventListener('DOMContentLoaded', checkSessionExpiry);
+
+// Prevent back button after logout
+window.addEventListener('popstate', function(e) {
+    const session = localStorage.getItem('medicalDashboardSession') || localStorage.getItem('rememberMeSession');
+    if (!session) {
+        window.location.href = 'index.html';
+    }
+});
 
         function logoutManagement() {
             document.getElementById('passwordModal').style.display = 'flex';
