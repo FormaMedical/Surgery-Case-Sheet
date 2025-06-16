@@ -6,6 +6,36 @@
     <title>Dashboard - Forma Medical</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="dashboard.css" rel="stylesheet">
+    <style>
+        /* Fix for the hover issue in submissions */
+        .recent-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .recent-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Ensure text doesn't disappear on hover */
+        .recent-item * {
+            pointer-events: none;
+        }
+        
+        .recent-item .status-badge {
+            pointer-events: none;
+        }
+        
+        /* Fix for password modal z-index */
+        #passwordModal {
+            z-index: 10000;
+        }
+        
+        #submissionDetailsModal {
+            z-index: 9999;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -44,27 +74,27 @@
 
         <!-- Navigation Tabs -->
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('overview')">
+            <button class="nav-tab active" onclick="showTab('overview', event)">
                 <i class="fas fa-chart-line"></i>
                 Overview
             </button>
-            <button class="nav-tab" onclick="showTab('calendar')">
+            <button class="nav-tab" onclick="showTab('calendar', event)">
                 <i class="fas fa-calendar-alt"></i>
                 Surgery Calendar
             </button>
-            <button class="nav-tab" onclick="showTab('analytics')">
+            <button class="nav-tab" onclick="showTab('analytics', event)">
                 <i class="fas fa-chart-bar"></i>
                 Analytics
             </button>
-            <button class="nav-tab" onclick="showTab('submissions')">
+            <button class="nav-tab" onclick="showTab('submissions', event)">
                 <i class="fas fa-clipboard-list"></i>
                 Submissions
             </button>
-            <button class="nav-tab" onclick="showTab('files')">
+            <button class="nav-tab" onclick="showTab('files', event)">
                 <i class="fas fa-folder-open"></i>
                 Files & Resources
             </button>
-            <button class="nav-tab" onclick="showTab('management')" style="margin-left: auto; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white;">
+            <button class="nav-tab" onclick="showTab('management', event)" style="margin-left: auto; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white;">
                 <i class="fas fa-users-cog"></i>
                 Management
             </button>
@@ -668,7 +698,7 @@
         </div>
 
         <!-- Submission Details Modal -->
-        <div id="submissionDetailsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
+        <div id="submissionDetailsModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem;">
             <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h2 style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Case Details</h2>
@@ -683,12 +713,10 @@
             </div>
         </div>
 
-        <!-- Commissions Tab - REMOVED -->
-
         <!-- Management Tab -->
         <div id="managementTab" class="tab-content">
             <!-- Password Protection Modal -->
-            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 10000;">
                 <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
                     <div style="margin-bottom: 2rem;">
                         <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
@@ -1122,7 +1150,7 @@
                 </div>
             </div>
         </div>
-
+        
     <script>
         console.log('Enhanced Medical Dashboard Loading...');
 
@@ -1222,6 +1250,7 @@
                 } else {
                     item.style.display = 'none';
                 }
+
             });
 
             updateResultsInfo(visibleCount);
@@ -2120,7 +2149,7 @@
         }
 
         function cancelManagementAccess() {
-            showTab('overview');
+            showTab('overview', { target: document.querySelector('.nav-tab.active') });
             document.getElementById('passwordModal').style.display = 'flex';
             document.getElementById('managementContent').style.display = 'none';
             document.getElementById('passwordError').style.display = 'none';
@@ -2135,7 +2164,7 @@
         }
 
         // Tab functionality
-        function showTab(tabName) {
+        function showTab(tabName, event) {
             // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
             const navTabs = document.querySelectorAll('.nav-tab');
@@ -2145,7 +2174,9 @@
             
             // Show selected tab
             document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             // Special handling for management tab
             if (tabName === 'management') {
