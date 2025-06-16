@@ -1181,6 +1181,16 @@
             // Simulate preview analytics
             console.log(`File previewed: ${filename} by ${sampleDistributor.companyName}`);
         }
+        // Add this to your initializeDashboard function or after DOM loads
+document.addEventListener('click', function(e) {
+    const submissionItem = e.target.closest('.recent-item[data-case-id]');
+    if (submissionItem) {
+        e.preventDefault();
+        e.stopPropagation();
+        const caseId = submissionItem.getAttribute('data-case-id');
+        showSubmissionDetails(caseId);
+    }
+});
 
         // Filtering and sorting functionality
         let currentDateFilter = 'all';
