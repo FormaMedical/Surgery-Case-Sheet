@@ -64,6 +64,10 @@
                 <i class="fas fa-folder-open"></i>
                 Files & Resources
             </button>
+            <button class="nav-tab" onclick="showTab('relationships')">
+                <i class="fas fa-handshake"></i>
+                Relationships
+            </button>
             <button class="nav-tab" onclick="showTab('management')" style="margin-left: auto; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white;">
                 <i class="fas fa-users-cog"></i>
                 Management
@@ -497,7 +501,7 @@
             </div>
         </div>
 
-        <!-- Submissions Tab - FIXED VERSION -->
+        <!-- Submissions Tab -->
         <div id="submissionsTab" class="tab-content">
             <div class="recent-section">
                 <h2 class="section-title">
@@ -593,8 +597,7 @@
                 </div>
                 
                 <div id="allSubmissions">
-                    <!-- FIXED: Added proper event handling and prevented search box pollution -->
-                    <div class="recent-item submission-case" data-case-id="CS-1234567890" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="J.S." data-status="PO Received" data-date="2024-12-20" data-submitted="2024-12-10" data-value="3285">
+                    <div class="recent-item" data-case-id="CS-1234567890" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="J.S." data-status="PO Received" data-date="2024-12-20" data-submitted="2024-12-10" data-value="3285" onclick="showSubmissionDetails('CS-1234567890')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Dec 20, 2024 • <strong>Patient:</strong> J.S. • <strong>Total:</strong> $3,285</p>
@@ -602,7 +605,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
                     
-                    <div class="recent-item submission-case" data-case-id="CS-1234567891" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="M.B." data-status="Awaiting PO" data-date="2024-12-22" data-submitted="2024-12-12" data-value="1850">
+                    <div class="recent-item" data-case-id="CS-1234567891" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="M.B." data-status="Awaiting PO" data-date="2024-12-22" data-submitted="2024-12-12" data-value="1850" onclick="showSubmissionDetails('CS-1234567891')">
                         <div class="recent-info">
                             <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
                             <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Dec 22, 2024 • <strong>Patient:</strong> M.B. • <strong>Total:</strong> $1,850</p>
@@ -610,7 +613,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item submission-case" data-case-id="CS-1234567892" data-surgeon="Dr. Michael Wilson" data-hospital="City General Hospital" data-patient="R.D." data-status="PO Received" data-date="2024-12-15" data-submitted="2024-12-03" data-value="4920">
+                    <div class="recent-item" data-case-id="CS-1234567892" data-surgeon="Dr. Michael Wilson" data-hospital="City General Hospital" data-patient="R.D." data-status="PO Received" data-date="2024-12-15" data-submitted="2024-12-03" data-value="4920" onclick="showSubmissionDetails('CS-1234567892')">
                         <div class="recent-info">
                             <h4>Lapidus Procedure • Dr. Michael Wilson</h4>
                             <p><strong>Hospital:</strong> City General Hospital • <strong>Surgery Date:</strong> Dec 15, 2024 • <strong>Patient:</strong> R.D. • <strong>Total:</strong> $4,920</p>
@@ -618,7 +621,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item submission-case" data-case-id="CS-1234567893" data-surgeon="Dr. Lisa Chen" data-hospital="Metro Health Center" data-patient="K.M." data-status="Awaiting PO" data-date="2025-01-12" data-submitted="2024-12-28" data-value="2175">
+                    <div class="recent-item" data-case-id="CS-1234567893" data-surgeon="Dr. Lisa Chen" data-hospital="Metro Health Center" data-patient="K.M." data-status="Awaiting PO" data-date="2025-01-12" data-submitted="2024-12-28" data-value="2175" onclick="showSubmissionDetails('CS-1234567893')">
                         <div class="recent-info">
                             <h4>Bunion Correction • Dr. Lisa Chen</h4>
                             <p><strong>Hospital:</strong> Metro Health Center • <strong>Surgery Date:</strong> Jan 12, 2025 • <strong>Patient:</strong> K.M. • <strong>Total:</strong> $2,175</p>
@@ -626,7 +629,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item submission-case" data-case-id="CS-1234567894" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="T.R." data-status="PO Received" data-date="2025-01-08" data-submitted="2024-12-22" data-value="3450">
+                    <div class="recent-item" data-case-id="CS-1234567894" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="T.R." data-status="PO Received" data-date="2025-01-08" data-submitted="2024-12-22" data-value="3450" onclick="showSubmissionDetails('CS-1234567894')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 8, 2025 • <strong>Patient:</strong> T.R. • <strong>Total:</strong> $3,450</p>
@@ -634,7 +637,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item submission-case" data-case-id="CS-1234567895" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="D.K." data-status="Awaiting PO" data-date="2025-01-05" data-submitted="2024-12-18" data-value="1920">
+                    <div class="recent-item" data-case-id="CS-1234567895" data-surgeon="Dr. Sarah Johnson" data-hospital="Regional Medical Center" data-patient="D.K." data-status="Awaiting PO" data-date="2025-01-05" data-submitted="2024-12-18" data-value="1920" onclick="showSubmissionDetails('CS-1234567895')">
                         <div class="recent-info">
                             <h4>Hammertoe Correction • Dr. Sarah Johnson</h4>
                             <p><strong>Hospital:</strong> Regional Medical Center • <strong>Surgery Date:</strong> Jan 5, 2025 • <strong>Patient:</strong> D.K. • <strong>Total:</strong> $1,920</p>
@@ -642,7 +645,7 @@
                         <span class="status-badge status-pending">Awaiting PO</span>
                     </div>
 
-                    <div class="recent-item submission-case" data-case-id="CS-1234567896" data-surgeon="Dr. Robert Martinez" data-hospital="Valley Medical Center" data-patient="A.L." data-status="PO Received" data-date="2024-12-28" data-submitted="2024-12-15" data-value="5200">
+                    <div class="recent-item" data-case-id="CS-1234567896" data-surgeon="Dr. Robert Martinez" data-hospital="Valley Medical Center" data-patient="A.L." data-status="PO Received" data-date="2024-12-28" data-submitted="2024-12-15" data-value="5200" onclick="showSubmissionDetails('CS-1234567896')">
                         <div class="recent-info">
                             <h4>Ankle Fusion • Dr. Robert Martinez</h4>
                             <p><strong>Hospital:</strong> Valley Medical Center • <strong>Surgery Date:</strong> Dec 28, 2024 • <strong>Patient:</strong> A.L. • <strong>Total:</strong> $5,200</p>
@@ -650,7 +653,7 @@
                         <span class="status-badge status-complete">PO Received</span>
                     </div>
 
-                    <div class="recent-item submission-case" data-case-id="CS-1234567897" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="M.K." data-status="Awaiting PO" data-date="2025-01-15" data-submitted="2025-01-02" data-value="3120">
+                    <div class="recent-item" data-case-id="CS-1234567897" data-surgeon="Dr. Benjamin Potter" data-hospital="Holston Valley Surgery Center" data-patient="M.K." data-status="Awaiting PO" data-date="2025-01-15" data-submitted="2025-01-02" data-value="3120" onclick="showSubmissionDetails('CS-1234567897')">
                         <div class="recent-info">
                             <h4>MTP Fusion • Dr. Benjamin Potter</h4>
                             <p><strong>Hospital:</strong> Holston Valley Surgery Center • <strong>Surgery Date:</strong> Jan 15, 2025 • <strong>Patient:</strong> M.K. • <strong>Total:</strong> $3,120</p>
@@ -683,6 +686,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Commissions Tab - REMOVED -->
 
         <!-- Management Tab -->
         <div id="managementTab" class="tab-content">
@@ -874,9 +879,325 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Product Catalogs -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Product Catalogs & Specifications</div>
+                            <div class="category-description">Detailed product information and technical specifications</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="product catalog implants systems">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">2025 Product Catalog</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 8.4 MB</span>
+                                        <span>Updated: Jan 1, 2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('2025-product-catalog.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('2025-product-catalog.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="pricing price list costs">
+                            <div class="file-header">
+                                <div class="file-icon excel">
+                                    <i class="fas fa-file-excel"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Current Price List</div>
+                                    <div class="file-meta">
+                                        <span>XLSX • 0.9 MB</span>
+                                        <span>Updated: Dec 20, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('price-list-2025.xlsx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('price-list-2025.xlsx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="technical specifications implant dimensions">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Technical Specifications Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 3.2 MB</span>
+                                        <span>Updated: Dec 5, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('tech-specs.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('tech-specs.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training & Educational -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--warning-amber) 0%, #d97706 100%);">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Training & Educational Materials</div>
+                            <div class="category-description">Resources for professional development and product training</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="surgical technique guide procedures">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Surgical Technique Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 5.7 MB</span>
+                                        <span>Updated: Nov 15, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('surgical-techniques.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('surgical-techniques.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="sales training presentation">
+                            <div class="file-header">
+                                <div class="file-icon" style="background: linear-gradient(135deg, #e11d48 0%, #be185d 100%);">
+                                    <i class="fas fa-file-powerpoint"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Sales Training Presentation</div>
+                                    <div class="file-meta">
+                                        <span>PPTX • 12.3 MB</span>
+                                        <span>Updated: Dec 1, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('sales-training.pptx')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('sales-training.pptx')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="compliance regulatory fda">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Regulatory Compliance Guide</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 2.1 MB</span>
+                                        <span>Updated: Nov 10, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('compliance-guide.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('compliance-guide.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Materials -->
+                <div class="file-category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <div class="category-title">Marketing & Promotional Materials</div>
+                            <div class="category-description">Brochures, flyers, and marketing resources for client presentations</div>
+                        </div>
+                    </div>
+                    
+                    <div class="files-grid">
+                        <div class="file-item" data-keywords="company brochure marketing">
+                            <div class="file-header">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Company Brochure</div>
+                                    <div class="file-meta">
+                                        <span>PDF • 4.8 MB</span>
+                                        <span>Updated: Dec 18, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('company-brochure.pdf')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('company-brochure.pdf')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-item" data-keywords="logo brand assets graphics">
+                            <div class="file-header">
+                                <div class="file-icon image">
+                                    <i class="fas fa-file-image"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="file-name">Brand Assets Package</div>
+                                    <div class="file-meta">
+                                        <span>ZIP • 15.2 MB</span>
+                                        <span>Updated: Oct 25, 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn primary" onclick="downloadFile('brand-assets.zip')">
+                                    <i class="fas fa-download"></i>
+                                    Download
+                                </button>
+                                <button class="file-btn secondary" onclick="previewFile('brand-assets.zip')">
+                                    <i class="fas fa-eye"></i>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
+        <div id="relationshipsTab" class="tab-content">
+            <div class="stats-section">
+                <h2 class="section-title">
+                    <i class="fas fa-handshake"></i>
+                    Surgeon & Hospital Relationships
+                </h2>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-user-md"></i>
+                            Top Surgeons
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Benjamin Potter</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">5 cases • $1,200 commission</div>
+                                </div>
+                                <span class="status-badge status-complete">Strong</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Sarah Johnson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">3 cases • $750 commission</div>
+                                </div>
+                                <span class="status-badge status-processing">Growing</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Dr. Michael Wilson</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • $500 commission</div>
+                                </div>
+                                <span class="status-badge status-pending">New</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-hospital"></i>
+                            Top Hospitals
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Holston Valley Surgery Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">6 cases • 3 surgeons</div>
+                                </div>
+                                <span class="status-badge status-complete">Strong</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">Regional Medical Center</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">4 cases • 2 surgeons</div>
+                                </div>
+                                <span class="status-badge status-processing">Growing</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-medium); border-radius: 10px; border: 1px solid var(--glass-border);">
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">City General Hospital</div>
+                                    <div style="font-size: 0.9rem; color: var(--text-secondary);">2 cases • 1 surgeon</div>
+                                </div>
+                                <span class="status-badge status-pending">Opportunity</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         console.log('Enhanced Medical Dashboard Loading...');
 
@@ -936,7 +1257,7 @@
             console.log(`File previewed: ${filename} by ${sampleDistributor.companyName}`);
         }
 
-        // FIXED: Filtering and sorting functionality
+        // Filtering and sorting functionality
         let currentDateFilter = 'all';
         let currentSort = 'date-desc';
 
@@ -945,8 +1266,7 @@
             const hospitalFilter = document.getElementById('hospitalFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
             
-            // FIXED: Use the specific submission cases class
-            const allItems = document.querySelectorAll('#allSubmissions .submission-case');
+            const allItems = document.querySelectorAll('#allSubmissions .recent-item');
             let visibleCount = 0;
 
             allItems.forEach(item => {
@@ -1061,8 +1381,7 @@
             });
             
             const container = document.getElementById('allSubmissions');
-            // FIXED: Only get visible submission cases
-            const items = Array.from(container.querySelectorAll('.submission-case[style*="flex"]'));
+            const items = Array.from(container.querySelectorAll('.recent-item[style*="flex"]'));
             
             items.sort((a, b) => {
                 switch (sortType) {
@@ -1143,7 +1462,7 @@
             }
         }
 
-        // FIXED: Submission details data and handling
+        // Submission details data
         const submissionDetails = {
             'CS-1234567890': {
                 id: 'CS-1234567890',
@@ -1321,7 +1640,6 @@
             }
         };
 
-        // FIXED: Proper event handling for submission cases
         function showSubmissionDetails(caseId) {
             const submission = submissionDetails[caseId];
             if (!submission) return;
@@ -1409,6 +1727,69 @@
                                 <span class="detail-label">Case Value:</span>
                                 <span class="detail-value" style="color: var(--success-green); font-size: 1.1rem;">${submission.caseValue}</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instruments & Parts -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-tools"></i> Instruments & Parts Used
+                    </h4>
+                    <div style="background: var(--surface-light); border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border);">
+                        <!-- Parts Table Header -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-bottom: 1px solid var(--border-color); display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; font-weight: 700; color: var(--text-primary); font-size: 0.9rem;">
+                            <div>Part Description</div>
+                            <div>Part Number</div>
+                            <div style="text-align: center;">Qty</div>
+                            <div style="text-align: right;">Unit Cost</div>
+                        </div>
+                        <!-- Parts List -->
+                        ${submission.instruments.map((instrument, index) => `
+                            <div style="padding: 1rem; border-bottom: ${index < submission.instruments.length - 1 ? '1px solid var(--border-color)' : 'none'}; display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; align-items: center; transition: all 0.3s ease; ${index % 2 === 0 ? 'background: rgba(255, 255, 255, 0.02)' : ''}">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">${instrument.name}</div>
+                                    <div style="color: var(--text-muted); font-size: 0.8rem;">
+                                        <i class="fas fa-box" style="margin-right: 0.25rem;"></i>
+                                        Medical Device
+                                    </div>
+                                </div>
+                                <div>
+                                    <span style="font-family: 'Courier New', monospace; background: var(--surface-dark); color: var(--accent-cyan); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${instrument.partNumber}</span>
+                                </div>
+                                <div style="text-align: center;">
+                                    <span style="background: var(--primary-gradient); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 700; font-size: 0.85rem;">${instrument.quantity}</span>
+                                </div>
+                                <div style="text-align: right; color: var(--success-green); font-weight: 700; font-size: 1rem;">${instrument.unitCost}</div>
+                            </div>
+                        `).join('')}
+                        
+                        <!-- Total Section -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-top: 2px solid var(--accent-blue);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 700; font-size: 1rem;">Total Case Value</div>
+                                    <div style="color: var(--text-muted); font-size: 0.85rem;">${submission.instruments.length} items</div>
+                                </div>
+                                <div style="color: var(--success-green); font-weight: 800; font-size: 1.5rem;">${submission.caseValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-sticky-note"></i> Case Notes
+                    </h4>
+                    <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                        <div style="margin-bottom: 1rem;">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Distributor Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.notes}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Surgeon Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.surgeonNotes}</div>
                         </div>
                     </div>
                 </div>
@@ -1828,7 +2209,7 @@
             document.getElementById('managementPassword').value = '';
         }
 
-        // FIXED: Tab functionality
+        // Tab functionality
         function showTab(tabName) {
             // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
@@ -1859,7 +2240,7 @@
                 }, 100);
             }
             
-            // FIXED: Special handling for submissions tab - clear search and reset filters
+            // Special handling for submissions tab
             if (tabName === 'submissions') {
                 setTimeout(() => {
                     // Clear any pre-filled search values
@@ -1911,20 +2292,6 @@
         function initializeDashboard() {
             let distributor = sampleDistributor;
             updateUI(distributor);
-            
-            // FIXED: Set up proper event listeners for submission cases
-            document.addEventListener('click', function(e) {
-                // Check if clicked element or its parent is a submission case
-                const submissionCase = e.target.closest('.submission-case');
-                if (submissionCase) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const caseId = submissionCase.getAttribute('data-case-id');
-                    if (caseId) {
-                        showSubmissionDetails(caseId);
-                    }
-                }
-            });
             
             // Animate elements on load
             setTimeout(() => {
