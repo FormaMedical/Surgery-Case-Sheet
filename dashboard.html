@@ -2439,7 +2439,87 @@
             </div>
         </div>
     </div>
+<!-- ... other tab-content blocks ... -->
 
+<!-- Inventory Tab -->
+<div class="tab-content" id="tab-inventory">
+    <div class="stats-section">
+        <h2 class="section-title">
+            <i class="fas fa-boxes"></i>
+            Inventory Management
+        </h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track and manage your surgical tray inventory with real-time status updates</p>
+        
+        <!-- Inventory Statistics -->
+        <div class="inventory-stats-grid">
+            <div class="inventory-stat-card">
+                <div class="inventory-stat-number" id="totalTrays">15</div>
+                <div class="inventory-stat-label">Total Trays</div>
+            </div>
+            <div class="inventory-stat-card">
+                <div class="inventory-stat-number" style="color: var(--success-green);" id="availableTrays">8</div>
+                <div class="inventory-stat-label">Available</div>
+            </div>
+            <div class="inventory-stat-card">
+                <div class="inventory-stat-number" style="color: var(--warning-amber);" id="inUseTrays">5</div>
+                <div class="inventory-stat-label">In Use</div>
+            </div>
+            <div class="inventory-stat-card">
+                <div class="inventory-stat-number" style="color: var(--accent-cyan);" id="loanerTrays">2</div>
+                <div class="inventory-stat-label">Loaner Trays</div>
+            </div>
+        </div>
+        
+        <!-- Inventory Actions -->
+        <div class="inventory-actions">
+            <button class="inventory-btn" onclick="openTrayModal()">
+                <i class="fas fa-plus"></i>
+                Add Tray
+            </button>
+            <button class="inventory-btn secondary" onclick="openInventoryUpdateModal()">
+                <i class="fas fa-sync-alt"></i>
+                Report Update
+            </button>
+            <button class="inventory-btn secondary" onclick="generateInventoryReport()">
+                <i class="fas fa-file-download"></i>
+                Export Report
+            </button>
+        </div>
+        
+        <!-- Procedure Trays -->
+        <div class="stats-section">
+            <h3 class="section-title" style="font-size: 1.4rem;">
+                <i class="fas fa-medical-kit"></i>
+                Procedure Trays
+            </h3>
+            <div id="procedureTrays" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Trays will be rendered by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Loaner Trays -->
+        <div class="stats-section">
+            <h3 class="section-title" style="font-size: 1.4rem;">
+                <i class="fas fa-handshake"></i>
+                Loaner & Demo Trays
+            </h3>
+            <div id="loanerTrays" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Trays will be rendered by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="stats-section">
+            <h3 class="section-title" style="font-size: 1.4rem;">
+                <i class="fas fa-clock"></i>
+                Recent Activity
+            </h3>
+            <div id="inventoryActivity" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Activity will be rendered by JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
     <script>
         console.log('Enhanced Medical Dashboard Loading...');
 
