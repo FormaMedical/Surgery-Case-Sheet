@@ -113,6 +113,27 @@
             background: var(--primary-gradient);
         }
 
+.recent-item:hover .recent-info h4,
+.recent-item:hover .recent-info p {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: var(--text-primary) !important;
+}
+
+.recent-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-blue);
+}
+
+/* Ensure text content is always visible */
+.recent-info h4,
+.recent-info p {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+}
+
         .header-content {
             display: flex;
             justify-content: space-between;
