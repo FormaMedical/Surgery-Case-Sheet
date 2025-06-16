@@ -1,1805 +1,4 @@
-// Tab functionality
-        function showTab(tabName) {
-            // Hide all tab contents
-            const tabContents = document.querySelectorAll('.tab-content');
-            const navTabs = document.querySelectorAll('.nav-tab');
-            
-            tabContents.forEach(content => content.classList.remove('active'));
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected tab
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
-            
-            // Special handling for management tab
-            if (tabName === 'management') {
-                document.getElementById('passwordModal').style.display = 'flex';
-                document.getElementById('managementContent').style.display = 'none';
-                document.getElementById('passwordError').style.display = 'none';
-                document.getElementById('managementPassword').value = '';
-                setTimeout(() => {
-                    document.getElementById('managementPassword').focus();
-                }, 100);
-            }
-            
-            // Special handling for calendar tab
-            if (tabName === 'calendar') {
-                setTimeout(() => {
-                    renderCalendar();
-                }, 100);
-            }
-            
-            // Special handling for submissions tab
-            if (tabName === 'submissions') {
-                setTimeout(() => {
-                    document.getElementById('searchFilter').value = '';
-                    document.getElementById('hospitalFilter').value = '';
-                    document.getElementById('statusFilter').value = '';
-                    
-                    document.querySelectorAll('.quick-filter-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    document.querySelector('.quick-filter-btn').classList.add('active');
-                    currentDateFilter = 'all';
-                    
-                    applyFilters();
-                }, 100);
-            }
-
-            // Special handling for inventory tab
-            if (tabName === 'inventory') {
-                setTimeout(() => {
-                    renderInventoryDashboard();
-                }, 100);
-            }
-            
-            // Trigger animations for the active tab
-            if (tabName === 'analytics') {
-                setTimeout(() => {
-                    animateChartBars();
-                }, 300);
-            }
-        }
-
-        function animateChartBars() {
-            const chartBars = document.querySelectorAll('[data-value]');
-            chartBars.forEach((bar, index) => {
-                bar.addEventListener('mouseenter', function() {
-                    const valueLabel = this.querySelector('div');
-                    if (valueLabel) {
-                        valueLabel.style.opacity = '1';
-                    }
-                });
-                
-                bar.addEventListener('mouseleave', function() {
-                    const valueLabel = this.querySelector('div');
-                    if (valueLabel) {
-                        valueLabel.style.opacity = '0';
-                    }
-                });
-            });
-        }
-
-        // Inventory Management Functions
-        function renderInventoryDashboard() {
-            updateInventoryStats();
-            renderProcedureTrays();
-            renderLoanerTrays();
-            renderInventoryActivity();
-        }
-
-        function updateInventoryStats() {
-            const totalTrays = inventoryTrays.length;
-            const availableTrays = inventoryTrays.filter(tray => tray.status === 'Available').length;
-            const inUseTrays = inventoryTrays.filter(tray => tray.status === 'In Use').length;
-            const loanerTrays = inventoryTrays.filter(tray => tray.type === 'Loaner' || tray.type === 'Pelican Demo').length;
-
-            document.getElementById('totalTrays').textContent = totalTrays;
-            document.getElementById('availableTrays').textContent = availableTrays;
-            document.getElementById('inUseTrays').textContent = inUseTrays;
-            document.getElementById('loanerTrays').textContent = loanerTrays;
-        }
-
-        function renderProcedureTrays() {
-            const procedureTrays = inventoryTrays.filter(tray => 
-                ['Hammertoe/Akin', 'MTP', 'Lapidus'].includes(tray.type)
-            );
-            
-            const container = document.getElementById('procedureTrays');
-            container.innerHTML = '';
-
-            procedureTrays.forEach(tray => {
-                const statusColor = getStatusColor(tray.status);
-                const statusIcon = getStatusIcon(tray.status);
-                
-                const trayElement = document.createElement('div');
-                trayElement.style.cssText = `
-                    display: flex; 
-                    justify-content: space-between; 
-                    align-items: center; 
-                    padding: 1rem; 
-                    background: var(--surface-medium); 
-                    border-radius: 10px; 
-                    border: 1px solid var(--glass-border); 
-                    transition: all 0.3s ease; 
-                    cursor: pointer;
-                `;
-                
-                trayElement.innerHTML = `
-                    <div>
-                        <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas fa-medical-kit" style="color: var(--accent-blue);"></i>
-                            ${tray.type} - ${tray.trayId}
-                        </div>
-                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
-                            <i class="fas fa-map-marker-alt" style="margin-right: 0.25rem;"></i>
-                            ${tray.location}
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">
-                            Last updated: ${formatDate(tray.lastUpdated)}
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <span style="background: rgba(59, 130, 246, 0.2); color: ${statusColor}; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${statusColor}30; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="${statusIcon}"></i>
-                            ${tray.status}
-                        </span>
-                        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
-                            <button onclick="editTray(${tray.id})" style="background: var(--primary-gradient); color: white; border: none; border-radius: 6px; padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="deleteTray(${tray.id})" style="background: var(--danger-red); color: white; border: none; border-radius: 6px; padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                trayElement.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateX(5px)';
-                    this.style.boxShadow = 'var(--shadow-sm)';
-                });
-                
-                trayElement.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateX(0)';
-                    this.style.boxShadow = 'none';
-                });
-                
-                container.appendChild(trayElement);
-            });
-        }
-
-        function renderLoanerTrays() {
-            const loanerTrays = inventoryTrays.filter(tray => 
-                ['Loaner', 'Pelican Demo'].includes(tray.type)
-            );
-            
-            const container = document.getElementById('loanerTrays');
-            container.innerHTML = '';
-
-            loanerTrays.forEach(tray => {
-                const statusColor = getStatusColor(tray.status);
-                const statusIcon = getStatusIcon(tray.status);
-                
-                const trayElement = document.createElement('div');
-                trayElement.style.cssText = `
-                    display: flex; 
-                    justify-content: space-between; 
-                    align-items: center; 
-                    padding: 1rem; 
-                    background: var(--surface-medium); 
-                    border-radius: 10px; 
-                    border: 1px solid var(--glass-border); 
-                    transition: all 0.3s ease; 
-                    cursor: pointer;
-                `;
-                
-                trayElement.innerHTML = `
-                    <div>
-                        <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="fas ${tray.type === 'Loaner' ? 'fa-handshake' : 'fa-suitcase'}" style="color: var(--accent-cyan);"></i>
-                            ${tray.type} - ${tray.trayId}
-                        </div>
-                        <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
-                            <i class="fas fa-map-marker-alt" style="margin-right: 0.25rem;"></i>
-                            ${tray.location}
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);">
-                            Last updated: ${formatDate(tray.lastUpdated)}
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <span style="background: rgba(59, 130, 246, 0.2); color: ${statusColor}; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${statusColor}30; display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="${statusIcon}"></i>
-                            ${tray.status}
-                        </span>
-                        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
-                            <button onclick="editTray(${tray.id})" style="background: var(--primary-gradient); color: white; border: none; border-radius: 6px; padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button onclick="deleteTray(${tray.id})" style="background: var(--danger-red); color: white; border: none; border-radius: 6px; padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                trayElement.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateX(5px)';
-                    this.style.boxShadow = 'var(--shadow-sm)';
-                });
-                
-                trayElement.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateX(0)';
-                    this.style.boxShadow = 'none';
-                });
-                
-                container.appendChild(trayElement);
-            });
-        }
-
-        function renderInventoryActivity() {
-            const container = document.getElementById('inventoryActivity');
-            container.innerHTML = '';
-
-            inventoryActivity.slice(0, 5).forEach(activity => {
-                const activityElement = document.createElement('div');
-                activityElement.className = 'recent-item';
-                
-                let actionIcon = 'fas fa-info-circle';
-                let actionColor = 'var(--accent-blue)';
-                
-                switch(activity.action) {
-                    case 'Received':
-                        actionIcon = 'fas fa-arrow-down';
-                        actionColor = 'var(--success-green)';
-                        break;
-                    case 'Returned':
-                        actionIcon = 'fas fa-arrow-up';
-                        actionColor = 'var(--warning-amber)';
-                        break;
-                    case 'Status Change':
-                        actionIcon = 'fas fa-edit';
-                        actionColor = 'var(--accent-cyan)';
-                        break;
-                }
-                
-                activityElement.innerHTML = `
-                    <div class="recent-info">
-                        <h4 style="display: flex; align-items: center; gap: 0.5rem;">
-                            <i class="${actionIcon}" style="color: ${actionColor};"></i>
-                            ${activity.action} • ${activity.type} - ${activity.trayId}
-                        </h4>
-                        <p><strong>Date:</strong> ${formatDate(activity.date)} • <strong>Details:</strong> ${activity.details}</p>
-                    </div>
-                    <span class="status-badge status-complete">${activity.user}</span>
-                `;
-                
-                container.appendChild(activityElement);
-            });
-        }
-
-        function getStatusColor(status) {
-            switch(status) {
-                case 'Available': return 'var(--success-green)';
-                case 'In Use': return 'var(--warning-amber)';
-                case 'Maintenance': return 'var(--danger-red)';
-                case 'Shipped Out': return 'var(--accent-cyan)';
-                default: return 'var(--text-muted)';
-            }
-        }
-
-        function getStatusIcon(status) {
-            switch(status) {
-                case 'Available': return 'fas fa-check-circle';
-                case 'In Use': return 'fas fa-clock';
-                case 'Maintenance': return 'fas fa-tools';
-                case 'Shipped Out': return 'fas fa-shipping-fast';
-                default: return 'fas fa-question-circle';
-            }
-        }
-
-        // Tray Management Functions
-        function openTrayModal(tray = null) {
-            const modal = document.getElementById('trayModal');
-            const form = document.getElementById('trayForm');
-            const title = document.getElementById('trayModalTitle');
-            const statusSelect = document.getElementById('trayStatus');
-            const locationContainer = document.getElementById('locationContainer');
-
-            if (tray) {
-                title.textContent = 'Edit Tray';
-                editingTray = tray;
-                
-                document.getElementById('trayType').value = tray.type;
-                document.getElementById('trayId').value = tray.trayId;
-                document.getElementById('trayStatus').value = tray.status;
-                document.getElementById('trayLocation').value = tray.location || '';
-                document.getElementById('trayNotes').value = tray.notes || '';
-                
-                if (tray.status === 'In Use' || tray.status === 'Shipped Out') {
-                    locationContainer.style.display = 'block';
-                } else {
-                title.textContent = 'Add Tray';
-                editingTray = null;
-                form.reset();
-                locationContainer.style.display = 'none';
-            }
-
-            // Add event listener for status change
-            statusSelect.addEventListener('change', function() {
-                if (this.value === 'In Use' || this.value === 'Shipped Out') {
-                    locationContainer.style.display = 'block';
-                } else {
-                    locationContainer.style.display = 'none';
-                }
-            });
-
-            modal.style.display = 'flex';
-        }
-
-        function closeTrayModal() {
-            document.getElementById('trayModal').style.display = 'none';
-            editingTray = null;
-        }
-
-        function editTray(trayId) {
-            const tray = inventoryTrays.find(t => t.id === trayId);
-            if (tray) {
-                openTrayModal(tray);
-            }
-        }
-
-        function deleteTray(trayId) {
-            if (confirm('Are you sure you want to delete this tray?')) {
-                const tray = inventoryTrays.find(t => t.id === trayId);
-                if (tray) {
-                    inventoryActivity.unshift({
-                        id: Date.now(),
-                        action: 'Deleted',
-                        trayId: tray.trayId,
-                        type: tray.type,
-                        date: new Date().toISOString().split('T')[0],
-                        details: `Tray ${tray.trayId} removed from inventory`,
-                        user: 'You'
-                    });
-                }
-                
-                inventoryTrays = inventoryTrays.filter(t => t.id !== trayId);
-                renderInventoryDashboard();
-            }
-        }
-
-        // Weekly Inventory Update Functions
-        function checkWeeklyInventoryUpdate() {
-            const lastUpdate = localStorage.getItem('lastInventoryUpdate');
-            const today = new Date();
-            const dayOfWeek = today.getDay();
-            
-            if (dayOfWeek === 1) {
-                if (!lastUpdate || isNewWeek(new Date(lastUpdate), today)) {
-                    setTimeout(() => {
-                        showWeeklyInventoryModal();
-                    }, 2000);
-                }
-            }
-        }
-
-        function isNewWeek(lastUpdate, today) {
-            const lastWeek = new Date(lastUpdate);
-            const todayWeek = new Date(today);
-            
-            const getMonday = (date) => {
-                const d = new Date(date);
-                const day = d.getDay();
-                const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-                return new Date(d.setDate(diff));
-            };
-            
-            return getMonday(lastWeek).getTime() !== getMonday(todayWeek).getTime();
-        }
-
-        function showWeeklyInventoryModal() {
-            document.getElementById('weeklyInventoryModal').style.display = 'flex';
-        }
-
-        function closeWeeklyInventoryModal() {
-            document.getElementById('weeklyInventoryModal').style.display = 'none';
-            localStorage.setItem('lastInventoryUpdate', new Date().toISOString());
-        }
-
-        function toggleChangesSection() {
-            const hasChanges = document.querySelector('input[name="hasChanges"]:checked');
-            const changesSection = document.getElementById('changesSection');
-            
-            if (hasChanges && hasChanges.value === 'yes') {
-                changesSection.style.display = 'block';
-            } else {
-                changesSection.style.display = 'none';
-            }
-        }
-
-        function addChange() {
-            const changeType = document.getElementById('changeType').value;
-            const trayId = document.getElementById('changeTrayId').value;
-            const date = document.getElementById('changeDate').value;
-            const details = document.getElementById('changeDetails').value;
-            
-            if (!changeType || !trayId || !date) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            const change = {
-                id: Date.now(),
-                type: changeType,
-                trayId: trayId,
-                date: date,
-                details: details
-            };
-            
-            weeklyChanges.push(change);
-            renderWeeklyChangesList();
-            
-            // Clear form
-            document.getElementById('changeType').value = '';
-            document.getElementById('changeTrayId').value = '';
-            document.getElementById('changeDate').value = '';
-            document.getElementById('changeDetails').value = '';
-        }
-
-        function renderWeeklyChangesList() {
-            const container = document.getElementById('changesList');
-            container.innerHTML = '';
-            
-            if (weeklyChanges.length === 0) return;
-            
-            const header = document.createElement('h4');
-            header.style.cssText = 'color: var(--text-primary); margin-bottom: 1rem;';
-            header.textContent = 'Changes to Report:';
-            container.appendChild(header);
-            
-            weeklyChanges.forEach((change, index) => {
-                const changeElement = document.createElement('div');
-                changeElement.style.cssText = `
-                    background: var(--surface-light); 
-                    padding: 1rem; 
-                    border-radius: 8px; 
-                    margin-bottom: 0.5rem; 
-                    border: 1px solid var(--glass-border);
-                `;
-                
-                changeElement.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: start;">
-                        <div>
-                            <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">
-                                ${change.type.charAt(0).toUpperCase() + change.type.slice(1)} - ${change.trayId}
-                            </div>
-                            <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.25rem;">
-                                Date: ${formatDate(change.date)}
-                            </div>
-                            <div style="color: var(--text-muted); font-size: 0.85rem;">
-                                ${change.details}
-                            </div>
-                        </div>
-                        <button onclick="removeWeeklyChange(${index})" style="background: var(--danger-red); color: white; border: none; border-radius: 6px; padding: 0.25rem 0.5rem; font-size: 0.75rem; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-                
-                container.appendChild(changeElement);
-            });
-        }
-
-        function removeWeeklyChange(index) {
-            weeklyChanges.splice(index, 1);
-            renderWeeklyChangesList();
-        }
-
-        function submitWeeklyUpdate() {
-            const hasChanges = document.querySelector('input[name="hasChanges"]:checked');
-            
-            if (!hasChanges) {
-                alert('Please indicate whether you have changes to report');
-                return;
-            }
-            
-            if (hasChanges.value === 'yes' && weeklyChanges.length === 0) {
-                alert('Please add at least one change or select "No changes this week"');
-                return;
-            }
-            
-            if (hasChanges.value === 'yes') {
-                weeklyChanges.forEach(change => {
-                    inventoryActivity.unshift({
-                        id: Date.now() + Math.random(),
-                        action: change.type.charAt(0).toUpperCase() + change.type.slice(1),
-                        trayId: change.trayId,
-                        type: 'Weekly Update',
-                        date: change.date,
-                        details: change.details,
-                        user: 'Weekly Report'
-                    });
-                });
-                
-                alert(`Weekly inventory update submitted successfully!\n\n${weeklyChanges.length} change(s) reported to Forma Medical.`);
-            } else {
-                alert('Weekly inventory update submitted - no changes reported.');
-            }
-            
-            weeklyChanges = [];
-            closeWeeklyInventoryModal();
-            
-            if (document.getElementById('inventoryTab').classList.contains('active')) {
-                renderInventoryDashboard();
-            }
-        }
-
-        function openInventoryUpdateModal() {
-            const modal = document.getElementById('inventoryUpdateModal');
-            const content = document.getElementById('inventoryUpdateContent');
-            
-            content.innerHTML = `
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
-                        <i class="fas fa-sync-alt" style="font-size: 1.5rem; color: white;"></i>
-                    </div>
-                    <h3 style="color: var(--text-primary); margin-bottom: 0.5rem;">Manual Inventory Update</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Report changes to your inventory status</p>
-                </div>
-
-                <form id="manualUpdateForm" style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div>
-                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Update Type</label>
-                        <select id="manualChangeType" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                            <option value="">Select update type</option>
-                            <option value="received">Received tray from Forma Medical</option>
-                            <option value="returned">Returned tray to Forma Medical</option>
-                            <option value="transferred">Transferred tray to another distributor</option>
-                            <option value="status">Status change</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Tray ID</label>
-                        <input type="text" id="manualTrayId" placeholder="e.g., HT-001" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                    </div>
-                    
-                    <div>
-                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Details</label>
-                        <textarea id="manualDetails" rows="3" placeholder="Provide details about this update..." required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <button type="button" onclick="closeInventoryUpdateModal()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer;">
-                            Cancel
-                        </button>
-                        <button type="submit" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; font-weight: 700; cursor: pointer;">
-                            <i class="fas fa-check"></i>
-                            Submit Update
-                        </button>
-                    </div>
-                </form>
-            `;
-            
-            modal.style.display = 'flex';
-            
-            document.getElementById('manualUpdateForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                submitManualUpdate();
-            });
-        }
-
-        function closeInventoryUpdateModal() {
-            document.getElementById('inventoryUpdateModal').style.display = 'none';
-        }
-
-        function submitManualUpdate() {
-            const changeType = document.getElementById('manualChangeType').value;
-            const trayId = document.getElementById('manualTrayId').value;
-            const details = document.getElementById('manualDetails').value;
-            
-            inventoryActivity.unshift({
-                id: Date.now(),
-                action: changeType.charAt(0).toUpperCase() + changeType.slice(1),
-                trayId: trayId,
-                type: 'Manual Update',
-                date: new Date().toISOString().split('T')[0],
-                details: details,
-                user: 'You'
-            });
-            
-            alert('Inventory update submitted successfully!\n\nForma Medical has been notified of this change.');
-            closeInventoryUpdateModal();
-            
-            if (document.getElementById('inventoryTab').classList.contains('active')) {
-                renderInventoryDashboard();
-            }
-        }
-
-        function generateInventoryReport() {
-            let report = "INVENTORY REPORT - " + sampleDistributor.companyName + "\n";
-            report += "Generated: " + new Date().toLocaleDateString() + "\n\n";
-            
-            report += "SUMMARY:\n";
-            report += "Total Trays: " + inventoryTrays.length + "\n";
-            report += "Available: " + inventoryTrays.filter(t => t.status === 'Available').length + "\n";
-            report += "In Use: " + inventoryTrays.filter(t => t.status === 'In Use').length + "\n";
-            report += "Maintenance: " + inventoryTrays.filter(t => t.status === 'Maintenance').length + "\n\n";
-            
-            report += "DETAILED INVENTORY:\n";
-            inventoryTrays.forEach(tray => {
-                report += `${tray.trayId} | ${tray.type} | ${tray.status} | ${tray.location} | Last Updated: ${tray.lastUpdated}\n`;
-            });
-            
-            const blob = new Blob([report], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `inventory-report-${new Date().toISOString().split('T')[0]}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            
-            alert('Inventory report downloaded successfully!');
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            });
-        }
-
-        // Initialize dashboard
-        function initializeDashboard() {
-            let distributor = sampleDistributor;
-            updateUI(distributor);
-            
-            setTimeout(() => {
-                const statNumbers = document.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    stat.style.transform = 'scale(1.05)';
-                    setTimeout(() => {
-                        stat.style.transform = 'scale(1)';
-                    }, 200);
-                });
-            }, 500);
-        }
-
-        function updateUI(distributor) {
-            document.getElementById('companyName').textContent = distributor.companyName;
-        }
-
-        // Handle tray form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const trayForm = document.getElementById('trayForm');
-            if (trayForm) {
-                trayForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const formData = {
-                        id: editingTray ? editingTray.id : Date.now(),
-                        trayId: document.getElementById('trayId').value,
-                        type: document.getElementById('trayType').value,
-                        status: document.getElementById('trayStatus').value,
-                        location: document.getElementById('trayLocation').value || 'Your Facility',
-                        dateReceived: editingTray ? editingTray.dateReceived : new Date().toISOString().split('T')[0],
-                        lastUpdated: new Date().toISOString().split('T')[0],
-                        notes: document.getElementById('trayNotes').value
-                    };
-
-                    if (editingTray) {
-                        const index = inventoryTrays.findIndex(t => t.id === editingTray.id);
-                        if (index !== -1) {
-                            inventoryTrays[index] = formData;
-                            
-                            inventoryActivity.unshift({
-                                id: Date.now(),
-                                action: 'Updated',
-                                trayId: formData.trayId,
-                                type: formData.type,
-                                date: formData.lastUpdated,
-                                details: `Tray ${formData.trayId} information updated`,
-                                user: 'You'
-                            });
-                        }
-                    } else {
-                        inventoryTrays.push(formData);
-                        
-                        inventoryActivity.unshift({
-                            id: Date.now(),
-                            action: 'Added',
-                            trayId: formData.trayId,
-                            type: formData.type,
-                            date: formData.lastUpdated,
-                            details: `New tray ${formData.trayId} added to inventory`,
-                            user: 'You'
-                        });
-                    }
-
-                    renderInventoryDashboard();
-                    closeTrayModal();
-                });
-            }
-        });
-
-        // Initialize when page loads
-        window.addEventListener('load', function() {
-            initializeDashboard();
-            renderCalendar();
-            checkWeeklyInventoryUpdate();
-        });
-
-        console.log('Enhanced Medical Dashboard Ready! 🏥✨');
-    </script>
-</body>
-</html>
-                    locationContainer.style.display = 'none';
-                }        <!-- Inventory Tab -->
-        <div id="inventoryTab" class="tab-content">
-            <div class="stats-section">
-                <h2 class="section-title">
-                    <i class="fas fa-boxes"></i>
-                    Inventory Management
-                </h2>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Track and manage your surgical trays and equipment inventory</p>
-                
-                <!-- Inventory Summary Cards -->
-                <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--accent-blue);" id="totalTrays">8</div>
-                        <div class="stat-label">Total Trays</div>
-                        <div class="stat-trend">In your possession</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--success-green);" id="availableTrays">6</div>
-                        <div class="stat-label">Available</div>
-                        <div class="stat-trend">Ready for use</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--warning-amber);" id="inUseTrays">2</div>
-                        <div class="stat-label">In Use</div>
-                        <div class="stat-trend">Currently at hospitals</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" style="color: var(--accent-cyan);" id="loanerTrays">3</div>
-                        <div class="stat-label">Loaner Trays</div>
-                        <div class="stat-trend">Temporary assignments</div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
-                    <button onclick="openTrayModal()" style="padding: 0.75rem 1.5rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-plus"></i>
-                        Add Tray
-                    </button>
-                    <button onclick="openInventoryUpdateModal()" style="padding: 0.75rem 1.5rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-sync-alt"></i>
-                        Update Inventory
-                    </button>
-                    <button onclick="generateInventoryReport()" style="padding: 0.75rem 1.5rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-file-export"></i>
-                        Export Report
-                    </button>
-                </div>
-
-                <!-- Tray Categories -->
-                <div class="analytics-grid">
-                    <!-- Procedure Trays -->
-                    <div class="analytics-card" style="grid-column: span 2;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                            <i class="fas fa-medical-kit"></i>
-                            Procedure Trays
-                        </h3>
-                        <div id="procedureTrays" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <!-- Procedure trays will be populated by JavaScript -->
-                        </div>
-                    </div>
-
-                    <!-- Loaner & Demo Sets -->
-                    <div class="analytics-card">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                            <i class="fas fa-handshake"></i>
-                            Loaner & Demo Sets
-                        </h3>
-                        <div id="loanerTrays" style="display: flex; flex-direction: column; gap: 1rem;">
-                            <!-- Loaner trays will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity -->
-                <div class="recent-section" style="margin-top: 2rem;">
-                    <h2 class="section-title">
-                        <i class="fas fa-history"></i>
-                        Recent Inventory Activity
-                    </h2>
-                    <div id="inventoryActivity">
-                        <!-- Activity will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tray Management Modal -->
-        <div id="trayModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2 id="trayModalTitle" style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Add Tray</h2>
-                    <button onclick="closeTrayModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <form id="trayForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <div>
-                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Tray Type</label>
-                        <select id="trayType" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                            <option value="">Select Tray Type</option>
-                            <option value="Hammertoe/Akin">Hammertoe/Akin Tray</option>
-                            <option value="MTP">MTP Tray</option>
-                            <option value="Lapidus">Lapidus Tray</option>
-                            <option value="Loaner">Loaner Tray</option>
-                            <option value="Pelican Demo">Pelican Demo Set</option>
-                        </select>
-                    </div>
-
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div>
-                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Tray ID</label>
-                            <input type="text" id="trayId" placeholder="e.g., HT-001" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                        </div>
-                        <div>
-                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Status</label>
-                            <select id="trayStatus" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                                <option value="Available">Available</option>
-                                <option value="In Use">In Use</option>
-                                <option value="Maintenance">Maintenance</option>
-                                <option value="Shipped Out">Shipped Out</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="locationContainer" style="display: none;">
-                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Current Location</label>
-                        <input type="text" id="trayLocation" placeholder="Hospital or destination" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                    </div>
-
-                    <div>
-                        <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Notes</label>
-                        <textarea id="trayNotes" rows="3" placeholder="Additional notes about this tray..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
-                    </div>
-
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <button type="button" onclick="closeTrayModal()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer;">
-                            Cancel
-                        </button>
-                        <button type="submit" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer;">
-                            <i class="fas fa-save"></i>
-                            Save Tray
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Weekly Inventory Update Modal -->
-        <div id="weeklyInventoryModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg);">
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
-                        <i class="fas fa-clipboard-check" style="font-size: 2rem; color: white;"></i>
-                    </div>
-                    <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">Weekly Inventory Update</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Please review and update your current inventory status</p>
-                </div>
-
-                <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fas fa-exclamation-circle" style="color: var(--warning-amber);"></i>
-                        Any Changes This Week?
-                    </h3>
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="radio" name="hasChanges" value="yes" onchange="toggleChangesSection()" style="accent-color: var(--accent-blue);">
-                            <span style="color: var(--text-primary);">Yes, I have changes to report</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="radio" name="hasChanges" value="no" onchange="toggleChangesSection()" style="accent-color: var(--accent-blue);">
-                            <span style="color: var(--text-primary);">No changes this week</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div id="changesSection" style="display: none; margin-bottom: 2rem;">
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Report Changes</h3>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div>
-                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Change Type</label>
-                            <select id="changeType" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                                <option value="">Select change type</option>
-                                <option value="received">Received tray from Forma Medical</option>
-                                <option value="returned">Returned tray to Forma Medical</option>
-                                <option value="transferred">Transferred tray to another distributor</option>
-                                <option value="status">Status change (Available/In Use/Maintenance)</option>
-                            </select>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Tray ID</label>
-                                <input type="text" id="changeTrayId" placeholder="e.g., HT-001" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                            </div>
-                            <div>
-                                <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Date</label>
-                                <input type="date" id="changeDate" style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary);">
-                            </div>
-                        </div>
-                        <div>
-                            <label style="display: block; color: var(--text-secondary); font-weight: 600; margin-bottom: 0.5rem;">Details</label>
-                            <textarea id="changeDetails" rows="3" placeholder="Provide additional details about this change..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-medium); color: var(--text-primary); resize: vertical;"></textarea>
-                        </div>
-                        <button onclick="addChange()" style="padding: 0.75rem 1.5rem; border: none; border-radius: 8px; background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
-                            <i class="fas fa-plus"></i>
-                            Add Change
-                        </button>
-                    </div>
-
-                    <!-- Changes List -->
-                    <div id="changesList" style="margin-top: 1.5rem;">
-                        <!-- Changes will be added here -->
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 1rem;">
-                    <button onclick="closeWeeklyInventoryModal()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer;">
-                        Skip This Week
-                    </button>
-                    <button onclick="submitWeeklyUpdate()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: var(--primary-gradient); color: white; font-weight: 700; cursor: pointer;">
-                        <i class="fas fa-check"></i>
-                        Submit Update
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Inventory Update Modal -->
-        <div id="inventoryUpdateModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 1rem;">
-            <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; max-width: 500px; width: 100%; box-shadow: var(--shadow-lg);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2 style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700;">Update Inventory</h2>
-                    <button onclick="closeInventoryUpdateModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <div id="inventoryUpdateContent">
-                    <!-- Content will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Management Tab -->
-        <div id="managementTab" class="tab-content">
-            <!-- Password Protection Modal -->
-            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-                <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
-                    <div style="margin-bottom: 2rem;">
-                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
-                            <i class="fas fa-shield-alt" style="font-size: 2rem; color: white;"></i>
-                        </div>
-                        <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">Management Access</h2>
-                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Enter password to access management dashboard</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <input type="password" id="managementPassword" placeholder="Enter password" style="width: 100%; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-primary); font-size: 1rem; text-align: center;" onkeypress="handlePasswordKeypress(event)">
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem;">
-                        <button onclick="cancelManagementAccess()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
-                            Cancel
-                        </button>
-                        <button onclick="verifyManagementPassword()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
-                            Access
-                        </button>
-                    </div>
-                    
-                    <div id="passwordError" style="display: none; color: var(--danger-red); font-size: 0.85rem; margin-top: 1rem; font-weight: 600;">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Incorrect password. Please try again.
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Management Dashboard Content (Hidden until authenticated) -->
-            <div id="managementContent" style="display: none;">
-                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
-                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-lg);">
-                        <i class="fas fa-users-cog" style="font-size: 3rem; color: white;"></i>
-                    </div>
-                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 2rem;">Management Dashboard</h3>
-                    <p style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary);">Access comprehensive management tools and team oversight</p>
-                    
-                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="management-dashboard.html" style="text-decoration: none;">
-                            <button style="padding: 1.5rem 3rem; border: none; border-radius: 16px; background: var(--primary-gradient); color: white; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-md);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
-                                <i class="fas fa-external-link-alt"></i>
-                                Launch Management Dashboard
-                            </button>
-                        </a>
-                        
-                        <button onclick="logoutManagement()" style="padding: 1.5rem 3rem; border: 1px solid var(--glass-border); border-radius: 16px; background: var(--surface-medium); color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Logout
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        console.log('Enhanced Medical Dashboard Loading...');
-
-        // Sample distributor data
-        const sampleDistributor = {
-            companyName: 'ABC Ortho Solutions',
-            code: 'ABCOrtho',
-            region: 'Tennessee Region'
-        };
-
-        // Inventory data
-        let inventoryTrays = [
-            {
-                id: 1,
-                trayId: 'HT-001',
-                type: 'Hammertoe/Akin',
-                status: 'Available',
-                location: 'Your Facility',
-                dateReceived: '2024-11-15',
-                lastUpdated: '2024-12-01',
-                notes: 'Complete set, excellent condition'
-            },
-            {
-                id: 2,
-                trayId: 'HT-002',
-                type: 'Hammertoe/Akin',
-                status: 'In Use',
-                location: 'Holston Valley Surgery Center',
-                dateReceived: '2024-10-20',
-                lastUpdated: '2024-12-10',
-                notes: 'Currently at hospital for Dr. Potter cases'
-            },
-            {
-                id: 3,
-                trayId: 'MTP-001',
-                type: 'MTP',
-                status: 'Available',
-                location: 'Your Facility',
-                dateReceived: '2024-12-01',
-                lastUpdated: '2024-12-01',
-                notes: 'Newly received from Forma Medical'
-            },
-            {
-                id: 4,
-                trayId: 'MTP-002',
-                type: 'MTP',
-                status: 'In Use',
-                location: 'Regional Medical Center',
-                dateReceived: '2024-11-08',
-                lastUpdated: '2024-12-08',
-                notes: 'Long-term placement with Dr. Johnson'
-            },
-            {
-                id: 5,
-                trayId: 'LAP-001',
-                type: 'Lapidus',
-                status: 'Available',
-                location: 'Your Facility',
-                dateReceived: '2024-11-25',
-                lastUpdated: '2024-11-25',
-                notes: 'Premium lapidus system'
-            },
-            {
-                id: 6,
-                trayId: 'LOAN-001',
-                type: 'Loaner',
-                status: 'Available',
-                location: 'Your Facility',
-                dateReceived: '2024-12-05',
-                lastUpdated: '2024-12-05',
-                notes: 'Temporary loaner for trial procedures'
-            },
-            {
-                id: 7,
-                trayId: 'DEMO-001',
-                type: 'Pelican Demo',
-                status: 'Available',
-                location: 'Your Facility',
-                dateReceived: '2024-11-30',
-                lastUpdated: '2024-11-30',
-                notes: 'Demo set for surgeon training'
-            },
-            {
-                id: 8,
-                trayId: 'DEMO-002',
-                type: 'Pelican Demo',
-                status: 'Available',
-                location: 'Your Facility',
-                dateReceived: '2024-12-03',
-                lastUpdated: '2024-12-03',
-                notes: 'Complete demo kit with training materials'
-            }
-        ];
-
-        let inventoryActivity = [
-            {
-                id: 1,
-                action: 'Received',
-                trayId: 'MTP-001',
-                type: 'MTP',
-                date: '2024-12-01',
-                details: 'Received new MTP tray from Forma Medical',
-                user: 'System'
-            },
-            {
-                id: 2,
-                action: 'Status Change',
-                trayId: 'HT-002',
-                type: 'Hammertoe/Akin',
-                date: '2024-12-10',
-                details: 'Changed status to In Use - sent to Holston Valley',
-                user: 'You'
-            },
-            {
-                id: 3,
-                action: 'Status Change',
-                trayId: 'MTP-002',
-                type: 'MTP',
-                date: '2024-12-08',
-                details: 'Moved to Regional Medical Center',
-                user: 'You'
-            }
-        ];
-
-        // Logout function
-        function logout() {
-            window.location.href = 'index.html';
-        }
-
-        // File search and management functions
-        function searchFiles() {
-            const searchTerm = document.getElementById('fileSearch').value.toLowerCase();
-            const fileItems = document.querySelectorAll('.file-item');
-            
-            fileItems.forEach(item => {
-                const keywords = item.getAttribute('data-keywords').toLowerCase();
-                const fileName = item.querySelector('.file-name').textContent.toLowerCase();
-                
-                if (keywords.includes(searchTerm) || fileName.includes(searchTerm)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = searchTerm ? 'none' : 'block';
-                }
-            });
-            
-            // Show/hide categories based on visible files
-            const categories = document.querySelectorAll('.file-category');
-            categories.forEach(category => {
-                const visibleFiles = category.querySelectorAll('.file-item[style*="block"], .file-item:not([style*="none"])');
-                if (searchTerm && visibleFiles.length === 0) {
-                    category.style.display = 'none';
-                } else {
-                    category.style.display = 'block';
-                }
-            });
-        }
-
-        function downloadFile(filename) {
-            // In a real implementation, this would trigger actual file download
-            alert(`Downloading ${filename}...\n\nIn a real implementation, this would start the file download.`);
-            
-            // Simulate download analytics
-            console.log(`File downloaded: ${filename} by ${sampleDistributor.companyName}`);
-        }
-
-        function previewFile(filename) {
-            // In a real implementation, this would open file preview
-            alert(`Opening preview for ${filename}...\n\nIn a real implementation, this would open the file in a preview modal or new tab.`);
-            
-            // Simulate preview analytics
-            console.log(`File previewed: ${filename} by ${sampleDistributor.companyName}`);
-        }
-
-        // Filtering and sorting functionality
-        let currentDateFilter = 'all';
-        let currentSort = 'date-desc';
-
-        function applyFilters() {
-            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
-            const hospitalFilter = document.getElementById('hospitalFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            const allItems = document.querySelectorAll('#allSubmissions .recent-item');
-            let visibleCount = 0;
-
-            allItems.forEach(item => {
-                const surgeon = item.getAttribute('data-surgeon').toLowerCase();
-                const hospital = item.getAttribute('data-hospital');
-                const patient = item.getAttribute('data-patient').toLowerCase();
-                const status = item.getAttribute('data-status');
-                const date = new Date(item.getAttribute('data-date'));
-                
-                // Text search
-                const matchesSearch = !searchTerm || 
-                    surgeon.includes(searchTerm) || 
-                    hospital.toLowerCase().includes(searchTerm) || 
-                    patient.includes(searchTerm);
-                
-                // Hospital filter
-                const matchesHospital = !hospitalFilter || hospital === hospitalFilter;
-                
-                // Status filter
-                const matchesStatus = !statusFilter || status === statusFilter;
-                
-                // Date filter
-                const matchesDate = checkDateFilter(date, currentDateFilter);
-                
-                if (matchesSearch && matchesHospital && matchesStatus && matchesDate) {
-                    item.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            updateResultsInfo(visibleCount);
-            applySorting(currentSort);
-        }
-
-        function checkDateFilter(itemDate, filter) {
-            const today = new Date();
-            const yesterday = new Date(today);
-            yesterday.setDate(yesterday.getDate() - 1);
-            
-            const startOfWeek = new Date(today);
-            startOfWeek.setDate(today.getDate() - today.getDay());
-            
-            const startOfLastWeek = new Date(startOfWeek);
-            startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
-            const endOfLastWeek = new Date(startOfWeek);
-            endOfLastWeek.setDate(endOfLastWeek.getDate() - 1);
-            
-            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-            const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-            const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-
-            switch (filter) {
-                case 'all':
-                    return true;
-                case 'today':
-                    return itemDate.toDateString() === today.toDateString();
-                case 'yesterday':
-                    return itemDate.toDateString() === yesterday.toDateString();
-                case 'thisWeek':
-                    return itemDate >= startOfWeek && itemDate <= today;
-                case 'lastWeek':
-                    return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
-                case 'thisMonth':
-                    return itemDate >= startOfMonth && itemDate <= today;
-                case 'lastMonth':
-                    return itemDate >= startOfLastMonth && itemDate <= endOfLastMonth;
-                default:
-                    return true;
-        // Submission details data
-        const submissionDetails = {
-            'CS-1234567890': {
-                id: 'CS-1234567890',
-                procedure: 'MTP Fusion',
-                surgeon: 'Dr. Benjamin Potter',
-                hospital: 'Holston Valley Surgery Center',
-                patient: 'J.S.',
-                surgeryDate: 'Dec 20, 2024',
-                submissionDate: 'Dec 10, 2024',
-                caseValue: '$3,285',
-                status: 'PO Received',
-                poNumber: 'PO-HV-2024-1156',
-                poReceivedDate: 'Dec 18, 2024',
-                instruments: [
-                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
-                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
-                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
-                    { name: 'Surgical Guide Kit', partNumber: 'SG-MTP-01', quantity: 1, unitCost: '$125' }
-                ],
-                notes: 'Patient has good bone quality. Standard MTP fusion procedure.',
-                surgeonNotes: 'Routine case, expect standard healing time',
-                priority: 'Standard'
-            },
-            'CS-1234567891': {
-                id: 'CS-1234567891',
-                procedure: 'Hammertoe Correction',
-                surgeon: 'Dr. Sarah Johnson',
-                hospital: 'Regional Medical Center',
-                patient: 'M.B.',
-                surgeryDate: 'Dec 22, 2024',
-                submissionDate: 'Dec 12, 2024',
-                caseValue: '$1,850',
-                status: 'Awaiting PO',
-                instruments: [
-                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
-                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 2, unitCost: '$45' },
-                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 3, unitCost: '$95' }
-                ],
-                notes: 'Patient has diabetes, monitor wound healing closely',
-                surgeonNotes: 'Patient requires special attention due to diabetes',
-                priority: 'High',
-                daysWaiting: 8
-            }
-            // Add other submission details here...
-        };
-
-        function showSubmissionDetails(caseId) {
-            const submission = submissionDetails[caseId];
-            if (!submission) return;
-
-            const modal = document.getElementById('submissionDetailsModal');
-            const content = document.getElementById('submissionDetailsContent');
-
-            const statusColor = submission.status === 'PO Received' ? 'var(--success-green)' : 'var(--warning-amber)';
-            const priorityColor = submission.priority === 'High' ? 'var(--warning-amber)' : 
-                                 submission.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
-
-            content.innerHTML = `
-                <!-- Case Header -->
-                <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                        <div>
-                            <h3 style="color: var(--text-primary); font-size: 1.3rem; margin-bottom: 0.5rem;">${submission.procedure}</h3>
-                            <div class="case-id">Case ID: ${submission.id}</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <span style="background: rgba(59, 130, 246, 0.2); color: ${statusColor}; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: 1px solid ${statusColor}30;">${submission.status}</span>
-                            ${submission.status === 'Awaiting PO' ? `<div style="color: var(--warning-amber); font-size: 0.8rem; margin-top: 0.5rem;"><i class="fas fa-clock"></i> ${submission.daysWaiting} days waiting</div>` : ''}
-                        </div>
-                    </div>
-                    <div style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700; text-align: center; margin-top: 1rem;">${submission.caseValue}</div>
-                </div>
-                <!-- Additional details would go here -->
-            `;
-
-            modal.style.display = 'flex';
-        }
-
-        function closeSubmissionDetailsModal() {
-            document.getElementById('submissionDetailsModal').style.display = 'none';
-        }
-
-        function submitPOForCase(caseId) {
-            const submission = submissionDetails[caseId];
-            if (submission) {
-                window.open('https://formamedical.github.io/Surgery-Case-Sheet/po-submission.html', '_blank');
-            }
-        }
-
-        // Calendar functionality
-        let currentDate = new Date();
-        let selectedDate = null;
-        let selectedSurgery = null;
-        let editingSurgery = null;
-        let surgeries = [
-            {
-                id: 1,
-                date: '2024-12-20',
-                time: '09:00',
-                procedure: 'MTP Fusion',
-                surgeon: 'Dr. Benjamin Potter',
-                hospital: 'Holston Valley Surgery Center',
-                patient: 'J.S.',
-                priority: 'Standard',
-                notes: 'Regular follow-up case'
-            },
-            {
-                id: 2,
-                date: '2024-12-22',
-                time: '14:30',
-                procedure: 'Hammertoe Correction',
-                surgeon: 'Dr. Sarah Johnson',
-                hospital: 'Regional Medical Center',
-                patient: 'M.B.',
-                priority: 'High',
-                notes: 'Patient has diabetes, monitor closely'
-            }
-        ];
-
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            // Update month display
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'];
-            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
-
-            // Get first day of month and days in month
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const daysInPrevMonth = new Date(year, month, 0).getDate();
-
-            const calendarGrid = document.getElementById('calendarGrid');
-            calendarGrid.innerHTML = '';
-
-            const today = new Date();
-            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
-
-            // Previous month's trailing days
-            for (let i = firstDay - 1; i >= 0; i--) {
-                const dayNumber = daysInPrevMonth - i;
-                const dayElement = createDayElement(dayNumber, true);
-                calendarGrid.appendChild(dayElement);
-            }
-
-            // Current month's days
-            for (let day = 1; day <= daysInMonth; day++) {
-                const isToday = isCurrentMonth && day === today.getDate();
-                const dayElement = createDayElement(day, false, isToday);
-                calendarGrid.appendChild(dayElement);
-            }
-
-            // Next month's leading days
-            const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
-            const remainingCells = totalCells - (firstDay + daysInMonth);
-            for (let day = 1; day <= remainingCells; day++) {
-                const dayElement = createDayElement(day, true);
-                calendarGrid.appendChild(dayElement);
-            }
-        }
-
-        function createDayElement(dayNumber, isOtherMonth, isToday = false) {
-            const dayElement = document.createElement('div');
-            dayElement.className = 'calendar-day';
-            if (isOtherMonth) dayElement.classList.add('other-month');
-            if (isToday) dayElement.classList.add('today');
-
-            const dayDate = isOtherMonth ? null : 
-                `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
-
-            dayElement.innerHTML = `
-                <div class="day-number">${dayNumber}</div>
-                <div class="surgeries-container"></div>
-            `;
-
-            if (!isOtherMonth && dayDate) {
-                const daySurgeries = surgeries.filter(surgery => surgery.date === dayDate);
-                const surgeriesContainer = dayElement.querySelector('.surgeries-container');
-                
-                daySurgeries.forEach(surgery => {
-                    const surgeryElement = document.createElement('div');
-                    surgeryElement.className = `surgery-item ${surgery.priority.toLowerCase().replace(' ', '-')}`;
-                    surgeryElement.innerHTML = `
-                        <i class="fas fa-clock" style="font-size: 0.6rem;"></i>
-                        ${surgery.time} ${surgery.procedure}
-                    `;
-                    surgeryElement.onclick = (e) => {
-                        e.stopPropagation();
-                        showSurgeryDetails(surgery);
-                    };
-                    surgeriesContainer.appendChild(surgeryElement);
-                });
-
-                dayElement.onclick = () => selectDate(dayDate, dayElement);
-            }
-
-            return dayElement;
-        }
-
-        function selectDate(date, element) {
-            document.querySelectorAll('.calendar-day.selected').forEach(day => {
-                day.classList.remove('selected');
-            });
-            
-            element.classList.add('selected');
-            selectedDate = date;
-            
-            openSurgeryModal(date);
-        }
-
-        function openSurgeryModal(date = null, surgery = null) {
-            const modal = document.getElementById('surgeryModal');
-            const form = document.getElementById('surgeryForm');
-            const title = document.getElementById('modalTitle');
-
-            if (surgery) {
-                title.textContent = 'Edit Surgery';
-                editingSurgery = surgery;
-                
-                document.getElementById('surgeryDate').value = surgery.date;
-                document.getElementById('surgeryTime').value = surgery.time;
-                document.getElementById('procedureType').value = surgery.procedure;
-                document.getElementById('surgeonName').value = surgery.surgeon;
-                document.getElementById('hospitalName').value = surgery.hospital;
-                document.getElementById('patientInitials').value = surgery.patient;
-                document.getElementById('casePriority').value = surgery.priority;
-                document.getElementById('surgeryNotes').value = surgery.notes || '';
-            } else {
-                title.textContent = 'Add Surgery';
-                editingSurgery = null;
-                form.reset();
-                
-                if (date) {
-                    document.getElementById('surgeryDate').value = date;
-                }
-            }
-
-            modal.style.display = 'flex';
-        }
-
-        function closeSurgeryModal() {
-            document.getElementById('surgeryModal').style.display = 'none';
-            editingSurgery = null;
-        }
-
-        function showSurgeryDetails(surgery) {
-            selectedSurgery = surgery;
-            const modal = document.getElementById('surgeryDetailsModal');
-            const content = document.getElementById('surgeryDetailsContent');
-
-            content.innerHTML = `
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div>
-                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Procedure</div>
-                        <div style="color: var(--text-primary); font-weight: 600; font-size: 1.1rem;">${surgery.procedure}</div>
-                    </div>
-                    <div>
-                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Surgeon</div>
-                        <div style="color: var(--text-primary); font-weight: 600;">${surgery.surgeon}</div>
-                    </div>
-                    <div>
-                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Hospital</div>
-                        <div style="color: var(--text-primary); font-weight: 600;">${surgery.hospital}</div>
-                    </div>
-                </div>
-            `;
-
-            modal.style.display = 'flex';
-        }
-
-        function closeSurgeryDetailsModal() {
-            document.getElementById('surgeryDetailsModal').style.display = 'none';
-            selectedSurgery = null;
-        }
-
-        function editSelectedSurgery() {
-            closeSurgeryDetailsModal();
-            openSurgeryModal(null, selectedSurgery);
-        }
-
-        function deleteSelectedSurgery() {
-            if (selectedSurgery && confirm('Are you sure you want to delete this surgery?')) {
-                surgeries = surgeries.filter(s => s.id !== selectedSurgery.id);
-                renderCalendar();
-                closeSurgeryDetailsModal();
-            }
-        }
-
-        function submitCaseFromCalendar() {
-            if (selectedSurgery) {
-                window.location.href = 'form.html';
-            }
-        }
-
-        function previousMonth() {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-        }
-
-        function nextMonth() {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-        }
-
-        function goToToday() {
-            currentDate = new Date();
-            renderCalendar();
-        }
-
-        // Handle surgery form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const surgeryForm = document.getElementById('surgeryForm');
-            if (surgeryForm) {
-                surgeryForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const formData = {
-                        id: editingSurgery ? editingSurgery.id : Date.now(),
-                        date: document.getElementById('surgeryDate').value,
-                        time: document.getElementById('surgeryTime').value,
-                        procedure: document.getElementById('procedureType').value,
-                        surgeon: document.getElementById('surgeonName').value,
-                        hospital: document.getElementById('hospitalName').value,
-                        patient: document.getElementById('patientInitials').value,
-                        priority: document.getElementById('casePriority').value,
-                        notes: document.getElementById('surgeryNotes').value
-                    };
-
-                    if (editingSurgery) {
-                        const index = surgeries.findIndex(s => s.id === editingSurgery.id);
-                        if (index !== -1) {
-                            surgeries[index] = formData;
-                        }
-                    } else {
-                        surgeries.push(formData);
-                    }
-
-                    renderCalendar();
-                    closeSurgeryModal();
-                });
-            }
-        });
-
-        // Management authentication functions
-        function handlePasswordKeypress(event) {
-            if (event.key === 'Enter') {
-                verifyManagementPassword();
-            }
-        }
-
-        function verifyManagementPassword() {
-            const password = document.getElementById('managementPassword').value;
-            const correctPassword = 'admin123';
-            
-            if (password === correctPassword) {
-                document.getElementById('passwordModal').style.display = 'none';
-                document.getElementById('managementContent').style.display = 'block';
-                document.getElementById('passwordError').style.display = 'none';
-            } else {
-                document.getElementById('passwordError').style.display = 'block';
-                document.getElementById('managementPassword').value = '';
-                document.getElementById('managementPassword').focus();
-            }
-        }
-
-        function cancelManagementAccess() {
-            showTab('overview');
-            document.getElementById('passwordModal').style.display = 'flex';
-            document.getElementById('managementContent').style.display = 'none';
-            document.getElementById('passwordError').style.display = 'none';
-            document.getElementById('managementPassword').value = '';
-        }
-
-        function logoutManagement() {
-            document.getElementById('passwordModal').style.display = 'flex';
-            document.getElementById('managementContent').style.display = 'none';
-            document.getElementById('passwordError').style.display = 'none';
-            document.getElementById('managementPassword').value = '';
-        }
-
-        function applyDateFilter(filter) {
-            currentDateFilter = filter;
-            
-            // Update active button
-            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Find and activate the correct button
-            const filterButtons = document.querySelectorAll('.quick-filter-btn');
-            filterButtons.forEach(btn => {
-                if (btn.textContent.includes('All Time') && filter === 'all') btn.classList.add('active');
-                if (btn.textContent.includes('Today') && filter === 'today') btn.classList.add('active');
-                if (btn.textContent.includes('Yesterday') && filter === 'yesterday') btn.classList.add('active');
-                if (btn.textContent.includes('This Week') && filter === 'thisWeek') btn.classList.add('active');
-                if (btn.textContent.includes('Last Week') && filter === 'lastWeek') btn.classList.add('active');
-                if (btn.textContent.includes('This Month') && filter === 'thisMonth') btn.classList.add('active');
-                if (btn.textContent.includes('Last Month') && filter === 'lastMonth') btn.classList.add('active');
-            });
-            
-            applyFilters();
-        }
-
-        function applySorting(sortType) {
-            currentSort = sortType;
-            
-            // Update active sort button
-            document.querySelectorAll('.sort-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Find the clicked button and mark it active
-            const sortButtons = document.querySelectorAll('.sort-btn');
-            sortButtons.forEach(btn => {
-                if (btn.textContent.includes('Newest') && sortType === 'date-desc') btn.classList.add('active');
-                if (btn.textContent.includes('Oldest') && sortType === 'date-asc') btn.classList.add('active');
-                if (btn.textContent.includes('Highest') && sortType === 'value-desc') btn.classList.add('active');
-                if (btn.textContent.includes('Status') && sortType === 'status') btn.classList.add('active');
-            });
-            
-            const container = document.getElementById('allSubmissions');
-            const items = Array.from(container.querySelectorAll('.recent-item[style*="flex"]'));
-            
-            items.sort((a, b) => {
-                switch (sortType) {
-                    case 'date-desc':
-                        return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
-                    case 'date-asc':
-                        return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
-                    case 'value-desc':
-                        return parseInt(b.getAttribute('data-value')) - parseInt(a.getAttribute('data-value'));
-                    case 'status':
-                        const statusOrder = { 'Awaiting PO': 0, 'PO Received': 1 };
-                        return statusOrder[a.getAttribute('data-status')] - statusOrder[b.getAttribute('data-status')];
-                    default:
-                        return 0;
-                }
-            });
-            
-            // Re-append sorted items
-            items.forEach(item => container.appendChild(item));
-        }
-
-        function clearAllFilters() {
-            document.getElementById('searchFilter').value = '';
-            document.getElementById('hospitalFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            
-            // Reset date filter to "All Time"
-            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector('.quick-filter-btn').classList.add('active');
-            currentDateFilter = 'all';
-            
-            applyFilters();
-        }
-
-        function updateResultsInfo(count) {
-            const resultsCount = document.getElementById('resultsCount');
-            const filterStatus = document.getElementById('filterStatus');
-            const noResults = document.getElementById('noResults');
-            const submissionsList = document.getElementById('allSubmissions');
-            
-            if (count === 0) {
-                noResults.style.display = 'block';
-                submissionsList.style.display = 'none';
-                resultsCount.textContent = 'No cases found';
-            } else {
-                noResults.style.display = 'none';
-                submissionsList.style.display = 'block';
-                resultsCount.textContent = `${count} case${count !== 1 ? 's' : ''} found`;
-            }
-            
-            // Show active filters
-            const activeFilters = [];
-            const searchTerm = document.getElementById('searchFilter').value;
-            const hospitalFilter = document.getElementById('hospitalFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            if (searchTerm) activeFilters.push(`Search: "${searchTerm}"`);
-            if (hospitalFilter) activeFilters.push(`Hospital: ${hospitalFilter}`);
-            if (statusFilter) activeFilters.push(`Status: ${statusFilter}`);
-            if (currentDateFilter !== 'all') {
-                const filterNames = {
-                    'today': 'Today',
-                    'yesterday': 'Yesterday',
-                    'thisWeek': 'This Week',
-                    'lastWeek': 'Last Week',
-                    'thisMonth': 'This Month',
-                    'lastMonth': 'Last Month'
-                };
-                activeFilters.push(`Date: ${filterNames[currentDateFilter]}`);
-            }
-            
-            if (activeFilters.length > 0) {
-                filterStatus.innerHTML = `<span style="color: var(--accent-blue);">• Filtered by: ${activeFilters.join(', ')}</span>`;
-            } else {
-                filterStatus.innerHTML = '';
-            }
-        }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -3107,10 +1306,6 @@
                 <i class="fas fa-handshake"></i>
                 Relationships
             </button>
-            <button class="nav-tab" onclick="showTab('inventory')">
-                <i class="fas fa-boxes"></i>
-                Inventory
-            </button>
             <button class="nav-tab" onclick="showTab('management')" style="margin-left: auto; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white;">
                 <i class="fas fa-users-cog"></i>
                 Management
@@ -3378,7 +1573,6 @@
                 </div>
             </div>
         </div>
-
         <div id="analyticsTab" class="tab-content">
             <!-- Performance Overview Dashboard -->
             <div class="stats-section">
@@ -3727,6 +1921,67 @@
 
                 <div id="submissionDetailsContent">
                     <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Commissions Tab - REMOVED -->
+
+        <!-- Management Tab -->
+        <div id="managementTab" class="tab-content">
+            <!-- Password Protection Modal -->
+            <div id="passwordModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                <div style="background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 3rem; max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
+                    <div style="margin-bottom: 2rem;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: var(--shadow-md);">
+                            <i class="fas fa-shield-alt" style="font-size: 2rem; color: white;"></i>
+                        </div>
+                        <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;">Management Access</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem;">Enter password to access management dashboard</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <input type="password" id="managementPassword" placeholder="Enter password" style="width: 100%; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-primary); font-size: 1rem; text-align: center;" onkeypress="handlePasswordKeypress(event)">
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="cancelManagementAccess()" style="flex: 1; padding: 1rem; border: 1px solid var(--glass-border); border-radius: 12px; background: var(--surface-medium); color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Cancel
+                        </button>
+                        <button onclick="verifyManagementPassword()" style="flex: 1; padding: 1rem; border: none; border-radius: 12px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); color: white; font-weight: 700; cursor: pointer; transition: all 0.3s ease;">
+                            Access
+                        </button>
+                    </div>
+                    
+                    <div id="passwordError" style="display: none; color: var(--danger-red); font-size: 0.85rem; margin-top: 1rem; font-weight: 600;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Incorrect password. Please try again.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Management Dashboard Content (Hidden until authenticated) -->
+            <div id="managementContent" style="display: none;">
+                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--danger-red) 0%, var(--warning-amber) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: var(--shadow-lg);">
+                        <i class="fas fa-users-cog" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 2rem;">Management Dashboard</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 3rem; color: var(--text-secondary);">Access comprehensive management tools and team oversight</p>
+                    
+                    <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="management-dashboard.html" style="text-decoration: none;">
+                            <button style="padding: 1.5rem 3rem; border: none; border-radius: 16px; background: var(--primary-gradient); color: white; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem; box-shadow: var(--shadow-md);" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)'">
+                                <i class="fas fa-external-link-alt"></i>
+                                Launch Management Dashboard
+                            </button>
+                        </a>
+                        
+                        <button onclick="logoutManagement()" style="padding: 1.5rem 3rem; border: 1px solid var(--glass-border); border-radius: 16px; background: var(--surface-medium); color: var(--text-secondary); font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 1rem;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -4109,7 +2364,6 @@
                 </div>
             </div>
         </div>
-
         <div id="relationshipsTab" class="tab-content">
             <div class="stats-section">
                 <h2 class="section-title">
@@ -4180,3 +2434,1126 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <script>
+        console.log('Enhanced Medical Dashboard Loading...');
+
+        // Sample distributor data
+        const sampleDistributor = {
+            companyName: 'ABC Ortho Solutions',
+            code: 'ABCOrtho',
+            region: 'Tennessee Region'
+        };
+
+        // Logout function
+        function logout() {
+            window.location.href = 'index.html';
+        }
+
+        // File search and management functions
+        function searchFiles() {
+            const searchTerm = document.getElementById('fileSearch').value.toLowerCase();
+            const fileItems = document.querySelectorAll('.file-item');
+            
+            fileItems.forEach(item => {
+                const keywords = item.getAttribute('data-keywords').toLowerCase();
+                const fileName = item.querySelector('.file-name').textContent.toLowerCase();
+                
+                if (keywords.includes(searchTerm) || fileName.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = searchTerm ? 'none' : 'block';
+                }
+            });
+            
+            // Show/hide categories based on visible files
+            const categories = document.querySelectorAll('.file-category');
+            categories.forEach(category => {
+                const visibleFiles = category.querySelectorAll('.file-item[style*="block"], .file-item:not([style*="none"])');
+                if (searchTerm && visibleFiles.length === 0) {
+                    category.style.display = 'none';
+                } else {
+                    category.style.display = 'block';
+                }
+            });
+        }
+
+        function downloadFile(filename) {
+            // In a real implementation, this would trigger actual file download
+            alert(`Downloading ${filename}...\n\nIn a real implementation, this would start the file download.`);
+            
+            // Simulate download analytics
+            console.log(`File downloaded: ${filename} by ${sampleDistributor.companyName}`);
+        }
+
+        function previewFile(filename) {
+            // In a real implementation, this would open file preview
+            alert(`Opening preview for ${filename}...\n\nIn a real implementation, this would open the file in a preview modal or new tab.`);
+            
+            // Simulate preview analytics
+            console.log(`File previewed: ${filename} by ${sampleDistributor.companyName}`);
+        }
+
+        // Filtering and sorting functionality
+        let currentDateFilter = 'all';
+        let currentSort = 'date-desc';
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            const allItems = document.querySelectorAll('#allSubmissions .recent-item');
+            let visibleCount = 0;
+
+            allItems.forEach(item => {
+                const surgeon = item.getAttribute('data-surgeon').toLowerCase();
+                const hospital = item.getAttribute('data-hospital');
+                const patient = item.getAttribute('data-patient').toLowerCase();
+                const status = item.getAttribute('data-status');
+                const date = new Date(item.getAttribute('data-date'));
+                
+                // Text search
+                const matchesSearch = !searchTerm || 
+                    surgeon.includes(searchTerm) || 
+                    hospital.toLowerCase().includes(searchTerm) || 
+                    patient.includes(searchTerm);
+                
+                // Hospital filter
+                const matchesHospital = !hospitalFilter || hospital === hospitalFilter;
+                
+                // Status filter
+                const matchesStatus = !statusFilter || status === statusFilter;
+                
+                // Date filter
+                const matchesDate = checkDateFilter(date, currentDateFilter);
+                
+                if (matchesSearch && matchesHospital && matchesStatus && matchesDate) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            updateResultsInfo(visibleCount);
+            applySorting(currentSort);
+        }
+
+        function checkDateFilter(itemDate, filter) {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay());
+            
+            const startOfLastWeek = new Date(startOfWeek);
+            startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
+            const endOfLastWeek = new Date(startOfWeek);
+            endOfLastWeek.setDate(endOfLastWeek.getDate() - 1);
+            
+            const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+
+            switch (filter) {
+                case 'all':
+                    return true;
+                case 'today':
+                    return itemDate.toDateString() === today.toDateString();
+                case 'yesterday':
+                    return itemDate.toDateString() === yesterday.toDateString();
+                case 'thisWeek':
+                    return itemDate >= startOfWeek && itemDate <= today;
+                case 'lastWeek':
+                    return itemDate >= startOfLastWeek && itemDate <= endOfLastWeek;
+                case 'thisMonth':
+                    return itemDate >= startOfMonth && itemDate <= today;
+                case 'lastMonth':
+                    return itemDate >= startOfLastMonth && itemDate <= endOfLastMonth;
+                default:
+                    return true;
+            }
+        }
+
+        function applyDateFilter(filter) {
+            currentDateFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find and activate the correct button
+            const filterButtons = document.querySelectorAll('.quick-filter-btn');
+            filterButtons.forEach(btn => {
+                if (btn.textContent.includes('All Time') && filter === 'all') btn.classList.add('active');
+                if (btn.textContent.includes('Today') && filter === 'today') btn.classList.add('active');
+                if (btn.textContent.includes('Yesterday') && filter === 'yesterday') btn.classList.add('active');
+                if (btn.textContent.includes('This Week') && filter === 'thisWeek') btn.classList.add('active');
+                if (btn.textContent.includes('Last Week') && filter === 'lastWeek') btn.classList.add('active');
+                if (btn.textContent.includes('This Month') && filter === 'thisMonth') btn.classList.add('active');
+                if (btn.textContent.includes('Last Month') && filter === 'lastMonth') btn.classList.add('active');
+            });
+            
+            applyFilters();
+        }
+
+        function applySorting(sortType) {
+            currentSort = sortType;
+            
+            // Update active sort button
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find the clicked button and mark it active
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            sortButtons.forEach(btn => {
+                if (btn.textContent.includes('Newest') && sortType === 'date-desc') btn.classList.add('active');
+                if (btn.textContent.includes('Oldest') && sortType === 'date-asc') btn.classList.add('active');
+                if (btn.textContent.includes('Highest') && sortType === 'value-desc') btn.classList.add('active');
+                if (btn.textContent.includes('Status') && sortType === 'status') btn.classList.add('active');
+            });
+            
+            const container = document.getElementById('allSubmissions');
+            const items = Array.from(container.querySelectorAll('.recent-item[style*="flex"]'));
+            
+            items.sort((a, b) => {
+                switch (sortType) {
+                    case 'date-desc':
+                        return new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'));
+                    case 'date-asc':
+                        return new Date(a.getAttribute('data-date')) - new Date(b.getAttribute('data-date'));
+                    case 'value-desc':
+                        return parseInt(b.getAttribute('data-value')) - parseInt(a.getAttribute('data-value'));
+                    case 'status':
+                        const statusOrder = { 'Awaiting PO': 0, 'PO Received': 1 };
+                        return statusOrder[a.getAttribute('data-status')] - statusOrder[b.getAttribute('data-status')];
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Re-append sorted items
+            items.forEach(item => container.appendChild(item));
+        }
+
+        function clearAllFilters() {
+            document.getElementById('searchFilter').value = '';
+            document.getElementById('hospitalFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            
+            // Reset date filter to "All Time"
+            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.quick-filter-btn').classList.add('active');
+            currentDateFilter = 'all';
+            
+            applyFilters();
+        }
+
+        function updateResultsInfo(count) {
+            const resultsCount = document.getElementById('resultsCount');
+            const filterStatus = document.getElementById('filterStatus');
+            const noResults = document.getElementById('noResults');
+            const submissionsList = document.getElementById('allSubmissions');
+            
+            if (count === 0) {
+                noResults.style.display = 'block';
+                submissionsList.style.display = 'none';
+                resultsCount.textContent = 'No cases found';
+            } else {
+                noResults.style.display = 'none';
+                submissionsList.style.display = 'block';
+                resultsCount.textContent = `${count} case${count !== 1 ? 's' : ''} found`;
+            }
+            
+            // Show active filters
+            const activeFilters = [];
+            const searchTerm = document.getElementById('searchFilter').value;
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            if (searchTerm) activeFilters.push(`Search: "${searchTerm}"`);
+            if (hospitalFilter) activeFilters.push(`Hospital: ${hospitalFilter}`);
+            if (statusFilter) activeFilters.push(`Status: ${statusFilter}`);
+            if (currentDateFilter !== 'all') {
+                const filterNames = {
+                    'today': 'Today',
+                    'yesterday': 'Yesterday',
+                    'thisWeek': 'This Week',
+                    'lastWeek': 'Last Week',
+                    'thisMonth': 'This Month',
+                    'lastMonth': 'Last Month'
+                };
+                activeFilters.push(`Date: ${filterNames[currentDateFilter]}`);
+            }
+            
+            if (activeFilters.length > 0) {
+                filterStatus.innerHTML = `<span style="color: var(--accent-blue);">• Filtered by: ${activeFilters.join(', ')}</span>`;
+            } else {
+                filterStatus.innerHTML = '';
+            }
+        }
+
+        // Submission details data
+        const submissionDetails = {
+            'CS-1234567890': {
+                id: 'CS-1234567890',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'J.S.',
+                surgeryDate: 'Dec 20, 2024',
+                submissionDate: 'Dec 10, 2024',
+                caseValue: '$3,285',
+                status: 'PO Received',
+                poNumber: 'PO-HV-2024-1156',
+                poReceivedDate: 'Dec 18, 2024',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Surgical Guide Kit', partNumber: 'SG-MTP-01', quantity: 1, unitCost: '$125' }
+                ],
+                notes: 'Patient has good bone quality. Standard MTP fusion procedure.',
+                surgeonNotes: 'Routine case, expect standard healing time',
+                priority: 'Standard'
+            },
+            'CS-1234567891': {
+                id: 'CS-1234567891',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'M.B.',
+                surgeryDate: 'Dec 22, 2024',
+                submissionDate: 'Dec 12, 2024',
+                caseValue: '$1,850',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
+                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 2, unitCost: '$45' },
+                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 3, unitCost: '$95' }
+                ],
+                notes: 'Patient has diabetes, monitor wound healing closely',
+                surgeonNotes: 'Patient requires special attention due to diabetes',
+                priority: 'High',
+                daysWaiting: 8
+            },
+            'CS-1234567892': {
+                id: 'CS-1234567892',
+                procedure: 'Lapidus Procedure',
+                surgeon: 'Dr. Michael Wilson',
+                hospital: 'City General Hospital',
+                patient: 'R.D.',
+                surgeryDate: 'Dec 15, 2024',
+                submissionDate: 'Dec 3, 2024',
+                caseValue: '$4,920',
+                status: 'PO Received',
+                poNumber: 'PO-CG-2024-0892',
+                poReceivedDate: 'Dec 12, 2024',
+                instruments: [
+                    { name: 'Lapidus Plate System', partNumber: 'LAP-PL-001', quantity: 1, unitCost: '$1,850' },
+                    { name: 'Compression Screws 4.0mm', partNumber: 'CS-40-004', quantity: 4, unitCost: '$225' },
+                    { name: 'Bone Graft Allograft', partNumber: 'BG-AL-20CC', quantity: 1, unitCost: '$680' },
+                    { name: 'Suture Anchors', partNumber: 'SA-35-002', quantity: 2, unitCost: '$165' },
+                    { name: 'Surgical Drill Bits', partNumber: 'DB-SET-01', quantity: 1, unitCost: '$85' }
+                ],
+                notes: 'Complex bunion deformity requiring Lapidus procedure',
+                surgeonNotes: 'Severe hallux valgus, good candidate for Lapidus',
+                priority: 'Standard'
+            },
+            'CS-1234567893': {
+                id: 'CS-1234567893',
+                procedure: 'Bunion Correction',
+                surgeon: 'Dr. Lisa Chen',
+                hospital: 'Metro Health Center',
+                patient: 'K.M.',
+                surgeryDate: 'Jan 12, 2025',
+                submissionDate: 'Dec 28, 2024',
+                caseValue: '$2,175',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Bunion Correction Plate', partNumber: 'BC-PL-002', quantity: 1, unitCost: '$950' },
+                    { name: 'Osteotomy Screws 3.0mm', partNumber: 'OS-30-003', quantity: 3, unitCost: '$155' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-10CC', quantity: 1, unitCost: '$385' },
+                    { name: 'Wire Guide System', partNumber: 'WG-BC-01', quantity: 1, unitCost: '$125' }
+                ],
+                notes: 'Young patient, active lifestyle, requires strong fixation',
+                surgeonNotes: 'Athlete - needs reliable fixation for early return to activity',
+                priority: 'High',
+                daysWaiting: 3
+            },
+            'CS-1234567894': {
+                id: 'CS-1234567894',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'T.R.',
+                surgeryDate: 'Jan 8, 2025',
+                submissionDate: 'Dec 22, 2024',
+                caseValue: '$3,450',
+                status: 'PO Received',
+                poNumber: 'PO-HV-2025-0034',
+                poReceivedDate: 'Jan 2, 2025',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Hardware Removal Kit', partNumber: 'HR-KIT-01', quantity: 1, unitCost: '$285' },
+                    { name: 'Revision Surgical Tools', partNumber: 'RST-SET-02', quantity: 1, unitCost: '$165' }
+                ],
+                notes: 'Revision case - previous hardware removal required',
+                surgeonNotes: 'Revision MTP fusion, remove old hardware first',
+                priority: 'Standard'
+            },
+            'CS-1234567895': {
+                id: 'CS-1234567895',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'D.K.',
+                surgeryDate: 'Jan 5, 2025',
+                submissionDate: 'Dec 18, 2024',
+                caseValue: '$1,920',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'Hammertoe Implant System', partNumber: 'HT-IMP-002', quantity: 1, unitCost: '$875' },
+                    { name: 'K-Wire 2.0mm', partNumber: 'KW-20-010', quantity: 3, unitCost: '$45' },
+                    { name: 'Fixation Screws 2.7mm', partNumber: 'FS-27-003', quantity: 2, unitCost: '$95' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-05CC', quantity: 1, unitCost: '$245' }
+                ],
+                notes: 'Multiple toe deformities, may require additional procedures',
+                surgeonNotes: 'Consider addressing adjacent toes if needed',
+                priority: 'Standard',
+                daysWaiting: 12
+            },
+            'CS-1234567896': {
+                id: 'CS-1234567896',
+                procedure: 'Ankle Fusion',
+                surgeon: 'Dr. Robert Martinez',
+                hospital: 'Valley Medical Center',
+                patient: 'A.L.',
+                surgeryDate: 'Dec 28, 2024',
+                submissionDate: 'Dec 15, 2024',
+                caseValue: '$5,200',
+                status: 'PO Received',
+                poNumber: 'PO-VM-2024-0756',
+                poReceivedDate: 'Dec 25, 2024',
+                instruments: [
+                    { name: 'Ankle Fusion Plate System', partNumber: 'AF-PL-001', quantity: 1, unitCost: '$2,450' },
+                    { name: 'Compression Screws 6.5mm', partNumber: 'CS-65-006', quantity: 6, unitCost: '$385' },
+                    { name: 'Bone Graft Allograft', partNumber: 'BG-AL-25CC', quantity: 1, unitCost: '$895' },
+                    { name: 'Surgical Guides Set', partNumber: 'SG-AF-01', quantity: 1, unitCost: '$325' },
+                    { name: 'Specialized Drill Bits', partNumber: 'DB-AF-SET', quantity: 1, unitCost: '$145' }
+                ],
+                notes: 'Post-traumatic arthritis, complex case requiring specialized implants',
+                surgeonNotes: 'Traumatic arthritis from old injury, needs strong fixation',
+                priority: 'High'
+            },
+            'CS-1234567897': {
+                id: 'CS-1234567897',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'M.K.',
+                surgeryDate: 'Jan 15, 2025',
+                submissionDate: 'Jan 2, 2025',
+                caseValue: '$3,120',
+                status: 'Awaiting PO',
+                instruments: [
+                    { name: 'MTP Fusion Plate System', partNumber: 'MTP-PL-001', quantity: 1, unitCost: '$1,250' },
+                    { name: 'Compression Screws 3.5mm', partNumber: 'CS-35-002', quantity: 2, unitCost: '$185' },
+                    { name: 'Bone Graft Substitute', partNumber: 'BGS-15CC', quantity: 1, unitCost: '$450' },
+                    { name: 'Bilateral Planning Kit', partNumber: 'BPK-MTP-01', quantity: 1, unitCost: '$95' }
+                ],
+                notes: 'Bilateral procedure planned, this is the first side',
+                surgeonNotes: 'Plan bilateral MTP fusion, start with right side',
+                priority: 'Standard',
+                daysWaiting: 5
+            }
+        };
+
+        function showSubmissionDetails(caseId) {
+            const submission = submissionDetails[caseId];
+            if (!submission) return;
+
+            const modal = document.getElementById('submissionDetailsModal');
+            const content = document.getElementById('submissionDetailsContent');
+
+            const statusColor = submission.status === 'PO Received' ? 'var(--success-green)' : 'var(--warning-amber)';
+            const priorityColor = submission.priority === 'High' ? 'var(--warning-amber)' : 
+                                 submission.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
+
+            content.innerHTML = `
+                <!-- Case Header -->
+                <div style="background: var(--surface-medium); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--glass-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--text-primary); font-size: 1.3rem; margin-bottom: 0.5rem;">${submission.procedure}</h3>
+                            <div class="case-id">Case ID: ${submission.id}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: rgba(59, 130, 246, 0.2); color: ${statusColor}; padding: 0.5rem 1rem; border-radius: 12px; font-size: 0.9rem; font-weight: 700; border: 1px solid ${statusColor}30;">${submission.status}</span>
+                            ${submission.status === 'Awaiting PO' ? `<div style="color: var(--warning-amber); font-size: 0.8rem; margin-top: 0.5rem;"><i class="fas fa-clock"></i> ${submission.daysWaiting} days waiting</div>` : ''}
+                        </div>
+                    </div>
+                    <div style="color: var(--text-primary); font-size: 1.5rem; font-weight: 700; text-align: center; margin-top: 1rem;">${submission.caseValue}</div>
+                </div>
+
+                <!-- Case Details -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <!-- Surgery Information -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-user-md"></i> Surgery Information
+                        </h4>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                            <div class="detail-row">
+                                <span class="detail-label">Surgeon:</span>
+                                <span class="detail-value">${submission.surgeon}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Hospital:</span>
+                                <span class="detail-value">${submission.hospital}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Patient:</span>
+                                <span class="detail-value">${submission.patient}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Surgery Date:</span>
+                                <span class="detail-value">${submission.surgeryDate}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Priority:</span>
+                                <span style="background: rgba(59, 130, 246, 0.2); color: ${priorityColor}; padding: 0.25rem 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${priorityColor}30;">${submission.priority}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submission Information -->
+                    <div>
+                        <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-clipboard-check"></i> Submission Info
+                        </h4>
+                        <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                            <div class="detail-row">
+                                <span class="detail-label">Submitted:</span>
+                                <span class="detail-value">${submission.submissionDate}</span>
+                            </div>
+                            ${submission.poNumber ? `
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Number:</span>
+                                    <span class="detail-value case-id">${submission.poNumber}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">PO Received:</span>
+                                    <span class="detail-value">${submission.poReceivedDate}</span>
+                                </div>
+                            ` : `
+                                <div class="detail-row">
+                                    <span class="detail-label">Days Waiting:</span>
+                                    <span class="detail-value" style="color: var(--warning-amber);">${submission.daysWaiting} days</span>
+                                </div>
+                            `}
+                            <div class="detail-row">
+                                <span class="detail-label">Case Value:</span>
+                                <span class="detail-value" style="color: var(--success-green); font-size: 1.1rem;">${submission.caseValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instruments & Parts -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-tools"></i> Instruments & Parts Used
+                    </h4>
+                    <div style="background: var(--surface-light); border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border);">
+                        <!-- Parts Table Header -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-bottom: 1px solid var(--border-color); display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; font-weight: 700; color: var(--text-primary); font-size: 0.9rem;">
+                            <div>Part Description</div>
+                            <div>Part Number</div>
+                            <div style="text-align: center;">Qty</div>
+                            <div style="text-align: right;">Unit Cost</div>
+                        </div>
+                        <!-- Parts List -->
+                        ${submission.instruments.map((instrument, index) => `
+                            <div style="padding: 1rem; border-bottom: ${index < submission.instruments.length - 1 ? '1px solid var(--border-color)' : 'none'}; display: grid; grid-template-columns: 2fr 1fr 80px 100px; gap: 1rem; align-items: center; transition: all 0.3s ease; ${index % 2 === 0 ? 'background: rgba(255, 255, 255, 0.02)' : ''}">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.25rem;">${instrument.name}</div>
+                                    <div style="color: var(--text-muted); font-size: 0.8rem;">
+                                        <i class="fas fa-box" style="margin-right: 0.25rem;"></i>
+                                        Medical Device
+                                    </div>
+                                </div>
+                                <div>
+                                    <span style="font-family: 'Courier New', monospace; background: var(--surface-dark); color: var(--accent-cyan); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${instrument.partNumber}</span>
+                                </div>
+                                <div style="text-align: center;">
+                                    <span style="background: var(--primary-gradient); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-weight: 700; font-size: 0.85rem;">${instrument.quantity}</span>
+                                </div>
+                                <div style="text-align: right; color: var(--success-green); font-weight: 700; font-size: 1rem;">${instrument.unitCost}</div>
+                            </div>
+                        `).join('')}
+                        
+                        <!-- Total Section -->
+                        <div style="background: var(--surface-medium); padding: 1rem; border-top: 2px solid var(--accent-blue);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="color: var(--text-primary); font-weight: 700; font-size: 1rem;">Total Case Value</div>
+                                    <div style="color: var(--text-muted); font-size: 0.85rem;">${submission.instruments.length} items</div>
+                                </div>
+                                <div style="color: var(--success-green); font-weight: 800; font-size: 1.5rem;">${submission.caseValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div style="margin-bottom: 2rem;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-sticky-note"></i> Case Notes
+                    </h4>
+                    <div style="background: var(--surface-light); padding: 1rem; border-radius: 8px;">
+                        <div style="margin-bottom: 1rem;">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Distributor Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.notes}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600;">Surgeon Notes:</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${submission.surgeonNotes}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                ${submission.status === 'Awaiting PO' ? `
+                    <div class="po-actions">
+                        <button onclick="closeSubmissionDetailsModal()" class="po-btn" style="background: var(--surface-medium); color: var(--text-secondary); border: 1px solid var(--glass-border);">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                        <button onclick="submitPOForCase('${submission.id}')" class="po-btn" style="background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%); color: white;">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit PO
+                        </button>
+                    </div>
+                ` : `
+                    <div style="text-align: center;">
+                        <button onclick="closeSubmissionDetailsModal()" class="po-btn" style="background: var(--primary-gradient); color: white; max-width: 200px;">
+                            <i class="fas fa-check"></i>
+                            Close
+                        </button>
+                    </div>
+                `}
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSubmissionDetailsModal() {
+            document.getElementById('submissionDetailsModal').style.display = 'none';
+        }
+
+        function submitPOForCase(caseId) {
+            const submission = submissionDetails[caseId];
+            if (submission) {
+                // Store case data for PO submission form
+                const poData = {
+                    caseId: submission.id,
+                    procedure: submission.procedure,
+                    surgeon: submission.surgeon,
+                    hospital: submission.hospital,
+                    patient: submission.patient,
+                    surgeryDate: submission.surgeryDate,
+                    caseValue: submission.caseValue,
+                    instruments: submission.instruments,
+                    notes: submission.notes
+                };
+                
+                // Store in sessionStorage to transfer to PO form
+                sessionStorage.setItem('prefilledPO', JSON.stringify(poData));
+                
+                // Navigate to PO submission form
+                window.open('https://formamedical.github.io/Surgery-Case-Sheet/po-submission.html', '_blank');
+            }
+        }
+
+        // Calendar functionality
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedSurgery = null;
+        let editingSurgery = null;
+        let surgeries = [
+            // Sample data
+            {
+                id: 1,
+                date: '2024-12-20',
+                time: '09:00',
+                procedure: 'MTP Fusion',
+                surgeon: 'Dr. Benjamin Potter',
+                hospital: 'Holston Valley Surgery Center',
+                patient: 'J.S.',
+                priority: 'Standard',
+                notes: 'Regular follow-up case'
+            },
+            {
+                id: 2,
+                date: '2024-12-22',
+                time: '14:30',
+                procedure: 'Hammertoe Correction',
+                surgeon: 'Dr. Sarah Johnson',
+                hospital: 'Regional Medical Center',
+                patient: 'M.B.',
+                priority: 'High',
+                notes: 'Patient has diabetes, monitor closely'
+            }
+        ];
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and days in month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+            // Previous month's trailing days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayNumber = daysInPrevMonth - i;
+                const dayElement = createDayElement(dayNumber, true);
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Current month's days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday = isCurrentMonth && day === today.getDate();
+                const dayElement = createDayElement(day, false, isToday);
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // Next month's leading days
+            const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+            const remainingCells = totalCells - (firstDay + daysInMonth);
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayElement = createDayElement(day, true);
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function createDayElement(dayNumber, isOtherMonth, isToday = false) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            if (isOtherMonth) dayElement.classList.add('other-month');
+            if (isToday) dayElement.classList.add('today');
+
+            const dayDate = isOtherMonth ? null : 
+                `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(dayNumber).padStart(2, '0')}`;
+
+            dayElement.innerHTML = `
+                <div class="day-number">${dayNumber}</div>
+                <div class="surgeries-container"></div>
+            `;
+
+            if (!isOtherMonth && dayDate) {
+                const daySurgeries = surgeries.filter(surgery => surgery.date === dayDate);
+                const surgeriesContainer = dayElement.querySelector('.surgeries-container');
+                
+                daySurgeries.forEach(surgery => {
+                    const surgeryElement = document.createElement('div');
+                    surgeryElement.className = `surgery-item ${surgery.priority.toLowerCase().replace(' ', '-')}`;
+                    surgeryElement.innerHTML = `
+                        <i class="fas fa-clock" style="font-size: 0.6rem;"></i>
+                        ${surgery.time} ${surgery.procedure}
+                    `;
+                    surgeryElement.onclick = (e) => {
+                        e.stopPropagation();
+                        showSurgeryDetails(surgery);
+                    };
+                    surgeriesContainer.appendChild(surgeryElement);
+                });
+
+                dayElement.onclick = () => selectDate(dayDate, dayElement);
+            }
+
+            return dayElement;
+        }
+
+        function selectDate(date, element) {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day.selected').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Select new date
+            element.classList.add('selected');
+            selectedDate = date;
+            
+            // Open surgery modal for adding new surgery
+            openSurgeryModal(date);
+        }
+
+        function openSurgeryModal(date = null, surgery = null) {
+            const modal = document.getElementById('surgeryModal');
+            const form = document.getElementById('surgeryForm');
+            const title = document.getElementById('modalTitle');
+
+            if (surgery) {
+                // Editing mode
+                title.textContent = 'Edit Surgery';
+                editingSurgery = surgery;
+                
+                // Populate form with surgery data
+                document.getElementById('surgeryDate').value = surgery.date;
+                document.getElementById('surgeryTime').value = surgery.time;
+                document.getElementById('procedureType').value = surgery.procedure;
+                document.getElementById('surgeonName').value = surgery.surgeon;
+                document.getElementById('hospitalName').value = surgery.hospital;
+                document.getElementById('patientInitials').value = surgery.patient;
+                document.getElementById('casePriority').value = surgery.priority;
+                document.getElementById('surgeryNotes').value = surgery.notes || '';
+            } else {
+                // Adding mode
+                title.textContent = 'Add Surgery';
+                editingSurgery = null;
+                form.reset();
+                
+                if (date) {
+                    document.getElementById('surgeryDate').value = date;
+                }
+            }
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('surgeryTime').focus();
+            }, 100);
+        }
+
+        function closeSurgeryModal() {
+            document.getElementById('surgeryModal').style.display = 'none';
+            editingSurgery = null;
+        }
+
+        function showSurgeryDetails(surgery) {
+            selectedSurgery = surgery;
+            const modal = document.getElementById('surgeryDetailsModal');
+            const content = document.getElementById('surgeryDetailsContent');
+
+            const priorityColor = surgery.priority === 'High' ? 'var(--warning-amber)' : 
+                                 surgery.priority === 'Urgent' ? 'var(--danger-red)' : 'var(--accent-blue)';
+
+            content.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Date & Time</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${formatDate(surgery.date)} at ${formatTime(surgery.time)}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Priority</div>
+                            <span style="background: rgba(59, 130, 246, 0.2); color: ${priorityColor}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700; border: 1px solid ${priorityColor}30;">${surgery.priority}</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Procedure</div>
+                        <div style="color: var(--text-primary); font-weight: 600; font-size: 1.1rem;">${surgery.procedure}</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Surgeon</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${surgery.surgeon}</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Patient</div>
+                            <div style="color: var(--text-primary); font-weight: 600;">${surgery.patient}</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Hospital</div>
+                        <div style="color: var(--text-primary); font-weight: 600;">${surgery.hospital}</div>
+                    </div>
+                    
+                    ${surgery.notes ? `
+                        <div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.25rem;">Notes</div>
+                            <div style="color: var(--text-secondary); line-height: 1.4;">${surgery.notes}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeSurgeryDetailsModal() {
+            document.getElementById('surgeryDetailsModal').style.display = 'none';
+            selectedSurgery = null;
+        }
+
+        function editSelectedSurgery() {
+            closeSurgeryDetailsModal();
+            openSurgeryModal(null, selectedSurgery);
+        }
+
+        function deleteSelectedSurgery() {
+            if (selectedSurgery && confirm('Are you sure you want to delete this surgery?')) {
+                surgeries = surgeries.filter(s => s.id !== selectedSurgery.id);
+                renderCalendar();
+                closeSurgeryDetailsModal();
+            }
+        }
+
+        function submitCaseFromCalendar() {
+            if (selectedSurgery) {
+                // Store surgery data for case sheet form
+                const surgeryData = {
+                    procedure: selectedSurgery.procedure,
+                    surgeon: selectedSurgery.surgeon,
+                    hospital: selectedSurgery.hospital,
+                    patient: selectedSurgery.patient,
+                    date: selectedSurgery.date,
+                    time: selectedSurgery.time,
+                    notes: selectedSurgery.notes,
+                    priority: selectedSurgery.priority
+                };
+                
+                // Store in sessionStorage to transfer to form
+                sessionStorage.setItem('prefilledSurgery', JSON.stringify(surgeryData));
+                
+                // Navigate to case sheet form
+                window.location.href = 'form.html';
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function goToToday() {
+            currentDate = new Date();
+            renderCalendar();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function formatTime(timeString) {
+            const [hours, minutes] = timeString.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        // Handle surgery form submission
+        document.getElementById('surgeryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                id: editingSurgery ? editingSurgery.id : Date.now(),
+                date: document.getElementById('surgeryDate').value,
+                time: document.getElementById('surgeryTime').value,
+                procedure: document.getElementById('procedureType').value,
+                surgeon: document.getElementById('surgeonName').value,
+                hospital: document.getElementById('hospitalName').value,
+                patient: document.getElementById('patientInitials').value,
+                priority: document.getElementById('casePriority').value,
+                notes: document.getElementById('surgeryNotes').value
+            };
+
+            if (editingSurgery) {
+                // Update existing surgery
+                const index = surgeries.findIndex(s => s.id === editingSurgery.id);
+                if (index !== -1) {
+                    surgeries[index] = formData;
+                }
+            } else {
+                // Add new surgery
+                surgeries.push(formData);
+            }
+
+            renderCalendar();
+            closeSurgeryModal();
+        });
+
+        // Management authentication functions
+        function handlePasswordKeypress(event) {
+            if (event.key === 'Enter') {
+                verifyManagementPassword();
+            }
+        }
+
+        function verifyManagementPassword() {
+            const password = document.getElementById('managementPassword').value;
+            const correctPassword = 'admin123'; // You can change this to any password
+            
+            if (password === correctPassword) {
+                document.getElementById('passwordModal').style.display = 'none';
+                document.getElementById('managementContent').style.display = 'block';
+                document.getElementById('passwordError').style.display = 'none';
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('managementPassword').value = '';
+                document.getElementById('managementPassword').focus();
+            }
+        }
+
+        function cancelManagementAccess() {
+            showTab('overview');
+            document.getElementById('passwordModal').style.display = 'flex';
+            document.getElementById('managementContent').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('managementPassword').value = '';
+        }
+
+        function logoutManagement() {
+            document.getElementById('passwordModal').style.display = 'flex';
+            document.getElementById('managementContent').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('managementPassword').value = '';
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            tabContents.forEach(content => content.classList.remove('active'));
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Special handling for management tab
+            if (tabName === 'management') {
+                document.getElementById('passwordModal').style.display = 'flex';
+                document.getElementById('managementContent').style.display = 'none';
+                document.getElementById('passwordError').style.display = 'none';
+                document.getElementById('managementPassword').value = '';
+                setTimeout(() => {
+                    document.getElementById('managementPassword').focus();
+                }, 100);
+            }
+            
+            // Special handling for calendar tab
+            if (tabName === 'calendar') {
+                setTimeout(() => {
+                    renderCalendar();
+                }, 100);
+            }
+            
+            // Special handling for submissions tab
+            if (tabName === 'submissions') {
+                setTimeout(() => {
+                    // Clear any pre-filled search values
+                    document.getElementById('searchFilter').value = '';
+                    document.getElementById('hospitalFilter').value = '';
+                    document.getElementById('statusFilter').value = '';
+                    
+                    // Reset date filter to "All Time"
+                    document.querySelectorAll('.quick-filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelector('.quick-filter-btn').classList.add('active');
+                    currentDateFilter = 'all';
+                    
+                    // Apply filters to show all results
+                    applyFilters();
+                }, 100);
+            }
+            
+            // Trigger animations for the active tab
+            if (tabName === 'analytics') {
+                setTimeout(() => {
+                    animateChartBars();
+                }, 300);
+            }
+        }
+
+        function animateChartBars() {
+            // Animate the revenue trend chart on hover
+            const chartBars = document.querySelectorAll('[data-value]');
+            chartBars.forEach((bar, index) => {
+                bar.addEventListener('mouseenter', function() {
+                    const valueLabel = this.querySelector('div');
+                    if (valueLabel) {
+                        valueLabel.style.opacity = '1';
+                    }
+                });
+                
+                bar.addEventListener('mouseleave', function() {
+                    const valueLabel = this.querySelector('div');
+                    if (valueLabel) {
+                        valueLabel.style.opacity = '0';
+                    }
+                });
+            });
+        }
+
+        // Initialize dashboard
+        function initializeDashboard() {
+            let distributor = sampleDistributor;
+            updateUI(distributor);
+            
+            // Animate elements on load
+            setTimeout(() => {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    stat.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        stat.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            }, 500);
+        }
+
+        function updateUI(distributor) {
+            document.getElementById('companyName').textContent = distributor.companyName;
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            initializeDashboard();
+            renderCalendar(); // Initialize calendar
+        });
+
+        console.log('Enhanced Medical Dashboard Ready! 🏥✨');
+    </script>
+</body>
+</html>
