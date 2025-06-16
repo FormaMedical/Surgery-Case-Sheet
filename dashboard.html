@@ -3639,16 +3639,18 @@
         <!-- All your HTML content goes here... -->
 
 
- <script>
+             <!-- Tab switching script -->
+    <script>
     document.querySelectorAll('.nav-tab').forEach(tab => {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-        this.classList.add('active');
-        const tabId = this.getAttribute('data-tab');
-        document.getElementById('tab-' + tabId).classList.add('active');
-      });
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            this.classList.add('active');
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        });
     });
+
 
 
         console.log('Enhanced Medical Dashboard Ready! 🏥✨');
